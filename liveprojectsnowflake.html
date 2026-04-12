@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vizonis Academy – SQL Training with Snowflake</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  :root {
+    --bg: #0b0d14;
+    --bg2: #111420;
+    --card: #171b2d;
+    --card-hover: #1e2340;
+    --border: #2a2f4a;
+    --fg: #e8eaf0;
+    --fg-muted: #8890a8;
+    --accent: #f5a623;
+    --accent-glow: rgba(245, 166, 35, 0.15);
+    --accent2: #22c997;
+    --accent2-glow: rgba(34, 201, 151, 0.12);
+    --red: #ef4444;
+    --blue: #38bdf8;
+    --code-bg: #0d1017;
+    --radius: 12px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  .bg-atmosphere {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+  }
+  .bg-atmosphere::before {
+    content: ''; position: absolute; top: -30%; right: -20%;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(245,166,35,0.06) 0%, transparent 70%);
+    border-radius: 50%; animation: floatBlob 20s ease-in-out infinite;
+  }
+  .bg-atmosphere::after {
+    content: ''; position: absolute; bottom: -20%; left: -15%;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(34,201,151,0.05) 0%, transparent 70%);
+    border-radius: 50%; animation: floatBlob 25s ease-in-out infinite reverse;
+  }
+  @keyframes floatBlob {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(40px, -30px) scale(1.05); }
+    66% { transform: translate(-20px, 20px) scale(0.95); }
+  }
+  .grid-pattern {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(245,166,35,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245,166,35,0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  /* Slide container */
+  .slides-container { position: relative; width: 100%; height: calc(100vh - 97px); z-index: 1; }
+  .slide {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    opacity: 0; visibility: hidden; transform: translateX(60px);
+    transition: opacity 0.5s ease, transform 0.5s ease, visibility 0s 0.5s;
+    overflow-y: auto;
+  }
+  .slide.active {
+    opacity: 1; visibility: visible; transform: translateX(0);
+    transition: opacity 0.5s ease, transform 0.5s ease, visibility 0s 0s;
+  }
+  .slide.exit-left { opacity: 0; transform: translateX(-60px); }
+
+  .slide-inner {
+    padding: 28px 48px 24px;
+    max-width: 1200px; margin: 0 auto; width: 100%;
+  }
+
+  /* Branding bar */
+  .brand-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 48px;
+    background: linear-gradient(135deg, rgba(245,166,35,0.08), rgba(34,201,151,0.04));
+    border-bottom: 1px solid var(--border);
+    position: relative; z-index: 10; flex-shrink: 0;
+  }
+  .brand-bar .logo {
+    display: flex; align-items: center; gap: 12px;
+    font-weight: 700; font-size: 18px; color: var(--accent); letter-spacing: -0.5px;
+  }
+  .brand-bar .logo .icon-box {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, var(--accent), #e08a10);
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    color: #0b0d14; font-weight: 700; font-size: 16px;
+  }
+  .brand-bar .contact-info {
+    display: flex; align-items: center; gap: 20px; font-size: 13px; color: var(--fg-muted);
+  }
+  .brand-bar .contact-info a {
+    color: var(--fg-muted); text-decoration: none;
+    display: flex; align-items: center; gap: 6px; transition: color 0.2s;
+  }
+  .brand-bar .contact-info a:hover { color: var(--accent); }
+
+  /* Footer */
+  .footer-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 48px; border-top: 1px solid var(--border);
+    background: var(--bg2); flex-shrink: 0; position: relative; z-index: 10;
+  }
+  .footer-bar .slide-counter {
+    font-size: 13px; color: var(--fg-muted); font-family: 'IBM Plex Mono', monospace;
+  }
+  .footer-bar .slide-counter span { color: var(--accent); font-weight: 600; }
+  .footer-bar .brand-footer { font-size: 12px; color: var(--fg-muted); opacity: 0.6; }
+
+  /* Progress */
+  .progress-track { height: 3px; background: var(--border); flex-shrink: 0; position: relative; z-index: 10; }
+  .progress-fill {
+    height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transition: width 0.5s ease; border-radius: 0 3px 3px 0;
+  }
+
+  /* Slide header elements */
+  .slide-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px;
+    color: var(--accent); margin-bottom: 12px;
+    padding: 5px 12px; background: var(--accent-glow);
+    border: 1px solid rgba(245,166,35,0.2); border-radius: 20px; width: fit-content;
+  }
+  .slide-title {
+    font-size: clamp(26px, 3.5vw, 40px); font-weight: 700;
+    line-height: 1.15; letter-spacing: -1px; margin-bottom: 6px;
+  }
+  .slide-subtitle {
+    font-size: 15px; color: var(--fg-muted); margin-bottom: 24px;
+    line-height: 1.5; max-width: 700px;
+  }
+
+  /* Section spacing helper */
+  .section-gap { margin-top: 20px; }
+
+  /* Grid layouts — no flex:1, size to content */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; }
+  .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; }
+
+  /* Cards */
+  .card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px;
+    transition: border-color 0.3s, transform 0.3s;
+    display: flex; flex-direction: column;
+  }
+  .card:hover { border-color: rgba(245,166,35,0.3); transform: translateY(-2px); }
+  .card-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px; margin-bottom: 12px; flex-shrink: 0;
+  }
+  .card-icon.amber { background: var(--accent-glow); color: var(--accent); border: 1px solid rgba(245,166,35,0.2); }
+  .card-icon.green { background: var(--accent2-glow); color: var(--accent2); border: 1px solid rgba(34,201,151,0.2); }
+  .card-icon.blue { background: rgba(56,189,248,0.1); color: var(--blue); border: 1px solid rgba(56,189,248,0.2); }
+  .card-icon.red { background: rgba(239,68,68,0.1); color: var(--red); border: 1px solid rgba(239,68,68,0.2); }
+  .card h3 { font-size: 14px; font-weight: 600; margin-bottom: 6px; color: var(--fg); }
+  .card p { font-size: 13px; color: var(--fg-muted); line-height: 1.5; flex: 1; }
+
+  /* Code blocks */
+  .code-block {
+    background: var(--code-bg); border: 1px solid var(--border);
+    border-radius: 10px; overflow: hidden;
+    font-family: 'IBM Plex Mono', monospace; font-size: 12px; line-height: 1.6;
+  }
+  .code-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 7px 14px; background: rgba(255,255,255,0.03);
+    border-bottom: 1px solid var(--border); font-size: 11px; color: var(--fg-muted);
+    white-space: nowrap;
+  }
+  .code-header .dots { display: flex; gap: 5px; }
+  .code-header .dots span { width: 8px; height: 8px; border-radius: 50%; }
+  .code-header .dots span:nth-child(1) { background: #ef4444; }
+  .code-header .dots span:nth-child(2) { background: #f5a623; }
+  .code-header .dots span:nth-child(3) { background: #22c55e; }
+  .code-body { padding: 12px 14px; overflow-x: auto; white-space: pre; color: #c9d1d9; }
+  .kw { color: #ff7b72; }
+  .fn { color: #d2a8ff; }
+  .str { color: #a5d6ff; }
+  .num { color: #79c0ff; }
+  .cm { color: #6e7681; font-style: italic; }
+  .tbl { color: #7ee787; }
+  .col { color: #ffa657; }
+  .type { color: #79c0ff; }
+
+  /* Comparison table */
+  .compare-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .compare-table th {
+    text-align: left; padding: 11px 14px;
+    background: rgba(245,166,35,0.06); border-bottom: 2px solid var(--border);
+    color: var(--accent); font-weight: 600; font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.8px;
+  }
+  .compare-table td {
+    padding: 9px 14px; border-bottom: 1px solid var(--border);
+    color: var(--fg-muted); vertical-align: top;
+  }
+  .compare-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .compare-table .check { color: var(--accent2); }
+  .compare-table .cross { color: var(--red); }
+
+  /* Bullet list */
+  .bullet-list { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  .bullet-list li {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 13.5px; color: var(--fg-muted); line-height: 1.5;
+  }
+  .bullet-list li .bullet {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent); flex-shrink: 0; margin-top: 6px;
+  }
+  .bullet-list li strong { color: var(--fg); }
+
+  /* Horizontal bullet list */
+  .bullet-list-h {
+    list-style: none; display: grid;
+    grid-template-columns: 1fr 1fr; gap: 10px 28px;
+  }
+  .bullet-list-h li {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 13.5px; color: var(--fg-muted); line-height: 1.5;
+  }
+  .bullet-list-h li .bullet {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent); flex-shrink: 0; margin-top: 6px;
+  }
+  .bullet-list-h li strong { color: var(--fg); }
+
+  /* Architecture diagram */
+  .arch-diagram {
+    display: flex; align-items: stretch; gap: 0;
+    justify-content: center; margin: 8px 0 0;
+  }
+  .arch-layer {
+    flex: 1; max-width: 280px;
+    padding: 22px 20px; border-radius: var(--radius);
+    text-align: center; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+  }
+  .arch-layer.bronze {
+    background: linear-gradient(135deg, rgba(180,140,60,0.12), rgba(180,140,60,0.04));
+    border: 1px solid rgba(180,140,60,0.25);
+  }
+  .arch-layer.silver {
+    background: linear-gradient(135deg, rgba(192,192,192,0.1), rgba(192,192,192,0.03));
+    border: 1px solid rgba(192,192,192,0.2);
+  }
+  .arch-layer.gold {
+    background: linear-gradient(135deg, rgba(245,166,35,0.15), rgba(245,166,35,0.04));
+    border: 1px solid rgba(245,166,35,0.3);
+  }
+  .arch-layer .layer-icon { font-size: 26px; margin-bottom: 8px; }
+  .arch-layer .layer-name { font-size: 17px; font-weight: 700; margin-bottom: 5px; }
+  .arch-layer .layer-desc { font-size: 12px; color: var(--fg-muted); line-height: 1.5; }
+  .arch-arrow {
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; color: var(--accent); padding: 0 10px;
+  }
+
+  /* Hero slide */
+  .hero-slide { display: flex; align-items: center; justify-content: center; text-align: center; }
+  .hero-content { max-width: 800px; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 20px; background: var(--accent-glow);
+    border: 1px solid rgba(245,166,35,0.25); border-radius: 30px;
+    font-size: 13px; font-weight: 500; color: var(--accent); margin-bottom: 28px;
+  }
+  .hero-title {
+    font-size: clamp(36px, 6vw, 60px); font-weight: 700;
+    letter-spacing: -2px; line-height: 1.1; margin-bottom: 16px;
+  }
+  .hero-title .highlight {
+    background: linear-gradient(135deg, var(--accent), #e08a10);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .hero-sub { font-size: 17px; color: var(--fg-muted); line-height: 1.6; margin-bottom: 32px; }
+  .hero-meta {
+    display: flex; align-items: center; justify-content: center;
+    gap: 30px; font-size: 13px; color: var(--fg-muted);
+  }
+  .hero-meta i { color: var(--accent); margin-right: 6px; }
+
+  /* Stat cards */
+  .stat-card { text-align: center; padding: 18px; }
+  .stat-card .stat-num {
+    font-size: 30px; font-weight: 700; color: var(--accent); line-height: 1; margin-bottom: 5px;
+  }
+  .stat-card .stat-label {
+    font-size: 11px; color: var(--fg-muted); text-transform: uppercase; letter-spacing: 0.8px;
+  }
+
+  /* UI mockup */
+  .ui-mockup {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); overflow: hidden;
+  }
+  .ui-topbar {
+    display: flex; align-items: center; gap: 8px;
+    padding: 9px 14px; background: rgba(255,255,255,0.03);
+    border-bottom: 1px solid var(--border); font-size: 12px; color: var(--fg-muted);
+  }
+  .ui-topbar .tab { padding: 5px 12px; border-radius: 6px; cursor: default; }
+  .ui-topbar .tab.active { background: rgba(245,166,35,0.12); color: var(--accent); }
+  .ui-sidebar { display: flex; }
+  .ui-sidebar .sidebar-nav {
+    width: 170px; padding: 10px; border-right: 1px solid var(--border);
+    font-size: 12px; flex-shrink: 0;
+  }
+  .ui-sidebar .sidebar-nav .nav-item {
+    padding: 6px 10px; border-radius: 6px; margin-bottom: 2px;
+    color: var(--fg-muted); display: flex; align-items: center; gap: 8px;
+  }
+  .ui-sidebar .sidebar-nav .nav-item.active { background: rgba(245,166,35,0.1); color: var(--accent); }
+  .ui-sidebar .sidebar-nav .nav-section {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 1px;
+    color: var(--fg-muted); opacity: 0.5; padding: 10px 10px 4px;
+  }
+  .ui-main { flex: 1; padding: 12px; min-height: 170px; }
+
+  /* Troubleshooting steps */
+  .ts-step {
+    display: flex; gap: 14px; padding: 14px;
+    border-radius: var(--radius); border: 1px solid var(--border);
+    background: var(--card); transition: border-color 0.3s;
+  }
+  .ts-step:hover { border-color: rgba(245,166,35,0.3); }
+  .ts-step .step-num {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: var(--accent-glow); border: 1px solid rgba(245,166,35,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: var(--accent); flex-shrink: 0;
+  }
+  .ts-step .step-content h4 { font-size: 13.5px; font-weight: 600; margin-bottom: 3px; }
+  .ts-step .step-content p { font-size: 12.5px; color: var(--fg-muted); line-height: 1.5; }
+
+  /* Insight cards */
+  .insight-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 16px;
+    display: flex; gap: 12px; align-items: flex-start;
+    transition: border-color 0.3s;
+  }
+  .insight-card:hover { border-color: rgba(245,166,35,0.3); }
+  .insight-card .insight-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .insight-card h4 { font-size: 13.5px; font-weight: 600; margin-bottom: 3px; }
+  .insight-card p { font-size: 12px; color: var(--fg-muted); line-height: 1.5; }
+
+  /* Checklist */
+  .checklist { display: flex; flex-direction: column; gap: 7px; }
+  .check-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 13px; background: var(--card);
+    border: 1px solid var(--border); border-radius: 8px; font-size: 13px;
+    transition: border-color 0.2s;
+  }
+  .check-item:hover { border-color: rgba(34,201,151,0.3); }
+  .check-item i { color: var(--accent2); font-size: 14px; flex-shrink: 0; }
+
+  /* Cortex chat */
+  .cortex-chat { display: flex; flex-direction: column; gap: 10px; }
+  .chat-msg { display: flex; gap: 9px; align-items: flex-start; }
+  .chat-msg.user { flex-direction: row-reverse; }
+  .chat-avatar {
+    width: 28px; height: 28px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; flex-shrink: 0;
+  }
+  .chat-msg.ai .chat-avatar { background: var(--accent-glow); color: var(--accent); border: 1px solid rgba(245,166,35,0.2); }
+  .chat-msg.user .chat-avatar { background: var(--accent2-glow); color: var(--accent2); border: 1px solid rgba(34,201,151,0.2); }
+  .chat-bubble {
+    padding: 9px 13px; border-radius: 10px;
+    font-size: 12px; line-height: 1.5; max-width: 85%;
+  }
+  .chat-msg.ai .chat-bubble { background: var(--card); border: 1px solid var(--border); color: var(--fg-muted); }
+  .chat-msg.user .chat-bubble { background: rgba(34,201,151,0.1); border: 1px solid rgba(34,201,151,0.2); color: var(--fg); }
+
+  /* Thank you */
+  .thank-you-slide { display: flex; align-items: center; justify-content: center; text-align: center; }
+  .thank-content { max-width: 700px; }
+  .thank-content .big-icon { font-size: 52px; color: var(--accent); margin-bottom: 22px; display: block; }
+  .thank-content h2 { font-size: 40px; font-weight: 700; letter-spacing: -1px; margin-bottom: 12px; }
+  .thank-content p { font-size: 16px; color: var(--fg-muted); line-height: 1.6; margin-bottom: 30px; }
+  .contact-cards { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .contact-card {
+    display: flex; align-items: center; gap: 12px;
+    padding: 13px 20px; background: var(--card);
+    border: 1px solid var(--border); border-radius: var(--radius);
+    font-size: 14px; transition: border-color 0.2s;
+  }
+  .contact-card:hover { border-color: var(--accent); }
+  .contact-card i { color: var(--accent); font-size: 17px; }
+  .contact-card a { color: var(--fg); text-decoration: none; }
+
+  /* Section label inside slide */
+  .section-label {
+    font-size: 12px; font-weight: 600; color: var(--fg-muted);
+    text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 10px;
+  }
+
+  /* Highlight card */
+  .highlight-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 16px 18px;
+    border-left: 3px solid var(--accent);
+  }
+  .highlight-card h3 { font-size: 13.5px; font-weight: 600; margin-bottom: 4px; }
+  .highlight-card p { font-size: 12.5px; color: var(--fg-muted); line-height: 1.5; }
+
+  /* Navigation controls */
+  .nav-controls {
+    position: fixed; bottom: 44px; right: 48px;
+    display: flex; gap: 8px; z-index: 100;
+  }
+  .nav-btn {
+    width: 38px; height: 38px; border-radius: 10px;
+    border: 1px solid var(--border); background: var(--card);
+    color: var(--fg-muted); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; transition: all 0.2s;
+  }
+  .nav-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-glow); }
+
+  /* Minimap */
+  .slide-minimap {
+    position: fixed; right: 48px; top: 50%; transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 5px; z-index: 100;
+  }
+  .minimap-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--border); cursor: pointer; transition: all 0.3s;
+  }
+  .minimap-dot.active {
+    background: var(--accent); box-shadow: 0 0 8px rgba(245,166,35,0.4); transform: scale(1.3);
+  }
+  .minimap-dot:hover:not(.active) { background: var(--fg-muted); }
+
+  /* Fade-up animation */
+  .fade-up {
+    opacity: 0; transform: translateY(18px);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+  }
+  .slide.active .fade-up { opacity: 1; transform: translateY(0); }
+  .slide.active .fade-up:nth-child(1) { transition-delay: 0.08s; }
+  .slide.active .fade-up:nth-child(2) { transition-delay: 0.16s; }
+  .slide.active .fade-up:nth-child(3) { transition-delay: 0.24s; }
+  .slide.active .fade-up:nth-child(4) { transition-delay: 0.30s; }
+  .slide.active .fade-up:nth-child(5) { transition-delay: 0.36s; }
+  .slide.active .fade-up:nth-child(6) { transition-delay: 0.42s; }
+
+  /* Scrollbar */
+  .slide::-webkit-scrollbar { width: 4px; }
+  .slide::-webkit-scrollbar-track { background: transparent; }
+  .slide::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    .bullet-list-h { grid-template-columns: 1fr; }
+    .brand-bar { padding: 10px 20px; flex-wrap: wrap; gap: 8px; }
+    .slide-inner { padding: 18px 20px; }
+    .footer-bar { padding: 8px 20px; }
+    .arch-diagram { flex-direction: column; align-items: center; }
+    .arch-arrow { transform: rotate(90deg); padding: 6px 0; }
+    .arch-layer { max-width: 100%; }
+    .slide-minimap { display: none; }
+    .nav-controls { right: 20px; bottom: 42px; }
+    .ui-sidebar .sidebar-nav { display: none; }
+    .contact-cards { flex-direction: column; align-items: center; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-atmosphere"></div>
+<div class="grid-pattern"></div>
+
+<div class="brand-bar">
+  <div class="logo">
+    <div class="icon-box">VA</div>
+    Vizonis Academy
+  </div>
+  <div class="contact-info">
+    <a href="tel:+916364671786"><i class="fas fa-phone"></i> +91 6364 671 786</a>
+    <a href="https://vizonis.com" target="_blank"><i class="fas fa-globe"></i> vizonis.com</a>
+  </div>
+</div>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<div class="slides-container" id="slidesContainer">
+
+  <!-- SLIDE 1: Title -->
+  <div class="slide hero-slide active" data-slide="0">
+    <div class="hero-content fade-up">
+      <div class="hero-badge"><i class="fas fa-snowflake"></i> SQL Training Program</div>
+      <h1 class="hero-title">SQL with <span class="highlight">Snowflake</span><br>HR Analytics Live Project</h1>
+      <p class="hero-sub">From raw data to business-ready insights using the Medallion Architecture — Bronze, Silver & Gold layers in Snowflake.</p>
+      <div class="hero-meta">
+        <span><i class="fas fa-calendar"></i> Today's Session</span>
+        <span><i class="fas fa-database"></i> Snowflake Cloud</span>
+        <span><i class="fas fa-layer-group"></i> Medallion Model</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: What is Snowflake -->
+  <div class="slide" data-slide="1">
+    <div class="slide-inner">
+      <div class="slide-tag fade-up"><i class="fas fa-snowflake"></i> Introduction</div>
+      <h2 class="slide-title fade-up">What is Snowflake?</h2>
+      <p class="slide-subtitle fade-up">A cloud-native data platform providing data warehousing, data lakes, data sharing, and data applications on one unified platform.</p>
+      <div class="grid-3 fade-up">
+        <div class="card"><div class="card-icon amber"><i class="fas fa-cloud"></i></div><h3>Fully Cloud-Native</h3><p>No hardware to manage. Runs on AWS, Azure, or GCP — your choice.</p></div>
+        <div class="card"><div class="card-icon green"><i class="fas fa-arrows-split-up-and-left"></i></div><h3>Separation of Compute & Storage</h3><p>Scale compute up/down instantly without touching storage costs.</p></div>
+        <div class="card"><div class="card-icon blue"><i class="fas fa-database"></i></div><h3>Multi-Cluster Shared Data</h3><p>Multiple compute clusters access the same data without performance loss.</p></div>
+        <div class="card"><div class="card-icon amber"><i class="fas fa-coins"></i></div><h3>Pay-Per-Second Pricing</h3><p>Only pay for compute resources you actually use — per second, not per hour.</p></div>
+        <div class="card"><div class="card-icon green"><i class="fas fa-shield-halved"></i></div><h3>Enterprise Security</h3><p>End-to-end encryption, row-level security, column masking, and RBAC built in.</p></div>
+        <div class="card"><div class="card-icon blue"><i class="fas fa-plug"></i></div><h3>Native Data Sharing</h3><p>Share live data with external organizations instantly — no copies or ETL needed.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: Snowflake vs SQL Server -->
+  <div class="slide" data-slide="2">
+    <div class="slide-inner">
+      <div class="slide-tag fade-up"><i class="fas fa-scale-balanced"></i> Comparison</div>
+      <h2 class="slide-title fade-up">Snowflake vs SQL Server</h2>
+      <p class="slide-subtitle fade-up">Why organizations are migrating from traditional on-premise databases to cloud-native Snowflake.</p>
+      <div class="fade-up" style="overflow-x:auto;">
+        <table class="compare-table">
+          <thead><tr><th>Feature</th><th>Snowflake</th><th>SQL Server</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Deployment</strong></td><td><span class="check"><i class="fas fa-check"></i></span> Fully cloud-native, zero infra</td><td><span class="cross"><i class="fas fa-xmark"></i></span> On-premise or managed cloud VM</td></tr>
+            <tr><td><strong>Scaling</strong></td><td><span class="check"><i class="fas fa-check"></i></span> Scale compute in seconds</td><td><span class="cross"><i class="fas fa-xmark"></i></span> Vertical scaling, downtime needed</td></tr>
+            <tr><td><strong>Compute & Storage</strong></td><td><span class="check"><i class="fas fa-check"></i></span> Separated — scale independently</td><td><span class="cross"><i class="fas fa-xmark"></i></span> Tightly coupled</td></tr>
+            <tr><td><strong>Pricing</strong></td><td><span class="check"><i class="fas fa-check"></i></span> Pay per second of compute</td><td><span class="cross"><i class="fas fa-xmark"></i></span> Per-core licensing (expensive)</td></tr>
+            <tr><td><strong>Semi-Structured Data</strong></td><td><span class="check"><i class="fas fa-check"></i></span> Native JSON, Avro, Parquet</td><td><span class="cross"><i class="fas fa-xmark"></i></span> Limited, needs conversion</td></tr>
+            <tr><td><strong>Concurrency</strong></td><td><span class="check"><i class="fas fa-check"></i></span> Multi-cluster, no contention</td><td><span class="cross"><i class="fas fa-xmark"></i></span> Resource contention under load</td></tr>
+            <tr><td><strong>Time Travel</strong></td><td><span class="check"><i class="fas fa-check"></i></span> 90 days built-in, zero config</td><td><span class="cross"><i class="fas fa-xmark"></i></span> Requires backups & restore</td></tr>
+            <tr><td><strong>Data Sharing</strong></td><td><span class="check"><i class="fas fa-check"></i></span> One-click secure sharing</td><td><span class="cross"><i class="fas fa-xmark"></i></span> Requires ETL / SSRS setup</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: Snowflake UI -->
+  <div class="slide" data-slide="3">
+    <div class="slide-inner">
+      <div class="slide-tag fade-up"><i class="fas fa-desktop"></i> Interface</div>
+      <h2 class="slide-title fade-up">Snowflake User Interface</h2>
+      <p class="slide-subtitle fade-up">The Snowsight web interface — your command center for everything in Snowflake.</p>
+      <div class="grid-2 fade-up">
+        <div>
+          <div class="ui-mockup">
+            <div class="ui-topbar">
+              <div class="dots"><span></span><span></span><span></span></div>
+              <div style="display:flex;gap:4px;">
+                <div class="tab active">Worksheets</div>
+                <div class="tab">Databases</div>
+                <div class="tab">Warehouses</div>
+              </div>
+            </div>
+            <div class="ui-sidebar">
+              <div class="sidebar-nav">
+                <div class="nav-section">Objects</div>
+                <div class="nav-item active"><i class="fas fa-database" style="font-size:11px;"></i> HR_DB</div>
+                <div class="nav-item" style="padding-left:24px;">BRONZE</div>
+                <div class="nav-item" style="padding-left:24px;">SILVER</div>
+                <div class="nav-item" style="padding-left:24px;">GOLD</div>
+                <div class="nav-section">Warehouses</div>
+                <div class="nav-item"><i class="fas fa-warehouse" style="font-size:11px;"></i> COMPUTE_WH</div>
+              </div>
+              <div class="ui-main">
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--fg-muted);line-height:1.7;">
+                  <span style="color:var(--accent);">-- Select warehouse & database</span><br>
+                  <span class="kw">USE WAREHOUSE</span> COMPUTE_WH;<br>
+                  <span class="kw">USE DATABASE</span> <span class="tbl">HR_DB</span>;<br>
+                  <span class="kw">USE SCHEMA</span> <span class="tbl">silver</span>;<br><br>
+                  <span class="kw">SELECT</span> * <span class="kw">FROM</span> <span class="tbl">employees_final</span><br>
+                  <span class="kw">LIMIT</span> <span class="num">10</span>;
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div class="card"><div class="card-icon amber"><i class="fas fa-file-code"></i></div><h3>Worksheets</h3><p>Write and execute SQL queries with syntax highlighting, auto-complete, and result visualization.</p></div>
+          <div class="card"><div class="card-icon green"><i class="fas fa-sitemap"></i></div><h3>Object Browser</h3><p>Navigate databases, schemas, tables, views — drag-and-drop objects into your worksheet.</p></div>
+          <div class="card"><div class="card-icon blue"><i class="fas fa-chart-bar"></i></div><h3>Query History & Profile</h3><p>Monitor query performance, see execution plans, and identify bottlenecks visually.</p></div>
+          <div class="card"><div class="card-icon amber"><i class="fas fa-warehouse"></i></div><h3>Warehouse Management</h3><p>Start, stop, resize warehouses. Monitor credit consumption in real-time.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: Snowflake Cortex -->
+  <div class="slide" data-slide="4">
+    <div class="slide-inner">
+      <div class="slide-tag fade-up"><i class="fas fa-robot"></i> AI-Powered</div>
+      <h2 class="slide-title fade-up">Snowflake Cortex for SQL Query Writing</h2>
+      <p class="slide-subtitle fade-up">Use the AI assistant directly inside Snowsight to generate, explain, and optimize SQL queries.</p>
+      <div class="grid-2 fade-up">
+        <div>
+          <div class="section-label">Cortex Assistant Chat</div>
+          <div class="cortex-chat">
+            <div class="chat-msg user">
+              <div class="chat-avatar"><i class="fas fa-user"></i></div>
+              <div class="chat-bubble">Write a query to find attrition rate by department from gold.hr_master</div>
+            </div>
+            <div class="chat-msg ai">
+              <div class="chat-avatar"><i class="fas fa-snowflake"></i></div>
+              <div class="chat-bubble">Here's the query:<br><br><code style="color:var(--accent);font-family:'IBM Plex Mono',monospace;font-size:11px;">SELECT<br>&nbsp;&nbsp;department_name,<br>&nbsp;&nbsp;COUNT(CASE WHEN attrition_flag='Yes'<br>&nbsp;&nbsp;&nbsp;&nbsp;THEN 1 END)*100.0/COUNT(*)<br>&nbsp;&nbsp;&nbsp;&nbsp;AS attrition_rate<br>FROM gold.hr_master<br>GROUP BY department_name;</code></div>
+            </div>
+            <div class="chat-msg user">
+              <div class="chat-avatar"><i class="fas fa-user"></i></div>
+              <div class="chat-bubble">Now optimize it for performance</div>
+            </div>
+            <div class="chat-msg ai">
+              <div class="chat-avatar"><i class="fas fa-snowflake"></i></div>
+              <div class="chat-bubble">The query is already efficient since it reads from the gold layer. For large datasets, consider <code style="color:var(--accent);">RESULT_SCAN()</code> to cache results.</div>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div class="card"><div class="card-icon green"><i class="fas fa-wand-magic-sparkles"></i></div><h3>Generate SQL from Plain English</h3><p>Describe what you need in natural language — Cortex writes the SQL. Supports complex joins, aggregations, window functions.</p></div>
+          <div class="card"><div class="card-icon amber"><i class="fas fa-magnifying-glass-chart"></i></div><h3>Explain Existing Queries</h3><p>Paste any SQL and ask Cortex to break it down — understand what each clause does step by step.</p></div>
+          <div class="card"><div class="card-icon blue"><i class="fas fa-bug"></i></div><h3>Debug & Fix Errors</h3><p>Got a syntax error? Paste the error and query — Cortex identifies the issue and provides the corrected version.</p></div>
+          <div class="card"><div class="card-icon green"><i class="fas fa-bolt"></i></div><h3>Optimize Performance</h3><p>Analyze query plans and get suggestions — indexing hints, join reordering, or warehouse sizing recommendations.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: Troubleshooting -->
+  <div class="slide" data-slide="5">
+    <div class="slide-inner">
+      <div class="slide-tag fade-up"><i class="fas fa-bug"></i> Debugging</div>
+      <h2 class="slide-title fade-up">Troubleshooting & Debugging in Snowflake</h2>
+      <p class="slide-subtitle fade-up">Common errors you'll encounter and proven strategies to resolve them fast.</p>
+      <div class="grid-2 fade-up">
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div class="ts-step"><div class="step-num">1</div><div class="step-content"><h4>Invalid Identifier / Object Not Found</h4><p>Check schema with <code>SELECT CURRENT_SCHEMA()</code>. Ensure correct database and schema with USE statements.</p></div></div>
+          <div class="ts-step"><div class="step-num">2</div><div class="step-content"><h4>CAST Conversion Failed (VARCHAR to INT)</h4><p>Raw data has non-numeric characters. Use <code>TRY_CAST()</code> — returns NULL instead of failing.</p></div></div>
+          <div class="ts-step"><div class="step-num">3</div><div class="step-content"><h4>Ambiguous Column in JOIN</h4><p>Always prefix columns with table aliases: <code>e.employee_id</code> instead of <code>employee_id</code>.</p></div></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div class="ts-step"><div class="step-num">4</div><div class="step-content"><h4>Warehouse Suspended / Timeout</h4><p>Check warehouse status. Run <code>ALTER WAREHOUSE COMPUTE_WH RESUME;</code> or ensure auto-resume is enabled.</p></div></div>
+          <div class="ts-step"><div class="step-num">5</div><div class="step-content"><h4>Query Running Too Slow</h4><p>Check <strong>Query Profile</strong> in Snowsight. Look for large data scans, spill to disk, or join explosions.</p></div></div>
+          <div class="ts-step"><div class="step-num">6</div><div class="step-content"><h4>Time Travel for Accidental Deletes</h4><p>Recover dropped tables: <code>UNDROP TABLE table_name;</code> Query past data: <code>SELECT * FROM t AT(OFFSET => -3600);</code></p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: Project Introduction -->
+  <div class="slide" data-slide="6">
+    <div class="slide-inner">
+      <div class="slide-tag fade-up"><i class="fas fa-briefcase"></i> Live Project</div>
+      <h2 class="slide-title fade-up">HR Analytics & Employee Performance</h2>
+      <p class="slide-subtitle fade-up">A real-world HR data pipeline — tracking performance, attrition, salary trends, and department productivity.</p>
+      <div class="grid-4 fade-up" style="margin-bottom:22px;">
+        <div class="stat-card card"><div class="stat-num">5</div><div class="stat-label">Bronze Tables</div></div>
+        <div class="stat-card card"><div class="stat-num">3</div><div class="stat-label">Medallion Layers</div></div>
+        <div class="stat-card card"><div class="stat-num">6</div><div class="stat-label">Project Phases</div></div>
+        <div class="stat-card card"><div class="stat-num">5+</div><div class="stat-label">Business Reports</div></div>
+      </div>
+      <div class="fade-up">
+        <div class="section-label">Business Objectives</div>
+        <ul class="bullet-list-h">
+          <li><span class="bullet"></span><strong>Track employee performance</strong> & identify top/bottom performers</li>
+          <li><span class="bullet"></span><strong>Analyze attrition patterns</strong> by department, salary, and rating</li>
+          <li><span class="bullet"></span><strong>Monitor salary trends</strong> and identify pay gaps</li>
+          <li><span class="bullet"></span><strong>Predict high-risk employees</strong> likely to leave the organization</li>
+          <li><span class="bullet"></span><strong>Measure department productivity</strong> through attendance data</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: Medallion Architecture -->
+  <div class="slide" data-slide="7">
+    <div class="slide-inner">
+      <div class="slide-tag fade-up"><i class="fas fa-layer-group"></i> Architecture</div>
+      <h2 class="slide-title fade-up">Medallion Architecture in HR_DB</h2>
+      <p class="slide-subtitle fade-up">Same database, different schemas — data gets cleaner and more valuable as it moves through layers.</p>
+      <div class="fade-up" style="margin-bottom:22px;">
+        <div class="arch-diagram">
+          <div class="arch-layer bronze">
+            <div class="layer-icon">&#129351;</div>
+            <div class="layer-name" style="color:#c8a84e;">Bronze</div>
+            <div class="layer-desc">Raw data (dirty)<br>5 source tables<br>VARCHAR dates, messy salaries</div>
+          </div>
+          <div class="arch-arrow"><i class="fas fa-arrow-right"></i></div>
+          <div class="arch-layer silver">
+            <div class="layer-icon">&#129352;</div>
+            <div class="layer-name" style="color:#c0c0c0;">Silver</div>
+            <div class="layer-desc">Cleaned & transformed<br>Cleaned names, fixed dates<br>Standardized values</div>
+          </div>
+          <div class="arch-arrow"><i class="fas fa-arrow-right"></i></div>
+          <div class="arch-layer gold">
+            <div class="layer-icon">&#129351;</div>
+            <div class="layer-name" style="color:#f5a623;">Gold</div>
+            <div class="layer-desc">Business-ready insights<br>Joined master table<br>Reports & views</div>
+          </div>
+        </div>
+      </div>
+      <div class="grid-3 fade-up">
+        <div class="card" style="border-left:3px solid #c8a84e;"><h3>Bronze Schema</h3><p>employees, departments, attendance, performance, attrition — loaded as-is with intentional data quality issues.</p></div>
+        <div class="card" style="border-left:3px solid #c0c0c0;"><h3>Silver Schema</h3><p>employees_clean, employees_final — text cleaned, dates cast, salaries parsed, cities standardized.</p></div>
+        <div class="card" style="border-left:3px solid #f5a623;"><h3>Gold Schema</h3><p>hr_master — all tables joined, views created for high-risk employees, ready for dashboards and reporting.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: Bronze Tables -->
+  <div class="slide" data-slide="8">
+    <div class="slide-inner">
+      <div class="slide-tag fade-up"><i class="fas fa-database"></i> Bronze Layer</div>
+      <h2 class="slide-title fade-up">Bronze Tables — Raw Data</h2>
+      <p class="slide-subtitle fade-up">Source data with intentional data quality issues — this is what real-world raw data looks like.</p>
+      <div class="grid-2 fade-up">
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div class="code-block">
+            <div class="code-header"><div class="dots"><span></span><span></span><span></span></div>bronze.employees</div>
+            <div class="code-body"><span class="kw">CREATE TABLE</span> <span class="tbl">bronze.employees</span> (
+  <span class="col">employee_id</span>    <span class="type">INT</span>,
+  <span class="col">first_name</span>     <span class="type">VARCHAR(50)</span>,
+  <span class="col">last_name</span>      <span class="type">VARCHAR(50)</span>,
+  <span class="col">email</span>          <span class="type">VARCHAR(100)</span>,
+  <span class="col">department_id</span>  <span class="type">INT</span>,
+  <span class="col">job_title</span>      <span class="type">VARCHAR(100)</span>,
+  <span class="col">hire_date</span>      <span class="type">VARCHAR(20)</span>,  <span class="cm">-- wrong type!</span>
+  <span class="col">salary</span>         <span class="type">VARCHAR(20)</span>,  <span class="cm">-- messy data!</span>
+  <span class="col">city</span>           <span class="type">VARCHAR(50)</span>
+);</div>
+          </div>
+          <div class="code-block">
+            <div class="code-header"><div class="dots"><span></span><span></span><span></span></div>bronze.performance</div>
+            <div class="code-body"><span class="kw">CREATE TABLE</span> <span class="tbl">bronze.performance</span> (
+  <span class="col">performance_id</span>  <span class="type">INT</span>,
+  <span class="col">employee_id</span>     <span class="type">INT</span>,
+  <span class="col">review_date</span>     <span class="type">VARCHAR(20)</span>,
+  <span class="col">rating</span>          <span class="type">INT</span>,          <span class="cm">-- 1 to 5</span>
+  <span class="col">comments</span>        <span class="type">VARCHAR(200)</span>
+);</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div class="code-block">
+            <div class="code-header"><div class="dots"><span></span><span></span><span></span></div>bronze.attendance</div>
+            <div class="code-body"><span class="kw">CREATE TABLE</span> <span class="tbl">bronze.attendance</span> (
+  <span class="col">attendance_id</span>   <span class="type">INT</span>,
+  <span class="col">employee_id</span>     <span class="type">INT</span>,
+  <span class="col">attendance_date</span> <span class="type">VARCHAR(20)</span>,
+  <span class="col">status</span>          <span class="type">VARCHAR(20)</span>  <span class="cm">-- Present/Absent/WFH/P/A</span>
+);</div>
+          </div>
+          <div class="code-block">
+            <div class="code-header"><div class="dots"><span></span><span></span><span></span></div>bronze.attrition</div>
+            <div class="code-body"><span class="kw">CREATE TABLE</span> <span class="tbl">bronze.attrition</span> (
+  <span class="col">employee_id</span>     <span class="type">INT</span>,
+  <span class="col">attrition_flag</span>  <span class="type">VARCHAR(10)</span>, <span class="cm">-- Yes/No/Y/N</span>
+  <span class="col">exit_date</span>       <span class="type">VARCHAR(20)</span>
+);</div>
+          </div>
+          <div class="code-block">
+            <div class="code-header"><div class="dots"><span></span><span></span><span></span></div>bronze.departments</div>
+            <div class="code-body"><span class="kw">CREATE TABLE</span> <span class="tbl">bronze.departments</span> (
+  <span class="col">department_id</span>      <span class="type">INT</span>,
+  <span class="col">department_name</span>    <span class="type">VARCHAR(100)</span>,
+  <span class="col">location</span>           <span class="type">VARCHAR(50)</span>
+);</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10: Phase 1 - Text Functions -->
+  <div class="slide" data-slide="9">
+    <div class="slide-inner">
+      <div class="slide-tag fade-up"><i class="fas fa-broom"></i> Phase 1: Data Cleaning</div>
+      <h2 class="slide-title fade-up">Text Functions — Clean Names & Extract Data</h2>
+      <p class="slide-subtitle fade-up">Using CONCAT, UPPER, LOWER, LEFT, RIGHT, SUBSTRING to clean raw bronze data into silver.</p>
+      <div class="grid-2 fade-up">
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div class="code-block">
+            <div class="code-header"><div class="dots"><span></span><span></span><span></span></div>Clean Names (CONCAT, UPPER, LOWER)</div>
+            <div class="code-body"><span class="kw">CREATE TABLE</span> <span class="tbl">silver.employees_clean</span> <span class="kw">AS</span>
+<span class="kw">SELECT</span>
+  <span class="col">employee_id</span>,
+  <span class="fn">UPPER</span>(<span class="col">first_name</span>)   <span class="kw">AS</span> <span class="col">first_name</span>,
+  <span class="fn">UPPER</span>(<span class="col">last_name</span>)    <span class="kw">AS</span> <span class="col">last_name</span>,
+  <span class="fn">CONCAT</span>(<span class="col">first_name</span>,<span class="str">' '</span>,<span class="col">last_name</span>)
+                         <span class="kw">AS</span> <span class="col">full_name</span>,
+  <span class="fn">LOWER</span>(<span class="col">email</span>)        <span class="kw">AS</span> <span class="col">email</span>,
+  <span class="col">department_id</span>, <span class="col">job_title</span>, <span class="col">city</span>
+<span class="kw">FROM</span> <span class="tbl">bronze.employees</span>;</div>
+          </div>
+          <div class="code-block">
+            <div class="code-header"><div class="dots"><span></span><span></span><span></span></div>Extract Email Domain (RIGHT)</div>
+            <div class="code-body"><span class="kw">SELECT</span>
+  <span class="col">email</span>,
+  <span class="fn">RIGHT</span>(<span class="col">email</span>,
+    <span class="fn">CHARINDEX</span>(<span class="str">'@'</span>,
+      <span class="fn">REVERSE</span>(<span class="col">email</span>)) - <span class="num">1</span>
+  ) <span class="kw">AS</span> <span class="col">email_domain</span>
+<span class="kw">FROM</span> <span class="tbl">bronze.employees</span>;</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div class="code-block">
+            <div class="code-header"><div class="dots"><span></span><span></span><span></span></div>Extract Year & Month (LEFT, SUBSTRING)</div>
+            <div class="code-body"><span class="cm">-- Extract year from hire_date</span>
+<span class="kw">SELECT</span>
+  <span class="col">hire_date</span>,
+  <span class="fn">LEFT</span>(<span class="col">hire_date</span>, <span class="num">4</span>) <span class="kw">AS</span> <span class="col">hire_year</span>
+<span class="kw">FROM</span> <span class="tbl">bronze.employees</span>;
+
+<span class="cm">-- Extract month (SUBSTRING)</span>
+<span class="kw">SELECT</span>
+  <span class="col">hire_date</span>,
+  <span class="fn">SUBSTRING</span>(<span class="col">hire_date</span>, <span class="num">6</span>, <span class="num">2</span>) <span class="kw">AS</span> <span class="col">hire_month</span>
+<span class="kw">FROM</span> <span class="tbl">bronze.employees</span>;</div>
+          </div>
+          <div class="code-block">
+            <div class="code-header"><div class="dots"><span></span><span></span><span></span></div>Find & Replace + Standardize (REPLACE, CASE)</div>
+            <div class="code-body"><span class="cm">-- Standardize city names</span>
+<span class="kw">SELECT</span>
+  <span class="fn">REPLACE</span>(<span class="col">city</span>,<span class="str">'BLR'</span>,<span class="str">'Bangalore'</span>)
+    <span class="kw">AS</span> <span class="col">city_clean</span>
+<span class="kw">FROM</span> <span class="tbl">bronze.employees</span>;
+
+<span class="cm">-- Standardize attrition flag</span>
+<span class="kw">SELECT</span> <span class="col">employee_id</span>,
+  <span class="kw">CASE WHEN</span> <span class="col">attrition_flag</span> <span class="kw">IN</span> (<span class="str">'Y'</span>,<span class="str">'Yes'</span>)
+    <span class="kw">THEN</span> <span class="str">'Yes'</span> <span class="kw">ELSE</span> <span class="str">'No'</span>
+  <span class="kw">END AS</span> <span class="col">attrition_flag</span>
+<span class="kw">FROM</span> <span class="tbl">bronze.attrition</span>;</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 11: Fix Dates & Salary -->
+  <div class="slide" data-slide="10">
+    <div class="slide-inner">
+      <div class="slide-tag fade-up"><i class="fas fa-broom"></i> Phase 1: Data Cleaning</div>
+      <h2 class="slide-title fade-up">Fix Dates & Salary — Complete Silver Table</h2>
+      <p class="slide-subtitle fade-up">Converting messy VARCHAR fields to proper types and building the final silver table.</p>
+      <div class="grid-2 fade-up">
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div class="code-block">
+            <div class="code-header"><div class="dots"><span></span><span></span><span></span></div>Fix Date Format (CAST)</div>
+            <div class="code-body"><span class="cm">-- Convert VARCHAR date to DATE type</span>
+<span class="kw">SELECT</span>
+  <span class="fn">CAST</span>(<span class="col">hire_date</span> <span class="kw">AS</span> <span class="type">DATE</span>)
+    <span class="kw">AS</span> <span class="col">hire_date</span>
+<span class="kw">FROM</span> <span class="tbl">bronze.employees</span>;</div>
+          </div>
+          <div class="code-block">
+            <div class="code-header"><div class="dots"><span></span><span></span><span></span></div>Fix Salary (Remove symbols, CAST to INT)</div>
+            <div class="code-body"><span class="cm">-- Remove '₹' and ',' then convert</span>
+<span class="kw">SELECT</span>
+  <span class="fn">CAST</span>(
+    <span class="fn">REPLACE</span>(
+      <span class="fn">REPLACE</span>(<span class="col">salary</span>,<span class="str">'₹'</span>,<span class="str">''</span>),
+      <span class="str">','</span>,<span class="str">''</span>
+    ) <span class="kw">AS</span> <span class="type">INT</span>
+  ) <span class="kw">AS</span> <span class="col">salary</span>
+<span class="kw">FROM</span> <span class="tbl">bronze.employees</span>;</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div class="code-block">
+            <div class="code-header"><div class="dots"><span></span><span></span><span></span></div>silver.employees_final (Complete)</div>
+            <div class="code-body"><span class="kw">CREATE TABLE</span> <span class="tbl">silver.employees_final</span> <span class="kw">AS</span>
+<span class="kw">SELECT</span>
+  e.<span class="col">employee_id</span>,
+  <span class="fn">CONCAT</span>(<span class="fn">UPPER</span>(e.<span class="col">first_name</span>),<span class="str">' '</span>,
+         <span class="fn">UPPER</span>(e.<span class="col">last_name</span>)) <span class="kw">AS</span> <span class="col">full_name</span>,
+  <span class="fn">LOWER</span>(e.<span class="col">email</span>)           <span class="kw">AS</span> <span class="col">email</span>,
+  <span class="fn">CAST</span>(<span class="fn">REPLACE</span>(<span class="fn">REPLACE</span>(
+    e.<span class="col">salary</span>,<span class="str">'₹'</span>,<span class="str">''</span>),<span class="str">','</span>,<span class="str">''</span>)
+    <span class="kw">AS</span> <span class="type">INT</span>)              <span class="kw">AS</span> <span class="col">salary</span>,
+  <span class="fn">CAST</span>(e.<span class="col">hire_date</span> <span class="kw">AS</span> <span class="type">DATE</span>)  <span class="kw">AS</span> <span class="col">hire_date</span>,
+  e.<span class="col">department_id</span>,
+  <span class="fn">REPLACE</span>(e.<span class="col">city</span>,<span class="str">'BLR'</span>,<span class="str">'Bangalore'</span>)
+                                <span class="kw">AS</span> <span class="col">city</span>
+<span class="kw">FROM</span> <span class="tbl">bronze.employees</span> e;</div>
+          </div>
+          <div class="highlight-card" style="border-left-color:var(--accent2);">
+            <h3 style="color:var(--accent2);">Key Takeaway</h3>
+            <p>We applied <strong>6 different SQL functions</strong> in a single query: CONCAT, UPPER, LOWER, CAST, REPLACE (nested). This is the real power of SQL transformations.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 12: Calculated Columns -->
+  <div class="slide" data-slide="11">
+    <div class="slide-inner">
+      <div class="slide-tag fade-up"><i class="fas fa-calculator"></i> Phase 2: Calculated Columns</div>
+      <h2 class="slide-title fade-up">Derived Fields — Salary Bands & Experience</h2>
+      <p class="slide-subtitle fade-up">Creating business-meaningful columns using CASE expressions and DATEDIFF on silver data.</p>
+      <div class="grid-2 fade-up" style="margin-bottom:18px;">
+        <div class="code-block">
+          <div class="code-header"><div class="dots"><span></span><span></span><span></span></div>Salary Band (CASE Expression)</div>
+          <div class="code-body"><span class="kw">SELECT</span>
+  <span class="col">employee_id</span>,
+  <span class="col">salary</span>,
+  <span class="kw">CASE</span>
+    <span class="kw">WHEN</span> <span class="col">salary</span> > <span class="num">100000</span> <span class="kw">THEN</span> <span class="str">'High'</span>
+    <span class="kw">WHEN</span> <span class="col">salary</span> > <span class="num">50000</span>  <span class="kw">THEN</span> <span class="str">'Medium'</span>
+    <span class="kw">ELSE</span>                      <span class="str">'Low'</span>
+  <span class="kw">END AS</span> <span class="col">salary_band</span>
+<span class="kw">FROM</span> <span class="tbl">silver.employees_final</span>;</div>
+        </div>
+        <div class="code-block">
+          <div class="code-header"><div class="dots"><span></span><span></span><span></span></div>Experience in Years (DATEDIFF)</div>
+          <div class="code-body"><span class="kw">SELECT</span>
+  <span class="col">employee_id</span>,
+  <span class="fn">DATEDIFF</span>(<span class="type">YEAR</span>, <span class="col">hire_date</span>,
+            <span class="fn">CURRENT_DATE</span>())
+    <span class="kw">AS</span> <span class="col">experience_years</span>
+<span class="kw">FROM</span> <span class="tbl">silver.employees_final</span>;</div>
+        </div>
+      </div>
+      <div class="grid-3 fade-up">
+        <div class="insight-card"><div class="insight-icon" style="color:var(--accent);">&#9670;</div><div><h4>High Band</h4><p>Salary above 1,00,000 — typically senior roles, critical to retain.</p></div></div>
+        <div class="insight-card"><div class="insight-icon" style="color:var(--blue);">&#9670;</div><div><h4>Medium Band</h4><p>Salary between 50,000 and 1,00,000 — mid-level, growth potential.</p></div></div>
+        <div class="insight-card"><div class="insight-icon" style="color:var(--red);">&#9670;</div><div><h4>Low Band</h4><p>Salary below 50,000 — high attrition risk if combined with low rating.</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 13: Joins -->
+  <div class="slide" data-slide="12">
+    <div class="slide-inner">
+      <div class="slide-tag fade-up"><i class="fas fa-link"></i> Phase 3: Joins</div>
+      <h2 class="slide-title fade-up">Building the Gold Master Table</h2>
+      <p class="slide-subtitle fade-up">Combining silver employees with bronze reference tables using INNER and LEFT joins.</p>
+      <div class="fade-up" style="margin-bottom:18px;">
+        <div class="code-block">
+          <div class="code-header"><div class="dots"><span></span><span></span><span></span></div>gold.hr_master — The Single Source of Truth</div>
+          <div class="code-body"><span class="kw">CREATE TABLE</span> <span class="tbl">gold.hr_master</span> <span class="kw">AS</span>
+<span class="kw">SELECT</span>
+  e.<span class="col">employee_id</span>,
+  e.<span class="col">full_name</span>,
+  d.<span class="col">department_name</span>,
+  e.<span class="col">salary</span>,
+  p.<span class="col">rating</span>,
+  a.<span class="col">attrition_flag</span>
+<span class="kw">FROM</span> <span class="tbl">silver.employees_final</span> e
+<span class="kw">INNER JOIN</span> <span class="tbl">bronze.departments</span> d
+  <span class="kw">ON</span> e.<span class="col">department_id</span> = d.<span class="col">department_id</span>
+<span class="kw">LEFT JOIN</span> <span class="tbl">bronze.performance</span> p
+  <span class="kw">ON</span> e.<span class="col">employee_id</span> = p.<span class="col">employee_id</span>
+<span class="kw">LEFT JOIN</span> <span class="tbl">bronze.attrition</span> a
+  <span class="kw">ON</span> e.<span class="col">employee_id</span> = a.<span class="col">employee_id</span>;</div>
+        </div>
+      </div>
+      <div class="grid-3 fade-up">
+        <div class="card" style="border-top:3px solid var(--accent2);"><h3>INNER JOIN</h3><p>Departments — every employee must have a valid department. Orphan records excluded.</p></div>
+        <div class="card" style="border-top:3px solid var(--accent);"><h3>LEFT JOIN</h3><p>Performance — not all employees have a review yet. We keep them with NULL rating.</p></div>
+        <div class="card" style="border-top:3px solid var(--blue);"><h3>LEFT JOIN</h3><p>Attrition — only exited employees have records. Active employees show NULL.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 14: Reports Part 1 -->
+  <div class="slide" data-slide="13">
+    <div class="slide-inner">
+      <div class="slide-tag fade-up"><i class="fas fa-chart-pie"></i> Phase 4: Reports</div>
+      <h2 class="slide-title fade-up">Business Insights — Attrition & Salary</h2>
+      <p class="slide-subtitle fade-up">Aggregate functions and GROUP BY to generate actionable HR analytics from the gold layer.</p>
+      <div class="grid-2 fade-up">
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div class="code-block">
+            <div class="code-header"><div class="dots"><span></span><span></span><span></span></div>Attrition Rate by Department</div>
+            <div class="code-body"><span class="kw">SELECT</span>
+  <span class="col">department_name</span>,
+  <span class="fn">COUNT</span>(<span class="kw">CASE WHEN</span> <span class="col">attrition_flag</span>=<span class="str">'Yes'</span>
+    <span class="kw">THEN</span> <span class="num">1</span> <span class="kw">END</span>) * <span class="num">100.0</span>
+    / <span class="fn">COUNT</span>(*)  <span class="kw">AS</span> <span class="col">attrition_rate</span>
+<span class="kw">FROM</span> <span class="tbl">gold.hr_master</span>
+<span class="kw">GROUP BY</span> <span class="col">department_name</span>;</div>
+          </div>
+          <div class="insight-card">
+            <div class="insight-icon" style="color:var(--red);"><i class="fas fa-triangle-exclamation"></i></div>
+            <div><h4>Why This Matters</h4><p>Departments with >20% attrition need immediate HR intervention. This query pinpoints exactly where.</p></div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div class="code-block">
+            <div class="code-header"><div class="dots"><span></span><span></span><span></span></div>Average Salary by Department</div>
+            <div class="code-body"><span class="kw">SELECT</span>
+  <span class="col">department_name</span>,
+  <span class="fn">AVG</span>(<span class="col">salary</span>) <span class="kw">AS</span> <span class="col">avg_salary</span>
+<span class="kw">FROM</span> <span class="tbl">gold.hr_master</span>
+<span class="kw">GROUP BY</span> <span class="col">department_name</span>
+<span class="kw">ORDER BY</span> <span class="col">avg_salary</span> <span class="kw">DESC</span>;</div>
+          </div>
+          <div class="insight-card">
+            <div class="insight-icon" style="color:var(--accent);"><i class="fas fa-lightbulb"></i></div>
+            <div><h4>Pay Equity Check</h4><p>Compare avg_salary across departments doing similar work. Large gaps indicate potential pay inequity.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 15: Reports Part 2 -->
+  <div class="slide" data-slide="14">
+    <div class="slide-inner">
+      <div class="slide-tag fade-up"><i class="fas fa-chart-line"></i> Phase 4: Reports</div>
+      <h2 class="slide-title fade-up">Business Insights — Performers & Risk Detection</h2>
+      <p class="slide-subtitle fade-up">Identifying top talent and predicting which employees are most likely to leave.</p>
+      <div class="grid-2 fade-up">
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div class="code-block">
+            <div class="code-header"><div class="dots"><span></span><span></span><span></span></div>Top Performers (Rating = 5)</div>
+            <div class="code-body"><span class="kw">SELECT</span> *
+<span class="kw">FROM</span> <span class="tbl">gold.hr_master</span>
+<span class="kw">WHERE</span> <span class="col">rating</span> = <span class="num">5</span>
+<span class="kw">ORDER BY</span> <span class="col">salary</span> <span class="kw">DESC</span>;</div>
+          </div>
+          <div class="code-block">
+            <div class="code-header"><div class="dots"><span></span><span></span><span></span></div>Attendance Analysis</div>
+            <div class="code-body"><span class="kw">SELECT</span>
+  <span class="col">employee_id</span>,
+  <span class="fn">COUNT</span>(<span class="kw">CASE WHEN</span> <span class="col">status</span>
+    <span class="kw">IN</span> (<span class="str">'Absent'</span>,<span class="str">'A'</span>)
+    <span class="kw">THEN</span> <span class="num">1</span> <span class="kw">END</span>) <span class="kw">AS</span> <span class="col">absent_days</span>
+<span class="kw">FROM</span> <span class="tbl">bronze.attendance</span>
+<span class="kw">GROUP BY</span> <span class="col">employee_id</span>
+<span class="kw">ORDER BY</span> <span class="col">absent_days</span> <span class="kw">DESC</span>;</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div class="code-block">
+            <div class="code-header"><div class="dots"><span></span><span></span><span></span></div>High-Risk Employees (Hidden Insight)</div>
+            <div class="code-body"><span class="cm">-- Logic: Low rating + Low salary</span>
+<span class="kw">SELECT</span> *
+<span class="kw">FROM</span> <span class="tbl">gold.hr_master</span>
+<span class="kw">WHERE</span> <span class="col">rating</span> <= <span class="num">2</span>
+  <span class="kw">AND</span> <span class="col">salary</span> < <span class="num">50000</span>;</div>
+          </div>
+          <div class="card" style="border:1px solid rgba(239,68,68,0.3);background:rgba(239,68,68,0.04);">
+            <div class="card-icon red"><i class="fas fa-user-shield"></i></div>
+            <h3 style="color:var(--red);">Why This Query is Powerful</h3>
+            <p>This is a <strong>predictive insight</strong> — employees with low performance ratings AND low pay are statistically most likely to attrite. HR can proactively intervene before they leave.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 16: UNION -->
+  <div class="slide" data-slide="15">
+    <div class="slide-inner">
+      <div class="slide-tag fade-up"><i class="fas fa-code-merge"></i> Phase 5: UNION</div>
+      <h2 class="slide-title fade-up">UNION — Combining Attendance Statuses</h2>
+      <p class="slide-subtitle fade-up">Standardizing fragmented status values (P/Present, A/Absent) into unified categories using UNION.</p>
+      <div class="grid-2 fade-up">
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div class="code-block">
+            <div class="code-header"><div class="dots"><span></span><span></span><span></span></div>Combine Present + WFH</div>
+            <div class="code-body"><span class="kw">SELECT</span> <span class="col">employee_id</span>, <span class="str">'Present'</span> <span class="kw">AS</span> <span class="col">status</span>
+<span class="kw">FROM</span> <span class="tbl">bronze.attendance</span>
+<span class="kw">WHERE</span> <span class="col">status</span> <span class="kw">IN</span> (<span class="str">'P'</span>,<span class="str">'Present'</span>)
+
+<span class="kw">UNION</span>
+
+<span class="kw">SELECT</span> <span class="col">employee_id</span>, <span class="str">'WFH'</span> <span class="kw">AS</span> <span class="col">status</span>
+<span class="kw">FROM</span> <span class="tbl">bronze.attendance</span>
+<span class="kw">WHERE</span> <span class="col">status</span> = <span class="str">'WFH'</span>;</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div class="card"><div class="card-icon amber"><i class="fas fa-circle-info"></i></div><h3>Why UNION Here?</h3><p>Raw data has inconsistent status codes: "P", "Present", "A", "Absent", "WFH". UNION lets us standardize into clean categories for reporting.</p></div>
+          <div class="card"><div class="card-icon green"><i class="fas fa-not-equal"></i></div><h3>UNION vs UNION ALL</h3><p><strong>UNION</strong> removes duplicates. <strong>UNION ALL</strong> keeps all rows (faster). Use UNION ALL when you know there are no duplicates or want to keep them.</p></div>
+          <div class="card"><div class="card-icon blue"><i class="fas fa-list-check"></i></div><h3>Rules for UNION</h3><p>Both queries must have the same number of columns. Corresponding columns must have compatible data types. Column names come from the first query.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 17: Views -->
+  <div class="slide" data-slide="16">
+    <div class="slide-inner">
+      <div class="slide-tag fade-up"><i class="fas fa-eye"></i> Phase 6: Views</div>
+      <h2 class="slide-title fade-up">Creating Views for Reusable Insights</h2>
+      <p class="slide-subtitle fade-up">Views are saved queries — no data stored, always reflect the latest data when queried.</p>
+      <div class="grid-2 fade-up">
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div class="code-block">
+            <div class="code-header"><div class="dots"><span></span><span></span><span></span></div>vw_high_risk_employees</div>
+            <div class="code-body"><span class="kw">CREATE VIEW</span> <span class="tbl">vw_high_risk_employees</span> <span class="kw">AS</span>
+<span class="kw">SELECT</span> *
+<span class="kw">FROM</span> <span class="tbl">gold.hr_master</span>
+<span class="kw">WHERE</span> <span class="col">attrition_flag</span> = <span class="str">'Yes'</span>
+   <span class="kw">OR</span> <span class="col">rating</span> <= <span class="num">2</span>;</div>
+          </div>
+          <div class="code-block">
+            <div class="code-header"><div class="dots"><span></span><span></span><span></span></div>Using the View</div>
+            <div class="code-body"><span class="cm">-- Query the view like a table</span>
+<span class="kw">SELECT</span> <span class="col">full_name</span>, <span class="col">department_name</span>,
+       <span class="col">salary</span>, <span class="col">rating</span>
+<span class="kw">FROM</span> <span class="tbl">vw_high_risk_employees</span>
+<span class="kw">ORDER BY</span> <span class="col">salary</span> <span class="kw">ASC</span>;</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div class="card"><div class="card-icon green"><i class="fas fa-rotate"></i></div><h3>Always Live Data</h3><p>Unlike a table that stores a snapshot, a view re-executes the underlying query every time — always showing the latest data.</p></div>
+          <div class="card"><div class="card-icon amber"><i class="fas fa-lock"></i></div><h3>Security & Abstraction</h3><p>Hide complex joins from end users. Grant access to the view without exposing the underlying gold or silver tables.</p></div>
+          <div class="card"><div class="card-icon blue"><i class="fas fa-recycle"></i></div><h3>DRY Principle</h3><p>Write complex filter logic once. Reuse it everywhere — dashboards, reports, other queries — without duplicating code.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 18: Student Deliverables -->
+  <div class="slide" data-slide="17">
+    <div class="slide-inner">
+      <div class="slide-tag fade-up"><i class="fas fa-graduation-cap"></i> Deliverables</div>
+      <h2 class="slide-title fade-up">Student Deliverables & Requirements</h2>
+      <p class="slide-subtitle fade-up">Build these queries independently using only silver tables. Every query must meet the mandatory rules.</p>
+      <div class="grid-2 fade-up">
+        <div>
+          <div class="section-label" style="color:var(--accent);">Queries to Build</div>
+          <div class="checklist" style="margin-bottom:18px;">
+            <div class="check-item"><i class="fas fa-square-check"></i> Department-wise attrition rate</div>
+            <div class="check-item"><i class="fas fa-square-check"></i> Salary distribution by band</div>
+            <div class="check-item"><i class="fas fa-square-check"></i> Top 10 employees by rating + salary</div>
+            <div class="check-item"><i class="fas fa-square-check"></i> High-risk employees report</div>
+            <div class="check-item"><i class="fas fa-square-check"></i> Attendance summary per employee</div>
+          </div>
+          <div class="section-label" style="color:var(--red);">Mandatory Rules</div>
+          <div class="checklist">
+            <div class="check-item" style="border-color:rgba(239,68,68,0.2);"><i class="fas fa-circle-exclamation" style="color:var(--red);"></i> Use Silver tables only (not Bronze)</div>
+            <div class="check-item" style="border-color:rgba(239,68,68,0.2);"><i class="fas fa-circle-exclamation" style="color:var(--red);"></i> At least 3 JOINs across deliverables</div>
+            <div class="check-item" style="border-color:rgba(239,68,68,0.2);"><i class="fas fa-circle-exclamation" style="color:var(--red);"></i> At least 2 aggregate functions</div>
+            <div class="check-item" style="border-color:rgba(239,68,68,0.2);"><i class="fas fa-circle-exclamation" style="color:var(--red);"></i> At least 2 text functions</div>
+            <div class="check-item" style="border-color:rgba(239,68,68,0.2);"><i class="fas fa-circle-exclamation" style="color:var(--red);"></i> At least 1 UNION</div>
+            <div class="check-item" style="border-color:rgba(239,68,68,0.2);"><i class="fas fa-circle-exclamation" style="color:var(--red);"></i> At least 1 VIEW</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div class="code-block">
+            <div class="code-header"><div class="dots"><span></span><span></span><span></span></div>Example: Top 10 (Meets 3 Rules)</div>
+            <div class="code-body"><span class="cm">-- Uses: JOIN, aggregate, text func</span>
+<span class="kw">SELECT</span>
+  <span class="fn">UPPER</span>(e.<span class="col">full_name</span>) <span class="kw">AS</span> <span class="col">name</span>,
+  d.<span class="col">department_name</span>,
+  <span class="fn">AVG</span>(p.<span class="col">rating</span>)     <span class="kw">AS</span> <span class="col">avg_rating</span>,
+  e.<span class="col">salary</span>
+<span class="kw">FROM</span> <span class="tbl">silver.employees_final</span> e
+<span class="kw">JOIN</span> <span class="tbl">bronze.departments</span> d
+  <span class="kw">ON</span> e.<span class="col">department_id</span>
+    = d.<span class="col">department_id</span>
+<span class="kw">JOIN</span> <span class="tbl">bronze.performance</span> p
+  <span class="kw">ON</span> e.<span class="col">employee_id</span>
+    = p.<span class="col">employee_id</span>
+<span class="kw">GROUP BY</span> <span class="col">name</span>,
+  d.<span class="col">department_name</span>,
+  e.<span class="col">salary</span>
+<span class="kw">ORDER BY</span> <span class="col">avg_rating</span> <span class="kw">DESC</span>,
+  e.<span class="col">salary</span> <span class="kw">DESC</span>
+<span class="kw">LIMIT</span> <span class="num">10</span>;</div>
+          </div>
+          <div class="highlight-card">
+            <h3>Pro Tip</h3>
+            <p>Combine multiple requirements in a single query where possible — a query with a JOIN + aggregate + text function counts for 3 rules at once!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 19: Thank You -->
+  <div class="slide thank-you-slide" data-slide="18">
+    <div class="thank-content fade-up">
+      <i class="fas fa-snowflake big-icon"></i>
+      <h2>Thank You</h2>
+      <p>You've learned Snowflake from scratch — from understanding the platform, to writing SQL with Cortex AI, to building a complete Medallion architecture pipeline. Now go build your deliverables!</p>
+      <div class="contact-cards">
+        <div class="contact-card"><i class="fas fa-phone"></i><a href="tel:+916364671786">+91 6364 671 786</a></div>
+        <div class="contact-card"><i class="fas fa-globe"></i><a href="https://vizonis.com" target="_blank">vizonis.com</a></div>
+        <div class="contact-card"><i class="fas fa-building"></i><span>Vizonis Academy</span></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer-bar">
+  <div class="slide-counter">Slide <span id="currentSlide">1</span> / <span id="totalSlides">19</span></div>
+  <div class="brand-footer">Vizonis Academy | SQL Training with Snowflake | vizonis.com | +91 6364 671 786</div>
+</div>
+
+<div class="nav-controls">
+  <button class="nav-btn" id="prevBtn" aria-label="Previous slide"><i class="fas fa-chevron-left"></i></button>
+  <button class="nav-btn" id="nextBtn" aria-label="Next slide"><i class="fas fa-chevron-right"></i></button>
+</div>
+
+<div class="slide-minimap" id="slideMinimap"></div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const totalSlides = slides.length;
+  let currentSlide = 0;
+  let isTransitioning = false;
+
+  const progressFill = document.getElementById('progressFill');
+  const currentSlideEl = document.getElementById('currentSlide');
+  const totalSlidesEl = document.getElementById('totalSlides');
+  const minimap = document.getElementById('slideMinimap');
+
+  totalSlidesEl.textContent = totalSlides;
+
+  for (let i = 0; i < totalSlides; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'minimap-dot' + (i === 0 ? ' active' : '');
+    dot.addEventListener('click', () => goToSlide(i));
+    dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+    minimap.appendChild(dot);
+  }
+
+  function updateUI() {
+    progressFill.style.width = ((currentSlide + 1) / totalSlides * 100) + '%';
+    currentSlideEl.textContent = currentSlide + 1;
+    const dots = minimap.querySelectorAll('.minimap-dot');
+    dots.forEach((dot, i) => dot.classList.toggle('active', i === currentSlide));
+  }
+
+  function goToSlide(index) {
+    if (isTransitioning || index === currentSlide || index < 0 || index >= totalSlides) return;
+    isTransitioning = true;
+
+    const direction = index > currentSlide ? 1 : -1;
+    const oldSlide = slides[currentSlide];
+    const newSlide = slides[index];
+
+    oldSlide.classList.remove('active');
+    if (direction > 0) {
+      oldSlide.classList.add('exit-left');
+    } else {
+      oldSlide.style.transform = 'translateX(60px)';
+      oldSlide.style.opacity = '0';
+    }
+
+    newSlide.style.transition = 'none';
+    newSlide.style.transform = direction > 0 ? 'translateX(60px)' : 'translateX(-60px)';
+    newSlide.style.opacity = '0';
+    newSlide.classList.remove('exit-left');
+    newSlide.style.visibility = 'visible';
+
+    newSlide.offsetHeight;
+
+    newSlide.style.transition = '';
+    newSlide.classList.add('active');
+    newSlide.style.transform = '';
+    newSlide.style.opacity = '';
+
+    currentSlide = index;
+    updateUI();
+    newSlide.scrollTop = 0;
+
+    setTimeout(() => {
+      oldSlide.classList.remove('exit-left');
+      oldSlide.style.transform = '';
+      oldSlide.style.opacity = '';
+      isTransitioning = false;
+    }, 550);
+  }
+
+  function nextSlide() { goToSlide(currentSlide + 1); }
+  function prevSlide() { goToSlide(currentSlide - 1); }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); prevSlide(); }
+    else if (e.key === 'Home') { e.preventDefault(); goToSlide(0); }
+    else if (e.key === 'End') { e.preventDefault(); goToSlide(totalSlides - 1); }
+  });
+
+  document.getElementById('nextBtn').addEventListener('click', nextSlide);
+  document.getElementById('prevBtn').addEventListener('click', prevSlide);
+
+  let touchStartX = 0, touchStartY = 0;
+  document.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+    touchStartY = e.changedTouches[0].screenY;
+  }, { passive: true });
+  document.addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].screenX - touchStartX;
+    const dy = e.changedTouches[0].screenY - touchStartY;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) { dx < 0 ? nextSlide() : prevSlide(); }
+  }, { passive: true });
+
+  updateUI();
+</script>
+
+</body>
+</html>
