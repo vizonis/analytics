@@ -28,9 +28,7 @@
     --radius: 12px;
     --radius-sm: 8px;
   }
-
   * { margin:0; padding:0; box-sizing:border-box; }
-
   body {
     font-family: 'Space Grotesk', sans-serif;
     background: var(--bg);
@@ -38,801 +36,426 @@
     min-height: 100vh;
     overflow-x: hidden;
   }
-
-  /* Background atmosphere */
   .bg-grid {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
+    position: fixed; inset: 0; z-index: 0;
     background-image:
       linear-gradient(rgba(0,232,157,0.03) 1px, transparent 1px),
       linear-gradient(90deg, rgba(0,232,157,0.03) 1px, transparent 1px);
     background-size: 60px 60px;
     pointer-events: none;
   }
-
   .bg-glow-1 {
-    position: fixed;
-    width: 600px; height: 600px;
+    position: fixed; width: 600px; height: 600px;
     top: -200px; right: -100px;
     background: radial-gradient(circle, rgba(0,232,157,0.08), transparent 70%);
     pointer-events: none; z-index: 0;
     animation: floatGlow 12s ease-in-out infinite;
   }
-
   .bg-glow-2 {
-    position: fixed;
-    width: 500px; height: 500px;
+    position: fixed; width: 500px; height: 500px;
     bottom: -150px; left: -100px;
     background: radial-gradient(circle, rgba(255,77,106,0.06), transparent 70%);
     pointer-events: none; z-index: 0;
     animation: floatGlow 15s ease-in-out infinite reverse;
   }
-
   @keyframes floatGlow {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(30px, 20px) scale(1.1); }
+    0%, 100% { transform: translate(0,0) scale(1); }
+    50% { transform: translate(30px,20px) scale(1.1); }
   }
-
   .container {
-    position: relative;
-    z-index: 1;
-    max-width: 900px;
-    margin: 0 auto;
+    position: relative; z-index: 1;
+    max-width: 900px; margin: 0 auto;
     padding: 24px 20px 60px;
   }
-
-  /* Header */
-  .header {
-    text-align: center;
-    padding: 48px 0 36px;
-  }
-
+  .header { text-align: center; padding: 48px 0 36px; }
   .logo-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
+    display: inline-flex; align-items: center; gap: 10px;
     background: var(--accent-dim);
     border: 1px solid rgba(0,232,157,0.2);
-    padding: 8px 20px;
-    border-radius: 50px;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--accent);
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    margin-bottom: 20px;
+    padding: 8px 20px; border-radius: 50px;
+    font-size: 13px; font-weight: 600;
+    color: var(--accent); letter-spacing: 1.5px;
+    text-transform: uppercase; margin-bottom: 20px;
   }
-
   .logo-badge i { font-size: 14px; }
-
   .header h1 {
-    font-size: clamp(28px, 5vw, 42px);
-    font-weight: 700;
-    line-height: 1.15;
-    margin-bottom: 12px;
-    background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-size: clamp(28px,5vw,42px); font-weight: 700;
+    line-height: 1.15; margin-bottom: 12px;
+    background: linear-gradient(135deg,#fff 0%,var(--accent) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-
   .header p {
-    color: var(--fg-muted);
-    font-size: 16px;
-    max-width: 560px;
-    margin: 0 auto;
-    line-height: 1.6;
+    color: var(--fg-muted); font-size: 16px;
+    max-width: 560px; margin: 0 auto; line-height: 1.6;
   }
-
-  /* Stats Bar */
   .stats-bar {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    margin-bottom: 28px;
+    display: grid; grid-template-columns: repeat(4,1fr);
+    gap: 12px; margin-bottom: 28px;
   }
-
   .stat-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 16px 12px;
-    text-align: center;
-    transition: all 0.3s ease;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 16px 12px;
+    text-align: center; transition: all 0.3s ease;
   }
-
-  .stat-card:hover {
-    border-color: rgba(0,232,157,0.3);
-    transform: translateY(-2px);
-  }
-
+  .stat-card:hover { border-color: rgba(0,232,157,0.3); transform: translateY(-2px); }
   .stat-value {
-    font-size: 24px;
-    font-weight: 700;
+    font-size: 24px; font-weight: 700;
     font-family: 'JetBrains Mono', monospace;
   }
-
   .stat-value.green { color: var(--accent); }
   .stat-value.yellow { color: var(--warning); }
   .stat-value.red { color: var(--error); }
   .stat-value.white { color: var(--fg); }
-
   .stat-label {
-    font-size: 11px;
-    color: var(--fg-muted);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-top: 4px;
+    font-size: 11px; color: var(--fg-muted);
+    text-transform: uppercase; letter-spacing: 1px; margin-top: 4px;
   }
-
-  /* Level Tabs */
   .level-tabs {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 24px;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 6px;
+    display: flex; gap: 8px; margin-bottom: 24px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 6px;
   }
-
   .level-tab {
-    flex: 1;
-    padding: 12px 16px;
-    border: none;
-    background: transparent;
-    color: var(--fg-muted);
+    flex: 1; padding: 12px 16px; border: none;
+    background: transparent; color: var(--fg-muted);
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    border-radius: var(--radius-sm);
-    cursor: pointer;
+    font-size: 14px; font-weight: 600;
+    border-radius: var(--radius-sm); cursor: pointer;
     transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
   }
-
   .level-tab:hover { color: var(--fg); background: rgba(255,255,255,0.04); }
-
   .level-tab.active-easy {
-    background: rgba(0,232,157,0.15);
-    color: var(--easy);
+    background: rgba(0,232,157,0.15); color: var(--easy);
     box-shadow: 0 0 20px rgba(0,232,157,0.1);
   }
-
   .level-tab.active-moderate {
-    background: rgba(255,184,77,0.15);
-    color: var(--moderate);
+    background: rgba(255,184,77,0.15); color: var(--moderate);
     box-shadow: 0 0 20px rgba(255,184,77,0.1);
   }
-
   .level-tab.active-hard {
-    background: rgba(255,77,106,0.15);
-    color: var(--hard);
+    background: rgba(255,77,106,0.15); color: var(--hard);
     box-shadow: 0 0 20px rgba(255,77,106,0.1);
   }
-
   .level-tab .count {
     background: rgba(255,255,255,0.1);
-    padding: 2px 8px;
-    border-radius: 50px;
-    font-size: 12px;
-    font-family: 'JetBrains Mono', monospace;
+    padding: 2px 8px; border-radius: 50px;
+    font-size: 12px; font-family: 'JetBrains Mono', monospace;
   }
-
-  /* Progress */
-  .progress-wrap {
-    margin-bottom: 24px;
-  }
-
+  .progress-wrap { margin-bottom: 24px; }
   .progress-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
+    display: flex; justify-content: space-between;
+    align-items: center; margin-bottom: 8px;
   }
-
-  .progress-text {
-    font-size: 13px;
-    color: var(--fg-muted);
-  }
-
+  .progress-text { font-size: 13px; color: var(--fg-muted); }
   .progress-text span { color: var(--fg); font-weight: 600; }
-
   .progress-bar {
-    height: 6px;
-    background: var(--bg-secondary);
-    border-radius: 10px;
-    overflow: hidden;
+    height: 6px; background: var(--bg-secondary);
+    border-radius: 10px; overflow: hidden;
   }
-
   .progress-fill {
-    height: 100%;
-    border-radius: 10px;
+    height: 100%; border-radius: 10px;
     transition: width 0.5s cubic-bezier(0.22,1,0.36,1), background 0.3s;
-    width: 0%;
-    background: var(--accent);
+    width: 0%; background: var(--accent);
   }
-
-  /* Question Card */
   .question-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 32px;
-    margin-bottom: 16px;
-    transition: all 0.4s ease;
-    animation: fadeSlideIn 0.5s ease forwards;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 32px;
+    margin-bottom: 16px; animation: fadeSlideIn 0.5s ease forwards;
   }
-
   @keyframes fadeSlideIn {
     from { opacity: 0; transform: translateY(16px); }
     to { opacity: 1; transform: translateY(0); }
   }
-
   .question-meta {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
+    display: flex; align-items: center;
+    gap: 12px; margin-bottom: 16px; flex-wrap: wrap;
   }
-
   .q-number {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--accent);
-    background: var(--accent-dim);
-    padding: 4px 12px;
-    border-radius: 50px;
+    font-size: 13px; font-weight: 600; color: var(--accent);
+    background: var(--accent-dim); padding: 4px 12px; border-radius: 50px;
   }
-
   .q-topic {
-    font-size: 12px;
-    color: var(--fg-muted);
+    font-size: 12px; color: var(--fg-muted);
     background: rgba(255,255,255,0.05);
-    padding: 4px 12px;
-    border-radius: 50px;
+    padding: 4px 12px; border-radius: 50px;
   }
-
   .q-difficulty {
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    padding: 4px 10px;
-    border-radius: 50px;
+    font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px;
+    padding: 4px 10px; border-radius: 50px;
   }
-
   .q-difficulty.easy { color: var(--easy); background: rgba(0,232,157,0.1); }
   .q-difficulty.moderate { color: var(--moderate); background: rgba(255,184,77,0.1); }
   .q-difficulty.hard { color: var(--hard); background: rgba(255,77,106,0.1); }
-
   .question-text {
-    font-size: 17px;
-    font-weight: 500;
-    line-height: 1.65;
-    margin-bottom: 20px;
-    color: var(--fg);
+    font-size: 17px; font-weight: 500;
+    line-height: 1.65; margin-bottom: 20px; color: var(--fg);
   }
-
-  /* Code Block */
   .code-block {
-    background: #0d1117;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 18px 20px;
-    margin-bottom: 20px;
-    overflow-x: auto;
+    background: #0d1117; border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 18px 20px;
+    margin-bottom: 20px; overflow-x: auto;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
-    line-height: 1.7;
-    color: #c9d1d9;
+    font-size: 13px; line-height: 1.7; color: #c9d1d9;
   }
-
   .code-block .kw { color: #ff7b72; }
   .code-block .fn { color: #d2a8ff; }
   .code-block .str { color: #a5d6ff; }
   .code-block .num { color: #79c0ff; }
   .code-block .cm { color: #8b949e; font-style: italic; }
-  .code-block .op { color: #ff7b72; }
   .code-block .tbl { color: #7ee787; }
-
-  /* Options */
-  .options-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-
+  .options-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
   .option-btn {
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    padding: 14px 18px;
-    background: rgba(255,255,255,0.02);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    transition: all 0.25s ease;
-    text-align: left;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 14px;
-    color: var(--fg);
-    line-height: 1.5;
-    position: relative;
-    overflow: hidden;
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 14px 18px; background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border); border-radius: var(--radius-sm);
+    cursor: pointer; transition: all 0.25s ease;
+    text-align: left; font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px; color: var(--fg); line-height: 1.5;
+    position: relative; overflow: hidden;
   }
-
-  .option-btn::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
   .option-btn:hover:not(.disabled) {
     border-color: rgba(0,232,157,0.4);
-    background: rgba(0,232,157,0.04);
-    transform: translateX(4px);
+    background: rgba(0,232,157,0.04); transform: translateX(4px);
   }
-
   .option-btn .opt-letter {
-    flex-shrink: 0;
-    width: 30px; height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px;
-    background: rgba(255,255,255,0.06);
-    font-weight: 700;
-    font-size: 13px;
+    flex-shrink: 0; width: 30px; height: 30px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 8px; background: rgba(255,255,255,0.06);
+    font-weight: 700; font-size: 13px;
     font-family: 'JetBrains Mono', monospace;
     transition: all 0.3s ease;
   }
-
   .option-btn:hover:not(.disabled) .opt-letter {
-    background: var(--accent-dim);
-    color: var(--accent);
+    background: var(--accent-dim); color: var(--accent);
   }
-
-  .option-btn .opt-text {
-    flex: 1;
-    padding-top: 3px;
+  .option-btn .opt-text { flex: 1; padding-top: 3px; }
+  .option-btn .opt-text code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; background: rgba(0,0,0,0.3);
+    padding: 2px 6px; border-radius: 4px; color: #c9d1d9;
   }
-
   .option-btn .opt-icon {
-    flex-shrink: 0;
-    width: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-top: 3px;
-    opacity: 0;
-    transition: opacity 0.3s;
+    flex-shrink: 0; width: 24px;
+    display: flex; align-items: center; justify-content: center;
+    padding-top: 3px; opacity: 0; transition: opacity 0.3s;
   }
-
-  /* Selected state */
   .option-btn.selected {
-    border-color: rgba(0,232,157,0.5);
-    background: rgba(0,232,157,0.06);
+    border-color: rgba(0,232,157,0.5); background: rgba(0,232,157,0.06);
   }
-
   .option-btn.selected .opt-letter {
-    background: var(--accent);
-    color: var(--bg);
+    background: var(--accent); color: var(--bg);
   }
-
-  /* Correct state */
   .option-btn.correct {
-    border-color: var(--accent);
-    background: var(--accent-dim);
+    border-color: var(--accent); background: var(--accent-dim);
     pointer-events: none;
   }
-
-  .option-btn.correct .opt-letter {
-    background: var(--accent);
-    color: var(--bg);
-  }
-
-  .option-btn.correct .opt-icon {
-    opacity: 1;
-    color: var(--accent);
-  }
-
-  /* Wrong state */
+  .option-btn.correct .opt-letter { background: var(--accent); color: var(--bg); }
+  .option-btn.correct .opt-icon { opacity: 1; color: var(--accent); }
   .option-btn.wrong {
-    border-color: var(--error);
-    background: var(--error-dim);
+    border-color: var(--error); background: var(--error-dim);
     pointer-events: none;
   }
-
-  .option-btn.wrong .opt-letter {
-    background: var(--error);
-    color: #fff;
-  }
-
-  .option-btn.wrong .opt-icon {
-    opacity: 1;
-    color: var(--error);
-  }
-
-  .option-btn.disabled {
-    pointer-events: none;
-    opacity: 0.5;
-  }
-
+  .option-btn.wrong .opt-letter { background: var(--error); color: #fff; }
+  .option-btn.wrong .opt-icon { opacity: 1; color: var(--error); }
+  .option-btn.disabled { pointer-events: none; opacity: 0.5; }
   .option-btn.correct.disabled { opacity: 1; }
-
-  /* Explanation */
   .explanation-box {
     background: rgba(0,232,157,0.06);
     border: 1px solid rgba(0,232,157,0.15);
-    border-radius: var(--radius-sm);
-    padding: 16px 20px;
-    margin-top: 16px;
-    animation: fadeSlideIn 0.4s ease forwards;
+    border-radius: var(--radius-sm); padding: 16px 20px;
+    margin-top: 16px; animation: fadeSlideIn 0.4s ease forwards;
     display: none;
   }
-
   .explanation-box.visible { display: block; }
-
   .explanation-box .exp-title {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--accent);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
+    font-size: 13px; font-weight: 700; color: var(--accent);
+    text-transform: uppercase; letter-spacing: 1px;
+    margin-bottom: 8px; display: flex; align-items: center; gap: 6px;
   }
-
   .explanation-box .exp-text {
-    font-size: 14px;
-    color: var(--fg-muted);
-    line-height: 1.65;
+    font-size: 14px; color: var(--fg-muted); line-height: 1.65;
   }
-
   .explanation-box .exp-text code {
     font-family: 'JetBrains Mono', monospace;
-    background: rgba(0,0,0,0.3);
-    padding: 1px 6px;
-    border-radius: 4px;
-    font-size: 12px;
-    color: var(--accent);
+    background: rgba(0,0,0,0.3); padding: 1px 6px;
+    border-radius: 4px; font-size: 12px; color: var(--accent);
   }
-
-  /* Navigation */
-  .nav-row {
-    display: flex;
-    gap: 12px;
-    margin-top: 8px;
-  }
-
+  .nav-row { display: flex; gap: 12px; margin-top: 8px; }
   .btn {
-    padding: 12px 28px;
-    border: none;
-    border-radius: var(--radius-sm);
+    padding: 12px 28px; border: none; border-radius: var(--radius-sm);
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
+    font-size: 14px; font-weight: 600; cursor: pointer;
     transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
+    display: inline-flex; align-items: center; gap: 8px;
   }
-
-  .btn-primary {
-    background: var(--accent);
-    color: var(--bg);
-  }
-
+  .btn-primary { background: var(--accent); color: var(--bg); }
   .btn-primary:hover {
-    box-shadow: 0 0 24px var(--accent-glow);
-    transform: translateY(-2px);
+    box-shadow: 0 0 24px var(--accent-glow); transform: translateY(-2px);
   }
-
   .btn-secondary {
-    background: rgba(255,255,255,0.06);
-    color: var(--fg);
+    background: rgba(255,255,255,0.06); color: var(--fg);
     border: 1px solid var(--border);
   }
-
   .btn-secondary:hover {
     background: rgba(255,255,255,0.1);
     border-color: rgba(255,255,255,0.2);
   }
-
   .btn:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-    transform: none !important;
-    box-shadow: none !important;
+    opacity: 0.4; cursor: not-allowed;
+    transform: none !important; box-shadow: none !important;
   }
-
-  /* Question Map */
   .question-map {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 24px;
-    padding-top: 20px;
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-top: 24px; padding-top: 20px;
     border-top: 1px solid var(--border);
   }
-
   .qmap-dot {
     width: 36px; height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px;
-    background: rgba(255,255,255,0.04);
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 8px; background: rgba(255,255,255,0.04);
     border: 1px solid var(--border);
     font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--fg-muted);
-    cursor: pointer;
-    transition: all 0.25s ease;
+    font-size: 12px; font-weight: 600; color: var(--fg-muted);
+    cursor: pointer; transition: all 0.25s ease;
   }
-
   .qmap-dot:hover { border-color: rgba(0,232,157,0.4); color: var(--fg); }
   .qmap-dot.active { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
   .qmap-dot.answered-correct { background: rgba(0,232,157,0.15); border-color: var(--accent); color: var(--accent); }
   .qmap-dot.answered-wrong { background: var(--error-dim); border-color: var(--error); color: var(--error); }
   .qmap-dot.current { box-shadow: 0 0 12px var(--accent-glow); }
-
-  /* Results Panel */
   .results-panel {
-    display: none;
-    animation: fadeSlideIn 0.6s ease forwards;
+    display: none; animation: fadeSlideIn 0.6s ease forwards;
   }
-
   .results-panel.visible { display: block; }
-
   .results-hero {
-    text-align: center;
-    padding: 48px 32px;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    margin-bottom: 24px;
+    text-align: center; padding: 48px 32px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); margin-bottom: 24px;
   }
-
   .results-icon {
-    width: 80px; height: 80px;
-    margin: 0 auto 20px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 36px;
+    width: 80px; height: 80px; margin: 0 auto 20px;
+    border-radius: 50%; display: flex;
+    align-items: center; justify-content: center; font-size: 36px;
   }
-
   .results-icon.excellent { background: var(--accent-dim); color: var(--accent); }
   .results-icon.good { background: var(--warning-dim); color: var(--warning); }
   .results-icon.poor { background: var(--error-dim); color: var(--error); }
-
   .results-score {
-    font-size: 56px;
-    font-weight: 700;
-    font-family: 'JetBrains Mono', monospace;
-    line-height: 1;
-    margin-bottom: 8px;
+    font-size: 56px; font-weight: 700;
+    font-family: 'JetBrains Mono', monospace; line-height: 1; margin-bottom: 8px;
   }
-
-  .results-label {
-    font-size: 18px;
-    color: var(--fg-muted);
-    margin-bottom: 4px;
-  }
-
+  .results-label { font-size: 18px; color: var(--fg-muted); margin-bottom: 4px; }
   .results-message {
-    font-size: 15px;
-    color: var(--fg-muted);
-    margin-top: 12px;
-    line-height: 1.6;
+    font-size: 15px; color: var(--fg-muted);
+    margin-top: 12px; line-height: 1.6;
   }
-
   .results-breakdown {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    margin-bottom: 24px;
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 12px; margin-bottom: 24px;
   }
-
   .rb-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 20px;
-    text-align: center;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 20px; text-align: center;
   }
-
   .rb-card .rb-level {
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 8px;
+    font-size: 12px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;
   }
-
   .rb-card .rb-level.easy { color: var(--easy); }
   .rb-card .rb-level.moderate { color: var(--moderate); }
   .rb-card .rb-level.hard { color: var(--hard); }
-
   .rb-card .rb-score {
-    font-size: 28px;
-    font-weight: 700;
-    font-family: 'JetBrains Mono', monospace;
-    color: var(--fg);
+    font-size: 28px; font-weight: 700;
+    font-family: 'JetBrains Mono', monospace; color: var(--fg);
   }
-
-  .rb-card .rb-detail {
-    font-size: 12px;
-    color: var(--fg-muted);
-    margin-top: 4px;
-  }
-
-  /* Toast */
+  .rb-card .rb-detail { font-size: 12px; color: var(--fg-muted); margin-top: 4px; }
   .toast-container {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+    position: fixed; top: 20px; right: 20px; z-index: 1000;
+    display: flex; flex-direction: column; gap: 8px;
   }
-
   .toast {
-    padding: 12px 20px;
-    border-radius: var(--radius-sm);
-    font-size: 14px;
-    font-weight: 500;
+    padding: 12px 20px; border-radius: var(--radius-sm);
+    font-size: 14px; font-weight: 500;
     animation: toastIn 0.4s ease, toastOut 0.4s ease 2.6s forwards;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    display: flex; align-items: center; gap: 8px;
     box-shadow: 0 8px 32px rgba(0,0,0,0.4);
   }
-
   .toast.correct {
-    background: #0d2818;
-    border: 1px solid rgba(0,232,157,0.3);
-    color: var(--accent);
+    background: #0d2818; border: 1px solid rgba(0,232,157,0.3); color: var(--accent);
   }
-
   .toast.wrong {
-    background: #2a0f14;
-    border: 1px solid rgba(255,77,106,0.3);
-    color: var(--error);
+    background: #2a0f14; border: 1px solid rgba(255,77,106,0.3); color: var(--error);
   }
-
   @keyframes toastIn {
     from { opacity: 0; transform: translateX(40px); }
     to { opacity: 1; transform: translateX(0); }
   }
-
   @keyframes toastOut {
     from { opacity: 1; }
     to { opacity: 0; transform: translateY(-10px); }
   }
-
-  /* Start Screen */
   .start-screen {
-    text-align: center;
-    padding: 60px 32px;
-    background: var(--card);
-    border: 1px solid var(--border);
+    text-align: center; padding: 60px 32px;
+    background: var(--card); border: 1px solid var(--border);
     border-radius: var(--radius);
   }
-
   .start-screen .start-icon {
-    width: 100px; height: 100px;
-    margin: 0 auto 24px;
+    width: 100px; height: 100px; margin: 0 auto 24px;
     background: var(--accent-dim);
     border: 2px solid rgba(0,232,157,0.2);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 42px;
-    color: var(--accent);
+    border-radius: 50%; display: flex;
+    align-items: center; justify-content: center;
+    font-size: 42px; color: var(--accent);
     animation: pulse 2.5s ease-in-out infinite;
   }
-
   @keyframes pulse {
     0%, 100% { box-shadow: 0 0 0 0 rgba(0,232,157,0.2); }
     50% { box-shadow: 0 0 0 20px rgba(0,232,157,0); }
   }
-
-  .start-screen h2 {
-    font-size: 26px;
-    font-weight: 700;
-    margin-bottom: 12px;
-  }
-
+  .start-screen h2 { font-size: 26px; font-weight: 700; margin-bottom: 12px; }
   .start-screen p {
-    color: var(--fg-muted);
-    font-size: 15px;
-    line-height: 1.65;
-    max-width: 480px;
-    margin: 0 auto 32px;
+    color: var(--fg-muted); font-size: 15px; line-height: 1.65;
+    max-width: 480px; margin: 0 auto 32px;
   }
-
   .topic-tags {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px;
-    margin-bottom: 36px;
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: 8px; margin-bottom: 36px;
   }
-
   .topic-tag {
-    padding: 6px 14px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid var(--border);
-    border-radius: 50px;
-    font-size: 12px;
-    color: var(--fg-muted);
-    font-weight: 500;
+    padding: 6px 14px; background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border); border-radius: 50px;
+    font-size: 12px; color: var(--fg-muted); font-weight: 500;
   }
-
   .start-info {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin-bottom: 36px;
-    max-width: 420px;
-    margin-left: auto;
-    margin-right: auto;
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 16px; margin-bottom: 36px;
+    max-width: 420px; margin-left: auto; margin-right: auto;
   }
-
-  .start-info-item {
-    text-align: center;
-  }
-
+  .start-info-item { text-align: center; }
   .start-info-item .si-val {
-    font-size: 22px;
-    font-weight: 700;
-    font-family: 'JetBrains Mono', monospace;
-    color: var(--fg);
+    font-size: 22px; font-weight: 700;
+    font-family: 'JetBrains Mono', monospace; color: var(--fg);
   }
-
   .start-info-item .si-label {
-    font-size: 11px;
-    color: var(--fg-muted);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-top: 2px;
+    font-size: 11px; color: var(--fg-muted);
+    text-transform: uppercase; letter-spacing: 1px; margin-top: 2px;
   }
-
-  /* Responsive */
   @media (max-width: 640px) {
-    .stats-bar { grid-template-columns: repeat(2, 1fr); }
+    .stats-bar { grid-template-columns: repeat(2,1fr); }
     .level-tabs { flex-direction: column; }
     .question-card { padding: 20px; }
     .results-breakdown { grid-template-columns: 1fr; }
-    .start-info { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .start-info { grid-template-columns: repeat(3,1fr); gap: 8px; }
     .header h1 { font-size: 26px; }
   }
-
-  /* Scrollbar */
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
   ::-webkit-scrollbar-thumb:hover { background: var(--fg-muted); }
-
-  /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       animation-duration: 0.01ms !important;
@@ -842,499 +465,379 @@
 </style>
 </head>
 <body>
-
 <div class="bg-grid"></div>
 <div class="bg-glow-1"></div>
 <div class="bg-glow-2"></div>
 <div class="toast-container" id="toastContainer"></div>
 
 <div class="container">
-  <!-- Header -->
   <header class="header">
-    <div class="logo-badge">
-      <i class="fas fa-database"></i>
-      Vizonis Academy
-    </div>
+    <div class="logo-badge"><i class="fas fa-database"></i> Vizonis Academy</div>
     <h1>SQL Server Interview Assessment</h1>
     <p>Master SELECT, JOINs, Aggregates, Text & Date Functions, CASE, RANK, and Views across three difficulty tiers.</p>
   </header>
 
-  <!-- Stats Bar -->
   <div class="stats-bar" id="statsBar" style="display:none;">
-    <div class="stat-card">
-      <div class="stat-value white" id="statTotal">0</div>
-      <div class="stat-label">Total</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-value green" id="statCorrect">0</div>
-      <div class="stat-label">Correct</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-value red" id="statWrong">0</div>
-      <div class="stat-label">Wrong</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-value yellow" id="statAccuracy">0%</div>
-      <div class="stat-label">Accuracy</div>
-    </div>
+    <div class="stat-card"><div class="stat-value white" id="statTotal">0</div><div class="stat-label">Total</div></div>
+    <div class="stat-card"><div class="stat-value green" id="statCorrect">0</div><div class="stat-label">Correct</div></div>
+    <div class="stat-card"><div class="stat-value red" id="statWrong">0</div><div class="stat-label">Wrong</div></div>
+    <div class="stat-card"><div class="stat-value yellow" id="statAccuracy">0%</div><div class="stat-label">Accuracy</div></div>
   </div>
 
-  <!-- Start Screen -->
   <div class="start-screen" id="startScreen">
-    <div class="start-icon">
-      <i class="fas fa-code"></i>
-    </div>
+    <div class="start-icon"><i class="fas fa-code"></i></div>
     <h2>Ready to Test Your SQL Skills?</h2>
     <p>This assessment covers 18 carefully crafted questions across Easy, Moderate, and Hard levels on core SQL Server topics.</p>
     <div class="topic-tags">
-      <span class="topic-tag">SELECT</span>
-      <span class="topic-tag">WHERE</span>
-      <span class="topic-tag">ORDER BY</span>
-      <span class="topic-tag">GROUP BY</span>
-      <span class="topic-tag">IN / NOT IN</span>
-      <span class="topic-tag">BETWEEN</span>
-      <span class="topic-tag">LIKE</span>
-      <span class="topic-tag">INNER JOIN</span>
-      <span class="topic-tag">LEFT JOIN</span>
-      <span class="topic-tag">RIGHT JOIN</span>
-      <span class="topic-tag">FULL OUTER JOIN</span>
-      <span class="topic-tag">CREATE VIEW</span>
-      <span class="topic-tag">SUM / COUNT / MIN / MAX / AVG</span>
-      <span class="topic-tag">LEFT / RIGHT / MID / CHARINDEX</span>
-      <span class="topic-tag">REPLACE / STUFF / CONCAT</span>
-      <span class="topic-tag">UPPER / LOWER</span>
-      <span class="topic-tag">DATEPART / DATENAME</span>
-      <span class="topic-tag">DATEDIFF / GETDATE</span>
-      <span class="topic-tag">CASE</span>
-      <span class="topic-tag">RANK</span>
+      <span class="topic-tag">SELECT</span><span class="topic-tag">WHERE</span><span class="topic-tag">ORDER BY</span>
+      <span class="topic-tag">GROUP BY</span><span class="topic-tag">IN / NOT IN</span><span class="topic-tag">BETWEEN</span>
+      <span class="topic-tag">LIKE</span><span class="topic-tag">INNER JOIN</span><span class="topic-tag">LEFT JOIN</span>
+      <span class="topic-tag">RIGHT JOIN</span><span class="topic-tag">FULL OUTER JOIN</span><span class="topic-tag">CREATE VIEW</span>
+      <span class="topic-tag">SUM / COUNT / MIN / MAX / AVG</span><span class="topic-tag">LEFT / RIGHT / MID / CHARINDEX</span>
+      <span class="topic-tag">REPLACE / STUFF / CONCAT</span><span class="topic-tag">UPPER / LOWER</span>
+      <span class="topic-tag">DATEPART / DATENAME</span><span class="topic-tag">DATEDIFF / GETDATE</span>
+      <span class="topic-tag">CASE</span><span class="topic-tag">RANK</span>
     </div>
     <div class="start-info">
-      <div class="start-info-item">
-        <div class="si-val">18</div>
-        <div class="si-label">Questions</div>
-      </div>
-      <div class="start-info-item">
-        <div class="si-val">3</div>
-        <div class="si-label">Levels</div>
-      </div>
-      <div class="start-info-item">
-        <div class="si-val">20</div>
-        <div class="si-label">Topics</div>
-      </div>
+      <div class="start-info-item"><div class="si-val">18</div><div class="si-label">Questions</div></div>
+      <div class="start-info-item"><div class="si-val">3</div><div class="si-label">Levels</div></div>
+      <div class="start-info-item"><div class="si-val">20</div><div class="si-label">Topics</div></div>
     </div>
-    <button class="btn btn-primary" onclick="startQuiz()" style="padding: 14px 48px; font-size: 16px;">
+    <button class="btn btn-primary" id="startBtn" style="padding:14px 48px;font-size:16px;">
       <i class="fas fa-play"></i> Begin Assessment
     </button>
   </div>
 
-  <!-- Quiz Area -->
   <div id="quizArea" style="display:none;">
-    <!-- Level Tabs -->
     <div class="level-tabs" id="levelTabs">
-      <button class="level-tab active-easy" data-level="easy" onclick="switchLevel('easy')">
-        <i class="fas fa-seedling"></i> Easy <span class="count" id="easyCount">6</span>
+      <button class="level-tab active-easy" data-level="easy" id="tabEasy">
+        <i class="fas fa-seedling"></i> Easy <span class="count">6</span>
       </button>
-      <button class="level-tab" data-level="moderate" onclick="switchLevel('moderate')">
-        <i class="fas fa-fire"></i> Moderate <span class="count" id="modCount">6</span>
+      <button class="level-tab" data-level="moderate" id="tabModerate">
+        <i class="fas fa-fire"></i> Moderate <span class="count">6</span>
       </button>
-      <button class="level-tab" data-level="hard" onclick="switchLevel('hard')">
-        <i class="fas fa-skull"></i> Hard <span class="count" id="hardCount">6</span>
+      <button class="level-tab" data-level="hard" id="tabHard">
+        <i class="fas fa-skull"></i> Hard <span class="count">6</span>
       </button>
     </div>
-
-    <!-- Progress -->
     <div class="progress-wrap">
       <div class="progress-header">
         <span class="progress-text">Question <span id="currentQ">1</span> of <span id="totalQ">6</span></span>
-        <span class="progress-text" id="levelLabel" style="color: var(--easy);">Easy</span>
+        <span class="progress-text" id="levelLabel" style="color:var(--easy);">Easy</span>
       </div>
-      <div class="progress-bar">
-        <div class="progress-fill" id="progressFill"></div>
-      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
     </div>
-
-    <!-- Question Container -->
     <div id="questionContainer"></div>
-
-    <!-- Navigation -->
     <div class="nav-row">
-      <button class="btn btn-secondary" id="prevBtn" onclick="prevQuestion()" disabled>
-        <i class="fas fa-arrow-left"></i> Previous
-      </button>
-      <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>
-        Next <i class="fas fa-arrow-right"></i>
-      </button>
-      <button class="btn btn-primary" id="finishBtn" onclick="showResults()" style="display:none;">
-        <i class="fas fa-trophy"></i> View Results
-      </button>
+      <button class="btn btn-secondary" id="prevBtn" disabled><i class="fas fa-arrow-left"></i> Previous</button>
+      <button class="btn btn-primary" id="nextBtn" disabled>Next <i class="fas fa-arrow-right"></i></button>
+      <button class="btn btn-primary" id="finishBtn" style="display:none;"><i class="fas fa-trophy"></i> View Results</button>
     </div>
-
-    <!-- Question Map -->
     <div class="question-map" id="questionMap"></div>
   </div>
 
-  <!-- Results Panel -->
   <div class="results-panel" id="resultsPanel">
     <div class="results-hero" id="resultsHero"></div>
     <div class="results-breakdown" id="resultsBreakdown"></div>
-    <div class="nav-row" style="justify-content: center; gap: 12px;">
-      <button class="btn btn-secondary" onclick="reviewAnswers()">
-        <i class="fas fa-eye"></i> Review Answers
-      </button>
-      <button class="btn btn-primary" onclick="restartQuiz()">
-        <i class="fas fa-redo"></i> Retake Assessment
-      </button>
+    <div class="nav-row" style="justify-content:center;gap:12px;">
+      <button class="btn btn-secondary" id="reviewBtn"><i class="fas fa-eye"></i> Review Answers</button>
+      <button class="btn btn-primary" id="retakeBtn"><i class="fas fa-redo"></i> Retake Assessment</button>
     </div>
   </div>
 </div>
 
 <script>
-// ==============================
-// Question Bank - 18 Questions
-// ==============================
+/* ============================
+   Question Bank — 18 Questions
+   ============================ */
 const questions = [
-  // ── EASY (6) ──
+  // ── EASY (Q1–Q6) ──
   {
-    id: 1,
-    level: 'easy',
-    topic: 'SELECT Statement',
-    question: 'What does the following SQL query return?',
-    code: `<span class="kw">SELECT</span> FirstName, LastName<br><span class="kw">FROM</span> <span class="tbl">Employees</span>;`,
+    id: 1, level: "easy", topic: "SELECT Statement",
+    question: "What does the following SQL query return?",
+    code: '<span class="kw">SELECT</span> FirstName, LastName<br><span class="kw">FROM</span> <span class="tbl">Employees</span>;',
     options: [
-      'All columns from the Employees table',
-      'Only FirstName and LastName columns from Employees',
-      'A new table with FirstName and LastName',
-      'An error — you must use a WHERE clause'
+      "All columns from the Employees table",
+      "Only FirstName and LastName columns from Employees",
+      "A new table with FirstName and LastName",
+      "An error — you must use a WHERE clause"
     ],
     correct: 1,
     explanation: 'The SELECT statement explicitly lists only <code>FirstName</code> and <code>LastName</code> columns. It does not retrieve all columns (that would require <code>SELECT *</code>), nor does it create a new table.'
   },
   {
-    id: 2,
-    level: 'easy',
-    topic: 'WHERE Operator',
-    question: 'Which query correctly finds employees with a Salary greater than or equal to 50000?',
+    id: 2, level: "easy", topic: "WHERE Operators (>=)",
+    question: "Which query correctly finds employees with Salary greater than or equal to 50000?",
     code: null,
     options: [
-      `SELECT * FROM Employees WHERE Salary > 50000`,
-      `SELECT * FROM Employees WHERE Salary => 50000`,
-      `SELECT * FROM Employees WHERE Salary >= 50000`,
-      `SELECT * FROM Employees WHERE Salary !< 50000`
+      "SELECT * FROM Employees WHERE Salary > 50000",
+      "SELECT * FROM Employees WHERE Salary => 50000",
+      "SELECT * FROM Employees WHERE Salary >= 50000",
+      "SELECT * FROM Employees WHERE Salary !< 50000"
     ],
     correct: 2,
-    explanation: 'In SQL Server, <code>>=</code> is the correct "greater than or equal to" operator. The syntax <code>=></code> is invalid, and <code>!<</code> is not standard. <code>> 50000</code> excludes exactly 50000.'
+    explanation: 'In SQL Server, <code>>=</code> is the correct "greater than or equal to" operator. <code>=></code> is invalid syntax, and <code>!<</code> is not standard. <code>> 50000</code> excludes the value 50000 itself.'
   },
   {
-    id: 3,
-    level: 'easy',
-    topic: 'ORDER BY',
-    question: 'What is the default sort order when using ORDER BY in SQL Server?',
-    code: `<span class="kw">SELECT</span> ProductName, Price<br><span class="kw">FROM</span> <span class="tbl">Products</span><br><span class="kw">ORDER BY</span> Price;`,
+    id: 3, level: "easy", topic: "ORDER BY",
+    question: "What is the default sort order when using ORDER BY in SQL Server?",
+    code: '<span class="kw">SELECT</span> ProductName, Price<br><span class="kw">FROM</span> <span class="tbl">Products</span><br><span class="kw">ORDER BY</span> Price;',
     options: [
-      'Random order',
-      'Descending (highest to lowest)',
-      'Ascending (lowest to highest)',
-      'Order of insertion into the table'
+      "Random order",
+      "Descending (highest to lowest)",
+      "Ascending (lowest to highest)",
+      "Order of insertion into the table"
     ],
     correct: 2,
-    explanation: 'SQL Server\'s default ORDER BY direction is <code>ASC</code> (ascending — lowest to highest). To sort descending, you must explicitly write <code>ORDER BY Price DESC</code>.'
+    explanation: 'SQL Server defaults to <code>ASC</code> (ascending — lowest to highest). To sort descending you must explicitly write <code>ORDER BY Price DESC</code>.'
   },
   {
-    id: 4,
-    level: 'easy',
-    topic: 'LIKE Operator',
-    question: 'Which pattern matches any string that starts with "S", followed by exactly 3 characters?',
-    code: `<span class="kw">SELECT</span> City<br><span class="kw">FROM</span> <span class="tbl">Locations</span><br><span class="kw">WHERE</span> City <span class="kw">LIKE</span> <span class="str">'_____'</span>;  <span class="cm">-- some pattern</span>`,
+    id: 4, level: "easy", topic: "LIKE Operator",
+    question: "Which LIKE pattern matches any string that starts with 'S' followed by exactly 3 characters?",
+    code: '<span class="kw">SELECT</span> City<br><span class="kw">FROM</span> <span class="tbl">Locations</span><br><span class="kw">WHERE</span> City <span class="kw">LIKE</span> <span class="str">\'pattern\'</span>;',
     options: [
-      `'S___'`,
-      `'%S___'`,
-      `'S%%%'`,
-      `'_S__'`
+      "S___",
+      "%S___",
+      "S%%%",
+      "_S__"
     ],
     correct: 0,
-    explanation: 'In SQL Server LIKE patterns, <code>_</code> matches exactly one character. <code>\'S___\'</code> means: letter "S" followed by exactly 3 any characters (total 4 characters starting with S). <code>%</code> matches zero or more characters.'
+    explanation: 'In LIKE, <code>_</code> matches exactly one character and <code>%</code> matches zero or more. <code>S___</code> means: letter S followed by exactly 3 any characters (4 characters total starting with S).'
   },
   {
-    id: 5,
-    level: 'easy',
-    topic: 'INNER JOIN',
-    question: 'What does an INNER JOIN return?',
-    code: `<span class="kw">SELECT</span> e.Name, d.DepartmentName<br><span class="kw">FROM</span> <span class="tbl">Employees</span> e<br><span class="kw">INNER JOIN</span> <span class="tbl">Departments</span> d<br>  <span class="kw">ON</span> e.DeptID = d.DeptID;`,
+    id: 5, level: "easy", topic: "INNER JOIN",
+    question: "What does an INNER JOIN return?",
+    code: '<span class="kw">SELECT</span> e.Name, d.DepartmentName<br><span class="kw">FROM</span> <span class="tbl">Employees</span> e<br><span class="kw">INNER JOIN</span> <span class="tbl">Departments</span> d<br>&nbsp;&nbsp;<span class="kw">ON</span> e.DeptID = d.DeptID;',
     options: [
-      'All rows from both tables, including unmatched rows',
-      'All rows from Employees, with NULLs for non-matching Departments',
-      'Only rows where there is a match in both tables',
-      'All rows from Departments, with NULLs for non-matching Employees'
+      "All rows from both tables including unmatched rows",
+      "All rows from Employees with NULLs for non-matching Departments",
+      "Only rows where there is a match in both tables",
+      "All rows from Departments with NULLs for non-matching Employees"
     ],
     correct: 2,
-    explanation: '<code>INNER JOIN</code> returns only the rows where the join condition matches in both tables. Unmatched rows from either side are excluded. For unmatched rows, you\'d need <code>LEFT JOIN</code>, <code>RIGHT JOIN</code>, or <code>FULL OUTER JOIN</code>.'
+    explanation: '<code>INNER JOIN</code> returns only matched rows from both sides. Unmatched rows from either table are excluded. Use <code>LEFT JOIN</code>, <code>RIGHT JOIN</code>, or <code>FULL OUTER JOIN</code> to include unmatched rows.'
   },
   {
-    id: 6,
-    level: 'easy',
-    topic: 'Aggregate Function – COUNT',
-    question: 'What is the difference between COUNT(*) and COUNT(ColumnName)?',
-    code: `<span class="kw">SELECT</span> <span class="fn">COUNT</span>(*) <span class="kw">AS</span> TotalRows,<br>       <span class="fn">COUNT</span>(Email) <span class="kw">AS</span> EmailCount<br><span class="kw">FROM</span> <span class="tbl">Customers</span>;`,
+    id: 6, level: "easy", topic: "Aggregate Function — COUNT",
+    question: "What is the difference between COUNT(*) and COUNT(ColumnName)?",
+    code: '<span class="kw">SELECT</span> <span class="fn">COUNT</span>(*) <span class="kw">AS</span> TotalRows,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="fn">COUNT</span>(Email) <span class="kw">AS</span> EmailCount<br><span class="kw">FROM</span> <span class="tbl">Customers</span>;',
     options: [
-      'There is no difference',
-      'COUNT(*) counts all rows; COUNT(Email) skips NULL values in Email',
-      'COUNT(*) is faster but less accurate',
-      'COUNT(Email) counts distinct email addresses only'
+      "There is no difference",
+      "COUNT(*) counts all rows; COUNT(Email) skips NULL values in Email",
+      "COUNT(*) is faster but less accurate",
+      "COUNT(Email) counts distinct email addresses only"
     ],
     correct: 1,
-    explanation: '<code>COUNT(*)</code> counts every row regardless of NULLs. <code>COUNT(ColumnName)</code> counts only non-NULL values in that column. If some customers have NULL Email, EmailCount will be less than TotalRows. For distinct values, use <code>COUNT(DISTINCT Email)</code>.'
+    explanation: '<code>COUNT(*)</code> counts every row. <code>COUNT(Email)</code> counts only non-NULL values in that column. For distinct values use <code>COUNT(DISTINCT Email)</code>.'
   },
 
-  // ── MODERATE (6) ──
+  // ── MODERATE (Q7–Q12) ──
   {
-    id: 7,
-    level: 'moderate',
-    topic: 'GROUP BY with Aggregate',
-    question: 'What is wrong with this query?',
-    code: `<span class="kw">SELECT</span> Department, Name, <span class="fn">COUNT</span>(*) <span class="kw">AS</span> EmpCount<br><span class="kw">FROM</span> <span class="tbl">Employees</span><br><span class="kw">GROUP BY</span> Department;`,
+    id: 7, level: "moderate", topic: "GROUP BY with Aggregate",
+    question: "What is wrong with this query?",
+    code: '<span class="kw">SELECT</span> Department, Name, <span class="fn">COUNT</span>(*) <span class="kw">AS</span> EmpCount<br><span class="kw">FROM</span> <span class="tbl">Employees</span><br><span class="kw">GROUP BY</span> Department;',
     options: [
-      'COUNT(*) cannot be used with GROUP BY',
-      'Name is not in the GROUP BY clause and is not wrapped in an aggregate function',
-      'The AS keyword is invalid here',
-      'Nothing is wrong — this query is valid'
+      "COUNT(*) cannot be used with GROUP BY",
+      "Name is not in the GROUP BY clause and not wrapped in an aggregate",
+      "The AS keyword is invalid here",
+      "Nothing is wrong — this query is valid"
     ],
     correct: 1,
-    explanation: 'In SQL Server, when using GROUP BY, every column in the SELECT list must either appear in the GROUP BY clause or be wrapped in an aggregate function. <code>Name</code> is neither, so this query will error with "Column \'Employees.Name\' is invalid in the select list because it is not contained in either an aggregate function or the GROUP BY clause."'
+    explanation: 'With GROUP BY, every column in SELECT must either appear in GROUP BY or be inside an aggregate function. <code>Name</code> satisfies neither, causing error 8120.'
   },
   {
-    id: 8,
-    level: 'moderate',
-    topic: 'LEFT JOIN',
-    question: 'How many rows will the result set contain?',
-    code: `<span class="cm">-- TableA has 5 rows, TableB has 3 rows</span><br><span class="cm">-- Only 2 rows in TableA match TableB</span><br><span class="kw">SELECT</span> a.Id, b.Value<br><span class="kw">FROM</span> <span class="tbl">TableA</span> a<br><span class="kw">LEFT JOIN</span> <span class="tbl">TableB</span> b <span class="kw">ON</span> a.Id = b.FkId;`,
-    options: [
-      '3 rows',
-      '2 rows',
-      '5 rows',
-      '8 rows'
-    ],
+    id: 8, level: "moderate", topic: "LEFT JOIN",
+    question: "TableA has 5 rows, TableB has 3 rows. Only 2 rows match. How many rows does this LEFT JOIN return?",
+    code: '<span class="kw">SELECT</span> a.Id, b.Value<br><span class="kw">FROM</span> <span class="tbl">TableA</span> a<br><span class="kw">LEFT JOIN</span> <span class="tbl">TableB</span> b <span class="kw">ON</span> a.Id = b.FkId;',
+    options: ["3 rows", "2 rows", "5 rows", "8 rows"],
     correct: 2,
-    explanation: '<code>LEFT JOIN</code> returns ALL rows from the left table (TableA = 5 rows). The 2 matching rows get joined data from TableB. The 3 non-matching rows from TableA still appear, with NULL values for TableB columns. So the total is always 5 rows.'
+    explanation: '<code>LEFT JOIN</code> returns ALL rows from the left table (TableA = 5). The 2 matches get joined data; the 3 non-matches show NULLs for TableB columns. Total is always 5.'
   },
   {
-    id: 9,
-    level: 'moderate',
-    topic: 'IN Operator',
-    question: 'What does this query return?',
-    code: `<span class="kw">SELECT</span> ProductName<br><span class="kw">FROM</span> <span class="tbl">Products</span><br><span class="kw">WHERE</span> CategoryID <span class="kw">IN</span> (<span class="kw">SELECT</span> CategoryID <span class="kw">FROM</span> <span class="tbl">Categories</span> <span class="kw">WHERE</span> Status = <span class="str">'Active'</span>);`,
+    id: 9, level: "moderate", topic: "IN Operator with Subquery",
+    question: "What does this query return?",
+    code: '<span class="kw">SELECT</span> ProductName<br><span class="kw">FROM</span> <span class="tbl">Products</span><br><span class="kw">WHERE</span> CategoryID <span class="kw">IN</span> (<br>&nbsp;&nbsp;<span class="kw">SELECT</span> CategoryID <span class="kw">FROM</span> <span class="tbl">Categories</span><br>&nbsp;&nbsp;<span class="kw">WHERE</span> Status = <span class="str">\'Active\'</span><br>);',
     options: [
-      'All products that do NOT belong to Active categories',
-      'All products belonging to categories with Status = \'Active\'',
-      'All products — the subquery is ignored',
-      'An error — IN cannot be used with subqueries'
+      "All products NOT in Active categories",
+      "All products in Active categories",
+      "All products — the subquery is ignored",
+      "Error — IN cannot be used with subqueries"
     ],
     correct: 1,
-    explanation: 'The <code>IN</code> operator with a subquery first evaluates the subquery to get a list of CategoryIDs where Status is \'Active\', then returns all products whose CategoryID appears in that list. This is equivalent to a join but can be more readable for filtered lookups.'
+    explanation: 'The subquery returns a list of CategoryIDs where Status is Active. <code>IN</code> then filters Products to only those whose CategoryID appears in that list.'
   },
   {
-    id: 10,
-    level: 'moderate',
-    topic: 'Text Functions – UPPER, LOWER, CONCAT',
-    question: 'What is the output of this query?',
-    code: `<span class="kw">SELECT</span> <span class="fn">UPPER</span>(<span class="fn">LEFT</span>(<span class="str">'SqlServer'</span>, <span class="num">3</span>)) + <span class="fn">LOWER</span>(<span class="fn">RIGHT</span>(<span class="str">'SQLSERVER'</span>, <span class="num">4</span>)) <span class="kw">AS</span> Result;`,
-    options: [
-      `'SQLsql'`,
-      `'SQLerver'`,
-      `'SQLserver'`,
-      `'SQLserv'`
-    ],
+    id: 10, level: "moderate", topic: "Text Functions — UPPER, LOWER, LEFT, RIGHT",
+    question: "What is the output?",
+    code: '<span class="kw">SELECT</span> <span class="fn">UPPER</span>(<span class="fn">LEFT</span>(<span class="str">\'SqlServer\'</span>, <span class="num">3</span>))\n  + <span class="fn">LOWER</span>(<span class="fn">RIGHT</span>(<span class="str">\'SQLSERVER\'</span>, <span class="num">4</span>)) <span class="kw">AS</span> Result;',
+    options: ["SQLrver", "SQLsql", "SQLerver", "SQLserv"],
     correct: 0,
-    explanation: '<code>LEFT(\'SqlServer\', 3)</code> returns <code>\'Sql\'</code>, then <code>UPPER(\'Sql\')</code> = <code>\'SQL\'</code>. <code>RIGHT(\'SQLSERVER\', 4)</code> returns <code>\'RVER\'</code>, then <code>LOWER(\'RVER\')</code> = <code>\'rver\'</code>. Concatenating: <code>\'SQL\' + \'rver\'</code> = <code>\'SQLrver\'</code>. Wait — let me recheck: <code>RIGHT(\'SQLSERVER\', 4)</code> = last 4 chars = <code>\'ERVER\'</code>... actually <code>\'SQLSERVER\'</code> has 9 chars, last 4 = <code>\'RVER\'</code>... no: S-Q-L-S-E-R-V-E-R, last 4 = E-R-V-E-R... Hmm, the answer key says \'SQLsql\' — <code>LEFT(\'SqlServer\',3)</code>=\'Sql\'→UPPER=\'SQL\', <code>RIGHT(\'SQLSERVER\',4)</code>=\'RVER\'→LOWER=\'rver\' = \'SQLrver\''. The correct answer is actually \'SQLrver\' but among the options, this reveals a common gotcha."
+    explanation: '<code>LEFT(\'SqlServer\',3)</code> = \'Sql\', then <code>UPPER</code> = \'SQL\'. <code>RIGHT(\'SQLSERVER\',4)</code> = last 4 chars = \'RVER\', then <code>LOWER</code> = \'rver\'. Concatenated: \'SQLrver\'.'
   },
   {
-    id: 11,
-    level: 'moderate',
-    topic: 'DATE FUNCTIONS – DATEDIFF, GETDATE',
-    question: 'What does DATEDIFF(YEAR, \'2020-03-15\', GETDATE()) return if today is 2025-01-10?',
-    code: `<span class="kw">SELECT</span> <span class="fn">DATEDIFF</span>(<span class="kw">YEAR</span>, <span class="str">'2020-03-15'</span>, <span class="fn">GETDATE</span>()) <span class="kw">AS</span> YearsDiff;`,
-    options: [
-      '4',
-      '5',
-      '4.8',
-      'Error — DATEDIFF requires DATE type, not string'
-    ],
+    id: 11, level: "moderate", topic: "DATE Functions — DATEDIFF, GETDATE",
+    question: "What does DATEDIFF(YEAR, '2020-03-15', GETDATE()) return if today is 2025-01-10?",
+    code: '<span class="kw">SELECT</span> <span class="fn">DATEDIFF</span>(<span class="kw">YEAR</span>, <span class="str">\'2020-03-15\'</span>, <span class="fn">GETDATE</span>()) <span class="kw">AS</span> YearsDiff;',
+    options: ["4", "5", "4.8", "Error — DATEDIFF requires DATE type"],
     correct: 1,
-    explanation: '<code>DATEDIFF</code> counts the number of datepart boundaries crossed between two dates. From 2020 to 2025, the YEAR boundary is crossed 5 times (2021, 2022, 2023, 2024, 2025). It does NOT calculate the actual difference in years as a decimal. SQL Server also implicitly converts the string to a date.'
+    explanation: '<code>DATEDIFF</code> counts crossed datepart boundaries. From 2020 to 2025, the YEAR boundary is crossed 5 times (2021, 2022, 2023, 2024, 2025). It does NOT compute a fractional difference.'
   },
   {
-    id: 12,
-    level: 'moderate',
-    topic: 'CASE Statement',
-    question: 'What value does \'Grade\' return for a student with Score = 82?',
-    code: `<span class="kw">SELECT</span><br>  <span class="kw">CASE</span><br>    <span class="kw">WHEN</span> Score >= <span class="num">90</span> <span class="kw">THEN</span> <span class="str">'A'</span><br>    <span class="kw">WHEN</span> Score >= <span class="num">80</span> <span class="kw">THEN</span> <span class="str">'B'</span><br>    <span class="kw">WHEN</span> Score >= <span class="num">70</span> <span class="kw">THEN</span> <span class="str">'C'</span><br>    <span class="kw">ELSE</span> <span class="str">'F'</span><br>  <span class="kw">END</span> <span class="kw">AS</span> Grade<br><span class="kw">FROM</span> <span class="tbl">Students</span><br><span class="kw">WHERE</span> Score = <span class="num">82</span>;`,
-    options: [
-      `'A'`,
-      `'B'`,
-      `'C'`,
-      `'F'`
-    ],
+    id: 12, level: "moderate", topic: "CASE Statement",
+    question: "What Grade is returned for a student with Score = 82?",
+    code: '<span class="kw">SELECT</span> <span class="kw">CASE</span><br>&nbsp;&nbsp;<span class="kw">WHEN</span> Score >= <span class="num">90</span> <span class="kw">THEN</span> <span class="str">\'A\'</span><br>&nbsp;&nbsp;<span class="kw">WHEN</span> Score >= <span class="num">80</span> <span class="kw">THEN</span> <span class="str">\'B\'</span><br>&nbsp;&nbsp;<span class="kw">WHEN</span> Score >= <span class="num">70</span> <span class="kw">THEN</span> <span class="str">\'C\'</span><br>&nbsp;&nbsp;<span class="kw">ELSE</span> <span class="str">\'F\'</span><br><span class="kw">END</span> <span class="kw">AS</span> Grade<br><span class="kw">FROM</span> <span class="tbl">Students</span> <span class="kw">WHERE</span> Score = <span class="num">82</span>;',
+    options: ["A", "B", "C", "F"],
     correct: 1,
-    explanation: 'CASE evaluates conditions in order. Score 82 does NOT satisfy <code>>= 90</code>, but DOES satisfy <code>>= 80</code>, so it returns <code>\'B\'</code>. Once a WHEN condition is met, subsequent WHEN clauses are skipped — even though 82 also satisfies <code>>= 70</code>, that branch is never reached.'
+    explanation: 'CASE evaluates conditions in order. 82 fails >= 90, passes >= 80, so it returns \'B\'. Subsequent WHEN clauses are skipped even though 82 also satisfies >= 70.'
   },
 
-  // ── HARD (6) ──
+  // ── HARD (Q13–Q18) ──
   {
-    id: 13,
-    level: 'hard',
-    topic: 'FULL OUTER JOIN',
-    question: 'Given the tables below, how many rows does this FULL OUTER JOIN return?',
-    code: `<span class="cm">-- TableX: ColA values → 1, 2, 3, 4</span><br><span class="cm">-- TableY: ColB values → 3, 4, 5, 6</span><br><span class="kw">SELECT</span> x.ColA, y.ColB<br><span class="kw">FROM</span> <span class="tbl">TableX</span> x<br><span class="kw">FULL OUTER JOIN</span> <span class="tbl">TableY</span> y<br>  <span class="kw">ON</span> x.ColA = y.ColB;`,
+    id: 13, level: "hard", topic: "FULL OUTER JOIN",
+    question: "TableX ColA: {1, 2, 3, 4}. TableY ColB: {3, 4, 5, 6}. How many rows does this return?",
+    code: '<span class="kw">SELECT</span> x.ColA, y.ColB<br><span class="kw">FROM</span> <span class="tbl">TableX</span> x<br><span class="kw">FULL OUTER JOIN</span> <span class="tbl">TableY</span> y<br>&nbsp;&nbsp;<span class="kw">ON</span> x.ColA = y.ColB;',
+    options: ["4 rows", "6 rows", "8 rows", "2 rows"],
+    correct: 1,
+    explanation: 'Matches: (3,3) and (4,4) = 2 rows. Unmatched from TableX: (1,NULL) and (2,NULL) = 2 rows. Unmatched from TableY: (NULL,5) and (NULL,6) = 2 rows. Total = 6.'
+  },
+  {
+    id: 14, level: "hard", topic: "RANK Function",
+    question: "With ORDER BY Salary ASC, what ranks are assigned to values: 50000, 50000, 60000, 60000, 70000?",
+    code: '<span class="kw">SELECT</span> Salary,<br>&nbsp;&nbsp;<span class="fn">RANK</span>() <span class="kw">OVER</span> (<span class="kw">ORDER BY</span> Salary <span class="kw">ASC</span>) <span class="kw">AS</span> Rnk<br><span class="kw">FROM</span> <span class="tbl">Salaries</span>;',
     options: [
-      '4 rows',
-      '6 rows',
-      '8 rows',
-      '2 rows'
+      "1, 1, 2, 2, 3",
+      "1, 1, 3, 3, 5",
+      "1, 2, 3, 4, 5",
+      "1, 2, 2, 3, 4"
     ],
     correct: 1,
-    explanation: 'FULL OUTER JOIN returns all matched rows plus unmatched rows from both sides. Matching pairs: (3,3) and (4,4) = 2 rows. Unmatched from TableX: (1, NULL) and (2, NULL) = 2 rows. Unmatched from TableY: (NULL, 5) and (NULL, 6) = 2 rows. Total = 2 + 2 + 2 = 6 rows.'
+    explanation: 'Both 50000s get rank 1. RANK skips rank 2 — both 60000s get rank 3. RANK skips rank 4 — 70000 gets rank 5. This gap behavior distinguishes RANK from DENSE_RANK (which gives 1,1,2,2,3).'
   },
   {
-    id: 14,
-    level: 'hard',
-    topic: 'RANK Function',
-    question: 'What ranks are assigned to the Salary values 50000, 50000, 60000, 60000, 70000?',
-    code: `<span class="kw">SELECT</span> Salary,<br>  <span class="fn">RANK</span>() <span class="kw">OVER</span> (<span class="kw">ORDER BY</span> Salary <span class="kw">DESC</span>) <span class="kw">AS</span> Rnk<br><span class="kw">FROM</span> <span class="tbl">Salaries</span>;`,
+    id: 15, level: "hard", topic: "STUFF Function",
+    question: "What is the output?",
+    code: '<span class="kw">SELECT</span> <span class="fn">STUFF</span>(<span class="str">\'ABCDEFGHIJ\'</span>, <span class="num">3</span>, <span class="num">4</span>, <span class="str">\'XYZ\'</span>) <span class="kw">AS</span> Result;',
     options: [
-      '1, 1, 2, 2, 3',
-      '1, 1, 3, 3, 5',
-      '1, 2, 3, 4, 5',
-      '1, 1, 2, 3, 4'
-    ],
-    correct: 1,
-    explanation: '<code>RANK()</code> assigns the same rank to ties but skips subsequent ranks. 70000→Rank 1. The two 60000s both get Rank 2... wait, descending: 70000=1, then 60000,60000 both get rank 2? No — RANK gives: 70000→1, 60000→2, 60000→2, 50000→4, 50000→4. But the question shows 50000,50000,60000,60000,70000 in that order. With ORDER BY DESC: 70000→1, 60000→2, 60000→2, 50000→4, 50000→4. Among the options, the correct mapping for the values listed in original order (50000,50000,60000,60000,70000) would be: 50000→4, 50000→4, 60000→2, 60000→2, 70000→1. The option showing the RANK skip behavior is <code>1, 1, 3, 3, 5</code> — but that\'s for ascending with values 50,50,60,60,70: 50→1, 50→1, 60→3, 60→3, 70→5. Yes — RANK skips: after two 1s, next is 3 (skipping 2), after two 3s, next is 5 (skipping 4).'
-  },
-  {
-    id: 15,
-    level: 'hard',
-    topic: 'STUFF Function',
-    question: 'What is the output of this STUFF function?',
-    code: `<span class="kw">SELECT</span> <span class="fn">STUFF</span>(<span class="str">'ABCDEFGHIJ'</span>, <span class="num">3</span>, <span class="num">4</span>, <span class="str">'XYZ'</span>) <span class="kw">AS</span> Result;`,
-    options: [
-      `'ABXYZGHIJ'`,
-      `'ABXYZFGHIJ'`,
-      `'XYZEFGHIJ'`,
-      `'ABXYZHIJ'`
+      "ABXYZGHIJ",
+      "ABXYZFGHIJ",
+      "XYZEFGHIJ",
+      "ABXYZHIJ"
     ],
     correct: 0,
-    explanation: '<code>STUFF(string, start, length, replacement)</code>: Starting at position 3 (\'C\'), delete 4 characters (\'CDEF\'), insert \'XYZ\'. Result: \'AB\' + \'XYZ\' + \'GHIJ\' = <code>\'ABXYZGHIJ\'</code>. Note: STUFF is 1-based, and the start position is inclusive.'
+    explanation: '<code>STUFF(string, start, length, replace)</code>: start at position 3 (\'C\'), delete 4 chars (\'CDEF\'), insert \'XYZ\'. Result: \'AB\' + \'XYZ\' + \'GHIJ\' = \'ABXYZGHIJ\'. STUFF is 1-based.'
   },
   {
-    id: 16,
-    level: 'hard',
-    topic: 'CHARINDEX + REPLACE',
-    question: 'What is the final output?',
-    code: `<span class="kw">DECLARE</span> @str <span class="kw">VARCHAR</span>(<span class="num">50</span>) = <span class="str">'Hello World, Hello SQL'</span>;<br><span class="kw">DECLARE</span> @pos <span class="kw">INT</span> = <span class="fn">CHARINDEX</span>(<span class="str">'SQL'</span>, @str);<br><span class="kw">DECLARE</span> @result <span class="kw">VARCHAR</span>(<span class="num">50</span>);<br><br><span class="kw">SET</span> @result = <span class="fn">REPLACE</span>(<span class="fn">LEFT</span>(@str, @pos - <span class="num">1</span>), <span class="str">'Hello'</span>, <span class="str">'Hi'</span>);<br><br><span class="kw">SELECT</span> @result <span class="kw">AS</span> Output;`,
+    id: 16, level: "hard", topic: "CHARINDEX + REPLACE + LEFT",
+    question: "What is the final output of @result?",
+    code: '<span class="kw">DECLARE</span> @str <span class="kw">VARCHAR</span>(<span class="num">50</span>) = <span class="str">\'Hello World, Hello SQL\'</span>;\n<span class="kw">DECLARE</span> @pos <span class="kw">INT</span> = <span class="fn">CHARINDEX</span>(<span class="str">\'SQL\'</span>, @str);\n<span class="kw">DECLARE</span> @result <span class="kw">VARCHAR</span>(<span class="num">50</span>);\n<span class="kw">SET</span> @result = <span class="fn">REPLACE</span>(\n&nbsp;&nbsp;<span class="fn">LEFT</span>(@str, @pos - <span class="num">1</span>),\n&nbsp;&nbsp;<span class="str">\'Hello\'</span>, <span class="str">\'Hi\'</span>\n);\n<span class="kw">SELECT</span> @result <span class="kw">AS</span> Output;',
     options: [
-      `'Hi World, Hello SQL'`,
-      `'Hi World, Hi SQL'`,
-      `'Hello World, Hi SQL'`,
-      `'Hi World, Hello'`
+      "Hi World, Hi ",
+      "Hi World, Hello SQL",
+      "Hello World, Hi SQL",
+      "Hi World, Hello"
     ],
     correct: 0,
-    explanation: '<code>CHARINDEX(\'SQL\', @str)</code> finds \'SQL\' at position 19. <code>LEFT(@str, 18)</code> = <code>\'Hello World, Hello \'</code>. Then <code>REPLACE</code> replaces ALL occurrences of \'Hello\' with \'Hi\' in that substring: <code>\'Hi World, Hi \'</code>... Wait — but the option says <code>\'Hi World, Hello SQL\'</code>. Let me recheck: <code>LEFT(@str, @pos-1)</code> = LEFT(\'Hello World, Hello SQL\', 18) = <code>\'Hello World, Hello \'</code> (positions 1-18). REPLACE replaces both \'Hello\' occurrences → <code>\'Hi World, Hi \'</code>. So the correct answer should be <code>\'Hi World, Hi \'</code>... The intended correct answer from the options closest to reality is option 1, acknowledging REPLACE affects all occurrences within the LEFT substring.'
+    explanation: '<code>CHARINDEX(\'SQL\', @str)</code> = 20. <code>LEFT(@str, 19)</code> = \'Hello World, Hello \'. <code>REPLACE</code> replaces ALL \'Hello\' occurrences in that substring: \'Hi World, Hi \'.'
   },
   {
-    id: 17,
-    level: 'hard',
-    topic: 'CREATE VIEW with JOIN + Aggregate',
-    question: 'Which statement about this view is TRUE?',
-    code: `<span class="kw">CREATE VIEW</span> <span class="tbl">vw_DeptSalary</span> <span class="kw">AS</span><br><span class="kw">SELECT</span> d.DeptName,<br>  <span class="fn">COUNT</span>(*) <span class="kw">AS</span> HeadCount,<br>  <span class="fn">AVG</span>(e.Salary) <span class="kw">AS</span> AvgSalary<br><span class="kw">FROM</span> <span class="tbl">Departments</span> d<br><span class="kw">INNER JOIN</span> <span class="tbl">Employees</span> e<br>  <span class="kw">ON</span> d.DeptID = e.DeptID<br><span class="kw">GROUP BY</span> d.DeptName;`,
+    id: 17, level: "hard", topic: "CREATE VIEW with JOIN + Aggregate",
+    question: "Which statement about this view is TRUE?",
+    code: '<span class="kw">CREATE VIEW</span> <span class="tbl">vw_DeptSalary</span> <span class="kw">AS</span><br><span class="kw">SELECT</span> d.DeptName,<br>&nbsp;&nbsp;<span class="fn">COUNT</span>(*) <span class="kw">AS</span> HeadCount,<br>&nbsp;&nbsp;<span class="fn">AVG</span>(e.Salary) <span class="kw">AS</span> AvgSalary<br><span class="kw">FROM</span> <span class="tbl">Departments</span> d<br><span class="kw">INNER JOIN</span> <span class="tbl">Employees</span> e <span class="kw">ON</span> d.DeptID = e.DeptID<br><span class="kw">GROUP BY</span> d.DeptName;',
     options: [
-      'The view stores a physical copy of the aggregated data',
-      'You can add an ORDER BY clause inside the view definition without TOP',
-      'The view is a stored query — data is computed when the view is queried',
-      'You cannot use aggregate functions inside a view'
+      "The view stores a physical copy of the aggregated data",
+      "You can add ORDER BY inside the view without TOP",
+      "The view is a stored query — data is computed when queried",
+      "You cannot use aggregate functions inside a view"
     ],
     correct: 2,
-    explanation: 'A view in SQL Server is a virtual table — it stores only the query definition, not data. When you <code>SELECT FROM vw_DeptSalary</code>, the underlying query executes at that moment, computing fresh aggregate results. You cannot add <code>ORDER BY</code> in a view without <code>TOP</code> (or <code>OFFSET-FETCH</code>). Aggregate functions are perfectly valid inside views.'
+    explanation: 'A view is a virtual table storing only the query definition, not data. When you SELECT from it, the query executes fresh. ORDER BY requires TOP or OFFSET-FETCH inside a view. Aggregates are valid.'
   },
   {
-    id: 18,
-    level: 'hard',
-    topic: 'DATEPART vs DATENAME + CASE + RANK',
-    question: 'What does this query accomplish?',
-    code: `<span class="kw">SELECT</span><br>  EmployeeName,<br>  <span class="fn">DATENAME</span>(<span class="kw">MONTH</span>, HireDate) <span class="kw">AS</span> MonthName,<br>  <span class="fn">RANK</span>() <span class="kw">OVER</span> (<br>    <span class="kw">PARTITION BY</span> <span class="fn">DATEPART</span>(<span class="kw">YEAR</span>, HireDate)<br>    <span class="kw">ORDER BY</span> <span class="fn">DATEDIFF</span>(<span class="kw">DAY</span>, HireDate, <span class="fn">GETDATE</span>()) <span class="kw">ASC</span><br>  ) <span class="kw">AS</span> SeniorityRank<br><span class="kw">FROM</span> <span class="tbl">Employees</span><br><span class="kw">WHERE</span> <span class="kw">CASE</span><br>  <span class="kw">WHEN</span> <span class="fn">DATEPART</span>(<span class="kw">WEEKDAY</span>, HireDate) <span class="kw">BETWEEN</span> <span class="num">2</span> <span class="kw">AND</span> <span class="num">6</span> <span class="kw">THEN</span> <span class="num">1</span><br>  <span class="kw">ELSE</span> <span class="num">0</span><br><span class="kw">END</span> = <span class="num">1</span>;`,
+    id: 18, level: "hard", topic: "DATEPART + DATENAME + DATEDIFF + RANK + CASE + BETWEEN",
+    question: "What does this query accomplish?",
+    code: '<span class="kw">SELECT</span> EmployeeName,<br>&nbsp;&nbsp;<span class="fn">DATENAME</span>(<span class="kw">MONTH</span>, HireDate) <span class="kw">AS</span> MonthName,<br>&nbsp;&nbsp;<span class="fn">RANK</span>() <span class="kw">OVER</span> (<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">PARTITION BY</span> <span class="fn">DATEPART</span>(<span class="kw">YEAR</span>, HireDate)<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">ORDER BY</span> <span class="fn">DATEDIFF</span>(<span class="kw">DAY</span>, HireDate, <span class="fn">GETDATE</span>()) <span class="kw">ASC</span><br>&nbsp;&nbsp;) <span class="kw">AS</span> SeniorityRank<br><span class="kw">FROM</span> <span class="tbl">Employees</span><br><span class="kw">WHERE</span> <span class="kw">CASE</span><br>&nbsp;&nbsp;<span class="kw">WHEN</span> <span class="fn">DATEPART</span>(<span class="kw">WEEKDAY</span>, HireDate) <span class="kw">BETWEEN</span> <span class="num">2</span> <span class="kw">AND</span> <span class="num">6</span> <span class="kw">THEN</span> <span class="num">1</span><br>&nbsp;&nbsp;<span class="kw">ELSE</span> <span class="num">0</span><br><span class="kw">END</span> = <span class="num">1</span>;',
     options: [
-      'Ranks employees by salary within each department, excluding weekend hires',
-      'Finds employees hired on weekdays, shows their hire month name, and ranks them by tenure (longest first) within each hire year',
-      'Lists employees hired in the current year, ranked by month name alphabetically',
-      'Groups employees by weekday of hire and calculates average tenure per group'
+      "Ranks employees by salary within each department, excluding weekend hires",
+      "Finds weekday hires, shows hire month name, ranks by tenure within each hire year",
+      "Lists employees hired in the current year ranked by month name",
+      "Groups employees by weekday of hire and calculates average tenure"
     ],
     correct: 1,
-    explanation: 'Breaking it down: <code>DATEPART(WEEKDAY, HireDate) BETWEEN 2 AND 6</code> filters for weekday hires only (assuming default @@DATEFIRST = 7, where Monday=2... Saturday=6). <code>DATENAME(MONTH, HireDate)</code> returns the month name (e.g., \'January\'). <code>RANK() OVER (PARTITION BY DATEPART(YEAR, HireDate) ORDER BY DATEDIFF(DAY, HireDate, GETDATE()) ASC)</code> ranks employees within each hire year by days since hire — smallest DATEDIFF = most senior = rank 1. The CASE in WHERE acts as a filter for weekday-only hires.'
+    explanation: 'The CASE filters weekday-only hires (WEEKDAY 2-6). DATENAME returns the month name. RANK with PARTITION BY year and ORDER BY DATEDIFF ascending ranks by tenure — smallest diff = most senior = rank 1.'
   }
 ];
 
-// Fix question 10 - recalculate properly
-// LEFT('SqlServer',3) = 'Sql' → UPPER = 'SQL'
-// RIGHT('SQLSERVER',4) = 'RVER' → LOWER = 'rver'
-// Result: 'SQLrver'
-// None of the options match exactly. Let me fix the options.
-questions[9].options = [
-  `'SQLrver'`,
-  `'SQLsql'`,
-  `'SQLerver'`,
-  `'SQLserv'`
-];
-questions[9].correct = 0;
-questions[9].explanation = '<code>LEFT(\'SqlServer\', 3)</code> returns <code>\'Sql\'</code>, then <code>UPPER(\'Sql\')</code> = <code>\'SQL\'</code>. <code>RIGHT(\'SQLSERVER\', 4)</code> returns the last 4 characters: <code>\'RVER\'</code>, then <code>LOWER(\'RVER\')</code> = <code>\'rver\'</code>. Concatenation with <code>+</code>: <code>\'SQL\' + \'rver\'</code> = <code>\'SQLrver\'</code>.';
-
-// Fix question 14 - make the question clearer
-questions[13].options = [
-  '1, 1, 2, 2, 3',
-  '1, 1, 3, 3, 5',
-  '1, 2, 3, 4, 5',
-  '1, 2, 2, 3, 4'
-];
-// With ORDER BY DESC: 70000→1, 60000→2, 60000→2, 50000→4, 50000→4
-// But question asks about ascending? Let me make it ORDER BY ASC explicitly.
-questions[13].code = `<span class="kw">SELECT</span> Salary,<br>  <span class="fn">RANK</span>() <span class="kw">OVER</span> (<span class="kw">ORDER BY</span> Salary <span class="kw">ASC</span>) <span class="kw">AS</span> Rnk<br><span class="kw">FROM</span> <span class="tbl">Salaries</span>;`;
-// ASC: 50000→1, 50000→1, 60000→3, 60000→3, 70000→5
-questions[13].correct = 1;
-questions[13].explanation = '<code>RANK()</code> with <code>ORDER BY Salary ASC</code>: the two 50000s both get rank 1. RANK then skips rank 2 — the two 60000s get rank 3. RANK then skips rank 4 — 70000 gets rank 5. This "gap" behavior distinguishes RANK from DENSE_RANK (which would give 1,1,2,2,3).';
-
-// Fix question 16 - recalculate
-// @str = 'Hello World, Hello SQL'
-// CHARINDEX('SQL', @str): H(1)e(2)l(3)l(4)o(5) (6)W(7)o(8)r(9)l(10)d(11),(12) (13)H(14)e(15)l(16)l(17)o(18) (19)S(20)Q(21)L(22)
-// 'SQL' starts at position 20
-// LEFT(@str, 19) = 'Hello World, Hello '
-// REPLACE('Hello World, Hello ', 'Hello', 'Hi') = 'Hi World, Hi '
-// So correct output is 'Hi World, Hi '
-questions[15].options = [
-  `'Hi World, Hi '`,
-  `'Hi World, Hello SQL'`,
-  `'Hello World, Hi SQL'`,
-  `'Hi World, Hello'`
-];
-questions[15].correct = 0;
-questions[15].explanation = '<code>CHARINDEX(\'SQL\', @str)</code> finds \'SQL\' starting at position 20. <code>LEFT(@str, 19)</code> extracts <code>\'Hello World, Hello \'</code> (the first 19 characters). <code>REPLACE</code> then replaces ALL occurrences of \'Hello\' with \'Hi\' within that substring, yielding <code>\'Hi World, Hi \'</code>. Note: REPLACE affects every occurrence, not just the first one.';
-
-// ==============================
-// State
-// ==============================
-let currentLevel = 'easy';
+/* ============================
+   State
+   ============================ */
+let currentLevel = "easy";
 let currentIndex = 0;
-let answers = {}; // { questionId: selectedOptionIndex }
+let answers = {};
 let reviewMode = false;
 
 const levelQuestions = {
-  easy: questions.filter(q => q.level === 'easy'),
-  moderate: questions.filter(q => q.level === 'moderate'),
-  hard: questions.filter(q => q.level === 'hard')
+  easy: questions.filter(function(q) { return q.level === "easy"; }),
+  moderate: questions.filter(function(q) { return q.level === "moderate"; }),
+  hard: questions.filter(function(q) { return q.level === "hard"; })
 };
 
-// ==============================
-// Functions
-// ==============================
+/* ============================
+   DOM References (set after DOM ready)
+   ============================ */
+let startScreen, quizArea, statsBar, questionContainer, questionMap;
+let prevBtn, nextBtn, finishBtn;
+let currentQEl, totalQEl, progressFill, levelLabel;
+let tabEasy, tabModerate, tabHard;
+let resultsPanel, resultsHero, resultsBreakdown, reviewBtn, retakeBtn;
+let statTotal, statCorrect, statWrong, statAccuracy;
+
+/* ============================
+   Initialization
+   ============================ */
+document.addEventListener("DOMContentLoaded", function() {
+  startScreen = document.getElementById("startScreen");
+  quizArea = document.getElementById("quizArea");
+  statsBar = document.getElementById("statsBar");
+  questionContainer = document.getElementById("questionContainer");
+  questionMap = document.getElementById("questionMap");
+  prevBtn = document.getElementById("prevBtn");
+  nextBtn = document.getElementById("nextBtn");
+  finishBtn = document.getElementById("finishBtn");
+  currentQEl = document.getElementById("currentQ");
+  totalQEl = document.getElementById("totalQ");
+  progressFill = document.getElementById("progressFill");
+  levelLabel = document.getElementById("levelLabel");
+  tabEasy = document.getElementById("tabEasy");
+  tabModerate = document.getElementById("tabModerate");
+  tabHard = document.getElementById("tabHard");
+  resultsPanel = document.getElementById("resultsPanel");
+  resultsHero = document.getElementById("resultsHero");
+  resultsBreakdown = document.getElementById("resultsBreakdown");
+  reviewBtn = document.getElementById("reviewBtn");
+  retakeBtn = document.getElementById("retakeBtn");
+  statTotal = document.getElementById("statTotal");
+  statCorrect = document.getElementById("statCorrect");
+  statWrong = document.getElementById("statWrong");
+  statAccuracy = document.getElementById("statAccuracy");
+
+  document.getElementById("startBtn").addEventListener("click", startQuiz);
+  prevBtn.addEventListener("click", prevQuestion);
+  nextBtn.addEventListener("click", nextQuestion);
+  finishBtn.addEventListener("click", showResults);
+  tabEasy.addEventListener("click", function() { switchLevel("easy"); });
+  tabModerate.addEventListener("click", function() { switchLevel("moderate"); });
+  tabHard.addEventListener("click", function() { switchLevel("hard"); });
+  reviewBtn.addEventListener("click", reviewAnswers);
+  retakeBtn.addEventListener("click", restartQuiz);
+});
+
+/* ============================
+   Core Functions
+   ============================ */
 function startQuiz() {
-  document.getElementById('startScreen').style.display = 'none';
-  document.getElementById('quizArea').style.display = 'block';
-  document.getElementById('statsBar').style.display = 'grid';
+  startScreen.style.display = "none";
+  quizArea.style.display = "block";
+  statsBar.style.display = "grid";
   renderQuestion();
   renderQuestionMap();
   updateStats();
@@ -1345,17 +848,20 @@ function switchLevel(level) {
   currentIndex = 0;
   reviewMode = false;
 
-  // Update tab styles
-  document.querySelectorAll('.level-tab').forEach(tab => {
-    tab.className = 'level-tab';
-  });
-  document.querySelector(`.level-tab[data-level="${level}"]`).classList.add(`active-${level}`);
+  tabEasy.className = "level-tab";
+  tabModerate.className = "level-tab";
+  tabHard.className = "level-tab";
 
-  // Update progress color
-  const colors = { easy: 'var(--easy)', moderate: 'var(--moderate)', hard: 'var(--hard)' };
-  document.getElementById('progressFill').style.background = colors[level];
-  document.getElementById('levelLabel').style.color = colors[level];
-  document.getElementById('levelLabel').textContent = level.charAt(0).toUpperCase() + level.slice(1);
+  var activeTab = null;
+  if (level === "easy") activeTab = tabEasy;
+  else if (level === "moderate") activeTab = tabModerate;
+  else activeTab = tabHard;
+  activeTab.classList.add("active-" + level);
+
+  var colors = { easy: "var(--easy)", moderate: "var(--moderate)", hard: "var(--hard)" };
+  progressFill.style.background = colors[level];
+  levelLabel.style.color = colors[level];
+  levelLabel.textContent = level.charAt(0).toUpperCase() + level.slice(1);
 
   renderQuestion();
   renderQuestionMap();
@@ -1366,137 +872,150 @@ function getFilteredQuestions() {
 }
 
 function renderQuestion() {
-  const qs = getFilteredQuestions();
-  const q = qs[currentIndex];
-  const container = document.getElementById('questionContainer');
+  var qs = getFilteredQuestions();
+  var q = qs[currentIndex];
 
-  const totalAnswered = Object.keys(answers).length;
-  const totalQuestions = questions.length;
+  currentQEl.textContent = currentIndex + 1;
+  totalQEl.textContent = qs.length;
+  progressFill.style.width = ((currentIndex + 1) / qs.length * 100) + "%";
 
-  // Update progress
-  document.getElementById('currentQ').textContent = currentIndex + 1;
-  document.getElementById('totalQ').textContent = qs.length;
-  document.getElementById('progressFill').style.width = ((currentIndex + 1) / qs.length * 100) + '%';
+  prevBtn.disabled = currentIndex === 0;
 
-  // Update nav buttons
-  document.getElementById('prevBtn').disabled = currentIndex === 0;
-  
-  const isAnswered = answers[q.id] !== undefined;
-  const isLast = currentIndex === qs.length - 1;
-  const allAnswered = totalAnswered === totalQuestions;
+  var isAnswered = answers[q.id] !== undefined;
+  var isLast = currentIndex === qs.length - 1;
+  var totalAnswered = Object.keys(answers).length;
+  var allAnswered = totalAnswered === questions.length;
 
   if (isLast && allAnswered) {
-    document.getElementById('nextBtn').style.display = 'none';
-    document.getElementById('finishBtn').style.display = 'inline-flex';
+    nextBtn.style.display = "none";
+    finishBtn.style.display = "inline-flex";
   } else {
-    document.getElementById('nextBtn').style.display = 'inline-flex';
-    document.getElementById('finishBtn').style.display = 'none';
-    document.getElementById('nextBtn').disabled = !isAnswered;
+    nextBtn.style.display = "inline-flex";
+    finishBtn.style.display = "none";
+    nextBtn.disabled = !isAnswered;
   }
 
-  // Build question HTML
-  const letters = ['A', 'B', 'C', 'D'];
-  const answered = answers[q.id] !== undefined;
-  const selectedIdx = answers[q.id];
-  const isCorrect = selectedIdx === q.correct;
+  var letters = ["A", "B", "C", "D"];
+  var selectedIdx = answers[q.id];
+  var isCorrect = (selectedIdx === q.correct);
 
-  let optionsHtml = q.options.map((opt, i) => {
-    let classes = 'option-btn';
-    if (answered) {
-      classes += ' disabled';
-      if (i === q.correct) classes += ' correct';
-      else if (i === selectedIdx && !isCorrect) classes += ' wrong';
+  var optionsHtml = "";
+  for (var i = 0; i < q.options.length; i++) {
+    var classes = "option-btn";
+    var icon = "";
+    var disabledAttr = "";
+
+    if (isAnswered) {
+      disabledAttr = " disabled";
+      if (i === q.correct) {
+        classes += " correct";
+        icon = '<i class="fas fa-check"></i>';
+      } else if (i === selectedIdx && !isCorrect) {
+        classes += " wrong";
+        icon = '<i class="fas fa-times"></i>';
+      } else {
+        classes += " disabled";
+      }
     } else if (selectedIdx === i) {
-      classes += ' selected';
+      classes += " selected";
     }
 
-    const icon = answered
-      ? (i === q.correct ? '<i class="fas fa-check"></i>' : (i === selectedIdx ? '<i class="fas fa-times"></i>' : ''))
-      : '';
+    var optText = formatOptionText(q.options[i]);
+    optionsHtml += '<button class="' + classes + '" data-qid="' + q.id + '" data-idx="' + i + '"' + disabledAttr + '>'
+      + '<span class="opt-letter">' + letters[i] + '</span>'
+      + '<span class="opt-text">' + optText + '</span>'
+      + '<span class="opt-icon">' + icon + '</span>'
+      + '</button>';
+  }
 
-    return `
-      <button class="${classes}" onclick="selectOption(${q.id}, ${i})" ${answered ? 'disabled' : ''}>
-        <span class="opt-letter">${letters[i]}</span>
-        <span class="opt-text">${formatOptionText(opt)}</span>
-        <span class="opt-icon">${icon}</span>
-      </button>
-    `;
-  }).join('');
+  var codeHtml = q.code ? '<div class="code-block">' + q.code + '</div>' : '';
 
-  const codeHtml = q.code ? `<div class="code-block">${q.code}</div>` : '';
+  var expHtml = "";
+  if (isAnswered) {
+    expHtml = '<div class="explanation-box visible">'
+      + '<div class="exp-title"><i class="fas fa-lightbulb"></i> Explanation</div>'
+      + '<div class="exp-text">' + q.explanation + '</div>'
+      + '</div>';
+  } else {
+    expHtml = '<div class="explanation-box" id="expBox"></div>';
+  }
 
-  const explanationHtml = answered
-    ? `<div class="explanation-box visible">
-        <div class="exp-title"><i class="fas fa-lightbulb"></i> Explanation</div>
-        <div class="exp-text">${q.explanation}</div>
-      </div>`
-    : `<div class="explanation-box" id="expBox"></div>`;
+  questionContainer.innerHTML = '<div class="question-card">'
+    + '<div class="question-meta">'
+    + '<span class="q-number">Q' + (currentIndex + 1) + '</span>'
+    + '<span class="q-topic">' + q.topic + '</span>'
+    + '<span class="q-difficulty ' + q.level + '">' + q.level + '</span>'
+    + '</div>'
+    + '<div class="question-text">' + q.question + '</div>'
+    + codeHtml
+    + '<div class="options-list">' + optionsHtml + '</div>'
+    + expHtml
+    + '</div>';
 
-  container.innerHTML = `
-    <div class="question-card" key="${q.id}">
-      <div class="question-meta">
-        <span class="q-number">Q${currentIndex + 1}</span>
-        <span class="q-topic">${q.topic}</span>
-        <span class="q-difficulty ${q.level}">${q.level}</span>
-      </div>
-      <div class="question-text">${q.question}</div>
-      ${codeHtml}
-      <div class="options-list">${optionsHtml}</div>
-      ${explanationHtml}
-    </div>
-  `;
+  // Attach option click handlers via delegation
+  var optBtns = questionContainer.querySelectorAll(".option-btn:not(.disabled)");
+  for (var j = 0; j < optBtns.length; j++) {
+    optBtns[j].addEventListener("click", handleOptionClick);
+  }
 
   renderQuestionMap();
 }
 
+function handleOptionClick(e) {
+  var btn = e.currentTarget;
+  var qId = parseInt(btn.getAttribute("data-qid"));
+  var idx = parseInt(btn.getAttribute("data-idx"));
+  selectOption(qId, idx);
+}
+
 function formatOptionText(text) {
-  // If it looks like code (starts with SELECT, contains SQL keywords)
-  if (/^\s*(SELECT|INSERT|UPDATE|DELETE|CREATE|DECLARE|SET)/i.test(text)) {
-    return `<code style="font-family:'JetBrains Mono',monospace;font-size:12px;background:rgba(0,0,0,0.3);padding:2px 8px;border-radius:4px;white-space:pre-wrap;">${escapeHtml(text)}</code>`;
+  var sqlKeywords = /^\s*(SELECT|INSERT|UPDATE|DELETE|CREATE|DECLARE|SET)/i;
+  if (sqlKeywords.test(text)) {
+    return '<code>' + escapeHtml(text) + '</code>';
   }
-  if (text.startsWith('\'') || text.includes('=>') || text.includes('>=') || text.includes('!=') || text.includes('!<')) {
-    return `<code style="font-family:'JetBrains Mono',monospace;font-size:12px;background:rgba(0,0,0,0.3);padding:2px 8px;border-radius:4px;">${escapeHtml(text)}</code>`;
+  if (text.indexOf("'") === 0 || text.indexOf(">=") !== -1 || text.indexOf("=>") !== -1 || text.indexOf("!<") !== -1 || text.indexOf("!=") !== -1) {
+    return '<code>' + escapeHtml(text) + '</code>';
   }
   return escapeHtml(text);
 }
 
 function escapeHtml(str) {
-  const div = document.createElement('div');
+  var div = document.createElement("div");
   div.textContent = str;
   return div.innerHTML;
 }
 
 function selectOption(qId, optIndex) {
-  if (answers[qId] !== undefined) return; // Already answered
-
+  if (answers[qId] !== undefined) return;
   answers[qId] = optIndex;
-  const q = questions.find(x => x.id === qId);
-  const isCorrect = optIndex === q.correct;
 
-  // Show toast
+  var q = null;
+  for (var i = 0; i < questions.length; i++) {
+    if (questions[i].id === qId) { q = questions[i]; break; }
+  }
+  var isCorrect = optIndex === q.correct;
   showToast(isCorrect);
-
   updateStats();
   renderQuestion();
 }
 
 function showToast(correct) {
-  const container = document.getElementById('toastContainer');
-  const toast = document.createElement('div');
-  toast.className = `toast ${correct ? 'correct' : 'wrong'}`;
+  var container = document.getElementById("toastContainer");
+  var toast = document.createElement("div");
+  toast.className = "toast " + (correct ? "correct" : "wrong");
   toast.innerHTML = correct
     ? '<i class="fas fa-check-circle"></i> Correct!'
     : '<i class="fas fa-times-circle"></i> Incorrect';
   container.appendChild(toast);
-  setTimeout(() => toast.remove(), 3200);
+  setTimeout(function() { if (toast.parentNode) toast.remove(); }, 3200);
 }
 
 function nextQuestion() {
-  const qs = getFilteredQuestions();
+  var qs = getFilteredQuestions();
   if (currentIndex < qs.length - 1) {
     currentIndex++;
     renderQuestion();
-    scrollToTop();
+    window.scrollTo({ top: 200, behavior: "smooth" });
   }
 }
 
@@ -1504,156 +1023,147 @@ function prevQuestion() {
   if (currentIndex > 0) {
     currentIndex--;
     renderQuestion();
-    scrollToTop();
+    window.scrollTo({ top: 200, behavior: "smooth" });
   }
-}
-
-function scrollToTop() {
-  window.scrollTo({ top: 200, behavior: 'smooth' });
 }
 
 function updateStats() {
-  let correct = 0;
-  let wrong = 0;
-  Object.entries(answers).forEach(([qId, optIdx]) => {
-    const q = questions.find(x => x.id === parseInt(qId));
-    if (optIdx === q.correct) correct++;
+  var correct = 0, wrong = 0;
+  var keys = Object.keys(answers);
+  for (var i = 0; i < keys.length; i++) {
+    var qId = parseInt(keys[i]);
+    var q = null;
+    for (var j = 0; j < questions.length; j++) {
+      if (questions[j].id === qId) { q = questions[j]; break; }
+    }
+    if (answers[qId] === q.correct) correct++;
     else wrong++;
-  });
-
-  const total = correct + wrong;
-  const accuracy = total > 0 ? Math.round((correct / total) * 100) : 0;
-
-  document.getElementById('statTotal').textContent = total;
-  document.getElementById('statCorrect').textContent = correct;
-  document.getElementById('statWrong').textContent = wrong;
-  document.getElementById('statAccuracy').textContent = accuracy + '%';
+  }
+  var total = correct + wrong;
+  var accuracy = total > 0 ? Math.round((correct / total) * 100) : 0;
+  statTotal.textContent = total;
+  statCorrect.textContent = correct;
+  statWrong.textContent = wrong;
+  statAccuracy.textContent = accuracy + "%";
 }
 
 function renderQuestionMap() {
-  const map = document.getElementById('questionMap');
-  let html = '';
-
-  ['easy', 'moderate', 'hard'].forEach(level => {
-    const qs = levelQuestions[level];
-    qs.forEach((q, i) => {
-      const globalIdx = questions.indexOf(q);
-      let cls = 'qmap-dot';
+  var html = "";
+  var levels = ["easy", "moderate", "hard"];
+  for (var l = 0; l < levels.length; l++) {
+    var level = levels[l];
+    var qs = levelQuestions[level];
+    for (var i = 0; i < qs.length; i++) {
+      var q = qs[i];
+      var globalIdx = questions.indexOf(q);
+      var cls = "qmap-dot";
       if (answers[q.id] !== undefined) {
-        cls += answers[q.id] === q.correct ? ' answered-correct' : ' answered-wrong';
+        cls += answers[q.id] === q.correct ? " answered-correct" : " answered-wrong";
       }
       if (level === currentLevel && i === currentIndex) {
-        cls += ' active current';
+        cls += " active current";
       }
-      html += `<div class="${cls}" onclick="jumpToQuestion('${level}', ${i})" title="Q${globalIdx + 1}: ${q.topic}">${globalIdx + 1}</div>`;
-    });
-  });
+      html += '<div class="' + cls + '" data-level="' + level + '" data-index="' + i + '" title="Q' + (globalIdx + 1) + ': ' + q.topic + '">' + (globalIdx + 1) + '</div>';
+    }
+  }
+  questionMap.innerHTML = html;
 
-  map.innerHTML = html;
+  // Attach click handlers to map dots
+  var dots = questionMap.querySelectorAll(".qmap-dot");
+  for (var d = 0; d < dots.length; d++) {
+    dots[d].addEventListener("click", handleMapClick);
+  }
 }
 
-function jumpToQuestion(level, index) {
-  if (level !== currentLevel) {
-    switchLevel(level);
-  }
+function handleMapClick(e) {
+  var dot = e.currentTarget;
+  var level = dot.getAttribute("data-level");
+  var index = parseInt(dot.getAttribute("data-index"));
+  if (level !== currentLevel) switchLevel(level);
   currentIndex = index;
   renderQuestion();
-  scrollToTop();
+  window.scrollTo({ top: 200, behavior: "smooth" });
 }
 
-// ==============================
-// Results
-// ==============================
+/* ============================
+   Results
+   ============================ */
 function showResults() {
-  const totalAnswered = Object.keys(answers).length;
-  if (totalAnswered < questions.length) {
-    // Check if at least current level is done
-    const currentQs = getFilteredQuestions();
-    const currentAnswered = currentQs.filter(q => answers[q.id] !== undefined).length;
-    if (currentAnswered < currentQs.length) return;
-  }
-
-  document.getElementById('quizArea').style.display = 'none';
-  const panel = document.getElementById('resultsPanel');
-  panel.classList.add('visible');
-
-  let correct = 0;
-  let wrong = 0;
-  Object.entries(answers).forEach(([qId, optIdx]) => {
-    const q = questions.find(x => x.id === parseInt(qId));
-    if (optIdx === q.correct) correct++;
+  var correct = 0, wrong = 0;
+  var keys = Object.keys(answers);
+  for (var i = 0; i < keys.length; i++) {
+    var qId = parseInt(keys[i]);
+    var q = null;
+    for (var j = 0; j < questions.length; j++) {
+      if (questions[j].id === qId) { q = questions[j]; break; }
+    }
+    if (answers[qId] === q.correct) correct++;
     else wrong++;
-  });
-
-  const total = correct + wrong;
-  const pct = Math.round((correct / questions.length) * 100);
-
-  // Hero
-  let iconClass, scoreColor, message;
-  if (pct >= 80) {
-    iconClass = 'excellent';
-    scoreColor = 'var(--accent)';
-    message = 'Outstanding performance! You have a strong command of SQL Server concepts.';
-  } else if (pct >= 50) {
-    iconClass = 'good';
-    scoreColor = 'var(--warning)';
-    message = 'Good effort! Review the topics where you missed questions to strengthen your understanding.';
-  } else {
-    iconClass = 'poor';
-    scoreColor = 'var(--error)';
-    message = 'Keep practicing! Focus on the fundamentals and revisit the explanation for each question.';
   }
 
-  const unanswered = questions.length - total;
-  const answerNote = unanswered > 0 ? `<div style="margin-top:8px;font-size:13px;color:var(--fg-muted);">${unanswered} question${unanswered > 1 ? 's' : ''} unanswered (counted as incorrect)</div>` : '';
+  var pct = Math.round((correct / questions.length) * 100);
+  var unanswered = questions.length - correct - wrong;
 
-  document.getElementById('resultsHero').innerHTML = `
-    <div class="results-icon ${iconClass}">
-      <i class="fas ${pct >= 80 ? 'fa-trophy' : pct >= 50 ? 'fa-medal' : 'fa-book-open'}"></i>
-    </div>
-    <div class="results-score" style="color:${scoreColor};">${pct}%</div>
-    <div class="results-label">${correct} out of ${questions.length} correct</div>
-    ${answerNote}
-    <div class="results-message">${message}</div>
-  `;
+  var iconClass, scoreColor, message;
+  if (pct >= 80) {
+    iconClass = "excellent"; scoreColor = "var(--accent)";
+    message = "Outstanding performance! You have a strong command of SQL Server concepts.";
+  } else if (pct >= 50) {
+    iconClass = "good"; scoreColor = "var(--warning)";
+    message = "Good effort! Review the topics where you missed questions to strengthen your understanding.";
+  } else {
+    iconClass = "poor"; scoreColor = "var(--error)";
+    message = "Keep practicing! Focus on the fundamentals and revisit each explanation carefully.";
+  }
 
-  // Breakdown by level
-  let breakdownHtml = '';
-  ['easy', 'moderate', 'hard'].forEach(level => {
-    const qs = levelQuestions[level];
-    let levelCorrect = 0;
-    qs.forEach(q => {
-      if (answers[q.id] !== undefined && answers[q.id] === q.correct) levelCorrect++;
-    });
-    const levelTotal = qs.length;
-    const levelPct = Math.round((levelCorrect / levelTotal) * 100);
-    breakdownHtml += `
-      <div class="rb-card">
-        <div class="rb-level ${level}">${level}</div>
-        <div class="rb-score">${levelCorrect}/${levelTotal}</div>
-        <div class="rb-detail">${levelPct}% accuracy</div>
-      </div>
-    `;
-  });
-  document.getElementById('resultsBreakdown').innerHTML = breakdownHtml;
+  var iconName = pct >= 80 ? "fa-trophy" : pct >= 50 ? "fa-medal" : "fa-book-open";
+  var noteHtml = unanswered > 0
+    ? '<div style="margin-top:8px;font-size:13px;color:var(--fg-muted);">' + unanswered + ' question' + (unanswered > 1 ? 's' : '') + ' unanswered (counted as incorrect)</div>'
+    : '';
 
-  scrollToTop();
+  resultsHero.innerHTML = '<div class="results-icon ' + iconClass + '"><i class="fas ' + iconName + '"></i></div>'
+    + '<div class="results-score" style="color:' + scoreColor + ';">' + pct + '%</div>'
+    + '<div class="results-label">' + correct + ' out of ' + questions.length + ' correct</div>'
+    + noteHtml
+    + '<div class="results-message">' + message + '</div>';
+
+  var bdHtml = "";
+  var levels = ["easy", "moderate", "hard"];
+  for (var l = 0; l < levels.length; l++) {
+    var level = levels[l];
+    var qs = levelQuestions[level];
+    var lvlCorrect = 0;
+    for (var k = 0; k < qs.length; k++) {
+      if (answers[qs[k].id] !== undefined && answers[qs[k].id] === qs[k].correct) lvlCorrect++;
+    }
+    var lvlPct = Math.round((lvlCorrect / qs.length) * 100);
+    bdHtml += '<div class="rb-card">'
+      + '<div class="rb-level ' + level + '">' + level + '</div>'
+      + '<div class="rb-score">' + lvlCorrect + '/' + qs.length + '</div>'
+      + '<div class="rb-detail">' + lvlPct + '% accuracy</div>'
+      + '</div>';
+  }
+  resultsBreakdown.innerHTML = bdHtml;
+
+  quizArea.style.display = "none";
+  resultsPanel.classList.add("visible");
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function reviewAnswers() {
-  document.getElementById('resultsPanel').classList.remove('visible');
-  document.getElementById('quizArea').style.display = 'block';
+  resultsPanel.classList.remove("visible");
+  quizArea.style.display = "block";
   reviewMode = true;
-  switchLevel('easy');
+  switchLevel("easy");
 }
 
 function restartQuiz() {
   answers = {};
   currentIndex = 0;
   reviewMode = false;
-  document.getElementById('resultsPanel').classList.remove('visible');
-  document.getElementById('quizArea').style.display = 'block';
-  switchLevel('easy');
+  resultsPanel.classList.remove("visible");
+  quizArea.style.display = "block";
+  switchLevel("easy");
   updateStats();
 }
 </script>
