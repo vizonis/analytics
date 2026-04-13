@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Power BI Course Content | Vizonis Academy — 13 Weekend Sessions with DAX, Power Query & Cloud</title>
+<meta name="description" content="Complete Power BI course content by Vizonis Academy. 13 weekend sessions covering Power Query, M Language, DAX expressions, hierarchies, drilldown, cloud deployment, insights, subscriptions, and real-world projects.">
+<meta name="keywords" content="Power BI course content, Power BI syllabus, DAX training, Power Query M Language course, Power BI cloud deployment, Power BI certification course, vizonis academy Power BI, weekend Power BI course India">
+<meta name="robots" content="index, follow">
+<meta name="author" content="Vizonis Academy">
+<link rel="canonical" href="https://vizonis.com/courses/power-bi">
+
+<meta property="og:title" content="Power BI Course Content | Vizonis Academy — 13 Sessions">
+<meta property="og:description" content="13-session weekend curriculum: Power Query, M Language, DAX Level 1 & 2, Cloud Deployment, Q&A, Insights, Subscriptions + Projects.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://vizonis.com/courses/power-bi">
+<meta property="og:site_name" content="Vizonis Academy">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "Microsoft Power BI Training",
+  "description": "Comprehensive 13-session Power BI course covering Power Query, M Language, DAX expressions (Level 1 & 2), Hierarchies, Drilldown Reports, Cloud Deployment, Power BI Service Operations, Insights, Subscriptions, and real-world dashboard projects.",
+  "provider": {
+    "@type": "EducationalOrganization",
+    "name": "Vizonis Academy",
+    "url": "https://vizonis.com",
+    "telephone": "+916364671786",
+    "email": "support@vizonis.com"
+  },
+  "hasCourseInstance": {
+    "@type": "CourseInstance",
+    "courseMode": "onsite",
+    "courseSchedule": {
+      "@type": "Schedule",
+      "repeatFrequency": "Weekly",
+      "byDay": ["https://schema.org/Saturday", "https://schema.org/Sunday"],
+      "duration": "PT2H"
+    },
+    "numberOfSessions": 13,
+    "courseWorkload": "PT26H"
+  }
+}
+</script>
+
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  :root {
+    --bg: #06090f;
+    --bg-secondary: #0c1220;
+    --card: #111a2e;
+    --card-hover: #162038;
+    --border: #1a2744;
+    --border-light: #223050;
+    --fg: #eaf0f9;
+    --fg-muted: #7b8fad;
+    --accent: #00d47b;
+    --accent-dim: rgba(0,212,123,0.08);
+    --accent-glow: rgba(0,212,123,0.2);
+    --gold: #f5b731;
+    --gold-dim: rgba(245,183,49,0.08);
+    --pbi-yellow: #f2c811;
+    --pbi-yellow-dim: rgba(242,200,17,0.08);
+    --pbi-yellow-glow: rgba(242,200,17,0.15);
+    --pbi-dark: #c8a600;
+    --error: #ff4d6a;
+    --radius: 14px;
+    --radius-sm: 10px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family:'DM Sans',sans-serif;
+    background:var(--bg);
+    color:var(--fg);
+    min-height:100vh;
+    overflow-x:hidden;
+    line-height:1.6;
+  }
+
+  .atmo-grid {
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      linear-gradient(rgba(242,200,17,0.015) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(242,200,17,0.015) 1px,transparent 1px);
+    background-size:80px 80px;
+  }
+  .atmo-glow { position:fixed;pointer-events:none;z-index:0;border-radius:50%; }
+  .atmo-glow.g1 {
+    width:600px;height:600px;top:-200px;right:-100px;
+    background:radial-gradient(circle,rgba(242,200,17,0.06),transparent 70%);
+    animation:drift 14s ease-in-out infinite;
+  }
+  .atmo-glow.g2 {
+    width:500px;height:500px;bottom:-150px;left:-100px;
+    background:radial-gradient(circle,rgba(0,212,123,0.04),transparent 70%);
+    animation:drift 18s ease-in-out infinite reverse;
+  }
+  .atmo-glow.g3 {
+    width:400px;height:400px;top:40%;left:50%;transform:translate(-50%,-50%);
+    background:radial-gradient(circle,rgba(242,200,17,0.03),transparent 60%);
+    animation:drift 22s ease-in-out infinite;
+  }
+  @keyframes drift {
+    0%,100%{transform:translate(0,0) scale(1);}
+    50%{transform:translate(20px,-15px) scale(1.05);}
+  }
+
+  .container { position:relative;z-index:1;max-width:960px;margin:0 auto;padding:0 24px; }
+
+  /* ── Nav ── */
+  .navbar {
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(6,9,15,0.88);backdrop-filter:blur(20px);
+    border-bottom:1px solid var(--border);
+  }
+  .navbar.scrolled { background:rgba(6,9,15,0.96); }
+  .nav-inner {
+    max-width:960px;margin:0 auto;padding:0 24px;
+    display:flex;align-items:center;justify-content:space-between;height:68px;
+  }
+  .nav-logo {
+    display:flex;align-items:center;gap:10px;
+    text-decoration:none;color:var(--fg);
+  }
+  .nav-logo-icon {
+    width:36px;height:36px;border-radius:9px;
+    background:linear-gradient(135deg,var(--accent),#00a86b);
+    display:flex;align-items:center;justify-content:center;
+    font-size:16px;color:var(--bg);font-weight:700;
+    font-family:'Space Grotesk',sans-serif;
+  }
+  .nav-logo-text {
+    font-family:'Space Grotesk',sans-serif;
+    font-size:18px;font-weight:700;letter-spacing:-0.5px;
+  }
+  .nav-right { display:flex;align-items:center;gap:10px; }
+  .nav-link {
+    padding:8px 16px;border:none;background:transparent;
+    color:var(--fg-muted);font-family:'DM Sans',sans-serif;
+    font-size:13px;font-weight:500;cursor:pointer;
+    border-radius:8px;transition:all 0.25s;text-decoration:none;
+  }
+  .nav-link:hover { color:var(--fg);background:rgba(255,255,255,0.05); }
+  .nav-cta {
+    padding:8px 20px;border:none;border-radius:8px;
+    background:var(--accent);color:var(--bg);
+    font-family:'DM Sans',sans-serif;font-size:13px;
+    font-weight:600;cursor:pointer;transition:all 0.25s;
+    text-decoration:none;display:inline-flex;align-items:center;gap:7px;
+  }
+  .nav-cta:hover { box-shadow:0 0 20px var(--accent-glow);transform:translateY(-1px); }
+  .mobile-toggle {
+    display:none;background:none;border:none;
+    color:var(--fg);font-size:20px;cursor:pointer;padding:8px;
+  }
+
+  /* ── Hero ── */
+  .course-hero { padding:140px 0 48px;text-align:center; }
+  .breadcrumb {
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:13px;color:var(--fg-muted);margin-bottom:24px;
+  }
+  .breadcrumb a { color:var(--fg-muted);text-decoration:none;transition:color 0.25s; }
+  .breadcrumb a:hover { color:var(--pbi-yellow); }
+  .breadcrumb .sep { opacity:0.4; }
+
+  .course-badge-row {
+    display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:24px;
+  }
+  .course-tag {
+    display:inline-flex;align-items:center;gap:6px;
+    padding:6px 16px;border-radius:50px;
+    font-size:12px;font-weight:600;
+    border:1px solid var(--border);background:rgba(255,255,255,0.03);color:var(--fg-muted);
+  }
+  .course-tag.ct-yellow { border-color:rgba(242,200,17,0.3);color:var(--pbi-yellow);background:var(--pbi-yellow-dim); }
+  .course-tag.ct-accent { border-color:rgba(0,212,123,0.3);color:var(--accent);background:var(--accent-dim); }
+  .course-tag.ct-gold { border-color:rgba(245,183,49,0.3);color:var(--gold);background:var(--gold-dim); }
+
+  .course-hero h1 {
+    font-family:'Space Grotesk',sans-serif;
+    font-size:clamp(32px,5.5vw,56px);
+    font-weight:700;line-height:1.1;letter-spacing:-1.5px;margin-bottom:16px;
+  }
+  .course-hero h1 .hl { color:var(--pbi-yellow); }
+  .ch-desc {
+    font-size:17px;color:var(--fg-muted);max-width:640px;
+    margin:0 auto 36px;line-height:1.7;
+  }
+  .hero-meta-bar {
+    display:flex;justify-content:center;gap:0;
+    background:var(--card);border:1px solid var(--border);
+    border-radius:var(--radius-sm);overflow:hidden;
+    max-width:640px;margin:0 auto;
+  }
+  .hero-meta-item {
+    flex:1;padding:18px 16px;text-align:center;
+    border-right:1px solid var(--border);
+  }
+  .hero-meta-item:last-child { border-right:none; }
+  .hmi-val {
+    font-family:'Space Grotesk',sans-serif;
+    font-size:22px;font-weight:700;color:var(--fg);
+  }
+  .hmi-val.yellow { color:var(--pbi-yellow); }
+  .hmi-label {
+    font-size:11px;color:var(--fg-muted);
+    text-transform:uppercase;letter-spacing:0.8px;margin-top:2px;
+  }
+
+  /* ── Progress Track ── */
+  .progress-section { padding:32px 0 24px; }
+  .progress-track-wrap {
+    background:var(--card);border:1px solid var(--border);
+    border-radius:var(--radius);padding:28px 28px 20px;
+  }
+  .progress-header {
+    display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;
+  }
+  .progress-title {
+    font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;
+  }
+  .progress-count {
+    font-size:13px;color:var(--fg-muted);font-family:'Space Grotesk',monospace;
+  }
+  .progress-count span { color:var(--pbi-yellow);font-weight:600; }
+  .progress-dots { display:flex;gap:4px;align-items:center; }
+  .p-dot {
+    flex:1;height:6px;border-radius:3px;background:var(--border);
+    cursor:pointer;transition:all 0.3s;position:relative;
+  }
+  .p-dot:hover { background:var(--border-light); }
+  .p-dot.active { background:var(--pbi-yellow); }
+  .p-dot.visited { background:rgba(242,200,17,0.35); }
+
+  /* ── Phase Labels ── */
+  .phase-divider {
+    display:flex;align-items:center;gap:14px;
+    margin:32px 0 18px;padding:0 4px;
+  }
+  .phase-divider .pd-line { flex:1;height:1px;background:var(--border); }
+  .phase-divider .pd-label {
+    font-size:11px;font-weight:700;text-transform:uppercase;
+    letter-spacing:2px;color:var(--pbi-yellow);
+    white-space:nowrap;
+  }
+  .phase-divider .pd-icon {
+    width:28px;height:28px;border-radius:7px;
+    background:var(--pbi-yellow-dim);
+    display:flex;align-items:center;justify-content:center;
+    font-size:12px;color:var(--pbi-yellow);
+  }
+
+  /* ── Class Cards ── */
+  .days-section { padding:16px 0 40px; }
+  .day-card {
+    background:var(--card);border:1px solid var(--border);
+    border-radius:var(--radius);margin-bottom:12px;
+    overflow:hidden;transition:border-color 0.3s;
+  }
+  .day-card:hover { border-color:var(--border-light); }
+  .day-card.active { border-color:rgba(242,200,17,0.35); }
+
+  .day-header {
+    width:100%;padding:20px 26px;background:transparent;
+    border:none;color:var(--fg);font-family:'DM Sans',sans-serif;
+    font-size:15px;font-weight:500;text-align:left;
+    cursor:pointer;display:flex;align-items:center;gap:14px;
+    transition:background 0.25s;
+  }
+  .day-header:hover { background:rgba(255,255,255,0.015); }
+
+  .day-num {
+    flex-shrink:0;width:42px;height:42px;border-radius:11px;
+    background:var(--pbi-yellow-dim);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Space Grotesk',sans-serif;
+    font-size:13px;font-weight:700;color:var(--pbi-yellow);
+    transition:all 0.3s;
+  }
+  .day-card.active .day-num { background:var(--pbi-yellow);color:var(--bg); }
+
+  .day-info { flex:1;min-width:0; }
+  .day-info h3 {
+    font-family:'Space Grotesk',sans-serif;
+    font-size:15px;font-weight:600;margin-bottom:1px;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .day-info .day-sub { font-size:12px;color:var(--fg-muted); }
+
+  .day-topics-count {
+    flex-shrink:0;padding:4px 11px;border-radius:50px;
+    background:rgba(255,255,255,0.04);
+    font-size:11px;color:var(--fg-muted);
+    font-family:'Space Grotesk',monospace;
+  }
+
+  .day-chevron {
+    flex-shrink:0;font-size:13px;color:var(--fg-muted);
+    transition:transform 0.35s,color 0.3s;
+  }
+  .day-card.active .day-chevron { transform:rotate(180deg);color:var(--pbi-yellow); }
+
+  .day-body {
+    max-height:0;overflow:hidden;
+    transition:max-height 0.5s cubic-bezier(0.22,1,0.36,1);
+  }
+  .day-card.active .day-body { max-height:800px; }
+  .day-body-inner { padding:0 26px 22px; }
+
+  .topic-list { list-style:none; }
+  .topic-list li {
+    display:flex;align-items:flex-start;gap:11px;
+    padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.025);
+    font-size:13.5px;color:var(--fg);line-height:1.5;
+  }
+  .topic-list li:last-child { border-bottom:none; }
+  .topic-check {
+    flex-shrink:0;width:20px;height:20px;border-radius:5px;
+    background:var(--pbi-yellow-dim);
+    display:flex;align-items:center;justify-content:center;margin-top:2px;
+  }
+  .topic-check i { font-size:9px;color:var(--pbi-yellow);opacity:0.5; }
+
+  .day-tags {
+    display:flex;gap:7px;flex-wrap:wrap;
+    margin-top:14px;padding-top:12px;border-top:1px solid var(--border);
+  }
+  .day-tag {
+    padding:3px 10px;border-radius:50px;
+    font-size:10px;font-weight:600;
+    background:rgba(255,255,255,0.035);color:var(--fg-muted);
+    border:1px solid rgba(255,255,255,0.05);
+  }
+
+  /* ── Projects ── */
+  .projects-section { padding:40px 0; }
+  .projects-box {
+    background:linear-gradient(135deg,var(--pbi-yellow-dim),rgba(0,212,123,0.02));
+    border:1px solid rgba(242,200,17,0.18);
+    border-radius:var(--radius);padding:40px 36px;text-align:center;
+  }
+  .pb-icon {
+    width:64px;height:64px;margin:0 auto 20px;border-radius:16px;
+    background:var(--pbi-yellow-dim);
+    display:flex;align-items:center;justify-content:center;
+    font-size:28px;color:var(--pbi-yellow);
+  }
+  .projects-box h2 {
+    font-family:'Space Grotesk',sans-serif;
+    font-size:28px;font-weight:700;letter-spacing:-0.5px;margin-bottom:12px;
+  }
+  .projects-box p {
+    font-size:15px;color:var(--fg-muted);max-width:520px;
+    margin:0 auto 24px;line-height:1.7;
+  }
+  .project-highlights {
+    display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
+    max-width:620px;margin:0 auto 28px;
+  }
+  .ph-item {
+    background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.05);
+    border-radius:var(--radius-sm);padding:14px 10px;text-align:center;
+  }
+  .ph-item i { font-size:18px;color:var(--pbi-yellow);margin-bottom:6px;display:block; }
+  .ph-item span { font-size:11px;color:var(--fg-muted);font-weight:500; }
+
+  /* ── Outcomes ── */
+  .outcomes-section { padding:40px 0; }
+  .outcomes-grid { display:grid;grid-template-columns:repeat(2,1fr);gap:14px; }
+  .outcome-card {
+    background:var(--card);border:1px solid var(--border);
+    border-radius:var(--radius-sm);padding:20px 18px;
+    display:flex;gap:14px;align-items:flex-start;transition:all 0.3s;
+  }
+  .outcome-card:hover { border-color:rgba(242,200,17,0.3);transform:translateY(-2px); }
+  .outcome-icon {
+    flex-shrink:0;width:38px;height:38px;border-radius:9px;
+    background:var(--pbi-yellow-dim);
+    display:flex;align-items:center;justify-content:center;
+    font-size:15px;color:var(--pbi-yellow);
+  }
+  .outcome-card h4 {
+    font-family:'Space Grotesk',sans-serif;
+    font-size:14px;font-weight:600;margin-bottom:3px;
+  }
+  .outcome-card p { font-size:12px;color:var(--fg-muted);line-height:1.5; }
+
+  /* ── CTA ── */
+  .cta-section { padding:40px 0 80px; }
+  .cta-box {
+    background:linear-gradient(135deg,rgba(242,200,17,0.08),rgba(0,212,123,0.02));
+    border:1px solid rgba(242,200,17,0.2);
+    border-radius:var(--radius);padding:52px 36px;
+    text-align:center;position:relative;overflow:hidden;
+  }
+  .cta-box::before {
+    content:'';position:absolute;top:-50%;left:-50%;
+    width:200%;height:200%;
+    background:radial-gradient(circle at 30% 40%,rgba(242,200,17,0.05),transparent 50%);
+    pointer-events:none;
+  }
+  .cta-box h2 {
+    font-family:'Space Grotesk',sans-serif;
+    font-size:clamp(22px,3.5vw,32px);font-weight:700;
+    letter-spacing:-0.8px;margin-bottom:12px;position:relative;
+  }
+  .cta-box p {
+    font-size:15px;color:var(--fg-muted);max-width:500px;
+    margin:0 auto 28px;line-height:1.7;position:relative;
+  }
+  .cta-actions {
+    display:flex;gap:14px;justify-content:center;
+    flex-wrap:wrap;position:relative;
+  }
+  .btn {
+    padding:13px 30px;border:none;border-radius:var(--radius-sm);
+    font-family:'DM Sans',sans-serif;font-size:14px;
+    font-weight:600;cursor:pointer;transition:all 0.3s;
+    display:inline-flex;align-items:center;gap:9px;text-decoration:none;
+  }
+  .btn-primary { background:var(--accent);color:var(--bg); }
+  .btn-primary:hover { box-shadow:0 0 28px var(--accent-glow);transform:translateY(-2px); }
+  .btn-whatsapp { background:#25d366;color:#fff; }
+  .btn-whatsapp:hover { box-shadow:0 0 28px rgba(37,211,102,0.3);transform:translateY(-2px); }
+  .btn-outline { background:transparent;color:var(--fg);border:1px solid var(--border); }
+  .btn-outline:hover { border-color:var(--pbi-yellow);color:var(--pbi-yellow); }
+
+  /* ── Footer ── */
+  footer { border-top:1px solid var(--border);padding:32px 0; }
+  .footer-inner {
+    display:flex;justify-content:space-between;align-items:center;
+    flex-wrap:wrap;gap:12px;font-size:12px;color:var(--fg-muted);
+  }
+  .footer-contact { display:flex;gap:16px;flex-wrap:wrap; }
+  .footer-contact a {
+    color:var(--fg-muted);text-decoration:none;
+    display:flex;align-items:center;gap:5px;transition:color 0.25s;
+  }
+  .footer-contact a:hover { color:var(--pbi-yellow); }
+
+  /* ── WhatsApp Float ── */
+  .whatsapp-float {
+    position:fixed;bottom:24px;right:24px;z-index:200;
+    width:56px;height:56px;border-radius:50%;background:#25d366;
+    display:flex;align-items:center;justify-content:center;
+    font-size:26px;color:#fff;cursor:pointer;
+    box-shadow:0 4px 24px rgba(37,211,102,0.35);
+    transition:all 0.3s;text-decoration:none;
+    animation:waFloat 3s ease-in-out infinite;
+  }
+  .whatsapp-float:hover {
+    transform:scale(1.1);box-shadow:0 6px 32px rgba(37,211,102,0.5);animation:none;
+  }
+  @keyframes waFloat {
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-8px);}
+  }
+  .wa-tooltip {
+    position:absolute;right:68px;top:50%;transform:translateY(-50%);
+    white-space:nowrap;background:var(--card);border:1px solid var(--border);
+    padding:7px 14px;border-radius:8px;font-size:12px;font-weight:500;
+    color:var(--fg);box-shadow:0 4px 16px rgba(0,0,0,0.3);
+    opacity:0;pointer-events:none;transition:opacity 0.3s;
+  }
+  .wa-tooltip::after {
+    content:'';position:absolute;right:-6px;top:50%;
+    transform:translateY(-50%) rotate(45deg);
+    width:10px;height:10px;background:var(--card);
+    border-right:1px solid var(--border);border-top:1px solid var(--border);
+  }
+  .whatsapp-float:hover .wa-tooltip { opacity:1; }
+
+  /* ── Section Helpers ── */
+  .section-label {
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:12px;font-weight:700;text-transform:uppercase;
+    letter-spacing:2px;color:var(--pbi-yellow);margin-bottom:12px;
+  }
+  .section-label .sl-line { width:24px;height:2px;background:var(--pbi-yellow);border-radius:2px; }
+  .section-title {
+    font-family:'Space Grotesk',sans-serif;
+    font-size:clamp(24px,3.5vw,32px);font-weight:700;
+    letter-spacing:-0.8px;line-height:1.15;margin-bottom:12px;
+  }
+  .section-desc { font-size:14px;color:var(--fg-muted);max-width:560px;line-height:1.7; }
+  .sh-center { text-align:center; }
+  .sh-center .section-desc { margin:0 auto; }
+
+  /* ── Mobile ── */
+  @media (max-width:700px) {
+    .nav-link { display:none; }
+    .mobile-toggle { display:block; }
+    .course-hero { padding:120px 0 36px; }
+    .hero-meta-bar { flex-direction:column; }
+    .hero-meta-item { border-right:none;border-bottom:1px solid var(--border);padding:14px 16px; }
+    .hero-meta-item:last-child { border-bottom:none; }
+    .day-header { padding:16px 16px;gap:10px; }
+    .day-body-inner { padding:0 16px 18px; }
+    .day-topics-count { display:none; }
+    .day-tags { flex-direction:column; }
+    .project-highlights { grid-template-columns:repeat(2,1fr); }
+    .outcomes-grid { grid-template-columns:1fr; }
+    .cta-box { padding:36px 20px; }
+    .progress-track-wrap { padding:20px 16px 16px; }
+    .projects-box { padding:28px 20px; }
+    .phase-divider { margin:24px 0 14px; }
+  }
+
+  @media (prefers-reduced-motion:reduce) {
+    *,*::before,*::after {
+      animation-duration:0.01ms!important;
+      transition-duration:0.01ms!important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="atmo-grid"></div>
+<div class="atmo-glow g1"></div>
+<div class="atmo-glow g2"></div>
+<div class="atmo-glow g3"></div>
+
+<!-- Navigation -->
+<nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="https://vizonis.com" class="nav-logo" aria-label="Vizonis Academy Home">
+      <div class="nav-logo-icon">V</div>
+      <span class="nav-logo-text">Vizonis Academy</span>
+    </a>
+    <div class="nav-right">
+      <a href="https://vizonis.com" class="nav-link">Home</a>
+      <a href="#outcomes" class="nav-link">Outcomes</a>
+      <a href="https://wa.me/916364671786?text=Hi%20Vizonis%20Academy%2C%20I%20want%20to%20enrol%20for%20the%20Power%20BI%20course.%20Please%20share%20details." class="nav-cta" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-whatsapp"></i> Enrol Now
+      </a>
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <!-- ═══ HERO ═══ -->
+  <section class="course-hero" aria-label="Course overview">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="https://vizonis.com">Home</a>
+        <span class="sep">/</span>
+        <a href="https://vizonis.com#courses">Courses</a>
+        <span class="sep">/</span>
+        <span style="color:var(--fg);">Power BI</span>
+      </div>
+
+      <div class="course-badge-row">
+        <span class="course-tag ct-yellow"><i class="fas fa-chart-pie"></i> Microsoft Power BI</span>
+        <span class="course-tag ct-accent"><i class="fas fa-calendar-week"></i> Weekends Only</span>
+        <span class="course-tag ct-gold"><i class="fas fa-clock"></i> 26 Hours Total</span>
+      </div>
+
+      <h1>Power BI<br><span class="hl">Complete Course Content</span></h1>
+      <p class="ch-desc">
+        From installation to cloud deployment — 13 structured weekend sessions covering Power Query, M Language, DAX, hierarchies, drilldown, Power BI Service, and real-world dashboard projects.
+      </p>
+
+      <div class="hero-meta-bar">
+        <div class="hero-meta-item">
+          <div class="hmi-val yellow">13</div>
+          <div class="hmi-label">Sessions</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="hmi-val">2 hrs</div>
+          <div class="hmi-label">Per Session</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="hmi-val">Sat & Sun</div>
+          <div class="hmi-label">Schedule</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="hmi-val">Hands-on</div>
+          <div class="hmi-label">Projects</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PROGRESS TRACK ═══ -->
+  <section class="progress-section" aria-label="Course progress overview">
+    <div class="container">
+      <div class="progress-track-wrap">
+        <div class="progress-header">
+          <span class="progress-title"><i class="fas fa-road" style="color:var(--pbi-yellow);margin-right:6px;font-size:13px;"></i> Your Learning Path</span>
+          <span class="progress-count"><span>13</span> Sessions &middot; 26 Hours</span>
+        </div>
+        <div class="progress-dots" id="progressDots"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ DAY-BY-DAY CONTENT ═══ -->
+  <section class="days-section" aria-label="Class-by-class course content">
+    <div class="container" id="daysContainer"></div>
+  </section>
+
+  <!-- ═══ PROJECTS ═══ -->
+  <section class="projects-section" aria-label="Course projects">
+    <div class="container">
+      <div class="projects-box">
+        <div class="pb-icon"><i class="fas fa-laptop-code"></i></div>
+        <h2>Real-World Dashboard Projects</h2>
+        <p>Build production-grade Power BI dashboards using real datasets — not sample files. Every concept from DAX to Cloud is applied in hands-on projects.</p>
+        <div class="project-highlights">
+          <div class="ph-item">
+            <i class="fas fa-database"></i>
+            <span>Multi-Source Data</span>
+          </div>
+          <div class="ph-item">
+            <i class="fas fa-tachometer-alt"></i>
+            <span>Live Dashboards</span>
+          </div>
+          <div class="ph-item">
+            <i class="fas fa-cloud"></i>
+            <span>Cloud Publish</span>
+          </div>
+          <div class="ph-item">
+            <i class="fas fa-qrcode"></i>
+            <span>QR & Insights</span>
+          </div>
+        </div>
+        <a href="https://wa.me/916364671786?text=Hi%20Vizonis%20Academy%2C%20I%20want%20to%20know%20about%20the%20projects%20included%20in%20the%20Power%20BI%20course." class="btn btn-whatsapp" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-whatsapp"></i> Ask About Projects
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ OUTCOMES ═══ -->
+  <section class="outcomes-section" id="outcomes" aria-label="What you will achieve">
+    <div class="container">
+      <div class="sh-center" style="margin-bottom:36px;">
+        <div class="section-label"><span class="sl-line"></span> What You Achieve <span class="sl-line"></span></div>
+        <h2 class="section-title">After Completing This Course</h2>
+        <p class="section-desc">You will be ready for Power BI developer and BI analyst roles with end-to-end dashboard building skills.</p>
+      </div>
+      <div class="outcomes-grid">
+        <div class="outcome-card">
+          <div class="outcome-icon"><i class="fas fa-filter"></i></div>
+          <div>
+            <h4>Power Query Mastery</h4>
+            <p>Clean, transform, and combine data from multiple sources using Power Query Editor and M Language.</p>
+          </div>
+        </div>
+        <div class="outcome-card">
+          <div class="outcome-icon"><i class="fas fa-code"></i></div>
+          <div>
+            <h4>DAX Proficiency</h4>
+            <p>Write complex DAX measures including Time Intelligence, RANKX, KPIs, and calculated columns.</p>
+          </div>
+        </div>
+        <div class="outcome-card">
+          <div class="outcome-icon"><i class="fas fa-sitemap"></i></div>
+          <div>
+            <h4>Hierarchies & Drilldown</h4>
+            <p>Build multi-level hierarchies with drill-through, expand-to-next-level, and automated navigation.</p>
+          </div>
+        </div>
+        <div class="outcome-card">
+          <div class="outcome-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+          <div>
+            <h4>Cloud Deployment</h4>
+            <p>Publish, manage, and refresh dashboards on Power BI Service with gateways and scheduled refresh.</p>
+          </div>
+        </div>
+        <div class="outcome-card">
+          <div class="outcome-icon"><i class="fas fa-chart-bar"></i></div>
+          <div>
+            <h4>Advanced Visualizations</h4>
+            <p>Create waterfall charts, maps, ArcGIS maps, scatter plots, and high-density visual reports.</p>
+          </div>
+        </div>
+        <div class="outcome-card">
+          <div class="outcome-icon"><i class="fas fa-brain"></i></div>
+          <div>
+            <h4>AI-Powered Insights</h4>
+            <p>Use Quick Insights, natural language Q&A (Cortana), and content packs for intelligent analytics.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CTA ═══ -->
+  <section class="cta-section" aria-label="Enrol now">
+    <div class="container">
+      <div class="cta-box">
+        <h2>Ready to Master Power BI?</h2>
+        <p>Speak directly with our trainer on WhatsApp. No sales team, no middlemen — just a straight conversation about your learning goals.</p>
+        <div class="cta-actions">
+          <a href="https://wa.me/916364671786?text=Hi%20Vizonis%20Academy%2C%20I%20want%20to%20enrol%20for%20the%20Power%20BI%20course.%20Please%20share%20the%20batch%20schedule%20and%20fee%20details." class="btn btn-whatsapp" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-whatsapp"></i> Enrol on WhatsApp
+          </a>
+          <a href="https://vizonis.com#courses" class="btn btn-outline">
+            <i class="fas fa-arrow-left"></i> All Courses
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Footer -->
+<footer role="contentinfo">
+  <div class="container">
+    <div class="footer-inner">
+      <span>&copy; 2025 Vizonis Academy. All rights reserved.</span>
+      <div class="footer-contact">
+        <a href="tel:+916364671786"><i class="fas fa-phone"></i> +91 6364671786</a>
+        <a href="mailto:support@vizonis.com"><i class="fas fa-envelope"></i> support@vizonis.com</a>
+        <a href="https://vizonis.com"><i class="fas fa-globe"></i> vizonis.com</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/916364671786?text=Hi%20Vizonis%20Academy%2C%20I%20want%20to%20know%20about%20the%20Power%20BI%20course." class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+  <i class="fab fa-whatsapp"></i>
+  <span class="wa-tooltip">Enquire about Power BI course</span>
+</a>
+
+<script>
+(function() {
+
+  /* ════════════════════════════════════════
+     Course Data — From Power BI PDF
+     ════════════════════════════════════════ */
+  var phases = [
+    {
+      name: "Foundation & Report Building",
+      icon: "fa-layer-group",
+      classes: [
+        {
+          day: 1,
+          title: "Introduction to Power BI",
+          subtitle: "Setup, Architecture & Overview",
+          topics: [
+            "Introduction to Power BI — Need, Importance",
+            "Power BI — Advantages and Scalable Options",
+            "History — Power View, Power Query, Power Pivot",
+            "Power BI Data Source Library and DW Files",
+            "Cloud Collaboration and Usage Scope",
+            "Business Analyst Tools, MS Cloud Tools",
+            "Power BI Installation and Cloud Account",
+            "Power BI Cloud and Power BI Service",
+            "Power BI Architecture and Data Access",
+            "On-premise Data Access and Microsoft OneDrive",
+            "Power BI Desktop — Installation, Usage",
+            "Sample Reports and Visualization Controls",
+            "Power BI Cloud Account Configuration",
+            "Understanding Desktop & Mobile Editions",
+            "Report Rendering Options and End User Access",
+            "Power View and Power Map, Power BI Licenses",
+            "Course Plan — Power BI Online Training"
+          ],
+          tags: ["Setup", "Architecture", "Cloud", "Licenses", "Desktop"]
+        },
+        {
+          day: 2,
+          title: "Creating Power BI Reports & Auto Filters",
+          subtitle: "Report Design, Canvas & Publishing",
+          topics: [
+            "Report Design with Legacy & .DAT Files",
+            "Report Design with Database Tables",
+            "Understanding Power BI Report Designer",
+            "Report Canvas, Report Pages — Creation, Renames",
+            "Report Visuals, Fields and UI Options",
+            "Experimenting Visual Interactions, Advantages",
+            "Reports with Multiple Pages and Advantages",
+            "Pages with Multiple Visualizations, Data Access",
+            "Publish Options and Report Verification in Cloud",
+            "GET DATA Options and Report Fields, Filters",
+            "Report View Options — Full, Fit Page, Width Scale",
+            "Report Design using Databases & Queries",
+            "Query Settings and Data Preloads",
+            "Navigation Options and Report Refresh",
+            "Stacked Bar Chart, Stacked Column Chart",
+            "Clustered Bar Chart, Clustered Column Chart",
+            "Adding Report Titles, Report Format Options",
+            "Focus Mode, Explore and Export Settings"
+          ],
+          tags: ["Report Canvas", "Publishing", "GET DATA", "Charts", "Focus Mode"]
+        },
+        {
+          day: 3,
+          title: "Report Visualizations & Properties",
+          subtitle: "Formatting, Filters & Table Design",
+          topics: [
+            "Power BI Design — Canvas, Visualizations and Fields",
+            "Import Data Options with Power BI Model, Advantages",
+            "Direct Query Options and Real-time (LIVE) Data Access",
+            "Data Fields and Filters with Visualizations",
+            "Visualization Filters, Page Filters, Report Filters",
+            "Conditional Filters and Clearing, Testing Sets",
+            "Creating Customized Tables with Power BI Editor",
+            "General Properties, Sizing, Dimensions, Positions",
+            "Alternate Text and Tiles, Header (Column, Row) Properties",
+            "Grid Properties (Vertical, Horizontal) and Styles",
+            "Table Styles & Alternate Row Colors — Static, Dynamic",
+            "Sparse, Flashy Rows, Condensed Table Reports, Focus Mode",
+            "Totals Computations, Background, Borders Properties",
+            "Column Headers, Column Formatting, Value Properties",
+            "Conditional Formatting Options — Color Scale",
+            "Page Level Filters and Report Level Filters",
+            "Visual-Level Filters and Format Options",
+            "Report Fields, Formats and Analytics",
+            "Background Properties, Borders and Lock Aspect Class"
+          ],
+          tags: ["Conditional Formatting", "Table Styles", "Filters", "Properties"]
+        }
+      ]
+    },
+    {
+      name: "Charts, Maps & Hierarchies",
+      icon: "fa-chart-bar",
+      classes: [
+        {
+          day: 4,
+          title: "Chart & Map Report Properties",
+          subtitle: "All Chart Types, Analytics & Maps",
+          topics: [
+            "Chart Report Types and Properties",
+            "Stacked Bar Chart, Stacked Column Chart",
+            "Clustered Bar Chart, Clustered Column Chart",
+            "100% Stacked Bar Chart, 100% Stacked Column Chart",
+            "Line Charts, Area Charts, Stacked Area Charts",
+            "Line and Stacked Row Charts",
+            "Line and Stacked Column Charts",
+            "Waterfall Chart, Scatter Chart, Pie Chart",
+            "Field Properties — Axis, Legend, Value, Tooltip",
+            "Field Properties — Color Saturation, Filters Types",
+            "Formats — Legend, Axis, Data Labels, Plot Area",
+            "Data Labels — Visibility, Color and Display Units",
+            "Data Labels — Precision, Position, Text Options",
+            "Analytics — Constant Line, Position, Labels",
+            "Working with Waterfall Charts and Default Values",
+            "Modifying Legends and Visual Filters — Options",
+            "Map Reports — Working with Map Reports",
+            "Hierarchies — Grouping Multiple Report Fields",
+            "Hierarchy Levels and Usages in Visualizations",
+            "Preordered Attribute Collection — Advantages",
+            "Using Field Hierarchies with Chart Reports",
+            "Advanced Query Mode & Connection Settings",
+            "Direct Import and In-memory Loads, Advantages"
+          ],
+          tags: ["Waterfall", "Scatter", "Maps", "Analytics", "Hierarchies"]
+        },
+        {
+          day: 5,
+          title: "Hierarchies & Drilldown Reports",
+          subtitle: "Drill Modes, Parameters & Navigation",
+          topics: [
+            "Hierarchies and Drilldown Options",
+            "Hierarchy Levels and Drill Modes — Usage",
+            "Drill-thru Options with Tree Map and Pie Chart",
+            "Higher Levels and Next Level Navigation Options",
+            "Aggregates with Bottom/Up Navigations, Rules",
+            "Multi Field Aggregations and Hierarchies in Power BI",
+            "DRILLDOWN, SHOWNEXTLEVEL, EXPANDTONEXTLEVEL",
+            "SEE DATA and SEE RECORDS Options, Differences",
+            "Toggle Options with Tabular Data, Filters",
+            "Drilldown Buttons and Mouse Hover Options on Visuals",
+            "Dependent Aggregations, Independent Aggregations",
+            "Automated Records Selection with Tabular Data",
+            "Report Parameters — Creation and Data Type",
+            "Available Values and Default Values, Member Values",
+            "Parameters for Column Data and Table / Query Filters",
+            "Parameters Creation — Query Mode, UI Option",
+            "Linking Parameters to Query Columns — Options",
+            "Edit Query Options and Parameter Manage Entries",
+            "Connection Parameters and Dynamic Data Sources",
+            "Synonyms — Creation and Usage Options"
+          ],
+          tags: ["Drilldown", "Drill-thru", "Parameters", "SEE DATA", "Aggregations"]
+        }
+      ]
+    },
+    {
+      name: "Power Query & M Language",
+      icon: "fa-plug",
+      classes: [
+        {
+          day: 6,
+          title: "Power Query & M Language — Part 1",
+          subtitle: "Query Editor, Joins & Transformations",
+          topics: [
+            "Understanding Power Query Editor — Options",
+            "Power BI Interface and Query / Dataset Edits",
+            "Working with Empty Tables and Load / Edits",
+            "Empty Table Names and Header Row Promotions",
+            "Undo Headers Options, Blank Columns Detection",
+            "Data Imports and Query Marking in Query Editor",
+            "JSON Files & Binary Formats with Power Query",
+            "JavaScript Object Notation — Usage with M Language",
+            "Applied Steps and Usage Options, Revert Options",
+            "Creating Query Groups and Query References, Usage",
+            "Query Rename, Load Enable and Data Refresh Options",
+            "Combine Queries — Merge Join and Anti-Join Options",
+            "Combine Queries — Union and Union All as New Dataset",
+            "M Language — Nested Join and Join Kind Functions",
+            "REPLACE, REMOVE ROWS, REMOVE COL, BLANK — M Language",
+            "Column Splits and Filled Up / Filled Down Options",
+            "Query Hide and Change Type Options, Code Generation"
+          ],
+          tags: ["Power Query", "M Language", "JSON", "Merge Join", "Applied Steps"]
+        },
+        {
+          day: 7,
+          title: "Power Query & M Language — Part 2",
+          subtitle: "Advanced M, Pivot, Web & ArcGIS",
+          topics: [
+            "Invoke Function and Freezing Columns",
+            "Creating Reference Tables and Queries",
+            "Detection and Removal of Query Datasets",
+            "Custom Columns with Power Query",
+            "Power Query Expressions and Usage",
+            "Blank Queries and Enumeration Value Generation",
+            "M Language Semantics and Syntax, Transform Types",
+            "IF..ELSE Conditions, Transform Column() Types",
+            "Remove Columns(), Split Columns(), Replace Value()",
+            "Table.Distinct Options and GROUP BY Options",
+            "Table.Group(), Table.Sort() with Type Conversions",
+            "PIVOT Operation and Table.Pivot(), List Functions",
+            "Using Parameters with M Language (Power Query Editor)",
+            "Advanced Query Editor and Parameter Scripts",
+            "List Generation and Table Conversion Options",
+            "Aggregations using Power Query & Usage in Reports",
+            "Report Generation using Web Pages & HTML Tables",
+            "Reports from Page Collection with Power Query",
+            "Aggregate and Evaluate Options with M Language",
+            "Creating High-Density Reports, ArcGIS Maps, ESRI Files",
+            "Generating QR Codes for Reports",
+            "Table Bars and Drill Thru Filters"
+          ],
+          tags: ["PIVOT", "GROUP BY", "Web Pages", "ArcGIS", "QR Codes", "IF..ELSE"]
+        }
+      ]
+    },
+    {
+      name: "DAX Expressions",
+      icon: "fa-calculator",
+      classes: [
+        {
+          day: 8,
+          title: "DAX Expressions — Level 1",
+          subtitle: "Fundamentals, Context & Function Types",
+          topics: [
+            "Purpose of Data Analysis Expressions (DAX)",
+            "Scope of Usage with DAX, Usability Options",
+            "DAX Context — Row Context and Filter Context",
+            "DAX Entities — Calculated Columns and Measures",
+            "DAX Data Types — Numeric, Boolean, Variant, Currency",
+            "Datetime Data Type with DAX, Comparison with Excel",
+            "DAX Operators & Symbols, Usage, Operator Priority",
+            "Parenthesis, Comparison, Arithmetic, Text, Logic",
+            "DAX Functions and Types — Table Valued Functions",
+            "Filter, Aggregation and Time Intelligence Functions",
+            "Information Functions, Logical, Parent-Child Functions",
+            "Statistical and Text Functions, Formulas and Queries",
+            "Syntax Requirements with DAX, Differences with Excel",
+            "Naming Conventions and DAX Format Representation",
+            "Working with Special Characters in Table Names",
+            "Attribute / Column Scope with DAX — Examples",
+            "Measure / Column Scope with DAX — Examples"
+          ],
+          tags: ["DAX Basics", "Row Context", "Filter Context", "Operators", "Data Types"]
+        },
+        {
+          day: 9,
+          title: "DAX Expressions — Level 2",
+          subtitle: "Time Intelligence, KPIs & Advanced DAX",
+          topics: [
+            "YTD, QTD, MTD Calculations with DAX",
+            "DAX Calculations and Measures",
+            "Using TOPN, RANKX, RANK.EQ",
+            "Computations using STDEV & VAR",
+            "SAMPLE Function, COUNTALL, ISERROR",
+            "ISTEXT, DATEFORMAT, TIMEFORMAT",
+            "Time Intelligence Functions with DAX",
+            "Data Analysis Expressions and Functions",
+            "DATESYTD, DATESQTD, DATESMTD",
+            "ENDOFYEAR, ENDOFQUARTER, ENDOFMONTH",
+            "FIRSTDATE, LASTDATE, DATESBETWEEN",
+            "CLOSINGBALANCEYEAR, CLOSINGBALANCEQTR",
+            "SAMEPERIOD and PREVIOUSMONTH, QUARTER",
+            "KPIs with DAX, Vertipaq Queries in DAX",
+            "IF..ELSEIF.. Conditions with DAX",
+            "Slicing and Dicing Options with Columns, Measures",
+            "DAX for Query Extraction, Data Mashup Operations",
+            "Calculated Columns and Calculated Measures with DAX"
+          ],
+          tags: ["YTD/QTD/MTD", "RANKX", "TOPN", "KPIs", "DATESBETWEEN", "Vertipaq"]
+        }
+      ]
+    },
+    {
+      name: "Cloud, Service & Insights",
+      icon: "fa-cloud",
+      classes: [
+        {
+          day: 10,
+          title: "Power BI Deployment & Cloud",
+          subtitle: "Publish, Gateways & Architecture",
+          topics: [
+            "Power BI Report Validation and Publish",
+            "Understanding Power BI Cloud Architecture",
+            "Power BI Cloud Account and Workspace",
+            "Reports and Dataset Items Validation",
+            "Dashboards and Pins — Real-time Usage",
+            "Dynamic Data Sources and Encryptions",
+            "Personal and Organizational Content Packs",
+            "Gateways, Subscriptions, Mobile Reports",
+            "Data Refresh with Power BI Architecture",
+            "PBIX and PBIT Files with Power BI — Usage",
+            "Visual Data Imports and Visual Schemas",
+            "Cloud and On-Premise Data Sources",
+            "How Power BI Supports Data Model?",
+            "Relation between Dashboards to Reports",
+            "Relation between Datasets to Reports",
+            "Relation between Datasets to Dashboards",
+            "Page to Report — Mapping Options",
+            "Publish Options and Data Import Options",
+            "Need for PINS on Visuals and PINS on Reports",
+            "Need for Data Streams and Cloud Integration"
+          ],
+          tags: ["Cloud", "PBIX/PBIT", "Gateways", "Content Packs", "Data Model"]
+        },
+        {
+          day: 11,
+          title: "Power BI Cloud Operations",
+          subtitle: "Workspace, Dashboards & Dataset Management",
+          topics: [
+            "Report Publish Options and Verifications",
+            "Working with Power BI Cloud Interface & Options",
+            "Navigation Paths with My Workspace Screens",
+            "FILE, VIEW, EDIT REPORTS, ACCESS, DRILLDOWN",
+            "Saving Reports into PDF, PPTX, etc. — Report Embed",
+            "Report Rendering and EDIT, SAVE, Print Options",
+            "Report PIN and Individual Visual PIN Options",
+            "Create and Use Dashboards — Menu Options",
+            "Go to Dashboard and Go to LIVE Page Options",
+            "Operations on Pinned Reports and Visuals",
+            "TITLE, MEDIA, USAGE METRICS & FAVOURITES",
+            "SUBSCRIPTION Options and Reports with Mobile View",
+            "Options with Report Page — Print and Subscribe",
+            "Report Actions — USAGE METRICS, ANALYSE IN EXCEL",
+            "Report Actions — RELATED ITEMS, RENAME, DELETE",
+            "Dashboard Actions — METRICS, RELATED ITEMS",
+            "Dashboard Actions — SETTINGS FOR Q&A, DELETE",
+            "PIN Actions — METRICS, SHARE, RELATED ITEMS",
+            "PIN Actions — SETTINGS FOR Q&A, DELETE",
+            "EDIT DASHBOARD (Cloud), On-The-Fly Reports",
+            "Dataset Actions — CREATE REPORT, REFRESH",
+            "SCHEDULED REFRESH & RELATED ITEMS",
+            "Dashboard Integration with Apps in Power BI"
+          ],
+          tags: ["My Workspace", "Dashboards", "PIN", "Subscriptions", "Mobile View"]
+        },
+        {
+          day: 12,
+          title: "Improving Power BI Reports",
+          subtitle: "Gateways, Templates, Auto-Refresh & Q&A",
+          topics: [
+            "Publish Power BI Report Templates",
+            "Import and Export Options with Power BI",
+            "Dataset Navigations and Report Navigations",
+            "Quick Navigation Options with My Workspace",
+            "Dashboards, Workbooks, Reports, Datasets",
+            "Working with MY WORK SPACE Group",
+            "Installing the Power BI Personal Gateway",
+            "Automatic Refresh — Possible Issues",
+            "Adding Images to the Dashboards",
+            "Reading & Editing Power BI Views",
+            "Power BI Templates (PBIT) — Creation, Usage",
+            "Managing Report in Power BI Services",
+            "Power BI Gateway — Download and Installation",
+            "Personal and Enterprise Gateway Features",
+            "Power BI Settings — Dataset Gateway Integration",
+            "Configuring Dataset for Manual Refresh of Data",
+            "Configuring Automatic Refresh and Schedules",
+            "Workbooks and Alerts with Power BI",
+            "Dataset Actions and Refresh Settings with Gateway",
+            "Using Natural Language Q&A with Data — Cortana"
+          ],
+          tags: ["Gateway", "PBIT Templates", "Auto-Refresh", "Q&A", "Cortana"]
+        },
+        {
+          day: 13,
+          title: "Insights & Subscriptions",
+          subtitle: "Quick Insights, Content Packs & Cortana",
+          topics: [
+            "Data Navigation Paths and Data Splits",
+            "Getting Data from Existing Systems",
+            "Data Refresh and LIVE Connections",
+            "PBIT and PBIX — Differences, Usage Options",
+            "Quick Insights for Power BI Reports",
+            "Quick Insights for Power BI Dashboards",
+            "Generating Insights with Cloud Datasets",
+            "Generating Reports with Cloud Datasets",
+            "Using Relational Databases On-Premises",
+            "Using Relational Databases in the Cloud",
+            "Consuming a Service Content Pack",
+            "Creating a Custom Data Set from a Service",
+            "Creating a Content Pack for Your Organization",
+            "Consuming an Organizational Content Pack",
+            "Updating an Organizational Content Pack",
+            "Adding Tiles — Images, Videos, DataStream",
+            "Creating New Reports from Cortana, Advantages"
+          ],
+          tags: ["Quick Insights", "Content Packs", "Cortana", "DataStream", "LIVE Connections"]
+        }
+      ]
+    }
+  ];
+
+  /* Flatten for easy lookup */
+  var allClasses = [];
+  for (var p = 0; p < phases.length; p++) {
+    for (var c = 0; c < phases[p].classes.length; c++) {
+      allClasses.push(phases[p].classes[c]);
+    }
+  }
+
+  /* ══════════════════════════════
+     Render Progress Dots
+     ══════════════════════════════ */
+  var dotsContainer = document.getElementById("progressDots");
+  var dotsHtml = "";
+  for (var d = 0; d < allClasses.length; d++) {
+    dotsHtml += '<div class="p-dot" data-day="' + allClasses[d].day + '" title="Class ' + allClasses[d].day + ': ' + allClasses[d].title + '"></div>';
+  }
+  dotsContainer.innerHTML = dotsHtml;
+
+  /* ══════════════════════════════
+     Render Day Cards with Phases
+     ══════════════════════════════ */
+  var daysContainer = document.getElementById("daysContainer");
+  var cardsHtml = "";
+
+  for (var pi = 0; pi < phases.length; pi++) {
+    var phase = phases[pi];
+
+    /* Phase divider */
+    cardsHtml += '<div class="phase-divider">'
+      + '<span class="pd-line"></span>'
+      + '<span class="pd-icon"><i class="fas ' + phase.icon + '"></i></span>'
+      + '<span class="pd-label">Phase ' + (pi + 1) + ': ' + phase.name + '</span>'
+      + '<span class="pd-line"></span>'
+      + '</div>';
+
+    for (var ci = 0; ci < phase.classes.length; ci++) {
+      var cls = phase.classes[ci];
+      var topicCount = cls.topics.length;
+
+      var topicsLi = "";
+      for (var t = 0; t < cls.topics.length; t++) {
+        topicsLi += '<li>'
+          + '<span class="topic-check"><i class="fas fa-check"></i></span>'
+          + '<span>' + cls.topics[t] + '</span>'
+          + '</li>';
+      }
+
+      var tagsSpan = "";
+      for (var g = 0; g < cls.tags.length; g++) {
+        tagsSpan += '<span class="day-tag">' + cls.tags[g] + '</span>';
+      }
+
+      cardsHtml += '<div class="day-card" data-day="' + cls.day + '">'
+        + '<button class="day-header" aria-expanded="false">'
+        + '<span class="day-num">C' + cls.day + '</span>'
+        + '<div class="day-info">'
+        + '<h3>Class ' + cls.day + ': ' + cls.title + '</h3>'
+        + '<span class="day-sub">' + cls.subtitle + '</span>'
+        + '</div>'
+        + '<span class="day-topics-count">' + topicCount + ' topics</span>'
+        + '<span class="day-chevron"><i class="fas fa-chevron-down"></i></span>'
+        + '</button>'
+        + '<div class="day-body">'
+        + '<div class="day-body-inner">'
+        + '<ul class="topic-list">' + topicsLi + '</ul>'
+        + '<div class="day-tags">' + tagsSpan + '</div>'
+        + '</div>'
+        + '</div>'
+        + '</div>';
+    }
+  }
+  daysContainer.innerHTML = cardsHtml;
+
+  /* ══════════════════════════════
+     Accordion Logic
+     ══════════════════════════════ */
+  var dayCards = document.querySelectorAll(".day-card");
+  var activeDay = null;
+
+  function openDay(card) {
+    if (activeDay && activeDay !== card) {
+      activeDay.classList.remove("active");
+      activeDay.querySelector(".day-header").setAttribute("aria-expanded", "false");
+    }
+    card.classList.add("active");
+    card.querySelector(".day-header").setAttribute("aria-expanded", "true");
+    activeDay = card;
+    updateDots();
+  }
+
+  function closeDay(card) {
+    card.classList.remove("active");
+    card.querySelector(".day-header").setAttribute("aria-expanded", "false");
+    activeDay = null;
+    updateDots();
+  }
+
+  for (var c = 0; c < dayCards.length; c++) {
+    (function(card) {
+      card.querySelector(".day-header").addEventListener("click", function() {
+        if (card.classList.contains("active")) closeDay(card);
+        else openDay(card);
+      });
+    })(dayCards[c]);
+  }
+
+  /* ══════════════════════════════
+     Progress Dots Interaction
+     ══════════════════════════════ */
+  var pDots = document.querySelectorAll(".p-dot");
+
+  for (var p = 0; p < pDots.length; p++) {
+    (function(dot) {
+      dot.addEventListener("click", function() {
+        var dayNum = parseInt(dot.getAttribute("data-day"));
+        var targetCard = document.querySelector('.day-card[data-day="' + dayNum + '"]');
+        if (targetCard) {
+          openDay(targetCard);
+          var offset = document.getElementById("navbar").offsetHeight + 16;
+          var top = targetCard.getBoundingClientRect().top + window.pageYOffset - offset;
+          window.scrollTo({ top: top, behavior: "smooth" });
+        }
+      });
+    })(pDots[p]);
+  }
+
+  function updateDots() {
+    for (var u = 0; u < pDots.length; u++) pDots[u].classList.remove("active");
+    if (activeDay) {
+      var activeDayNum = parseInt(activeDay.getAttribute("data-day"));
+      var activeDot = document.querySelector('.p-dot[data-day="' + activeDayNum + '"]');
+      if (activeDot) activeDot.classList.add("active");
+    }
+  }
+
+  /* ══════════════════════════════
+     Scroll: Track visited dots
+     ══════════════════════════════ */
+  if ("IntersectionObserver" in window) {
+    var dayObserver = new IntersectionObserver(function(entries) {
+      for (var e = 0; e < entries.length; e++) {
+        if (entries[e].isIntersecting) {
+          var card = entries[e].target;
+          var dayNum = parseInt(card.getAttribute("data-day"));
+          for (var u = 0; u < pDots.length; u++) pDots[u].classList.remove("visited");
+          for (var v = 0; v < dayNum - 1; v++) {
+            var vd = document.querySelector('.p-dot[data-day="' + (v + 1) + '"]');
+            if (vd) vd.classList.add("visited");
+          }
+        }
+      }
+    }, { threshold: 0.3, rootMargin: "-80px 0px -60% 0px" });
+
+    for (var o = 0; o < dayCards.length; o++) dayObserver.observe(dayCards[o]);
+  }
+
+  /* ══════════════════════════════
+     Scroll Reveal
+     ══════════════════════════════ */
+  var revealEls = document.querySelectorAll(
+    ".day-card, .outcome-card, .projects-box, .cta-box, .progress-track-wrap, .phase-divider"
+  );
+  if ("IntersectionObserver" in window) {
+    var revealObs = new IntersectionObserver(function(entries) {
+      for (var r = 0; r < entries.length; r++) {
+        if (entries[r].isIntersecting) {
+          entries[r].target.style.opacity = "1";
+          entries[r].target.style.transform = "translateY(0)";
+          revealObs.unobserve(entries[r].target);
+        }
+      }
+    }, { threshold: 0.06, rootMargin: "0px 0px -20px 0px" });
+
+    for (var rv = 0; rv < revealEls.length; rv++) {
+      revealEls[rv].style.opacity = "0";
+      revealEls[rv].style.transform = "translateY(20px)";
+      revealEls[rv].style.transition = "opacity 0.5s ease, transform 0.5s ease";
+      revealObs.observe(revealEls[rv]);
+    }
+  }
+
+  /* ══════════════════════════════
+     Navbar scroll
+     ══════════════════════════════ */
+  var navbar = document.getElementById("navbar");
+  window.addEventListener("scroll", function() {
+    navbar.classList.toggle("scrolled", window.scrollY > 30);
+  }, { passive: true });
+
+  /* ══════════════════════════════
+     Auto-open Class 1
+     ══════════════════════════════ */
+  setTimeout(function() {
+    var firstCard = document.querySelector('.day-card[data-day="1"]');
+    if (firstCard) openDay(firstCard);
+  }, 600);
+
+})();
+</script>
+</body>
+</html>
