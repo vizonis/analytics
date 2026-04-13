@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python for Data Analytics Course Content | Vizonis Academy — 10 Weekend Sessions</title>
+<meta name="description" content="Complete Python for Data Analytics course content by Vizonis Academy. 10 weekend sessions covering Python fundamentals, NumPy, Pandas, data cleaning, EDA, Matplotlib, Seaborn, and Generative AI with Python for automated insights.">
+<meta name="keywords" content="Python data analytics course, Python course syllabus, Pandas training, NumPy course, Matplotlib Seaborn training, Python EDA course, Generative AI Python, OpenAI API Python, vizonis academy Python, weekend Python course India">
+<meta name="robots" content="index, follow">
+<meta name="author" content="Vizonis Academy">
+<link rel="canonical" href="https://vizonis.com/courses/python">
+
+<meta property="og:title" content="Python for Data Analytics Course Content | Vizonis Academy">
+<meta property="og:description" content="10-session weekend curriculum: Python, NumPy, Pandas, Matplotlib, Seaborn, EDA, Data Cleaning, and Generative AI with Python.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://vizonis.com/courses/python">
+<meta property="og:site_name" content="Vizonis Academy">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "Python for Data Analytics Training",
+  "description": "Comprehensive 10-session Python course covering Python fundamentals, NumPy, Pandas data manipulation, data cleaning, exploratory data analysis, Matplotlib and Seaborn visualization, and Generative AI using Python with OpenAI API integration.",
+  "provider": {
+    "@type": "EducationalOrganization",
+    "name": "Vizonis Academy",
+    "url": "https://vizonis.com",
+    "telephone": "+916364671786",
+    "email": "support@vizonis.com"
+  },
+  "hasCourseInstance": {
+    "@type": "CourseInstance",
+    "courseMode": "onsite",
+    "courseSchedule": {
+      "@type": "Schedule",
+      "repeatFrequency": "Weekly",
+      "byDay": ["https://schema.org/Saturday", "https://schema.org/Sunday"],
+      "duration": "PT2H"
+    },
+    "numberOfSessions": 10,
+    "courseWorkload": "PT20H"
+  }
+}
+</script>
+
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  :root {
+    --bg:#06090f;--card:#0f1724;--border:#1a2744;--border-light:#223050;
+    --fg:#eaf0f9;--fg-muted:#7b8fad;
+    --accent:#00d47b;--accent-dim:rgba(0,212,123,0.08);
+    --gold:#f5b731;--gold-dim:rgba(245,183,49,0.08);
+    --py:#48a9c5;--py-dim:rgba(72,169,197,0.08);
+    --py-ice:#8fd4ec;--py-deep:#2a6d8a;
+    --error:#ff4d6a;--radius:14px;--radius-sm:10px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--fg);min-height:100vh;overflow-x:hidden;line-height:1.6;}
+  .atmo-grid{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(72,169,197,0.012) 1px,transparent 1px),linear-gradient(90deg,rgba(72,169,197,0.012) 1px,transparent 1px);background-size:80px 80px;}
+  .atmo-glow{position:fixed;pointer-events:none;z-index:0;border-radius:50%;}
+  .atmo-glow.g1{width:600px;height:600px;top:-200px;right:-100px;background:radial-gradient(circle,rgba(72,169,197,0.06),transparent 70%);animation:drift 14s ease-in-out infinite;}
+  .atmo-glow.g2{width:500px;height:500px;bottom:-150px;left:-100px;background:radial-gradient(circle,rgba(0,212,123,0.04),transparent 70%);animation:drift 18s ease-in-out infinite reverse;}
+  .atmo-glow.g3{width:350px;height:350px;top:45%;left:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(72,169,197,0.03),transparent 60%);animation:drift 22s ease-in-out infinite;}
+  @keyframes drift{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(20px,-15px) scale(1.05);}}
+  .container{position:relative;z-index:1;max-width:960px;margin:0 auto;padding:0 24px;}
+  .navbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(6,9,15,0.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+  .navbar.scrolled{background:rgba(6,9,15,0.96);}
+  .nav-inner{max-width:960px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:68px;}
+  .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--fg);}
+  .nav-logo-icon{width:36px;height:36px;border-radius:9px;background:linear-gradient(135deg,var(--accent),#00a86b);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--bg);font-weight:700;font-family:'Space Grotesk',sans-serif;}
+  .nav-logo-text{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;letter-spacing:-0.5px;}
+  .nav-right{display:flex;align-items:center;gap:10px;}
+  .nav-link{padding:8px 16px;border:none;background:transparent;color:var(--fg-muted);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;border-radius:8px;transition:all 0.25s;text-decoration:none;}
+  .nav-link:hover{color:var(--fg);background:rgba(255,255,255,0.05);}
+  .nav-cta{padding:8px 20px;border:none;border-radius:8px;background:var(--accent);color:var(--bg);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.25s;text-decoration:none;display:inline-flex;align-items:center;gap:7px;}
+  .nav-cta:hover{box-shadow:0 0 20px var(--accent-dim);transform:translateY(-1px);}
+  .mobile-toggle{display:none;background:none;border:none;color:var(--fg);font-size:20px;cursor:pointer;padding:8px;}
+  .course-hero{padding:140px 0 48px;text-align:center;}
+  .breadcrumb{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--fg-muted);margin-bottom:24px;}
+  .breadcrumb a{color:var(--fg-muted);text-decoration:none;transition:color 0.25s;}
+  .breadcrumb a:hover{color:var(--py);}
+  .breadcrumb .sep{opacity:0.4;}
+  .course-badge-row{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:24px;}
+  .course-tag{display:inline-flex;align-items:center;gap:6px;padding:6px 16px;border-radius:50px;font-size:12px;font-weight:600;border:1px solid var(--border);background:rgba(255,255,255,0.03);color:var(--fg-muted);}
+  .course-tag.ct-py{border-color:rgba(72,169,197,0.3);color:var(--py);background:var(--py-dim);}
+  .course-tag.ct-accent{border-color:rgba(0,212,123,0.3);color:var(--accent);background:var(--accent-dim);}
+  .course-tag.ct-gold{border-color:rgba(245,183,49,0.3);color:var(--gold);background:var(--gold-dim);}
+  .course-hero h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(32px,5.5vw,56px);font-weight:700;line-height:1.1;letter-spacing:-1.5px;margin-bottom:16px;}
+  .course-hero h1 .hl{color:var(--py);}
+  .ch-desc{font-size:17px;color:var(--fg-muted);max-width:660px;margin:0 auto 36px;line-height:1.7;}
+  .hero-meta-bar{display:flex;justify-content:center;gap:0;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;max-width:640px;margin:0 auto;}
+  .hero-meta-item{flex:1;padding:18px 16px;text-align:center;border-right:1px solid var(--border);}
+  .hero-meta-item:last-child{border-right:none;}
+  .hmi-val{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:var(--fg);}
+  .hmi-val.py{color:var(--py);}
+  .hmi-label{font-size:11px;color:var(--fg-muted);text-transform:uppercase;letter-spacing:0.8px;margin-top:2px;}
+  .progress-section{padding:32px 0 24px;}
+  .progress-track-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px 28px 20px;}
+  .progress-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
+  .progress-title{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;}
+  .progress-count{font-size:13px;color:var(--fg-muted);font-family:'Space Grotesk',monospace;}
+  .progress-count span{color:var(--py);font-weight:600;}
+  .progress-dots{display:flex;gap:5px;align-items:center;}
+  .p-dot{flex:1;height:6px;border-radius:3px;background:var(--border);cursor:pointer;transition:all 0.3s;}
+  .p-dot:hover{background:var(--border-light);}
+  .p-dot.active{background:var(--py);}
+  .p-dot.visited{background:rgba(72,169,197,0.3);}
+  .phase-divider{display:flex;align-items:center;gap:14px;margin:32px 0 18px;padding:0 4px;}
+  .phase-divider .pd-line{flex:1;height:1px;background:var(--border);}
+  .phase-divider .pd-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--py);white-space:nowrap;}
+  .phase-divider .pd-icon{width:28px;height:28px;border-radius:7px;background:var(--py-dim);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--py);}
+  .days-section{padding:16px 0 40px;}
+  .day-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px;overflow:hidden;transition:border-color 0.3s;}
+  .day-card:hover{border-color:var(--border-light);}
+  .day-card.active{border-color:rgba(72,169,197,0.35);}
+  .day-header{width:100%;padding:20px 26px;background:transparent;border:none;color:var(--fg);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;text-align:left;cursor:pointer;display:flex;align-items:center;gap:14px;transition:background 0.25s;}
+  .day-header:hover{background:rgba(255,255,255,0.015);}
+  .day-num{flex-shrink:0;width:42px;height:42px;border-radius:11px;background:var(--py-dim);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:var(--py);transition:all 0.3s;}
+  .day-card.active .day-num{background:var(--py);color:var(--bg);}
+  .day-info{flex:1;min-width:0;}
+  .day-info h3{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;margin-bottom:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .day-info .day-sub{font-size:12px;color:var(--fg-muted);}
+  .day-topics-count{flex-shrink:0;padding:4px 11px;border-radius:50px;background:rgba(255,255,255,0.04);font-size:11px;color:var(--fg-muted);font-family:'Space Grotesk',monospace;}
+  .day-chevron{flex-shrink:0;font-size:13px;color:var(--fg-muted);transition:transform 0.35s,color 0.3s;}
+  .day-card.active .day-chevron{transform:rotate(180deg);color:var(--py);}
+  .day-body{max-height:0;overflow:hidden;transition:max-height 0.5s cubic-bezier(0.22,1,0.36,1);}
+  .day-card.active .day-body{max-height:1200px;}
+  .day-body-inner{padding:0 26px 22px;}
+  .topic-subcat{display:flex;align-items:center;gap:8px;margin:14px 0 6px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.04);}
+  .topic-subcat:first-child{margin-top:0;padding-top:0;border-top:none;}
+  .topic-subcat .ts-dot{width:6px;height:6px;border-radius:50%;background:var(--py);flex-shrink:0;}
+  .topic-subcat .ts-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--py-ice);}
+  .topic-list{list-style:none;}
+  .topic-list li{display:flex;align-items:flex-start;gap:11px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.02);font-size:13.5px;color:var(--fg);line-height:1.5;}
+  .topic-list li:last-child{border-bottom:none;}
+  .topic-check{flex-shrink:0;width:20px;height:20px;border-radius:5px;background:var(--py-dim);display:flex;align-items:center;justify-content:center;margin-top:2px;}
+  .topic-check i{font-size:9px;color:var(--py);opacity:0.5;}
+  .topic-list li .hl-ai{color:var(--gold);font-weight:600;}
+  .day-tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:14px;padding-top:12px;border-top:1px solid var(--border);}
+  .day-tag{padding:3px 10px;border-radius:50px;font-size:10px;font-weight:600;background:rgba(255,255,255,0.035);color:var(--fg-muted);border:1px solid rgba(255,255,255,0.05);}
+  .day-tag.dt-ai{background:var(--gold-dim);color:var(--gold);border-color:rgba(245,183,49,0.2);}
+  .projects-section{padding:40px 0;}
+  .projects-box{background:linear-gradient(135deg,var(--py-dim),rgba(0,212,123,0.02));border:1px solid rgba(72,169,197,0.18);border-radius:var(--radius);padding:40px 36px;text-align:center;}
+  .pb-icon{width:64px;height:64px;margin:0 auto 20px;border-radius:16px;background:var(--py-dim);display:flex;align-items:center;justify-content:center;font-size:28px;color:var(--py);}
+  .projects-box h2{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;letter-spacing:-0.5px;margin-bottom:12px;}
+  .projects-box p{font-size:15px;color:var(--fg-muted);max-width:540px;margin:0 auto 24px;line-height:1.7;}
+  .project-highlights{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:620px;margin:0 auto 28px;}
+  .ph-item{background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.05);border-radius:var(--radius-sm);padding:14px 10px;text-align:center;}
+  .ph-item i{font-size:18px;color:var(--py);margin-bottom:6px;display:block;}
+  .ph-item span{font-size:11px;color:var(--fg-muted);font-weight:500;}
+  .outcomes-section{padding:40px 0;}
+  .outcomes-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+  .outcome-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:20px 18px;display:flex;gap:14px;align-items:flex-start;transition:all 0.3s;}
+  .outcome-card:hover{border-color:rgba(72,169,197,0.3);transform:translateY(-2px);}
+  .outcome-icon{flex-shrink:0;width:38px;height:38px;border-radius:9px;background:var(--py-dim);display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--py);}
+  .outcome-card h4{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;margin-bottom:3px;}
+  .outcome-card p{font-size:12px;color:var(--fg-muted);line-height:1.5;}
+  .cta-section{padding:40px 0 80px;}
+  .cta-box{background:linear-gradient(135deg,rgba(72,169,197,0.08),rgba(0,212,123,0.02));border:1px solid rgba(72,169,197,0.2);border-radius:var(--radius);padding:52px 36px;text-align:center;position:relative;overflow:hidden;}
+  .cta-box::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 40%,rgba(72,169,197,0.05),transparent 50%);pointer-events:none;}
+  .cta-box h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(22px,3.5vw,32px);font-weight:700;letter-spacing:-0.8px;margin-bottom:12px;position:relative;}
+  .cta-box p{font-size:15px;color:var(--fg-muted);max-width:500px;margin:0 auto 28px;line-height:1.7;position:relative;}
+  .cta-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;}
+  .btn{padding:13px 30px;border:none;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.3s;display:inline-flex;align-items:center;gap:9px;text-decoration:none;}
+  .btn-primary{background:var(--accent);color:var(--bg);}
+  .btn-primary:hover{box-shadow:0 0 28px var(--accent-dim);transform:translateY(-2px);}
+  .btn-whatsapp{background:#25d366;color:#fff;}
+  .btn-whatsapp:hover{box-shadow:0 0 28px rgba(37,211,102,0.3);transform:translateY(-2px);}
+  .btn-outline{background:transparent;color:var(--fg);border:1px solid var(--border);}
+  .btn-outline:hover{border-color:var(--py);color:var(--py);}
+  footer{border-top:1px solid var(--border);padding:32px 0;}
+  .footer-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;font-size:12px;color:var(--fg-muted);}
+  .footer-contact{display:flex;gap:16px;flex-wrap:wrap;}
+  .footer-contact a{color:var(--fg-muted);text-decoration:none;display:flex;align-items:center;gap:5px;transition:color 0.25s;}
+  .footer-contact a:hover{color:var(--py);}
+  .whatsapp-float{position:fixed;bottom:24px;right:24px;z-index:200;width:56px;height:56px;border-radius:50%;background:#25d366;display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;cursor:pointer;box-shadow:0 4px 24px rgba(37,211,102,0.35);transition:all 0.3s;text-decoration:none;animation:waFloat 3s ease-in-out infinite;}
+  .whatsapp-float:hover{transform:scale(1.1);box-shadow:0 6px 32px rgba(37,211,102,0.5);animation:none;}
+  @keyframes waFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+  .wa-tooltip{position:absolute;right:68px;top:50%;transform:translateY(-50%);white-space:nowrap;background:var(--card);border:1px solid var(--border);padding:7px 14px;border-radius:8px;font-size:12px;font-weight:500;color:var(--fg);box-shadow:0 4px 16px rgba(0,0,0,0.3);opacity:0;pointer-events:none;transition:opacity 0.3s;}
+  .wa-tooltip::after{content:'';position:absolute;right:-6px;top:50%;transform:translateY(-50%) rotate(45deg);width:10px;height:10px;background:var(--card);border-right:1px solid var(--border);border-top:1px solid var(--border);}
+  .whatsapp-float:hover .wa-tooltip{opacity:1;}
+  .section-label{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--py);margin-bottom:12px;}
+  .section-label .sl-line{width:24px;height:2px;background:var(--py);border-radius:2px;}
+  .section-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(24px,3.5vw,32px);font-weight:700;letter-spacing:-0.8px;line-height:1.15;margin-bottom:12px;}
+  .section-desc{font-size:14px;color:var(--fg-muted);max-width:560px;line-height:1.7;}
+  .sh-center{text-align:center;}
+  .sh-center .section-desc{margin:0 auto;}
+  @media(max-width:700px){
+    .nav-link{display:none;}.mobile-toggle{display:block;}
+    .course-hero{padding:120px 0 36px;}
+    .hero-meta-bar{flex-direction:column;}
+    .hero-meta-item{border-right:none;border-bottom:1px solid var(--border);padding:14px 16px;}
+    .hero-meta-item:last-child{border-bottom:none;}
+    .day-header{padding:16px 16px;gap:10px;}
+    .day-body-inner{padding:0 16px 18px;}
+    .day-topics-count{display:none;}
+    .day-tags{flex-direction:column;}
+    .project-highlights{grid-template-columns:repeat(2,1fr);}
+    .outcomes-grid{grid-template-columns:1fr;}
+    .cta-box{padding:36px 20px;}
+    .progress-track-wrap{padding:20px 16px 16px;}
+    .projects-box{padding:28px 20px;}
+    .phase-divider{margin:24px 0 14px;}
+  }
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important;}}
+</style>
+</head>
+<body>
+
+<div class="atmo-grid"></div>
+<div class="atmo-glow g1"></div>
+<div class="atmo-glow g2"></div>
+<div class="atmo-glow g3"></div>
+
+<nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="https://vizonis.com" class="nav-logo" aria-label="Vizonis Academy Home">
+      <div class="nav-logo-icon">V</div>
+      <span class="nav-logo-text">Vizonis Academy</span>
+    </a>
+    <div class="nav-right">
+      <a href="https://vizonis.com" class="nav-link">Home</a>
+      <a href="#outcomes" class="nav-link">Outcomes</a>
+      <a href="https://wa.me/916364671786?text=Hi%20Vizonis%20Academy%2C%20I%20want%20to%20enrol%20for%20the%20Python%20course.%20Please%20share%20details." class="nav-cta" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-whatsapp"></i> Enrol Now
+      </a>
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <section class="course-hero" aria-label="Course overview">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="https://vizonis.com">Home</a><span class="sep">/</span>
+        <a href="https://vizonis.com#courses">Courses</a><span class="sep">/</span>
+        <span style="color:var(--fg);">Python</span>
+      </div>
+      <div class="course-badge-row">
+        <span class="course-tag ct-py"><i class="fab fa-python"></i> Python for Data Analytics</span>
+        <span class="course-tag ct-gold"><i class="fas fa-brain"></i> Includes Generative AI</span>
+        <span class="course-tag ct-accent"><i class="fas fa-calendar-week"></i> Weekends Only</span>
+      </div>
+      <h1>Python <span class="hl">Complete Course Content</span></h1>
+      <p class="ch-desc">From Python basics to Generative AI — 10 structured weekend sessions covering NumPy, Pandas, data cleaning, EDA, Matplotlib, Seaborn, and building AI-powered analytics workflows with OpenAI.</p>
+      <div class="hero-meta-bar">
+        <div class="hero-meta-item"><div class="hmi-val py">10</div><div class="hmi-label">Sessions</div></div>
+        <div class="hero-meta-item"><div class="hmi-val">2 hrs</div><div class="hmi-label">Per Session</div></div>
+        <div class="hero-meta-item"><div class="hmi-val">Sat & Sun</div><div class="hmi-label">Schedule</div></div>
+        <div class="hero-meta-item"><div class="hmi-val">Hands-on</div><div class="hmi-label">Projects</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="progress-section" aria-label="Course progress">
+    <div class="container">
+      <div class="progress-track-wrap">
+        <div class="progress-header">
+          <span class="progress-title"><i class="fas fa-road" style="color:var(--py);margin-right:6px;font-size:13px;"></i> Your Learning Path</span>
+          <span class="progress-count"><span>10</span> Sessions &middot; 20 Hours</span>
+        </div>
+        <div class="progress-dots" id="progressDots"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="days-section" aria-label="Session-by-session course content">
+    <div class="container" id="daysContainer"></div>
+  </section>
+
+  <section class="projects-section" aria-label="Course projects">
+    <div class="container">
+      <div class="projects-box">
+        <div class="pb-icon"><i class="fas fa-laptop-code"></i></div>
+        <h2>Real-World Python Projects</h2>
+        <p>Clean, analyze, and visualize real datasets using Python — then use Generative AI to auto-generate insights, summaries, and natural language reports from your data.</p>
+        <div class="project-highlights">
+          <div class="ph-item"><i class="fas fa-database"></i><span>Real Datasets</span></div>
+          <div class="ph-item"><i class="fas fa-broom"></i><span>Data Cleaning</span></div>
+          <div class="ph-item"><i class="fas fa-chart-area"></i><span>Dashboards</span></div>
+          <div class="ph-item"><i class="fas fa-robot"></i><span>AI Insights</span></div>
+        </div>
+        <a href="https://wa.me/916364671786?text=Hi%20Vizonis%20Academy%2C%20I%20want%20to%20know%20about%20the%20projects%20in%20the%20Python%20course." class="btn btn-whatsapp" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i> Ask About Projects</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="outcomes-section" id="outcomes" aria-label="What you will achieve">
+    <div class="container">
+      <div class="sh-center" style="margin-bottom:36px;">
+        <div class="section-label"><span class="sl-line"></span> What You Achieve <span class="sl-line"></span></div>
+        <h2 class="section-title">After Completing This Course</h2>
+        <p class="section-desc">You will be ready for data analyst and Python developer roles with end-to-end data analysis and visualization skills — plus the ability to integrate Generative AI into your workflows.</p>
+      </div>
+      <div class="outcomes-grid">
+        <div class="outcome-card"><div class="outcome-icon"><i class="fab fa-python"></i></div><div><h4>Python Proficiency</h4><p>Write clean, efficient Python code with functions, modules, list comprehensions, and error handling for data workflows.</p></div></div>
+        <div class="outcome-card"><div class="outcome-icon"><i class="fas fa-table"></i></div><div><h4>Pandas for Data Wrangling</h4><p>Clean, transform, merge, group, and reshape datasets using Pandas — the industry-standard Python data library.</p></div></div>
+        <div class="outcome-card"><div class="outcome-icon"><i class="fas fa-chart-line"></i></div><div><h4>Visualization Mastery</h4><p>Create publication-quality charts with Matplotlib and Seaborn — line plots, heatmaps, pair plots, facet grids, and more.</p></div></div>
+        <div class="outcome-card"><div class="outcome-icon"><i class="fas fa-search-plus"></i></div><div><h4>Exploratory Data Analysis</h4><p>Perform complete EDA — statistical summaries, correlation analysis, pivot tables, time-series exploration, and outlier detection.</p></div></div>
+        <div class="outcome-card"><div class="outcome-icon"><i class="fas fa-calculator"></i></div><div><h4>NumPy Computations</h4><p>Use NumPy arrays for fast numerical operations, broadcasting, boolean masking, and linear algebra — the foundation of all data work.</p></div></div>
+        <div class="outcome-card"><div class="outcome-icon" style="background:var(--gold-dim);"><i class="fas fa-brain" style="color:var(--gold);"></i></div><div><h4>Generative AI with Python</h4><p>Use OpenAI API to auto-generate insights from data, build AI-powered Q&A chatbots, and create intelligent text summaries — all in Python.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section" aria-label="Enrol now">
+    <div class="container">
+      <div class="cta-box">
+        <h2>Ready to Master Python for Data Analytics?</h2>
+        <p>Speak directly with our trainer on WhatsApp. No sales team, no middlemen — just a straight conversation about your learning goals.</p>
+        <div class="cta-actions">
+          <a href="https://wa.me/916364671786?text=Hi%20Vizonis%20Academy%2C%20I%20want%20to%20enrol%20for%20the%20Python%20course.%20Please%20share%20the%20batch%20schedule%20and%20fee%20details." class="btn btn-whatsapp" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i> Enrol on WhatsApp</a>
+          <a href="https://vizonis.com#courses" class="btn btn-outline"><i class="fas fa-arrow-left"></i> All Courses</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer role="contentinfo">
+  <div class="container">
+    <div class="footer-inner">
+      <span>&copy; 2025 Vizonis Academy. All rights reserved.</span>
+      <div class="footer-contact">
+        <a href="tel:+916364671786"><i class="fas fa-phone"></i> +91 6364671786</a>
+        <a href="mailto:support@vizonis.com"><i class="fas fa-envelope"></i> support@vizonis.com</a>
+        <a href="https://vizonis.com"><i class="fas fa-globe"></i> vizonis.com</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/916364671786?text=Hi%20Vizonis%20Academy%2C%20I%20want%20to%20know%20about%20the%20Python%20course." class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+  <i class="fab fa-whatsapp"></i>
+  <span class="wa-tooltip">Enquire about Python course</span>
+</a>
+
+<script>
+(function() {
+
+  /* ═══════════════════════════════════════
+     Course Data — 10 Sessions, 3 Phases
+     ═══════════════════════════════════════ */
+  var phases = [
+    {
+      name: "Python Foundations",
+      icon: "fa-terminal",
+      classes: [
+        {
+          day: 1,
+          title: "Python Fundamentals",
+          subtitle: "Setup, Variables, Data Types & Operators",
+          subcategories: [
+            {
+              label: "Environment Setup",
+              topics: [
+                "Installing Python — Anaconda Distribution",
+                "Jupyter Notebook — Interface, Cells, Kernels, Shortcuts",
+                "Google Colab — Cloud-Based Python Environment",
+                "Python 3.x vs Python 2.x — Key Differences"
+              ]
+            },
+            {
+              label: "Core Syntax",
+              topics: [
+                "Variables and Naming Conventions",
+                "Data Types — int, float, str, bool, complex, None",
+                "Type Conversion — int(), float(), str(), bool()",
+                "Arithmetic, Comparison, Logical and Assignment Operators",
+                "String Operations — Slicing, Concatenation, Methods",
+                "F-Strings and String Formatting"
+              ]
+            },
+            {
+              label: "Input & Output",
+              topics: [
+                "input() — Reading User Input",
+                "print() — Formatted Output",
+                "Comments — Single-Line and Multi-Line",
+                "Indentation and Code Block Structure"
+              ]
+            }
+          ],
+          tags: ["Anaconda", "Jupyter", "Variables", "Data Types", "F-Strings", "Operators"]
+        },
+        {
+          day: 2,
+          title: "Control Flow & Data Structures",
+          subtitle: "Loops, Conditions, Lists, Dictionaries",
+          subcategories: [
+            {
+              label: "Control Flow",
+              topics: [
+                "if, elif, else — Conditional Statements",
+                "Nested Conditions",
+                "for Loops — Iterating Over Sequences",
+                "while Loops — Condition-Based Iteration",
+                "break, continue, pass — Loop Control",
+                "Iterating with range(), enumerate(), zip()"
+              ]
+            },
+            {
+              label: "Data Structures",
+              topics: [
+                "Lists — Creation, Indexing, Slicing, Methods",
+                "Tuples — Immutable Sequences",
+                "Sets — Unique Elements, Set Operations",
+                "Dictionaries — Key-Value Pairs, Methods",
+                "List Comprehensions — Concise List Creation",
+                "Dictionary Comprehensions"
+              ]
+            }
+          ],
+          tags: ["if/elif/else", "for/while", "Lists", "Dict", "Comprehensions", "Sets", "Tuples"]
+        },
+        {
+          day: 3,
+          title: "Functions & Modules",
+          subtitle: "User-Defined Functions, Lambda & Libraries",
+          subcategories: [
+            {
+              label: "Functions",
+              topics: [
+                "def — Defining Functions",
+                "Parameters, Return Values, Default Arguments",
+                "*args and **kwargs — Variable Arguments",
+                "Lambda Functions — Anonymous Inline Functions",
+                "Scope — Local, Enclosing, Global, Built-in (LEGB Rule)"
+              ]
+            },
+            {
+              label: "Modules & Built-Ins",
+              topics: [
+                "import — Using Standard Library Modules",
+                "datetime — Working with Dates and Times",
+                "random — Random Number Generation",
+                "os — File System Operations",
+                "math — Mathematical Functions",
+                "Built-in Functions — map(), filter(), zip(), sorted(), enumerate()"
+              ]
+            }
+          ],
+          tags: ["def", "lambda", "*args", "**kwargs", "Scope", "datetime", "random", "map/filter"]
+        }
+      ]
+    },
+    {
+      name: "Data Analytics with NumPy & Pandas",
+      icon: "fa-database",
+      classes: [
+        {
+          day: 4,
+          title: "NumPy — Numerical Computing",
+          subtitle: "Arrays, Operations, Broadcasting & Linear Algebra",
+          subcategories: [
+            {
+              label: "NumPy Arrays",
+              topics: [
+                "Introduction to NumPy — Why NumPy Over Lists",
+                "Array Creation — array(), zeros(), ones(), arange(), linspace()",
+                "Array Indexing and Slicing — 1D, 2D, 3D",
+                "Reshaping — reshape(), transpose(), flatten(), ravel()",
+                "Array Data Types — int32, float64, bool, object"
+              ]
+            },
+            {
+              label: "Array Operations",
+              topics: [
+                "Element-Wise Operations — Addition, Multiplication, Comparison",
+                "Broadcasting — Rules and Automatic Expansion",
+                "Boolean Indexing and Fancy Indexing",
+                "Aggregation — sum(), mean(), min(), max(), std(), argmax(), argmin()",
+                "Concatenation — np.concatenate(), np.stack(), np.hstack(), np.vstack()",
+                "Sorting — np.sort(), np.argsort()"
+              ]
+            },
+            {
+              label: "Linear Algebra Basics",
+              topics: [
+                "Matrix Multiplication — np.dot(), np.matmul()",
+                "Determinant and Inverse — np.linalg.det(), np.linalg.inv()",
+                "Eigenvalues and Eigenvectors — np.linalg.eig()"
+              ]
+            }
+          ],
+          tags: ["ndarray", "reshape", "Broadcasting", "Boolean Index", "Aggregation", "Linear Algebra"]
+        },
+        {
+          day: 5,
+          title: "Pandas — Series & DataFrames",
+          subtitle: "Creating, Reading, Inspecting Data",
+          subcategories: [
+            {
+              label: "Pandas Basics",
+              topics: [
+                "Introduction to Pandas — Series vs DataFrame",
+                "Series — Creation, Indexing, Operations",
+                "DataFrame Creation — from dict, list of dicts, numpy arrays",
+                "Reading CSV Files — pd.read_csv() with Options",
+                "Reading Excel Files — pd.read_excel()",
+                "Reading JSON Files — pd.read_json()"
+              ]
+            },
+            {
+              label: "Data Inspection",
+              topics: [
+                "head(), tail() — First and Last Rows",
+                "info() — Data Types, Non-Null Count, Memory Usage",
+                "describe() — Statistical Summary",
+                "dtypes, shape, columns, index — Structure Overview",
+                "nunique(), value_counts() — Unique Values and Frequencies",
+                "sample() — Random Sampling from DataFrame"
+              ]
+            },
+            {
+              label: "Column & Row Operations",
+              topics: [
+                "Column Selection — Single, Multiple, Dot Notation, loc[], iloc[]",
+                "Row Filtering — Boolean Masking, loc[], iloc[]",
+                "Adding and Dropping Columns — df['new'] =, df.drop()",
+                "Renaming Columns — df.rename()",
+                "Sorting — sort_values(), sort_index()"
+              ]
+            }
+          ],
+          tags: ["Series", "DataFrame", "read_csv", "read_excel", "head/info", "loc/iloc", "Filtering"]
+        },
+        {
+          day: 6,
+          title: "Pandas — Data Cleaning & Transformation",
+          subtitle: "Missing Data, String Ops, Merge & Group By",
+          subcategories: [
+            {
+              label: "Data Cleaning",
+              topics: [
+                "Detecting Missing Data — isnull(), isna(), isnull().sum()",
+                "Handling Missing Data — fillna(), dropna(), interpolate()",
+                "Data Type Conversion — astype(), to_numeric(), to_datetime()",
+                "String Operations — str.lower(), str.upper(), str.strip(), str.replace()",
+                "str.contains(), str.split(), str.extract() — Pattern Matching",
+                "Removing Duplicates — duplicated(), drop_duplicates()"
+              ]
+            },
+            {
+              label: "Transformation",
+              topics: [
+                "apply() — Apply Function Along Axis",
+                "map() — Element-Wise Transformation",
+                "applymap() — Apply to Every Element",
+                "replace() — Value Replacement",
+                "cut() and qcut() — Binning Continuous Data"
+              ]
+            },
+            {
+              label: "Combining Data",
+              topics: [
+                "pd.concat() — Vertical and Horizontal Concatenation",
+                "pd.merge() — SQL-Style Joins (Inner, Left, Right, Outer)",
+                "merge_on and merge_on How Parameters",
+                "pd.join() — Index-Based Joining"
+              ]
+            },
+            {
+              label: "Group By",
+              topics: [
+                "groupby() — Split-Apply-Combine Pattern",
+                "Aggregation — agg(), mean(), sum(), count(), min(), max()",
+                "Multiple Aggregations — Named Aggregation",
+                "transform() — Group-Wise Transformation",
+                "filter() — Group-Wise Filtering"
+              ]
+            }
+          ],
+          tags: ["fillna", "astype", "str Methods", "apply/map", "concat", "merge/join", "groupby", "agg"]
+        },
+        {
+          day: 7,
+          title: "Exploratory Data Analysis",
+          subtitle: "EDA Workflow, Statistics & Pivot Tables",
+          subcategories: [
+            {
+              label: "EDA Workflow",
+              topics: [
+                "EDA Process — Understand, Clean, Analyze, Visualize",
+                "Univariate Analysis — Distribution of Single Variables",
+                "Bivariate Analysis — Relationship Between Two Variables",
+                "Multivariate Analysis — Multiple Variable Interactions",
+                "Outlier Detection — IQR Method, Z-Score, Box Plots"
+              ]
+            },
+            {
+              label: "Statistical Analysis",
+              topics: [
+                "Correlation — df.corr(), Positive/Negative Correlation",
+                "Covariance — df.cov()",
+                "Correlation Heatmaps — Identifying Relationships",
+                "Skewness and Kurtosis — df.skew(), df.kurtosis()"
+              ]
+            },
+            {
+              label: "Pivot & Reshape",
+              topics: [
+                "pd.pivot_table() — Cross-Tabulation with Aggregations",
+                "pd.pivot() — Reshape Data (No Aggregation)",
+                "pd.crosstab() — Frequency Tables",
+                "pd.melt() — Unpivoting Wide Data to Long Format",
+                "pd.wide_to_long(), pd.long_to_wide()"
+              ]
+            },
+            {
+              label: "Time Series Basics",
+              topics: [
+                "Datetime Indexing — Setting and Using DatetimeIndex",
+                "Resampling — resample('M').mean(), resample('W').sum()",
+                "Rolling Windows — rolling().mean(), rolling().std()",
+                "Shifting — shift(), diff() for Lagged/Differenced Data"
+              ]
+            }
+          ],
+          tags: ["EDA", "Correlation", "Heatmap", "pivot_table", "melt", "resample", "Rolling", "Outliers"]
+        }
+      ]
+    },
+    {
+      name: "Visualization & Generative AI",
+      icon: "fa-chart-pie",
+      classes: [
+        {
+          day: 8,
+          title: "Matplotlib — Data Visualization",
+          subtitle: "Plots, Subplots, Customization & Saving",
+          subcategories: [
+            {
+              label: "Core Plots",
+              topics: [
+                "Line Plots — plt.plot() — Trends Over Time",
+                "Scatter Plots — plt.scatter() — Relationships",
+                "Bar Charts — plt.bar(), plt.barh() — Categorical Comparison",
+                "Histograms — plt.hist() — Distribution of Data",
+                "Pie Charts — plt.pie() — Proportional Representation",
+                "Box Plots — plt.boxplot() — Outlier Detection"
+              ]
+            },
+            {
+              label: "Subplots & Layout",
+              topics: [
+                "plt.figure() — Figure Size, DPI, Facecolor",
+                "plt.subplot() — Grid of Plots",
+                "plt.subplots() — Multiple Axes Objects",
+                "Subplot2grid — Irregular Grid Layouts",
+                "plt.tight_layout() — Auto-Adjust Spacing"
+              ]
+            },
+            {
+              label: "Customization",
+              topics: [
+                "Labels — xlabel(), ylabel(), title()",
+                "Legends — plt.legend(), Positioning and Styling",
+                "Colors — Colormaps, Hex Codes, Named Colors",
+                "Markers — Styles, Sizes, Colors",
+                "Annotations — plt.annotate(), plt.text()",
+                "Grid Lines, Spines, Ticks — Appearance Control",
+                "Saving Plots — plt.savefig() — PNG, PDF, SVG"
+              ]
+            }
+          ],
+          tags: ["Line Plot", "Scatter", "Histogram", "Box Plot", "Subplot", "Annotations", "savefig"]
+        },
+        {
+          day: 9,
+          title: "Seaborn — Advanced Visualization",
+          subtitle: "Statistical Plots, Themes & Multi-Plot Layout",
+          subcategories: [
+            {
+              label: "Seaborn Basics",
+              topics: [
+                "Seaborn Themes — set_theme(), set_style(), set_context()",
+                "Color Palettes — deep, muted, bright, pastel, dark",
+                "Distribution Plots — histplot(), kdeplot(), ecdfplot()",
+                "Rug Plots — Adding Context to Distributions",
+                "Displot — Combined Distribution + Histogram + KDE"
+              ]
+            },
+            {
+              label: "Categorical Plots",
+              topics: [
+                "barplot() — Bar Charts with Aggregation",
+                "countplot() — Count of Categories",
+                "boxplot() — Box Plots with Hue",
+                "violinplot() — Violin Plots — Density + Box",
+                "swarmplot() — Individual Data Points"
+              ]
+            },
+            {
+              label: "Relationship & Multi-Plot",
+              topics: [
+                "scatterplot() — Enhanced Scatter with Hue, Size, Style",
+                "heatmap() — Correlation Heatmap",
+                "pairplot() — Pairwise Relationships",
+                "jointplot() — Scatter + Distribution Combined",
+                "regplot() — Regression Plot with Confidence Interval",
+                "FacetGrid — Multi-Plot by Category",
+                "catplot() — Unified Categorical Plotting Interface"
+              ]
+            }
+          ],
+          tags: ["Seaborn", "Themes", "histplot", "kdeplot", "boxplot", "violinplot", "heatmap", "pairplot", "FacetGrid"]
+        },
+        {
+          day: 10,
+          title: "Generative AI Using Python",
+          subtitle: "OpenAI API, Prompt Engineering & AI-Powered Analytics",
+          subcategories: [
+            {
+              label: "Generative AI Fundamentals",
+              topics: [
+                "What is Generative AI — LLMs, Transformers Overview",
+                "OpenAI API — Account Setup and API Key Management",
+                "openai Library — Installation and Authentication",
+                "ChatCompletion API — Basic Request-Response Cycle",
+                "Model Selection — GPT-4o, GPT-4o-mini, GPT-3.5",
+                "Temperature, Max Tokens, Top-P — Controlling Output"
+              ]
+            },
+            {
+              label: "Prompt Engineering for Data Analytics",
+              topics: [
+                "Zero-Shot Prompts — Direct Questions About Data",
+                "Few-Shot Prompts — Providing Examples in the Prompt",
+                "System Messages — Setting AI Behavior and Role",
+                "Structured Output — JSON and Table Generation from Data",
+                "Chain-of-Thought Prompting — Step-by-Step Reasoning"
+              ]
+            },
+            {
+              label: "AI-Powered Analytics Projects",
+              topics: [
+                "Automated Data Summarization — AI Describes Your Dataset",
+                "Natural Language Q&A — Ask Questions in Plain English, Get SQL or Python Answers",
+                "Insight Generation — AI Identifies Patterns and Trends",
+                "Sentiment Analysis on Data Using LLMs",
+                "Building a Simple Data Chatbot — Query Your Dataset Conversationally",
+                "Future of AI in Analytics — Copilot, Code Generation, Auto-Reporting"
+              ]
+            }
+          ],
+          tags: ["OpenAI API", "GPT-4o", "Prompt Engineering", "Few-Shot", "Chatbot", "Sentiment", "dt-ai", "dt-ai", "dt-ai"]
+        }
+      ]
+    }
+  ];
+
+  /* Flatten for lookup */
+  var allClasses = [];
+  for (var p = 0; p < phases.length; p++) {
+    for (var c = 0; c < phases[p].classes.length; c++) {
+      allClasses.push(phases[p].classes[c]);
+    }
+  }
+
+  /* Progress Dots */
+  var dotsContainer = document.getElementById("progressDots");
+  var dotsHtml = "";
+  for (var d = 0; d < allClasses.length; d++) {
+    var tCount = 0;
+    if (allClasses[d].subcategories) {
+      for (var s = 0; s < allClasses[d].subcategories.length; s++) {
+        tCount += allClasses[d].subcategories[s].topics.length;
+      }
+    }
+    dotsHtml += '<div class="p-dot" data-day="' + allClasses[d].day + '" title="Session ' + allClasses[d].day + ': ' + allClasses[d].title + ' (' + tCount + ' topics)"></div>';
+  }
+  dotsContainer.innerHTML = dotsHtml;
+
+  /* Render Session Cards */
+  var daysContainer = document.getElementById("daysContainer");
+  var cardsHtml = "";
+
+  for (var pi = 0; pi < phases.length; pi++) {
+    var phase = phases[pi];
+    cardsHtml += '<div class="phase-divider">'
+      + '<span class="pd-line"></span>'
+      + '<span class="pd-icon"><i class="fas ' + phase.icon + '"></i></span>'
+      + '<span class="pd-label">Phase ' + (pi + 1) + ': ' + phase.name + '</span>'
+      + '<span class="pd-line"></span>'
+      + '</div>';
+
+    for (var ci = 0; ci < phase.classes.length; ci++) {
+      var cls = phase.classes[ci];
+      var topicCount = 0;
+      if (cls.subcategories) {
+        for (var sc = 0; sc < cls.subcategories.length; sc++) {
+          topicCount += cls.subcategories[sc].topics.length;
+        }
+      }
+
+      var topicsHtml = "";
+      if (cls.subcategories) {
+        for (var si = 0; si < cls.subcategories.length; si++) {
+          var subcat = cls.subcategories[si];
+          topicsHtml += '<div class="topic-subcat">'
+            + '<span class="ts-dot"></span>'
+            + '<span class="ts-label">' + subcat.label + '</span>'
+            + '</div>'
+            + '<ul class="topic-list">';
+          for (var ti = 0; ti < subcat.topics.length; ti++) {
+            var topicText = subcat.topics[ti];
+            /* Highlight Generative AI topics */
+            var aiKeywords = ["Generative AI", "OpenAI", "GPT-4o", "GPT-4o-mini", "Prompt Engineering", "LLM", "ChatCompletion", "Chatbot", "Sentiment Analysis", "Chain-of-Thought", "Few-Shot", "Zero-Shot", "Auto-Reporting"];
+            for (var ak = 0; ak < aiKeywords.length; ak++) {
+              if (topicText.indexOf(aiKeywords[ak]) !== -1) {
+                topicText = topicText.replace(aiKeywords[ak], '<span class="hl-ai">' + aiKeywords[ak] + '</span>');
+              }
+            }
+            topicsHtml += '<li>'
+              + '<span class="topic-check"><i class="fas fa-check"></i></span>'
+              + '<span>' + topicText + '</span>'
+              + '</li>';
+          }
+          topicsHtml += '</ul>';
+        }
+      }
+
+      var tagsSpan = "";
+      if (cls.tags) {
+        for (var g = 0; g < cls.tags.length; g++) {
+          if (cls.tags[g] === "dt-ai") {
+            /* Skip "dt-ai" tags, they were placeholders for JS logic, not display */
+          } else {
+            tagsSpan += '<span class="day-tag">' + cls.tags[g] + '</span>';
+          }
+        }
+      }
+
+      cardsHtml += '<div class="day-card" data-day="' + cls.day + '">'
+        + '<button class="day-header" aria-expanded="false">'
+        + '<span class="day-num">S' + cls.day + '</span>'
+        + '<div class="day-info">'
+        + '<h3>Session ' + cls.day + ': ' + cls.title + '</h3>'
+        + '<span class="day-sub">' + cls.subtitle + '</span>'
+        + '</div>'
+        + '<span class="day-topics-count">' + topicCount + ' topics</span>'
+        + '<span class="day-chevron"><i class="fas fa-chevron-down"></i></span>'
+        + '</button>'
+        + '<div class="day-body">'
+        + '<div class="day-body-inner">'
+        + topicsHtml
+        + '<div class="day-tags">' + tagsSpan + '</div>'
+        + '</div>'
+        + '</div>'
+        + '</div>';
+    }
+  }
+  daysContainer.innerHTML = cardsHtml;
+
+  /* Accordion */
+  var dayCards = document.querySelectorAll(".day-card");
+  var activeDay = null;
+
+  function openDay(card) {
+    if (activeDay && activeDay !== card) {
+      activeDay.classList.remove("active");
+      activeDay.querySelector(".day-header").setAttribute("aria-expanded", "false");
+    }
+    card.classList.add("active");
+    card.querySelector(".day-header").setAttribute("aria-expanded", "true");
+    activeDay = card;
+    updateDots();
+  }
+
+  function closeDay(card) {
+    card.classList.remove("active");
+    card.querySelector(".day-header").setAttribute("aria-expanded", "false");
+    activeDay = null;
+    updateDots();
+  }
+
+  for (var c = 0; c < dayCards.length; c++) {
+    (function(card) {
+      card.querySelector(".day-header").addEventListener("click", function() {
+        if (card.classList.contains("active")) closeDay(card);
+        else openDay(card);
+      });
+    })(dayCards[c]);
+  }
+
+  /* Progress Dots click */
+  var pDots = document.querySelectorAll(".p-dot");
+  for (var p = 0; p < pDots.length; p++) {
+    (function(dot) {
+      dot.addEventListener("click", function() {
+        var dayNum = parseInt(dot.getAttribute("data-day"));
+        var targetCard = document.querySelector('.day-card[data-day="' + dayNum + '"]');
+        if (targetCard) {
+          openDay(targetCard);
+          var offset = document.getElementById("navbar").offsetHeight + 16;
+          var top = targetCard.getBoundingClientRect().top + window.pageYOffset - offset;
+          window.scrollTo({ top: top, behavior: "smooth" });
+        }
+      });
+    })(pDots[p]);
+  }
+
+  function updateDots() {
+    for (var u = 0; u < pDots.length; u++) pDots[u].classList.remove("active");
+    if (activeDay) {
+      var activeDayNum = parseInt(activeDay.getAttribute("data-day"));
+      var activeDot = document.querySelector('.p-dot[data-day="' + activeDayNum + '"]');
+      if (activeDot) activeDot.classList.add("active");
+    }
+  }
+
+  /* Scroll visited dots */
+  if ("IntersectionObserver" in window) {
+    var dayObserver = new IntersectionObserver(function(entries) {
+      for (var e = 0; e < entries.length; e++) {
+        if (entries[e].isIntersecting) {
+          var card = entries[e].target;
+          var dayNum = parseInt(card.getAttribute("data-day"));
+          for (var u = 0; u < pDots.length; u++) pDots[u].classList.remove("visited");
+          for (var v = 0; v < dayNum - 1; v++) {
+            var vd = document.querySelector('.p-dot[data-day="' + (v + 1) + '"]');
+            if (vd) vd.classList.add("visited");
+          }
+        }
+      }
+    }, { threshold: 0.3, rootMargin: "-80px 0px -60% 0px" });
+    for (var o = 0; o < dayCards.length; o++) dayObserver.observe(dayCards[o]);
+  }
+
+  /* Scroll reveal */
+  var revealEls = document.querySelectorAll(".day-card,.outcome-card,.projects-box,.cta-box,.progress-track-wrap,.phase-divider");
+  if ("IntersectionObserver" in window) {
+    var revealObs = new IntersectionObserver(function(entries) {
+      for (var r = 0; r < entries.length; r++) {
+        if (entries[r].isIntersecting) {
+          entries[r].target.style.opacity = "1";
+          entries[r].target.style.transform = "translateY(0)";
+          revealObs.unobserve(entries[r].target);
+        }
+      }
+    }, { threshold: 0.06, rootMargin: "0px 0px -20px 0px" });
+    for (var rv = 0; rv < revealEls.length; rv++) {
+      revealEls[rv].style.opacity = "0";
+      revealEls[rv].style.transform = "translateY(20px)";
+      revealEls[rv].style.transition = "opacity 0.5s ease, transform 0.5s ease";
+      revealObs.observe(revealEls[rv]);
+    }
+  }
+
+  /* Navbar scroll */
+  var navbar = document.getElementById("navbar");
+  window.addEventListener("scroll", function() {
+    navbar.classList.toggle("scrolled", window.scrollY > 30);
+  }, { passive: true });
+
+  /* Auto-open Session 1 */
+  setTimeout(function() {
+    var firstCard = document.querySelector('.day-card[data-day="1"]');
+    if (firstCard) openDay(firstCard);
+  }, 600);
+
+})();
+</script>
+</body>
+</html>
