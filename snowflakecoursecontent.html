@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Snowflake Course Content | Vizonis Academy — 10 Weekend Sessions with Cortex Analyst, Snowpipe & Streams</title>
+<meta name="description" content="Complete Snowflake course content by Vizonis Academy. 10 weekend sessions covering cloud architecture, virtual warehouses, Snowflake SQL, semi-structured data, performance tuning, security, Snowpipe, Streams, Tasks, Cortex Analyst, and real-world projects.">
+<meta name="keywords" content="Snowflake course content, Snowflake syllabus, Snowflake training India, Snowflake SQL course, Snowpipe training, Snowflake Streams Tasks, Snowflake Cortex Analyst, Snowflake semi-structured data, Snowflake security roles, vizonis academy Snowflake">
+<meta name="robots" content="index, follow">
+<meta name="author" content="Vizonis Academy">
+<link rel="canonical" href="https://vizonis.com/courses/snowflake">
+
+<meta property="og:title" content="Snowflake Course Content | Vizonis Academy — 10 Sessions">
+<meta property="og:description" content="10-session weekend curriculum: Architecture, SQL, Semi-Structured Data, Clustering, Security, Snowpipe, Streams, Cortex Analyst + Projects.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://vizonis.com/courses/snowflake">
+<meta property="og:site_name" content="Vizonis Academy">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "Snowflake Data Cloud Training",
+  "description": "Comprehensive 10-session Snowflake course covering cloud data warehouse architecture, virtual warehouses, Snowflake SQL, semi-structured data (JSON, VARIANT, ARRAY, OBJECT), performance tuning with clustering keys, role-based security, Snowpipe, Streams, Tasks, Cortex Analyst, and real-world data engineering projects.",
+  "provider": {
+    "@type": "EducationalOrganization",
+    "name": "Vizonis Academy",
+    "url": "https://vizonis.com",
+    "telephone": "+916364671786",
+    "email": "support@vizonis.com"
+  },
+  "hasCourseInstance": {
+    "@type": "CourseInstance",
+    "courseMode": "onsite",
+    "courseSchedule": {
+      "@type": "Schedule",
+      "repeatFrequency": "Weekly",
+      "byDay": ["https://schema.org/Saturday", "https://schema.org/Sunday"],
+      "duration": "PT2H"
+    },
+    "numberOfSessions": 10,
+    "courseWorkload": "PT20H"
+  }
+}
+</script>
+
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  :root {
+    --bg: #060a10;
+    --card: #0f1724;
+    --card-hover: #151f34;
+    --border: #1a2744;
+    --border-light: #223050;
+    --fg: #eaf0f9;
+    --fg-muted: #7b8fad;
+    --accent: #00d47b;
+    --accent-dim: rgba(0,212,123,0.08);
+    --accent-glow: rgba(0,212,123,0.2);
+    --gold: #f5b731;
+    --gold-dim: rgba(245,183,49,0.08);
+    --sf-cyan: #29b5e8;
+    --sf-cyan-dim: rgba(41,181,232,0.08);
+    --sf-ice: #88d4f7;
+    --error: #ff4d6a;
+    --radius: 14px;
+    --radius-sm: 10px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--fg);min-height:100vh;overflow-x:hidden;line-height:1.6;}
+
+  .atmo-grid{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(41,181,232,0.012) 1px,transparent 1px),linear-gradient(90deg,rgba(41,181,232,0.012) 1px,transparent 1px);background-size:80px 80px;}
+  .atmo-glow{position:fixed;pointer-events:none;z-index:0;border-radius:50%;}
+  .atmo-glow.g1{width:600px;height:600px;top:-200px;right:-100px;background:radial-gradient(circle,rgba(41,181,232,0.06),transparent 70%);animation:drift 14s ease-in-out infinite;}
+  .atmo-glow.g2{width:500px;height:500px;bottom:-150px;left:-100px;background:radial-gradient(circle,rgba(0,212,123,0.04),transparent 70%);animation:drift 18s ease-in-out infinite reverse;}
+  .atmo-glow.g3{width:350px;height:350px;top:45%;left:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(41,181,232,0.035),transparent 60%);animation:drift 22s ease-in-out infinite;}
+  @keyframes drift{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(20px,-15px) scale(1.05);}}
+
+  /* Floating snowflake particles */
+  .sf-particles{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+  .sf-particle{position:absolute;color:rgba(41,181,232,0.06);animation:sfFall linear infinite;}
+  @keyframes sfFall{0%{transform:translateY(-20px) rotate(0deg);opacity:0;}10%{opacity:1;}90%{opacity:1;}100%{transform:translateY(105vh) rotate(360deg);opacity:0;}}
+
+  .container{position:relative;z-index:1;max-width:960px;margin:0 auto;padding:0 24px;}
+
+  /* Nav */
+  .navbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(6,10,16,0.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+  .navbar.scrolled{background:rgba(6,10,16,0.96);}
+  .nav-inner{max-width:960px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:68px;}
+  .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--fg);}
+  .nav-logo-icon{width:36px;height:36px;border-radius:9px;background:linear-gradient(135deg,var(--accent),#00a86b);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--bg);font-weight:700;font-family:'Space Grotesk',sans-serif;}
+  .nav-logo-text{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;letter-spacing:-0.5px;}
+  .nav-right{display:flex;align-items:center;gap:10px;}
+  .nav-link{padding:8px 16px;border:none;background:transparent;color:var(--fg-muted);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;border-radius:8px;transition:all 0.25s;text-decoration:none;}
+  .nav-link:hover{color:var(--fg);background:rgba(255,255,255,0.05);}
+  .nav-cta{padding:8px 20px;border:none;border-radius:8px;background:var(--accent);color:var(--bg);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.25s;text-decoration:none;display:inline-flex;align-items:center;gap:7px;}
+  .nav-cta:hover{box-shadow:0 0 20px var(--accent-glow);transform:translateY(-1px);}
+  .mobile-toggle{display:none;background:none;border:none;color:var(--fg);font-size:20px;cursor:pointer;padding:8px;}
+
+  /* Hero */
+  .course-hero{padding:140px 0 48px;text-align:center;}
+  .breadcrumb{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--fg-muted);margin-bottom:24px;}
+  .breadcrumb a{color:var(--fg-muted);text-decoration:none;transition:color 0.25s;}
+  .breadcrumb a:hover{color:var(--sf-cyan);}
+  .breadcrumb .sep{opacity:0.4;}
+  .course-badge-row{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:24px;}
+  .course-tag{display:inline-flex;align-items:center;gap:6px;padding:6px 16px;border-radius:50px;font-size:12px;font-weight:600;border:1px solid var(--border);background:rgba(255,255,255,0.03);color:var(--fg-muted);}
+  .course-tag.ct-cyan{border-color:rgba(41,181,232,0.3);color:var(--sf-cyan);background:var(--sf-cyan-dim);}
+  .course-tag.ct-accent{border-color:rgba(0,212,123,0.3);color:var(--accent);background:var(--accent-dim);}
+  .course-tag.ct-gold{border-color:rgba(245,183,49,0.3);color:var(--gold);background:var(--gold-dim);}
+  .course-hero h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(32px,5.5vw,56px);font-weight:700;line-height:1.1;letter-spacing:-1.5px;margin-bottom:16px;}
+  .course-hero h1 .hl{color:var(--sf-cyan);}
+  .ch-desc{font-size:17px;color:var(--fg-muted);max-width:660px;margin:0 auto 36px;line-height:1.7;}
+  .hero-meta-bar{display:flex;justify-content:center;gap:0;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;max-width:640px;margin:0 auto;}
+  .hero-meta-item{flex:1;padding:18px 16px;text-align:center;border-right:1px solid var(--border);}
+  .hero-meta-item:last-child{border-right:none;}
+  .hmi-val{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:var(--fg);}
+  .hmi-val.cyan{color:var(--sf-cyan);}
+  .hmi-label{font-size:11px;color:var(--fg-muted);text-transform:uppercase;letter-spacing:0.8px;margin-top:2px;}
+
+  /* Progress */
+  .progress-section{padding:32px 0 24px;}
+  .progress-track-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px 28px 20px;}
+  .progress-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
+  .progress-title{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;}
+  .progress-count{font-size:13px;color:var(--fg-muted);font-family:'Space Grotesk',monospace;}
+  .progress-count span{color:var(--sf-cyan);font-weight:600;}
+  .progress-dots{display:flex;gap:5px;align-items:center;}
+  .p-dot{flex:1;height:6px;border-radius:3px;background:var(--border);cursor:pointer;transition:all 0.3s;}
+  .p-dot:hover{background:var(--border-light);}
+  .p-dot.active{background:var(--sf-cyan);}
+  .p-dot.visited{background:rgba(41,181,232,0.3);}
+
+  /* Phase Dividers */
+  .phase-divider{display:flex;align-items:center;gap:14px;margin:32px 0 18px;padding:0 4px;}
+  .phase-divider .pd-line{flex:1;height:1px;background:var(--border);}
+  .phase-divider .pd-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--sf-cyan);white-space:nowrap;}
+  .phase-divider .pd-icon{width:28px;height:28px;border-radius:7px;background:var(--sf-cyan-dim);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--sf-cyan);}
+
+  /* Session Cards */
+  .days-section{padding:16px 0 40px;}
+  .day-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px;overflow:hidden;transition:border-color 0.3s;}
+  .day-card:hover{border-color:var(--border-light);}
+  .day-card.active{border-color:rgba(41,181,232,0.35);}
+  .day-header{width:100%;padding:20px 26px;background:transparent;border:none;color:var(--fg);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;text-align:left;cursor:pointer;display:flex;align-items:center;gap:14px;transition:background 0.25s;}
+  .day-header:hover{background:rgba(255,255,255,0.015);}
+  .day-num{flex-shrink:0;width:42px;height:42px;border-radius:11px;background:var(--sf-cyan-dim);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:var(--sf-cyan);transition:all 0.3s;}
+  .day-card.active .day-num{background:var(--sf-cyan);color:var(--bg);}
+  .day-info{flex:1;min-width:0;}
+  .day-info h3{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;margin-bottom:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .day-info .day-sub{font-size:12px;color:var(--fg-muted);}
+  .day-topics-count{flex-shrink:0;padding:4px 11px;border-radius:50px;background:rgba(255,255,255,0.04);font-size:11px;color:var(--fg-muted);font-family:'Space Grotesk',monospace;}
+  .day-chevron{flex-shrink:0;font-size:13px;color:var(--fg-muted);transition:transform 0.35s,color 0.3s;}
+  .day-card.active .day-chevron{transform:rotate(180deg);color:var(--sf-cyan);}
+  .day-body{max-height:0;overflow:hidden;transition:max-height 0.5s cubic-bezier(0.22,1,0.36,1);}
+  .day-card.active .day-body{max-height:1200px;}
+  .day-body-inner{padding:0 26px 22px;}
+
+  .topic-subcat{display:flex;align-items:center;gap:8px;margin:14px 0 6px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.04);}
+  .topic-subcat:first-child{margin-top:0;padding-top:0;border-top:none;}
+  .topic-subcat .ts-dot{width:6px;height:6px;border-radius:50%;background:var(--sf-cyan);flex-shrink:0;}
+  .topic-subcat .ts-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--sf-ice);}
+
+  .topic-list{list-style:none;}
+  .topic-list li{display:flex;align-items:flex-start;gap:11px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.02);font-size:13.5px;color:var(--fg);line-height:1.5;}
+  .topic-list li:last-child{border-bottom:none;}
+  .topic-check{flex-shrink:0;width:20px;height:20px;border-radius:5px;background:var(--sf-cyan-dim);display:flex;align-items:center;justify-content:center;margin-top:2px;}
+  .topic-check i{font-size:9px;color:var(--sf-cyan);opacity:0.5;}
+  .topic-list li .hl-cortex{color:var(--gold);font-weight:600;}
+
+  .day-tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:14px;padding-top:12px;border-top:1px solid var(--border);}
+  .day-tag{padding:3px 10px;border-radius:50px;font-size:10px;font-weight:600;background:rgba(255,255,255,0.035);color:var(--fg-muted);border:1px solid rgba(255,255,255,0.05);}
+  .day-tag.dt-cortex{background:var(--gold-dim);color:var(--gold);border-color:rgba(245,183,49,0.2);}
+
+  /* Projects */
+  .projects-section{padding:40px 0;}
+  .projects-box{background:linear-gradient(135deg,var(--sf-cyan-dim),rgba(0,212,123,0.02));border:1px solid rgba(41,181,232,0.18);border-radius:var(--radius);padding:40px 36px;text-align:center;}
+  .pb-icon{width:64px;height:64px;margin:0 auto 20px;border-radius:16px;background:var(--sf-cyan-dim);display:flex;align-items:center;justify-content:center;font-size:28px;color:var(--sf-cyan);}
+  .projects-box h2{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;letter-spacing:-0.5px;margin-bottom:12px;}
+  .projects-box p{font-size:15px;color:var(--fg-muted);max-width:540px;margin:0 auto 24px;line-height:1.7;}
+  .project-highlights{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:640px;margin:0 auto 28px;}
+  .ph-item{background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.05);border-radius:var(--radius-sm);padding:14px 10px;text-align:center;}
+  .ph-item i{font-size:18px;color:var(--sf-cyan);margin-bottom:6px;display:block;}
+  .ph-item span{font-size:11px;color:var(--fg-muted);font-weight:500;}
+
+  /* Outcomes */
+  .outcomes-section{padding:40px 0;}
+  .outcomes-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+  .outcome-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:20px 18px;display:flex;gap:14px;align-items:flex-start;transition:all 0.3s;}
+  .outcome-card:hover{border-color:rgba(41,181,232,0.3);transform:translateY(-2px);}
+  .outcome-icon{flex-shrink:0;width:38px;height:38px;border-radius:9px;background:var(--sf-cyan-dim);display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--sf-cyan);}
+  .outcome-card h4{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;margin-bottom:3px;}
+  .outcome-card p{font-size:12px;color:var(--fg-muted);line-height:1.5;}
+
+  /* CTA */
+  .cta-section{padding:40px 0 80px;}
+  .cta-box{background:linear-gradient(135deg,rgba(41,181,232,0.08),rgba(0,212,123,0.02));border:1px solid rgba(41,181,232,0.2);border-radius:var(--radius);padding:52px 36px;text-align:center;position:relative;overflow:hidden;}
+  .cta-box::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 40%,rgba(41,181,232,0.05),transparent 50%);pointer-events:none;}
+  .cta-box h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(22px,3.5vw,32px);font-weight:700;letter-spacing:-0.8px;margin-bottom:12px;position:relative;}
+  .cta-box p{font-size:15px;color:var(--fg-muted);max-width:500px;margin:0 auto 28px;line-height:1.7;position:relative;}
+  .cta-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;}
+  .btn{padding:13px 30px;border:none;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.3s;display:inline-flex;align-items:center;gap:9px;text-decoration:none;}
+  .btn-primary{background:var(--accent);color:var(--bg);}
+  .btn-primary:hover{box-shadow:0 0 28px var(--accent-glow);transform:translateY(-2px);}
+  .btn-whatsapp{background:#25d366;color:#fff;}
+  .btn-whatsapp:hover{box-shadow:0 0 28px rgba(37,211,102,0.3);transform:translateY(-2px);}
+  .btn-outline{background:transparent;color:var(--fg);border:1px solid var(--border);}
+  .btn-outline:hover{border-color:var(--sf-cyan);color:var(--sf-cyan);}
+
+  /* Footer */
+  footer{border-top:1px solid var(--border);padding:32px 0;}
+  .footer-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;font-size:12px;color:var(--fg-muted);}
+  .footer-contact{display:flex;gap:16px;flex-wrap:wrap;}
+  .footer-contact a{color:var(--fg-muted);text-decoration:none;display:flex;align-items:center;gap:5px;transition:color 0.25s;}
+  .footer-contact a:hover{color:var(--sf-cyan);}
+
+  /* WhatsApp Float */
+  .whatsapp-float{position:fixed;bottom:24px;right:24px;z-index:200;width:56px;height:56px;border-radius:50%;background:#25d366;display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;cursor:pointer;box-shadow:0 4px 24px rgba(37,211,102,0.35);transition:all 0.3s;text-decoration:none;animation:waFloat 3s ease-in-out infinite;}
+  .whatsapp-float:hover{transform:scale(1.1);box-shadow:0 6px 32px rgba(37,211,102,0.5);animation:none;}
+  @keyframes waFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+  .wa-tooltip{position:absolute;right:68px;top:50%;transform:translateY(-50%);white-space:nowrap;background:var(--card);border:1px solid var(--border);padding:7px 14px;border-radius:8px;font-size:12px;font-weight:500;color:var(--fg);box-shadow:0 4px 16px rgba(0,0,0,0.3);opacity:0;pointer-events:none;transition:opacity 0.3s;}
+  .wa-tooltip::after{content:'';position:absolute;right:-6px;top:50%;transform:translateY(-50%) rotate(45deg);width:10px;height:10px;background:var(--card);border-right:1px solid var(--border);border-top:1px solid var(--border);}
+  .whatsapp-float:hover .wa-tooltip{opacity:1;}
+
+  .section-label{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--sf-cyan);margin-bottom:12px;}
+  .section-label .sl-line{width:24px;height:2px;background:var(--sf-cyan);border-radius:2px;}
+  .section-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(24px,3.5vw,32px);font-weight:700;letter-spacing:-0.8px;line-height:1.15;margin-bottom:12px;}
+  .section-desc{font-size:14px;color:var(--fg-muted);max-width:560px;line-height:1.7;}
+  .sh-center{text-align:center;}
+  .sh-center .section-desc{margin:0 auto;}
+
+  @media (max-width:700px) {
+    .nav-link{display:none;}
+    .mobile-toggle{display:block;}
+    .course-hero{padding:120px 0 36px;}
+    .hero-meta-bar{flex-direction:column;}
+    .hero-meta-item{border-right:none;border-bottom:1px solid var(--border);padding:14px 16px;}
+    .hero-meta-item:last-child{border-bottom:none;}
+    .day-header{padding:16px 16px;gap:10px;}
+    .day-body-inner{padding:0 16px 18px;}
+    .day-topics-count{display:none;}
+    .day-tags{flex-direction:column;}
+    .project-highlights{grid-template-columns:repeat(2,1fr);}
+    .outcomes-grid{grid-template-columns:1fr;}
+    .cta-box{padding:36px 20px;}
+    .progress-track-wrap{padding:20px 16px 16px;}
+    .projects-box{padding:28px 20px;}
+    .phase-divider{margin:24px 0 14px;}
+  }
+  @media (prefers-reduced-motion:reduce) {
+    *,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important;}
+  }
+</style>
+</head>
+<body>
+
+<div class="atmo-grid"></div>
+<div class="atmo-glow g1"></div>
+<div class="atmo-glow g2"></div>
+<div class="atmo-glow g3"></div>
+
+<!-- Snowflake particles -->
+<div class="sf-particles" id="sfParticles" aria-hidden="true"></div>
+
+<nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="https://vizonis.com" class="nav-logo" aria-label="Vizonis Academy Home">
+      <div class="nav-logo-icon">V</div>
+      <span class="nav-logo-text">Vizonis Academy</span>
+    </a>
+    <div class="nav-right">
+      <a href="https://vizonis.com" class="nav-link">Home</a>
+      <a href="#outcomes" class="nav-link">Outcomes</a>
+      <a href="https://wa.me/916364671786?text=Hi%20Vizonis%20Academy%2C%20I%20want%20to%20enrol%20for%20the%20Snowflake%20course.%20Please%20share%20details." class="nav-cta" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-whatsapp"></i> Enrol Now
+      </a>
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <section class="course-hero" aria-label="Course overview">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="https://vizonis.com">Home</a>
+        <span class="sep">/</span>
+        <a href="https://vizonis.com#courses">Courses</a>
+        <span class="sep">/</span>
+        <span style="color:var(--fg);">Snowflake</span>
+      </div>
+      <div class="course-badge-row">
+        <span class="course-tag ct-cyan"><i class="fas fa-snowflake"></i> Snowflake Data Cloud</span>
+        <span class="course-tag ct-gold"><i class="fas fa-brain"></i> Includes Cortex Analyst</span>
+        <span class="course-tag ct-accent"><i class="fas fa-calendar-week"></i> Weekends Only</span>
+      </div>
+      <h1>Snowflake<br><span class="hl">Complete Course Content</span></h1>
+      <p class="ch-desc">
+        From cloud architecture to Cortex Analyst — 10 structured weekend sessions covering Snowflake SQL, semi-structured data, performance optimization, Snowpipe, Streams, Tasks, security, and AI-powered analytics.
+      </p>
+      <div class="hero-meta-bar">
+        <div class="hero-meta-item">
+          <div class="hmi-val cyan">10</div>
+          <div class="hmi-label">Sessions</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="hmi-val">2 hrs</div>
+          <div class="hmi-label">Per Session</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="hmi-val">Sat & Sun</div>
+          <div class="hmi-label">Schedule</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="hmi-val">Hands-on</div>
+          <div class="hmi-label">Projects</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="progress-section" aria-label="Course progress">
+    <div class="container">
+      <div class="progress-track-wrap">
+        <div class="progress-header">
+          <span class="progress-title"><i class="fas fa-road" style="color:var(--sf-cyan);margin-right:6px;font-size:13px;"></i> Your Learning Path</span>
+          <span class="progress-count"><span>10</span> Sessions &middot; 20 Hours</span>
+        </div>
+        <div class="progress-dots" id="progressDots"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="days-section" aria-label="Session-by-session course content">
+    <div class="container" id="daysContainer"></div>
+  </section>
+
+  <section class="projects-section" aria-label="Course projects">
+    <div class="container">
+      <div class="projects-box">
+        <div class="pb-icon"><i class="fas fa-laptop-code"></i></div>
+        <h2>Real-World Snowflake Projects</h2>
+        <p>Load, transform, and analyze data on actual Snowflake instances — build pipelines with Snowpipe, create Streams for CDC, and deploy Cortex Analyst for natural language querying of your data.</p>
+        <div class="project-highlights">
+          <div class="ph-item"><i class="fas fa-cloud-upload-alt"></i><span>Data Loading</span></div>
+          <div class="ph-item"><i class="fas fa-stream"></i><span>Streams & Tasks</span></div>
+          <div class="ph-item"><i class="fas fa-brain"></i><span>Cortex Analyst</span></div>
+          <div class="ph-item"><i class="fas fa-tachometer-alt"></i><span>Performance Tuning</span></div>
+        </div>
+        <a href="https://wa.me/916364671786?text=Hi%20Vizonis%20Academy%2C%20I%20want%20to%20know%20about%20the%20projects%20included%20in%20the%20Snowflake%20course." class="btn btn-whatsapp" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-whatsapp"></i> Ask About Projects
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="outcomes-section" id="outcomes" aria-label="What you will achieve">
+    <div class="container">
+      <div class="sh-center" style="margin-bottom:36px;">
+        <div class="section-label"><span class="sl-line"></span> What You Achieve <span class="sl-line"></span></div>
+        <h2 class="section-title">After Completing This Course</h2>
+        <p class="section-desc">You will be ready for Snowflake developer, data engineer, and cloud analytics roles with end-to-end Snowflake platform skills.</p>
+      </div>
+      <div class="outcomes-grid">
+        <div class="outcome-card">
+          <div class="outcome-icon"><i class="fas fa-cloud"></i></div>
+          <div>
+            <h4>Snowflake Architecture</h4>
+            <p>Understand shared-disk, shared-nothing architecture, virtual warehouses, micro-partitions, and how Snowflake separates storage from compute.</p>
+          </div>
+        </div>
+        <div class="outcome-card">
+          <div class="outcome-icon"><i class="fas fa-code"></i></div>
+          <div>
+            <h4>Snowflake SQL Proficiency</h4>
+            <p>Write queries with window functions, CTEs, subqueries, views, materialized views, and Snowflake-specific extensions.</p>
+          </div>
+        </div>
+        <div class="outcome-card">
+          <div class="outcome-icon"><i class="fas fa-file-code"></i></div>
+          <div>
+            <h4>Semi-Structured Data</h4>
+            <p>Parse and query JSON, Avro, Parquet, and XML using VARIANT, OBJECT, ARRAY, FLATTEN, and LATERAL joins.</p>
+          </div>
+        </div>
+        <div class="outcome-card">
+          <div class="outcome-icon"><i class="fas fa-bolt"></i></div>
+          <div>
+            <h4>Data Pipelines</h4>
+            <p>Build automated ingestion pipelines with Snowpipe, Streams, Tasks, and stored procedures for continuous data loading.</p>
+          </div>
+        </div>
+        <div class="outcome-card">
+          <div class="outcome-icon"><i class="fas fa-shield-alt"></i></div>
+          <div>
+            <h4>Security & Governance</h4>
+            <p>Implement RBAC with roles, privileges, row access policies, dynamic data masking, and end-to-end access control.</p>
+          </div>
+        </div>
+        <div class="outcome-card">
+          <div class="outcome-icon" style="background:var(--gold-dim);"><i class="fas fa-brain" style="color:var(--gold);"></i></div>
+          <div>
+            <h4>Cortex Analyst AI</h4>
+            <p>Use Snowflake Cortex Analyst to ask natural language questions against your data — build AI-powered analytics without writing SQL.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section" aria-label="Enrol now">
+    <div class="container">
+      <div class="cta-box">
+        <h2>Ready to Master Snowflake?</h2>
+        <p>Speak directly with our trainer on WhatsApp. No sales team, no middlemen — just a straight conversation about your learning goals.</p>
+        <div class="cta-actions">
+          <a href="https://wa.me/916364671786?text=Hi%20Vizonis%20Academy%2C%20I%20want%20to%20enrol%20for%20the%20Snowflake%20course.%20Please%20share%20the%20batch%20schedule%20and%20fee%20details." class="btn btn-whatsapp" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-whatsapp"></i> Enrol on WhatsApp
+          </a>
+          <a href="https://vizonis.com#courses" class="btn btn-outline">
+            <i class="fas fa-arrow-left"></i> All Courses
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer role="contentinfo">
+  <div class="container">
+    <div class="footer-inner">
+      <span>&copy; 2025 Vizonis Academy. All rights reserved.</span>
+      <div class="footer-contact">
+        <a href="tel:+916364671786"><i class="fas fa-phone"></i> +91 6364671786</a>
+        <a href="mailto:support@vizonis.com"><i class="fas fa-envelope"></i> support@vizonis.com</a>
+        <a href="https://vizonis.com"><i class="fas fa-globe"></i> vizonis.com</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/916364671786?text=Hi%20Vizonis%20Academy%2C%20I%20want%20to%20know%20about%20the%20Snowflake%20course." class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+  <i class="fab fa-whatsapp"></i>
+  <span class="wa-tooltip">Enquire about Snowflake course</span>
+</a>
+
+<script>
+(function() {
+
+  /* Generate snowflake particles */
+  var particlesContainer = document.getElementById("sfParticles");
+  var snowChars = ["\u2744", "\u2745", "\u2746"];
+  for (var sp = 0; sp < 15; sp++) {
+    var p = document.createElement("span");
+    p.className = "sf-particle";
+    p.textContent = snowChars[Math.floor(Math.random() * snowChars.length)];
+    p.style.left = (Math.random() * 100) + "%";
+    p.style.fontSize = (10 + Math.random() * 14) + "px";
+    p.style.animationDuration = (12 + Math.random() * 18) + "s";
+    p.style.animationDelay = (Math.random() * 20) + "s";
+    particlesContainer.appendChild(p);
+  }
+
+  /* ═══════════════════════════════════
+     Course Data — 10 Sessions, 4 Phases
+     ═══════════════════════════════════ */
+  var phases = [
+    {
+      name: "Foundation & SQL",
+      icon: "fa-layer-group",
+      classes: [
+        {
+          day: 1,
+          title: "Introduction to Snowflake",
+          subtitle: "Architecture, Account Setup & Navigation",
+          subcategories: [
+            {
+              label: "Snowflake Overview",
+              topics: [
+                "What is Snowflake — Cloud Data Platform Overview",
+                "Snowflake vs Traditional Data Warehouses (Redshift, BigQuery, Azure Synapse)",
+                "Snowflake Architecture — Shared-Disk, Shared-Nothing Hybrid",
+                "Storage Layer — Columnar Storage, Micro-Partitions, Automatic Clustering",
+                "Compute Layer — Virtual Warehouses, Multi-Cluster Warehouses",
+                "Cloud Services Layer — Query Optimizer, Security, Metadata"
+              ]
+            },
+            {
+              label: "Account & Setup",
+              topics: [
+                "Creating a Snowflake Account (Trial, Standard, Enterprise)",
+                "Snowflake Web Interface — Worksheets, Object Explorer, History",
+                "Snowsight — The New Snowflake UI Overview",
+                "Role-Based Access Control (RBAC) Basics — SECURITYADMIN, SYSADMIN",
+                "Editions and Pricing — Credits, Warehouse Sizing, Cost Optimization Basics"
+              ]
+            }
+          ],
+          tags: ["Architecture", "Virtual Warehouse", "Micro-Partitions", "Snowsight", "RBAC"]
+        },
+        {
+          day: 2,
+          title: "Databases, Schemas & Tables",
+          subtitle: "Creating, Managing & Loading Data",
+          subcategories: [
+            {
+              label: "Database Objects",
+              topics: [
+                "CREATE DATABASE, CREATE SCHEMA — Hierarchical Namespace",
+                "CREATE TABLE — Data Types (NUMBER, VARCHAR, DATE, TIMESTAMP, FLOAT, BOOLEAN, VARIANT, ARRAY, OBJECT)",
+                "ALTER TABLE — Add/Drop Columns, Change Data Types",
+                "DROP TABLE, DROP SCHEMA, DROP DATABASE — Cascade Behavior",
+                "CLONE — Creating Zero-Copy Clones of Databases, Schemas, Tables",
+                "Transient, Temporary, and Permanent Tables"
+              ]
+            },
+            {
+              label: "Data Loading Basics",
+              topics: [
+                "Stages — Internal (User, Table) vs External (S3, Azure Blob, GCS)",
+                "PUT Command — Upload Files to Internal Stages",
+                "COPY INTO — Loading Data from Stages into Tables",
+                "File Formats — CSV, JSON, Parquet, Avro, XML, ORC",
+                "FORMAT_OPTIONS and COPY_OPTIONS for Data Loading Control",
+                "VALIDATION_MODE = RETURN_ROWS — Preview Before Loading"
+              ]
+            }
+          ],
+          tags: ["CREATE TABLE", "CLONE", "Stages", "COPY INTO", "PUT", "Parquet", "JSON"]
+        },
+        {
+          day: 3,
+          title: "Snowflake SQL — Core Queries",
+          subtitle: "SELECT, Filtering, Aggregation & Ordering",
+          subcategories: [
+            {
+              label: "SELECT & Filtering",
+              topics: [
+                "SELECT Statement — Columns, Aliases, Expressions, DISTINCT",
+                "WHERE Clause — Comparison Operators, BETWEEN, IN, NOT IN, LIKE, IS NULL",
+                "ORDER BY — ASC, DESC, NULLS FIRST, NULLS LAST",
+                "LIMIT and FETCH — Row Limitation in Snowflake",
+                "QUALIFY Clause — Filtering Window Function Results (Snowflake-Specific)"
+              ]
+            },
+            {
+              label: "Aggregation & Grouping",
+              topics: [
+                "Aggregate Functions — SUM, COUNT, AVG, MIN, MAX, COUNT(DISTINCT)",
+                "GROUP BY — Single Column, Multiple Columns, GROUPING SETS, CUBE, ROLLUP",
+                "HAVING Clause — Filtering After Aggregation",
+                "NULL Handling in Aggregation — AVG vs AVG(DISTINCT), COUNT(*) vs COUNT(column)"
+              ]
+            }
+          ],
+          tags: ["SELECT", "WHERE", "GROUP BY", "HAVING", "QUALIFY", "LIMIT", "GROUPING SETS"]
+        }
+      ]
+    },
+    {
+      name: "Advanced SQL & Semi-Structured",
+      icon: "fa-code-branch",
+      classes: [
+        {
+          day: 4,
+          title: "Joins, Subqueries & CTEs",
+          subtitle: "Multi-Table Queries & Query Structure",
+          subcategories: [
+            {
+              label: "Joins",
+              topics: [
+                "INNER JOIN — Matching Rows from Both Tables",
+                "LEFT OUTER JOIN — All Rows from Left Table",
+                "RIGHT OUTER JOIN — All Rows from Right Table",
+                "FULL OUTER JOIN — All Rows from Both Tables",
+                "CROSS JOIN — Cartesian Product",
+                "NATURAL JOIN — Auto-Detect Join Columns",
+                "Self-Join — Joining a Table to Itself",
+                "Multi-Table Joins — Joining 3+ Tables in a Single Query"
+              ]
+            },
+            {
+              label: "Subqueries & CTEs",
+              topics: [
+                "Scalar Subqueries — Single Value in SELECT or WHERE",
+                "Correlated Subqueries — Row-by-Row Evaluation",
+                "EXISTS and NOT EXISTS — Efficient Existence Checks",
+                "IN and NOT IN with Subqueries",
+                "CTE (WITH Clause) — Common Table Expressions",
+                "Recursive CTEs — Hierarchical Data Traversal",
+                "Multiple CTEs — Chaining and Referencing"
+              ]
+            }
+          ],
+          tags: ["INNER JOIN", "LEFT JOIN", "FULL JOIN", "CTE", "Recursive CTE", "EXISTS", "Correlated"]
+        },
+        {
+          day: 5,
+          title: "Semi-Structured Data",
+          subtitle: "VARIANT, OBJECT, ARRAY, FLATTEN & LATERAL",
+          subcategories: [
+            {
+              label: "Semi-Structured Data Types",
+              topics: [
+                "VARIANT Data Type — Storing JSON, XML, Avro Natively",
+                "OBJECT — Key-Value Pairs Access (col:key)",
+                "ARRAY — Indexed Access (col[0], col:index)",
+                "PARSE_JSON and TRY_PARSE_JSON — String to Variant Conversion",
+                "TO_VARIANT, TO_OBJECT, TO_ARRAY — Explicit Casting"
+              ]
+            },
+            {
+              label: "Querying Nested Data",
+              topics: [
+                "Dot Notation — Navigating JSON Keys (data:address.city)",
+                "FLATTEN Function — Exploding Arrays into Rows",
+                "LATERAL FLATTEN — Joining Flattened Results with Parent Rows",
+                "LATERAL VIEW with FLATTEN — Multiple Levels of Nesting",
+                "ARRAY_SIZE, IS_ARRAY, IS_OBJECT — Type Checking Functions",
+                "STRIP_NULL_VALUE and IGNORE_NULL — Handling Nulls in JSON"
+              ]
+            }
+          ],
+          tags: ["VARIANT", "OBJECT", "ARRAY", "FLATTEN", "LATERAL", "PARSE_JSON", "Dot Notation"]
+        },
+        {
+          day: 6,
+          title: "Window Functions & Views",
+          subtitle: "Analytic Queries, Materialized Views & Secure Views",
+          subcategories: [
+            {
+              label: "Window Functions",
+              topics: [
+                "OVER() Clause — Partition By and Order By",
+                "ROW_NUMBER, RANK, DENSE_RANK — Ranking Rows",
+                "LAG and LEAD — Accessing Previous and Next Rows",
+                "FIRST_VALUE and LAST_VALUE — First/Last in Window",
+                "LEAD/LAG with Offset — Time-Series Analysis",
+                "Running Totals with SUM() OVER()",
+                "Window Frames — ROWS BETWEEN, RANGE BETWEEN"
+              ]
+            },
+            {
+              label: "Views",
+              topics: [
+                "CREATE VIEW — Simple Views",
+                "ALTER VIEW — Modifying View Definition",
+                "Materialized Views — Pre-Computed Results for Performance",
+                "Secure Views — Row-Level Access Control",
+                "Recursive Views and View Dependencies",
+                "DROP VIEW — Removing Views"
+              ]
+            }
+          ],
+          tags: ["RANK", "DENSE_RANK", "ROW_NUMBER", "LAG", "LEAD", "Materialized View", "Secure View"]
+        }
+      ]
+    },
+    {
+      name: "Performance & Security",
+      icon: "fa-tachometer-alt",
+      classes: [
+        {
+          day: 7,
+          title: "Performance Optimization",
+          subtitle: "Clustering Keys, Caching & Query Profiling",
+          subcategories: [
+            {
+              label: "Clustering & Micro-Partitions",
+              topics: [
+                "Understanding Micro-Partitions — Automatic Data Grouping",
+                "CLUSTER BY — Defining Clustering Keys on Tables",
+                "Clustering Depth — Measuring with SYSTEM$CLUSTERING_INFORMATION",
+                "Automatic Clustering — Background Maintenance Service",
+                "Reclustering — MANUAL and AUTO_RECLUSTER Options",
+                "Choosing the Right Clustering Key — Best Practices"
+              ]
+            },
+            {
+              label: "Query Optimization",
+              topics: [
+                "QUERY_HISTORY — Analyzing Query Performance",
+                "Query Profile — Understanding Execution Plans",
+                "Result Cache — Snowflake's Automatic Caching Mechanism",
+                "Warehouse Caching — Persistent Cache Across Queries",
+                "Search Optimization Service — Faster Point Lookups",
+                "Zero-Copy Cloning for Testing Without Performance Impact"
+              ]
+            }
+          ],
+          tags: ["Clustering Key", "Micro-Partitions", "Query Profile", "Result Cache", "Search Optimization"]
+        },
+        {
+          day: 8,
+          title: "Security & Governance",
+          subtitle: "RBAC, Masking, Policies & Data Governance",
+          subcategories: [
+            {
+              label: "Role-Based Access Control",
+              topics: [
+                "Snowflake RBAC Hierarchy — ACCOUNTADMIN, SECURITYADMIN, SYSADMIN",
+                "CREATE ROLE, GRANT ROLE — Building Custom Role Hierarchies",
+                "GRANT and REVOKE — Privileges on Databases, Schemas, Tables",
+                "OWNERSHIP vs PRIVILEGES — Understanding the Difference",
+                "SHOW GRANTS — Auditing Permissions",
+                "Future Grants — GRANT OPTION for Automatic Permission Inheritance"
+              ]
+            },
+            {
+              label: "Data Masking & Row Policies",
+              topics: [
+                "Dynamic Data Masking — MASKING POLICY on Columns",
+                "Built-in Masking Functions — MASK(), EMAIL(), DATE(), REGEXP_REPLACE()",
+                "Conditional Masking — Different Masks Based on Role or Context",
+                "Row Access Policies — FILTER_ROW_TABLE() for Row-Level Security",
+                "Context Functions — CURRENT_ROLE(), CURRENT_USER(), CURRENT_REGION()",
+                "Tags — Object Tagging for Governance and Discovery"
+              ]
+            }
+          ],
+          tags: ["RBAC", "GRANT", "REVOKE", "Data Masking", "Row Access Policy", "Tags", "Future Grants"]
+        }
+      ]
+    },
+    {
+      name: "Pipelines, Automation & AI",
+      icon: "fa-cogs",
+      classes: [
+        {
+          day: 9,
+          title: "Snowpipe, Streams & Tasks",
+          subtitle: "Continuous Data Ingestion & Automation",
+          subcategories: [
+            {
+              label: "Snowpipe — Continuous Loading",
+              topics: [
+                "What is Snowpipe — Serverless Data Ingestion",
+                "Creating Pipes — AUTO_INGEST vs Standard Pipes",
+                "External Stages with Notification Integration (SQS, Azure Queue, GCS Pub/Sub)",
+                "COPY INTO with Pipes — Loading New Files Automatically",
+                "PIPE_STATUS — Monitoring Snowpipe Performance",
+                "Snowpipe Error Handling — VALIDATION_MODE, Error Tables"
+              ]
+            },
+            {
+              label: "Streams & Tasks",
+              topics: [
+                "Streams — Change Data Capture (CDC) on Tables",
+                "CREATE STREAM — Tracking INSERT, UPDATE, DELETE Operations",
+                "STREAM_DATA — Querying Changed Rows (INSERTED, DELETED, UPDATED)",
+                "Tasks — Scheduled SQL Execution with CREATE TASK",
+                "Stored Procedures inside Tasks — Complex Automation Logic",
+                "Task Chains — AFTER Clause for Sequential Task Execution",
+                "SUSPEND and RESUME Tasks — Managing Task Lifecycle",
+                "Task History — Querying Task Execution Logs"
+              ]
+            }
+          ],
+          tags: ["Snowpipe", "AUTO_INGEST", "Streams", "CDC", "Tasks", "Task Chains", "Stored Procedures"]
+        },
+        {
+          day: 10,
+          title: "Cortex Analyst & Cortex AI",
+          subtitle: "Natural Language Analytics, LLM Functions & Projects",
+          subcategories: [
+            {
+              label: "Cortex Analyst — Natural Language to SQL",
+              topics: [
+                "What is Cortex Analyst — AI-Powered Text-to-SQL Service",
+                "Setting Up Cortex Analyst — Semantic Models and Catalogs",
+                "CREATE CORTEX ANALYST SEMANTIC MODEL — Defining Your Data Context",
+                "Querying Data with Natural Language — Asking Questions in Plain English",
+                "Cortex Analyst SQL API — Integrating with Applications",
+                "Building a Cortex Analyst-Powered Dashboard or Chat Interface",
+                "Best Practices for Semantic Model Design — Column Descriptions, Relationships"
+              ]
+            },
+            {
+              label: "Cortex AI Functions",
+              topics: [
+                "SNOWFLAKE.CORTEX.COMPLETE — LLM Inference Inside SQL",
+                "SNOWFLAKE.CORTEX.EMBED_TEXT — Generating Text Embeddings",
+                "SNOWFLAKE.CORTEX.SENTIMENT — Sentiment Analysis on Text Data",
+                "SNOWFLAKE.CORTEX.SUMMARIZE — Auto-Summarizing Long Text",
+                "SNOWFLAKE.CORTEX.TRANSLATE — Language Translation in SQL",
+                "SNOWFLAKE.CORTEX.CLASSIFY_TEXT — Zero-Shot Text Classification"
+              ]
+            },
+            {
+              label: "Integration & Projects",
+              topics: [
+                "Snowflake Marketplace — Accessing Third-Party Data",
+                "Snowflake Connectors — Connecting to External Systems",
+                "End-to-End Project — Load, Transform, Analyze, and Ask Questions with Cortex Analyst"
+              ]
+            }
+          ],
+          tags: ["Cortex Analyst", "Semantic Model", "Text-to-SQL", "COMPLETE", "EMBED_TEXT", "SENTIMENT", "Marketplace", "dt-cortex", "dt-cortex", "dt-cortex"]
+        }
+      ]
+    }
+  ];
+
+  /* Flatten */
+  var allClasses = [];
+  for (var p = 0; p < phases.length; p++) {
+    for (var c = 0; c < phases[p].classes.length; c++) {
+      allClasses.push(phases[p].classes[c]);
+    }
+  }
+
+  /* ═══ Progress Dots ═══ */
+  var dotsContainer = document.getElementById("progressDots");
+  var dotsHtml = "";
+  for (var d = 0; d < allClasses.length; d++) {
+    var tCount = 0;
+    if (allClasses[d].subcategories) {
+      for (var s = 0; s < allClasses[d].subcategories.length; s++) {
+        tCount += allClasses[d].subcategories[s].topics.length;
+      }
+    }
+    dotsHtml += '<div class="p-dot" data-day="' + allClasses[d].day + '" title="Session ' + allClasses[d].day + ': ' + allClasses[d].title + ' (' + tCount + ' topics)"></div>';
+  }
+  dotsContainer.innerHTML = dotsHtml;
+
+  /* ═══ Render Session Cards ═══ */
+  var daysContainer = document.getElementById("daysContainer");
+  var cardsHtml = "";
+
+  for (var pi = 0; pi < phases.length; pi++) {
+    var phase = phases[pi];
+
+    cardsHtml += '<div class="phase-divider">'
+      + '<span class="pd-line"></span>'
+      + '<span class="pd-icon"><i class="fas ' + phase.icon + '"></i></span>'
+      + '<span class="pd-label">Phase ' + (pi + 1) + ': ' + phase.name + '</span>'
+      + '<span class="pd-line"></span>'
+      + '</div>';
+
+    for (var ci = 0; ci < phase.classes.length; ci++) {
+      var cls = phase.classes[ci];
+      var topicCount = 0;
+      if (cls.subcategories) {
+        for (var sc = 0; sc < cls.subcategories.length; sc++) {
+          topicCount += cls.subcategories[sc].topics.length;
+        }
+      }
+
+      var topicsHtml = "";
+      if (cls.subcategories) {
+        for (var si = 0; si < cls.subcategories.length; si++) {
+          var subcat = cls.subcategories[si];
+          topicsHtml += '<div class="topic-subcat">'
+            + '<span class="ts-dot"></span>'
+            + '<span class="ts-label">' + subcat.label + '</span>'
+            + '</div>'
+            + '<ul class="topic-list">';
+          for (var ti = 0; ti < subcat.topics.length; ti++) {
+            /* Highlight Cortex Analyst topics */
+            var topicText = subcat.topics[ti];
+            if (topicText.indexOf("Cortex Analyst") !== -1) {
+              topicText = topicText.replace(/Cortex Analyst/g, '<span class="hl-cortex">Cortex Analyst</span>');
+            }
+            topicsHtml += '<li>'
+              + '<span class="topic-check"><i class="fas fa-check"></i></span>'
+              + '<span>' + topicText + '</span>'
+              + '</li>';
+          }
+          topicsHtml += '</ul>';
+        }
+      }
+
+      var tagsSpan = "";
+      if (cls.tags) {
+        for (var g = 0; g < cls.tags.length; g++) {
+          var tagClass = "day-tag";
+          if (cls.tags[g] === "dt-cortex") {
+            tagClass = "day-tag dt-cortex";
+          } else {
+            tagsSpan += '<span class="' + tagClass + '">' + cls.tags[g] + '</span>';
+            continue;
+          }
+        }
+      }
+
+      cardsHtml += '<div class="day-card" data-day="' + cls.day + '">'
+        + '<button class="day-header" aria-expanded="false">'
+        + '<span class="day-num">S' + cls.day + '</span>'
+        + '<div class="day-info">'
+        + '<h3>Session ' + cls.day + ': ' + cls.title + '</h3>'
+        + '<span class="day-sub">' + cls.subtitle + '</span>'
+        + '</div>'
+        + '<span class="day-topics-count">' + topicCount + ' topics</span>'
+        + '<span class="day-chevron"><i class="fas fa-chevron-down"></i></span>'
+        + '</button>'
+        + '<div class="day-body">'
+        + '<div class="day-body-inner">'
+        + topicsHtml
+        + '<div class="day-tags">' + tagsSpan + '</div>'
+        + '</div>'
+        + '</div>'
+        + '</div>';
+    }
+  }
+  daysContainer.innerHTML = cardsHtml;
+
+  /* ═══ Accordion ═══ */
+  var dayCards = document.querySelectorAll(".day-card");
+  var activeDay = null;
+
+  function openDay(card) {
+    if (activeDay && activeDay !== card) {
+      activeDay.classList.remove("active");
+      activeDay.querySelector(".day-header").setAttribute("aria-expanded", "false");
+    }
+    card.classList.add("active");
+    card.querySelector(".day-header").setAttribute("aria-expanded", "true");
+    activeDay = card;
+    updateDots();
+  }
+
+  function closeDay(card) {
+    card.classList.remove("active");
+    card.querySelector(".day-header").setAttribute("aria-expanded", "false");
+    activeDay = null;
+    updateDots();
+  }
+
+  for (var c = 0; c < dayCards.length; c++) {
+    (function(card) {
+      card.querySelector(".day-header").addEventListener("click", function() {
+        if (card.classList.contains("active")) closeDay(card);
+        else openDay(card);
+      });
+    })(dayCards[c]);
+  }
+
+  /* ═══ Progress Dots Click ═══ */
+  var pDots = document.querySelectorAll(".p-dot");
+  for (var p = 0; p < pDots.length; p++) {
+    (function(dot) {
+      dot.addEventListener("click", function() {
+        var dayNum = parseInt(dot.getAttribute("data-day"));
+        var targetCard = document.querySelector('.day-card[data-day="' + dayNum + '"]');
+        if (targetCard) {
+          openDay(targetCard);
+          var offset = document.getElementById("navbar").offsetHeight + 16;
+          var top = targetCard.getBoundingClientRect().top + window.pageYOffset - offset;
+          window.scrollTo({ top: top, behavior: "smooth" });
+        }
+      });
+    })(pDots[p]);
+  }
+
+  function updateDots() {
+    for (var u = 0; u < pDots.length; u++) pDots[u].classList.remove("active");
+    if (activeDay) {
+      var activeDayNum = parseInt(activeDay.getAttribute("data-day"));
+      var activeDot = document.querySelector('.p-dot[data-day="' + activeDayNum + '"]');
+      if (activeDot) activeDot.classList.add("active");
+    }
+  }
+
+  /* ═══ Scroll: Track visited dots ═══ */
+  if ("IntersectionObserver" in window) {
+    var dayObserver = new IntersectionObserver(function(entries) {
+      for (var e = 0; e < entries.length; e++) {
+        if (entries[e].isIntersecting) {
+          var card = entries[e].target;
+          var dayNum = parseInt(card.getAttribute("data-day"));
+          for (var u = 0; u < pDots.length; u++) pDots[u].classList.remove("visited");
+          for (var v = 0; v < dayNum - 1; v++) {
+            var vd = document.querySelector('.p-dot[data-day="' + (v + 1) + '"]');
+            if (vd) vd.classList.add("visited");
+          }
+        }
+      }
+    }, { threshold: 0.3, rootMargin: "-80px 0px -60% 0px" });
+    for (var o = 0; o < dayCards.length; o++) dayObserver.observe(dayCards[o]);
+  }
+
+  /* ═══ Scroll Reveal ═══ */
+  var revealEls = document.querySelectorAll(".day-card,.outcome-card,.projects-box,.cta-box,.progress-track-wrap,.phase-divider");
+  if ("IntersectionObserver" in window) {
+    var revealObs = new IntersectionObserver(function(entries) {
+      for (var r = 0; r < entries.length; r++) {
+        if (entries[r].isIntersecting) {
+          entries[r].target.style.opacity = "1";
+          entries[r].target.style.transform = "translateY(0)";
+          revealObs.unobserve(entries[r].target);
+        }
+      }
+    }, { threshold: 0.06, rootMargin: "0px 0px -20px 0px" });
+    for (var rv = 0; rv < revealEls.length; rv++) {
+      revealEls[rv].style.opacity = "0";
+      revealEls[rv].style.transform = "translateY(20px)";
+      revealEls[rv].style.transition = "opacity 0.5s ease, transform 0.5s ease";
+      revealObs.observe(revealEls[rv]);
+    }
+  }
+
+  /* ═══ Navbar scroll ═══ */
+  var navbar = document.getElementById("navbar");
+  window.addEventListener("scroll", function() {
+    navbar.classList.toggle("scrolled", window.scrollY > 30);
+  }, { passive: true });
+
+  /* ═══ Auto-open Session 1 ═══ */
+  setTimeout(function() {
+    var firstCard = document.querySelector('.day-card[data-day="1"]');
+    if (firstCard) openDay(firstCard);
+  }, 600);
+
+})();
+</script>
+</body>
+</html>
