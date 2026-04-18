@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vizonis Academy | Power BI — Complete Visualization Guide</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script>
+tailwind.config={theme:{extend:{colors:{obsidian:'#050505',charcoal:'#0F1115',acid:'#CCFF00',silver:'#E1E1E1',cardDark:'#0A0C10'},fontFamily:{sans:['Space Grotesk','sans-serif'],display:['Syncopate','sans-serif']}}}}
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:'Space Grotesk',sans-serif;background:#050505;color:#E1E1E1;overflow-x:hidden}
+.noise-overlay{position:fixed;inset:0;z-index:9000;pointer-events:none;opacity:.04;background-image:url('https://grainy-gradients.vercel.app/noise.svg')}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#050505}::-webkit-scrollbar-thumb{background:#CCFF00;border-radius:3px}
+.gradient-text{background:linear-gradient(to bottom,#FFF 0%,#9ca3af 50%,#111827 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.acid-gradient-text{background:linear-gradient(135deg,#CCFF00,#88cc00,#CCFF00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.teal-gradient-text{background:linear-gradient(135deg,#2dd4bf,#14b8a6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.glass-card{background:rgba(255,255,255,.03);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.08);transition:all .4s ease}
+.glass-card:hover{background:rgba(255,255,255,.06);border-color:rgba(204,255,0,.3);box-shadow:0 0 30px rgba(204,255,0,.08)}
+.glow-btn{position:relative;overflow:hidden;transition:all .3s ease}
+.glow-btn:hover{box-shadow:0 0 30px rgba(204,255,0,.4);transform:translateY(-2px)}
+.particle{position:absolute;border-radius:50%;background:#CCFF00;opacity:.15;animation:fp linear infinite}
+@keyframes fp{0%{transform:translateY(100vh) scale(0);opacity:0}10%{opacity:.15}90%{opacity:.15}100%{transform:translateY(-100px) scale(1);opacity:0}}
+.grid-bg{background-image:linear-gradient(rgba(204,255,0,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(204,255,0,.03) 1px,transparent 1px);background-size:60px 60px}
+.section-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(204,255,0,.3),transparent)}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:4px 14px;border-radius:9999px;font-size:.75rem;border:1px solid rgba(204,255,0,.3);background:rgba(204,255,0,.08);color:#CCFF00;font-weight:600}
+.badge-teal{border-color:rgba(45,212,191,.3);background:rgba(45,212,191,.08);color:#2dd4bf}
+.badge-purple{border-color:rgba(192,132,252,.3);background:rgba(192,132,252,.08);color:#c084fc}
+.sub-nav-item{padding:8px 12px;border-radius:8px;font-size:.65rem;text-transform:uppercase;letter-spacing:.08em;color:#6b7280;transition:all .2s;cursor:pointer;border:1px solid transparent;white-space:nowrap}
+.sub-nav-item:hover,.sub-nav-item.active{color:#CCFF00;background:rgba(204,255,0,.05);border-color:rgba(204,255,0,.15)}
+.step-box{background:rgba(204,255,0,.04);border:1px solid rgba(204,255,0,.15);border-radius:12px;padding:16px 20px;position:relative}
+.step-box .step-l{font-size:.65rem;text-transform:uppercase;letter-spacing:.15em;color:#CCFF00;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.vis-mock{background:#0A0C10;border:1px solid rgba(255,255,255,.08);border-radius:12px;overflow:hidden}
+.vis-titlebar{background:rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.06);padding:10px 16px;font-size:.7rem;color:#6b7280;display:flex;align-items:center;gap:8px}
+.vis-titlebar i{color:#9ca3af}
+.pb-mock{background:linear-gradient(90deg,#CCFF00 0%,#CCFF00 var(--pct,70%),rgba(255,255,255,.06) var(--pct,70%));height:22px;border-radius:4px;min-width:4px;transition:width .5s}
+.pb-row{display:flex;align-items:center;gap:12px;padding:6px 16px;border-bottom:1px solid rgba(255,255,255,.03);font-size:.72rem;color:#9ca3af}
+.pb-label{width:120px;flex-shrink:0;color:#e1e1e1;font-size:.7rem}
+.pb-track{flex:1;height:22px;background:rgba(255,255,255,.06);border-radius:4px;overflow:hidden}
+.cond-row{display:flex;align-items:center;gap:8px;padding:8px 16px;border-bottom:1px solid rgba(255,255,255,.03);font-size:.72rem}
+.icon-circle{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.6rem}
+.bar-v{background:linear-gradient(to top,#CCFF00,#88cc00);border-radius:4px 4px 0 0;min-width:24px;transition:height .5s}
+.bar-h{background:linear-gradient(90deg,#CCFF00,#88cc00);border-radius:0 4px 4px 0;min-height:20px;transition:width .5s}
+@keyframes pulseGlow{0%,100%{box-shadow:0 0 20px rgba(204,255,0,.1)}50%{box-shadow:0 0 40px rgba(204,255,0,.25)}}
+.pulse-glow{animation:pulseGlow 3s ease-in-out infinite}
+.reveal{opacity:0;transform:translateY(40px)}
+.cat-label{display:inline-block;padding:3px 12px;border-radius:6px;font-size:.65rem;text-transform:uppercase;letter-spacing:.15em;font-weight:700;margin-bottom:8px}
+.whatsapp-float{position:fixed;bottom:30px;right:30px;z-index:8000;width:60px;height:60px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.4);transition:all .3s;cursor:pointer}
+.whatsapp-float:hover{transform:scale(1.1)}
+</style>
+</head>
+<body class="grid-bg">
+<div class="noise-overlay"></div>
+<div id="particles" class="fixed inset-0 z-0 pointer-events-none overflow-hidden"></div>
+
+<nav class="fixed top-0 left-0 right-0 z-[7000] bg-obsidian/80 border-b border-white/5 backdrop-blur-md">
+<div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+<a href="#" class="font-display text-xl font-bold tracking-tight"><span class="text-acid">V</span>IZONIS</a>
+<div class="hidden lg:flex items-center gap-1 overflow-x-auto">
+<a href="#table" class="sub-nav-item">Table</a>
+<a href="#matrix" class="sub-nav-item">Matrix</a>
+<a href="#drill" class="sub-nav-item">Drill</a>
+<a href="#line" class="sub-nav-item">Line</a>
+<a href="#area" class="sub-nav-item">Area</a>
+<a href="#bar" class="sub-nav-item">Bars</a>
+<a href="#combo" class="sub-nav-item">Combo</a>
+<a href="#pie" class="sub-nav-item">Pie</a>
+<a href="#advanced" class="sub-nav-item">Advanced</a>
+<a href="#geo" class="sub-nav-item">Geo</a>
+<a href="#kpi" class="sub-nav-item">KPI</a>
+<a href="#ai" class="sub-nav-item">AI</a>
+<a href="#card" class="sub-nav-item">Cards</a>
+<a href="#dashboard" class="sub-nav-item">Dashboard</a>
+<a href="#bookmarks" class="sub-nav-item">Bookmarks</a>
+<a href="#rls" class="sub-nav-item">RLS</a>
+</div>
+<a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20want%20to%20learn%20Power%20BI%20visuals." target="_blank" class="glow-btn bg-acid text-obsidian px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest whitespace-nowrap">Enroll Now</a>
+</div>
+</nav>
+
+<section class="relative min-h-screen flex flex-col justify-center items-center pt-20 overflow-hidden">
+<div class="hero-orb w-[500px] h-[500px] bg-acid top-1/4 -left-40" style="position:absolute;border-radius:50%;filter:blur(120px);opacity:.2;animation:of 8s ease-in-out infinite alternate"></div>
+<div class="hero-orb w-[400px] h-[400px] bg-teal-500 bottom-1/4 -right-32" style="position:absolute;border-radius:50%;filter:blur(120px);opacity:.15;animation:of 8s ease-in-out infinite alternate;animation-delay:-5s"></div>
+<style>@keyframes of{0%{transform:translate(0,0) scale(1)}100%{transform:translate(30px,-40px) scale(1.2)}}</style>
+<div class="relative z-10 text-center px-6 max-w-6xl mx-auto">
+<div class="badge badge-teal mb-8 mx-auto w-fit"><i class="fas fa-chart-bar"></i> Power BI Visualization</div>
+<h1 class="font-display text-5xl md:text-7xl lg:text-8xl font-bold leading-[.9] tracking-tighter mb-8">
+<span class="gradient-text block">THE COMPLETE</span>
+<span class="teal-gradient-text block mt-2">VISUAL GUIDE</span>
+<span class="gradient-text block mt-2 text-2xl md:text-4xl lg:text-5xl">EVERY CHART. EVERY SETTING.</span>
+</h1>
+<p class="text-gray-400 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-12">Table to Treemap, Bookmarks to RLS — every Power BI visual explained with visual mockups and step-by-step instructions.</p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center">
+<a href="#table" class="glow-btn bg-acid text-obsidian px-10 py-4 rounded-full text-sm font-bold uppercase tracking-widest">Explore Visuals <i class="fas fa-arrow-down ml-2"></i></a>
+<a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20want%20to%20learn%20Power%20BI%20visuals." target="_blank" class="glow-btn border border-white/20 text-white px-10 py-4 rounded-full text-sm font-bold uppercase tracking-widest hover:border-acid hover:text-acid"><i class="fab fa-whatsapp mr-2"></i> Chat With Us</a>
+</div>
+</div>
+</section>
+
+<!-- ===================== TABLE VISUALS ===================== -->
+<section id="table" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge badge-teal mb-4 mx-auto w-fit"><i class="fas fa-table"></i> Chapter 01</span>
+<h2 class="font-display text-4xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">TABLE VISUALS</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">The most versatile visual — works as a detailed data table, leaderboard, or styled report</p>
+</div>
+<div class="max-w-5xl mx-auto reveal">
+
+<!-- Table Mock: Before -->
+<div class="vis-mock mb-4">
+<div class="vis-titlebar"><i class="fas fa-table"></i> Table Visual — Basic (Before Formatting)</div>
+<div style="display:grid;grid-template-columns:80px 1fr 120px 100px 80px;font-size:.7rem;color:#9ca3af;border-bottom:1px solid rgba(255,255,255,.06)">
+<div style="padding:8px 12px;color:#6b7280;font-weight:600;font-size:.65rem">EEID</div>
+<div style="padding:8px 12px;color:#6b7280;font-weight:600;font-size:.65rem">Full Name</div>
+<div style="padding:8px 12px;color:#6b7280;font-weight:600;font-size:.65rem">Salary</div>
+<div style="padding:8px 12px;color:#6b7280;font-weight:600;font-size:.65rem">City</div>
+<div style="padding:8px 12px;color:#6b7280;font-weight:600;font-size:.65rem">Status</div>
+<div style="padding:6px 12px;border-bottom:1px solid rgba(255,255,255,.03)">E02387</div><div style="padding:6px 12px;border-bottom:1px solid rgba(255,255,255,.03)">Emily Davis</div><div style="padding:6px 12px;border-bottom:1px solid rgba(255,255,255,.03)">$141,604</div><div style="padding:6px 12px;border-bottom:1px solid rgba(255,255,255,.03)">Seattle</div><div style="padding:6px 12px;border-bottom:1px solid rgba(255,255,255,.03)">InActive</div>
+<div style="padding:6px 12px;border-bottom:1px solid rgba(255,255,255,.03)">E03496</div><div style="padding:6px 12px;border-bottom:1px solid rgba(255,255,255,.03)">Robert Yang</div><div style="padding:6px 12px;border-bottom:1px solid rgba(255,255,255,.03)">$256,420</div><div style="padding:6px 12px;border-bottom:1px solid rgba(255,255,255,.03)">Austin</div><div style="padding:6px 12px;border-bottom:1px solid rgba(255,255,255,.03)">InActive</div>
+<div style="padding:6px 12px;border-bottom:1px solid rgba(255,255,255,.03)">E00935</div><div style="padding:6px 12px;border-bottom:1px solid rgba(255,255,255,.03)">Joseph Martin</div><div style="padding:6px 12px;border-bottom:1px solid rgba(255,255,255,.03)">$247,022</div><div style="padding:6px 12px;border-bottom:1px solid rgba(255,255,255,.03)">Miami</div><div style="padding:6px 12px;border-bottom:1px solid rgba(255,255,255,.03)">Active</div>
+<div style="padding:6px 12px">E02572</div><div style="padding:6px 12px">Luna Sanders</div><div style="padding:6px 12px">$163,099</div><div style="padding:6px 12px">Chicago</div><div style="padding:6px 12px">Active</div>
+</div>
+</div>
+
+<!-- Table Mock: After (with Data Bars + Icons + Font Color) -->
+<div class="vis-mock mb-10 pulse-glow" style="border-color:rgba(204,255,0,.2)">
+<div class="vis-titlebar"><i class="fas fa-table" style="color:#CCFF00"></i> Table Visual — After Formatting (Data Bars + Icons + Font Color)</div>
+<div style="display:grid;grid-template-columns:80px 1fr 160px 100px 80px;font-size:.7rem">
+<div style="padding:8px 12px;color:#6b7280;font-weight:600;font-size:.65rem">EEID</div>
+<div style="padding:8px 12px;color:#6b7280;font-weight:600;font-size:.65rem">Full Name</div>
+<div style="padding:8px 12px;color:#6b7280;font-weight:600;font-size:.65rem">Salary</div>
+<div style="padding:8px 12px;color:#6b7280;font-weight:600;font-size:.65rem">City</div>
+<div style="padding:8px 12px;color:#6b7280;font-weight:600;font-size:.65rem">Status</div>
+
+<div class="pb-row" style="grid-column:1/-1;display:flex;align-items:center;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.03)">
+<span style="width:60px;flex-shrink:0;color:#9ca3af;font-size:.7rem">E03496</span>
+<span style="flex:1;color:#e1e1e1;font-size:.75rem">Robert Yang</span>
+<span style="width:140px;flex-shrink:0"><div class="pb-track"><div class="pb-mock" style="--pct:100%;width:100%"></div></div><span style="font-size:.65rem;color:#CCFF00;margin-top:1px;display:block">$256,420</span></span>
+<span style="width:80px;flex-shrink:0;color:#9ca3af;font-size:.7rem">Austin</span>
+<span style="width:70px;flex-shrink:0"><span class="icon-circle" style="background:rgba(239,68,68,.2);color:#ef4444;margin:0 auto"><i class="fas fa-times" style="font-size:.5rem"></i></span></span>
+</div>
+
+<div class="pb-row" style="grid-column:1/-1;display:flex;align-items:center;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.03)">
+<span style="width:60px;color:#9ca3af;font-size:.7rem">E00935</span>
+<span style="flex:1;color:#e1e1e1;font-size:.75rem">Joseph Martin</span>
+<span style="width:140px"><div class="pb-track"><div class="pb-mock" style="--pct:96%;width:96%"></div></div><span style="font-size:.65rem;color:#CCFF00;margin-top:1px;display:block">$247,022</span></span>
+<span style="width:80px;color:#9ca3af;font-size:.7rem">Miami</span>
+<span style="width:70px"><span class="icon-circle" style="background:rgba(34,197,94,.2);color:#22c55e;margin:0 auto"><i class="fas fa-check" style="font-size:.5rem"></i></span></span>
+</div>
+
+<div class="pb-row" style="grid-column:1/-1;display:flex;align-items:center;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.03)">
+<span style="width:60px;color:#9ca3af;font-size:.7rem">E02572</span>
+<span style="flex:1;color:#e1e1e1;font-size:.75rem">Luna Sanders</span>
+<span style="width:140px"><div class="pb-track"><div class="pb-mock" style="--pct:63%;width:63%"></div></div><span style="font-size:.65rem;color:#CCFF00;margin-top:1px;display:block">$163,099</span></span>
+<span style="width:80px;color:#9ca3af;font-size:.7rem">Chicago</span>
+<span style="width:70px"><span class="icon-circle" style="background:rgba(34,197,94,.2);color:#22c55e;margin:0 auto"><i class="fas fa-check" style="font-size:.5rem"></i></span></span>
+</div>
+
+<div class="pb-row" style="grid-column:1/-1;display:flex;align-items:center;padding:8px 12px">
+<span style="width:60px;color:#9ca3af;font-size:.7rem">E02387</span>
+<span style="flex:1;color:#e1e1e1;font-size:.75rem">Emily Davis</span>
+<span style="width:140px"><div class="pb-track"><div class="pb-mock" style="--pct:55%;width:55%"></div></div><span style="font-size:.65rem;color:#CCFF00;margin-top:1px;display:block">$141,604</span></span>
+<span style="width:80px;color:#9ca3af;font-size:.7rem">Seattle</span>
+<span style="width:70px"><span class="icon-circle" style="background:rgba(239,68,68,.2);color:#ef4444;margin:0 auto"><i class="fas fa-times" style="font-size:.5rem"></i></span></span>
+</div>
+</div>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="step-box"><div class="step-l"><i class="fas fa-sliders-h"></i> Formatting — Table</div>
+<p class="text-sm text-gray-400">Format pane → Grid: toggle zebra striping (alternating row colors), set row padding, adjust font size. <span class="text-acid font-semibold">Zebra striping</span> dramatically improves readability for tables with 20+ rows.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-th"></i> Cell Elements — Data Bars</div>
+<p class="text-sm text-gray-400">Format → Cell Elements → Data Bars → pick Salary column. Bars show relative magnitude inline. Set bar color to <span class="text-acid font-semibold">acid green</span>, direction Left-to-Right, show value at end.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-icons"></i> Cell Elements — Icons</div>
+<p class="text-sm text-gray-400">Format → Cell Elements → Icons → pick Status column. Map "Active" to <span class="text-green-400 font-semibold">green check</span>, "InActive" to <span class="text-red-400 font-semibold">red X</span>. Icons replace text and instantly convey status.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-palette"></i> Conditional Formatting — Font Color</div>
+<p class="text-sm text-gray-400">Format → Conditional Formatting → Font Color → Salary > $200,000 → set <span class="text-acid font-semibold">acid green</span>. Salary < $75,000 → set <span class="text-red-400 font-semibold">red</span>. Draws attention to outliers automatically.</p></div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== MATRIX VISUALS ===================== -->
+<section id="matrix" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge badge-purple mb-4 mx-auto w-fit"><i class="fas fa-th-large"></i> Chapter 02</span>
+<h2 class="font-display text-4xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">MATRIX VISUALS</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">Table on steroids — two-dimensional cross-tabulation with subtotals and collapsible hierarchy</p>
+</div>
+<div class="max-w-5xl mx-auto reveal">
+
+<div class="vis-mock mb-10" style="border-color:rgba(192,132,252,.2)">
+<div class="vis-titlebar"><i class="fas fa-th-large" style="color:#c084fc"></i> Matrix — Employees by City and Status (with Data Bars + Conditional Font Color)</div>
+<div style="font-size:.7rem;overflow-x:auto">
+<div style="display:grid;grid-template-columns:100px 80px 120px 120px 80px;min-width:500px">
+<div style="padding:10px 12px;color:#6b7280;font-weight:600;font-size:.65rem;border-bottom:2px solid rgba(192,132,252,.3)">City</div>
+<div style="padding:10px 12px;color:#6b7280;font-weight:600;font-size:.65rem;border-bottom:2px solid rgba(192,132,252,.3)">Active</div>
+<div style="padding:10px 12px;color:#6b7280;font-weight:600;font-size:.65rem;border-bottom:2px solid rgba(192,132,252,.3)">InActive</div>
+<div style="padding:10px 12px;color:#6b7280;font-weight:600;font-size:.65rem;border-bottom:2px solid rgba(192,132,252,.3)">Total</div>
+<div style="padding:10px 12px;color:#6b7280;font-weight:600;font-size:.65rem;border-bottom:2px solid rgba(192,132,252,.3)">Avg Salary</div>
+
+<div style="padding:8px 12px;color:#c084fc;font-weight:600;border-bottom:1px solid rgba(255,255,255,.06);font-size:.7rem;background:rgba(192,132,252,.05)">Seattle</div>
+<div style="padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.03);color:#22c55e;font-weight:600">5</div>
+<div style="padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.03);color:#ef4444;font-weight:600">1</div>
+<div style="padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.03);font-weight:700;color:#e1e1e1">6</div>
+<div style="padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.03);color:#CCFF00;font-weight:600">$152,458</div>
+
+<div style="padding:8px 12px;color:#c084fc;font-weight:600;border-bottom:1px solid rgba(255,255,255,.06);font-size:.7rem;background:rgba(192,132,252,.05)">Chicago</div>
+<div style="padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.03);color:#22c55e;font-weight:600">12</div>
+<div style="padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.03);color:#ef4444;font-weight:600">2</div>
+<div style="padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.03);font-weight:700;color:#e1e1e1">14</div>
+<div style="padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.03);color:#CCFF00;font-weight:600">$98,234</div>
+
+<div style="padding:8px 12px;color:#c084fc;font-weight:600;border-bottom:1px solid rgba(255,255,255,.06);font-size:.7rem;background:rgba(192,132,252,.05)">Austin</div>
+<div style="padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.03);color:#22c55e;font-weight:600">18</div>
+<div style="padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.03);color:#ef4444;font-weight:600">3</div>
+<div style="padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.03);font-weight:700;color:#e1e1e1">21</div>
+<div style="padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.03);color:#CCFF00;font-weight:600">$112,847</div>
+
+<div style="padding:10px 12px;font-weight:700;color:#c084fc;font-size:.7rem;background:rgba(192,132,252,.08);border-top:2px solid rgba(192,132,252,.3)">TOTAL</div>
+<div style="padding:10px 12px;font-weight:700;color:#22c55e;background:rgba(192,132,252,.08);border-top:2px solid rgba(192,132,252,.3)">280</div>
+<div style="padding:10px 12px;font-weight:700;color:#ef4444;background:rgba(192,132,252,.08);border-top:2px solid rgba(192,132,252,.3)">35</div>
+<div style="padding:10px 12px;font-weight:700;color:#e1e1e1;background:rgba(192,132,252,.08);border-top:2px solid rgba(192,132,252,.3)">315</div>
+<div style="padding:10px 12px;font-weight:700;color:#CCFF00;background:rgba(192,132,252,.08);border-top:2px solid rgba(192,132,252,.3)">$103,742</div>
+</div>
+</div>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="step-box" style="border-color:rgba(192,132,252,.15)"><div class="step-l" style="color:#c084fc"><i class="fas fa-th"></i> Matrix vs Table</div>
+<p class="text-sm text-gray-400"><span class="text-purple-400 font-bold">Table</span> = flat rows. <span class="text-purple-400 font-bold">Matrix</span> = rows + columns cross-tabulation. Matrix automatically adds subtotals and grand totals. Use Matrix when you need to compare two dimensions.</p></div>
+<div class="step-box" style="border-color:rgba(192,132,252,.15)"><div class="step-l" style="color:#c084fc"><i class="fas fa-bars"></i> Data Bars in Matrix</div>
+<p class="text-sm text-gray-400">Same as Table — Cell Elements → Data Bars. Works on value cells. The bars automatically scale within each column, making cross-column comparison easy.</p></div>
+<div class="step-box" style="border-color:rgba(192,132,252,.15)"><div class="step-l" style="color:#c084fc"><i class="fas fa-palette"></i> Conditional Font Color in Matrix</div>
+<p class="text-sm text-gray-400">Active count → green. InActive count → red. Total → white bold. Set per-field conditional formatting in the Format pane under "Cell elements."</p></div>
+<div class="step-box" style="border-color:rgba(192,132,252,.15)"><div class="step-l" style="color:#c084fc"><i class="fas fa-sort"></i> Subtotals & Grand Totals</div>
+<p class="text-sm text-gray-400">Format → Subtotals → Per row level / Per column level. Toggle on/off independently. Style subtotal rows with <span class="text-purple-400 font-bold">purple accent</span> to distinguish from data rows.</p></div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== DRILL DOWN ===================== -->
+<section id="drill" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge badge-teal mb-4 mx-auto w-fit"><i class="fas fa-search-plus"></i> Chapter 03</span>
+<h2 class="font-display text-4xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">DRILL DOWN VISUALS</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">Navigate data hierarchy — Country → City → Employee — without changing the report page</p>
+</div>
+<div class="max-w-5xl mx-auto reveal">
+
+<div class="vis-mock mb-10" style="border-color:rgba(45,212,191,.2)">
+<div class="vis-titlebar"><i class="fas fa-search-plus" style="color:#2dd4bf"></i> Drill Down Hierarchy — Country → City → Employee</div>
+<div class="p-6">
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+<div style="flex:1;height:40px;background:rgba(45,212,191,.1);border:1px solid rgba(45,212,191,.2);border-radius:8px;display:flex;align-items:center;justify-content:space-between;padding:0 16px">
+<span style="font-size:.75rem;color:#2dd4bf;font-weight:600"><i class="fas fa-globe mr-2"></i>United States</span>
+<span style="font-size:.7rem;color:#9ca3af">245 employees</span>
+</div>
+<div style="flex:1;height:40px;background:rgba(45,212,191,.1);border:1px solid rgba(45,212,191,.2);border-radius:8px;display:flex;align-items:center;justify-content:space-between;padding:0 16px">
+<span style="font-size:.75rem;color:#2dd4bf;font-weight:600"><i class="fas fa-globe mr-2"></i>China</span>
+<span style="font-size:.7rem;color:#9ca3af">70 employees</span>
+</div>
+</div>
+<div style="text-align:center;color:#6b7280;font-size:.65rem;margin:12px 0"><i class="fas fa-arrow-down" style="color:#2dd4bf"></i> DRILL DOWN: Click United States</div>
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;margin-left:20px">
+<div style="flex:1;height:36px;background:rgba(204,255,0,.05);border:1px solid rgba(204,255,0,.15);border-radius:8px;display:flex;align-items:center;justify-content:space-between;padding:0 14px">
+<span style="font-size:.7rem;color:#CCFF00;font-weight:500">Seattle</span>
+<span style="font-size:.65rem;color:#9ca3af">6 emp</span>
+</div>
+<div style="flex:1;height:36px;background:rgba(204,255,0,.05);border:1px solid rgba(204,255,0,.15);border-radius:8px;display:flex;align-items:center;justify-content:space-between;padding:0 14px">
+<span style="font-size:.7rem;color:#CCFF00;font-weight:500">Chicago</span>
+<span style="font-size:.65rem;color:#9ca3af">14 emp</span>
+</div>
+<div style="flex:1;height:36px;background:rgba(204,255,0,.05);border:1px solid rgba(204,255,0,.15);border-radius:8px;display:flex;align-items:center;justify-content:space-between;padding:0 14px">
+<span style="font-size:.7rem;color:#CCFF00;font-weight:500">Austin</span>
+<span style="font-size:.65rem;color:#9ca3af">21 emp</span>
+</div>
+</div>
+<div style="text-align:center;color:#6b7280;font-size:.65rem;margin:12px 0"><i class="fas fa-arrow-down" style="color:#CCFF00"></i> DRILL DOWN: Click Seattle</div>
+<div style="margin-left:40px;font-size:.7rem;color:#9ca3af;line-height:2">
+<div style="padding:4px 12px;background:rgba(255,255,255,.03);border-radius:6px;display:flex;justify-content:space-between"><span>Emily Davis</span><span style="color:#ef4444">InActive</span></div>
+<div style="padding:4px 12px;background:rgba(255,255,255,.03);border-radius:6px;display:flex;justify-content:space-between"><span>Isabella Xi</span><span style="color:#22c55e">Active</span></div>
+<div style="padding:4px 12px;background:rgba(255,255,255,.03);border-radius:6px;display:flex;justify-content:space-between"><span>Camila Silva</span><span style="color:#22c55e">Active</span></div>
+</div>
+</div>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="step-box"><div class="step-l"><i class="fas fa-toggle-on"></i> Turn On Drill</div>
+<p class="text-sm text-gray-400">Select visual → Format pane → Drill down → <span class="text-acid font-bold">"On"</span>. Your visual must have a hierarchy in the axis (Country → City → Employee). Drag multiple fields into the Axis well to create hierarchy.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-arrow-down"></i> Drill One Level Down</div>
+<p class="text-sm text-gray-400">Click the <span class="text-acid font-bold">drill down arrow</span> in the visual header (or double-click a bar). Moves one level deeper in the hierarchy. breadcrumb appears at top to show your path.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-expand-arrows-alt"></i> Expand All Levels</div>
+<p class="text-sm text-gray-400">Click the <span class="text-acid font-bold">expand icon</span> (double-down arrows) in the visual header. Shows ALL levels at once — Country, City, and Employee rows visible simultaneously. Great for print/PDF exports.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-arrow-up"></i> Drill Up</div>
+<p class="text-sm text-gray-400">Click the <span class="text-acid font-bold">drill up arrow</span> to go back one level. Or use the breadcrumb at the top of the visual to jump to any level directly. The hierarchy path shows: "Country > Seattle > [Employee]"</p></div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== LINE CHART ===================== -->
+<section id="line" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge badge-teal mb-4 mx-auto w-fit"><i class="fas fa-chart-line"></i> Chapter 04</span>
+<h2 class="font-display text-4xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">LINE CHART</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">The go-to chart for trends over time — monthly hires, revenue growth, attrition rate</p>
+</div>
+<div class="max-w-5xl mx-auto reveal">
+<div class="vis-mock mb-10" style="border-color:rgba(45,212,191,.2)">
+<div class="vis-titlebar"><i class="fas fa-chart-line" style="color:#2dd4bf"></i> Line Chart — Monthly Hires Trend (Smooth Interpolation)</div>
+<div class="p-6">
+<svg viewBox="0 0 600 200" style="width:100%;height:auto">
+<line x1="50" y1="20" x2="50" y2="170" stroke="rgba(255,255,255,.06)" stroke-width="1"/><line x1="145" y1="20" x2="145" y2="170" stroke="rgba(255,255,255,.06)" stroke-width="1"/><line x1="240" y1="20" x2="240" y2="170" stroke="rgba(255,255,255,.06)" stroke-width="1"/><line x1="335" y1="20" x2="335" y2="170" stroke="rgba(255,255,255,.06)" stroke-width="1"/><line x1="430" y1="20" x2="430" y2="170" stroke="rgba(255,255,255,.06)" stroke-width="1"/><line x1="525" y1="20" x2="525" y2="170" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
+<text x="50" y="185" fill="#6b7280" font-size="9" text-anchor="middle">Jan</text><text x="145" y="185" fill="#6b7280" font-size="9" text-anchor="middle">Feb</text><text x="240" y="185" fill="#6b7280" font-size="9" text-anchor="middle">Mar</text><text x="335" y="185" fill="#6b7280" font-size="9" text-anchor="middle">Apr</text><text x="430" y="185" fill="#6b7280" font-size="9" text-anchor="middle">May</text><text x="525" y="185" fill="#6b7280" font-size="9" text-anchor="middle">Jun</text>
+<path d="M50,120 C80,110 115,80 145,85 C175,90 210,50 240,55 C270,60 305,100 335,95 C365,90 400,40 430,35 C460,30 495,45 525,40" fill="none" stroke="#CCFF00" stroke-width="2.5" stroke-linecap="round"/>
+<circle cx="50" cy="120" r="3.5" fill="#CCFF00"/><circle cx="145" cy="85" r="3.5" fill="#CCFF00"/><circle cx="240" cy="55" r="3.5" fill="#CCFF00"/><circle cx="335" cy="95" r="3.5" fill="#CCFF00"/><circle cx="430" cy="35" r="3.5" fill="#CCFF00"/><circle cx="525" cy="40" r="3.5" fill="#CCFF00"/>
+<text x="430" y="28" fill="#CCFF00" font-size="9" text-anchor="middle" font-weight="600">18</text>
+</svg>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="step-box"><div class="step-l"><i class="fas fa-arrows-alt-h"></i> X Axis</div>
+<p class="text-sm text-gray-400">Drag Hire Date (Month) to X Axis. Format → X Axis → Type = <span class="text-acid font-bold">Continuous</span> (not categorical). Set Start/End values. Show axis title "Month".</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-arrows-alt-v"></i> Y Axis</div>
+<p class="text-sm text-gray-400">Drag Hires Count to Y Axis. Format → Y Axis → Start at 0. Set axis title "Number of Hires". Show gridlines for readability.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-font"></i> Data Labels</div>
+<p class="text-sm text-gray-400">Format → Data Labels → <span class="text-acid font-bold">On</span>. Position: Above. Show only for high/low points to avoid clutter. Use "Custom" label to show values conditionally.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-wave-square"></i> Interpolation Type — Smooth</div>
+<p class="text-sm text-gray-400">Format → Lines → Interpolation = <span class="text-acid font-bold">Smooth (Bezier)</span>. Creates curved lines instead of sharp angles. Best for showing trends when data has fluctuations. Straight = angular default.</p></div>
+</div>
+<div class="vis-mock mt-8" style="border-color:rgba(192,132,252,.2)">
+<div class="vis-titlebar"><i class="fas fa-chart-line" style="color:#c084fc"></i> Line Chart — Secondary Y Axis</div>
+<div class="p-6">
+<svg viewBox="0 0 600 200" style="width:100%;height:auto">
+<line x1="50" y1="170" x2="525" y2="170" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
+<text x="50" y="185" fill="#6b7280" font-size="9" text-anchor="middle">Jan</text><text x="240" y="185" fill="#6b7280" font-size="9" text-anchor="middle">Mar</text><text x="430" y="185" fill="#6b7280" font-size="9" text-anchor="middle">May</text>
+<polyline points="50,100 145,85 240,55 335,70 430,35 525,40" fill="none" stroke="#CCFF00" stroke-width="2"/>
+<polyline points="50,150 145,145 240,140 335,135 430,130 525,128" fill="none" stroke="#c084fc" stroke-width="2" stroke-dasharray="6,3"/>
+<text x="10" y="35" fill="#CCFF00" font-size="8" font-weight="600">Hires</text>
+<text x="10" y="150" fill="#c084fc" font-size="8" font-weight="600">Attrition %</text>
+</svg>
+</div>
+<div class="step-box mt-4"><div class="step-l" style="color:#c084fc"><i class="fas fa-columns"></i> Secondary Y Axis</div>
+<p class="text-sm text-gray-400">Drag a second measure → Format → "Enable secondary Y axis." Left axis = Hires (green line). Right axis = Attrition % (purple dashed line). <span class="text-purple-400 font-bold">Different scales</span> on same chart.</p></div>
+<div class="step-box mt-4"><div class="step-l" style="color:#c084fc"><i class="fas fa-list"></i> Legends</div>
+<p class="text-sm text-gray-400">Format → Legend → Position = Bottom/Top/Left/Right. <span class="text-purple-400 font-bold">Single legend</span> = one entry per line. Click legend items to toggle series visibility. Set legend title for clarity.</p></div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== AREA CHART ===================== -->
+<section id="area" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge mb-4 mx-auto w-fit"><i class="fas fa-mountain"></i> Chapter 05</span>
+<h2 class="font-display text-4xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">AREA CHARTS</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">Line chart with a filled area below — emphasizes volume/magnitude over time</p>
+</div>
+<div class="max-w-5xl mx-auto reveal">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+<div class="vis-mock" style="border-color:rgba(204,255,0,.15)">
+<div class="vis-titlebar"><i class="fas fa-chart-area" style="color:#CCFF00;font-size:.65rem"></i><span style="font-size:.6rem">Area</span></div>
+<div class="p-4"><svg viewBox="0 0 150 80"><path d="M10,60 L40,35 L70,45 L100,20 L130,25 L140,25 L140,70 L10,70Z" fill="rgba(204,255,0,.15)" stroke="#CCFF00" stroke-width="1.5"/></svg></div>
+</div>
+<div class="vis-mock" style="border-color:rgba(192,132,252,.15)">
+<div class="vis-titlebar"><i class="fas fa-layer-group" style="color:#c084fc;font-size:.65rem"></i><span style="font-size:.6rem">Stacked Area</span></div>
+<div class="p-4"><svg viewBox="0 0 150 80"><path d="M10,70 L40,55 L70,50 L100,45 L130,40 L140,40 L140,70Z" fill="rgba(204,255,0,.25)"/><path d="M10,70 L40,60 L70,58 L100,55 L130,50 L140,50 L140,70Z" fill="rgba(192,132,252,.3)" transform="translate(0,-15)"/><path d="M10,70 L40,65 L70,62 L100,60 L130,58 L140,58 L140,70Z" fill="rgba(45,212,191,.3)" transform="translate(0,-30)"/></svg></div>
+</div>
+<div class="vis-mock" style="border-color:rgba(45,212,191,.15)">
+<div class="vis-titlebar"><i class="fas fa-percentage" style="color:#2dd4bf;font-size:.65rem"></i><span style="font-size:.6rem">Stacked %</span></div>
+<div class="p-4"><svg viewBox="0 0 150 80"><rect x="10" y="20" width="130" height="20" rx="2" fill="rgba(204,255,0,.3)"/><rect x="10" y="40" width="130" height="20" rx="2" fill="rgba(192,132,252,.3)"/><rect x="10" y="60" width="130" height="10" rx="2" fill="rgba(45,212,191,.3)"/><line x1="10" y1="20" x2="140" y2="20" stroke="rgba(255,255,255,.1)" stroke-dasharray="2,2"/><line x1="10" y1="40" x2="140" y2="40" stroke="rgba(255,255,255,.1)" stroke-dasharray="2,2"/></svg></div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="step-box"><div class="step-l"><i class="fas fa-chart-area"></i> Area</div><p class="text-sm text-gray-400">Single series with filled area below the line. Best for showing <span class="text-acid font-bold">cumulative totals</span> or volume over time. Fill opacity: 15-20% for readability.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-layer-group"></i> Stacked Area</div><p class="text-sm text-gray-400">Multiple series stacked on top of each other. Shows both individual contribution AND total. Drag multiple measures to Values. Format → "Stacked area."</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-percentage"></i> Stacked % Area</div><p class="text-sm text-gray-400">Each series shows as percentage of total (always 0-100%). Perfect for <span class="text-acid font-bold">composition analysis</span> — "What % of hires come from each source?"</p></div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== BAR CHARTS ===================== -->
+<section id="bar" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge mb-4 mx-auto w-fit"><i class="fas fa-chart-bar"></i> Chapter 06</span>
+<h2 class="font-display text-4xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">BAR CHARTS</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">6 variants — Horizontal, Vertical, Stacked, and 100% Stacked — the workhorse of Power BI</p>
+</div>
+<div class="max-w-5xl mx-auto reveal">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+<div class="vis-mock" style="border-color:rgba(204,255,0,.15)">
+<div class="vis-titlebar"><i class="fas fa-bars" style="color:#CCFF00;font-size:.6rem"></i><span style="font-size:.58rem">Horizontal Bar</span></div>
+<div class="p-4" style="display:flex;flex-direction:column;gap:6px;justify-content:flex-end;height:160px;padding:12px">
+<div style="display:flex;align-items:center;gap:6px"><span style="font-size:.6rem;color:#9ca3af;width:50px;text-align:right">Seattle</span><div class="bar-h" style="width:60px;background:linear-gradient(90deg,#CCFF00,#88cc00)"></div></div>
+<div style="display:flex;align-items:center;gap:6px"><span style="font-size:.6rem;color:#9ca3af;width:50px;text-align:right">Chicago</span><div class="bar-h" style="width:110px;background:linear-gradient(90deg,#CCFF00,#88cc00)"></div></div>
+<div style="display:flex;align-items:center;gap:6px"><span style="font-size:.6rem;color:#9ca3af;width:50px;text-align:right">Austin</span><div class="bar-h" style="width:90px;background:linear-gradient(90deg,#CCFF00,#88cc00)"></div></div>
+<div style="display:flex;align-items:center;gap:6px"><span style="font-size:.6rem;color:#9ca3af;width:50px;text-align:right">Beijing</span><div class="bar-h" style="width:75px;background:linear-gradient(90deg,#CCFF00,#88cc00)"></div></div>
+<div style="display:flex;align-items:center;gap:6px"><span style="font-size:.6rem;color:#9ca3af;width:50px;text-align:right">Chengdu</span><div class="bar-h" style="width:50px;background:linear-gradient(90deg,#CCFF00,#88cc00)"></div></div>
+</div>
+</div>
+<div class="vis-mock" style="border-color:rgba(192,132,252,.15)">
+<div class="vis-titlebar"><i class="fas fa-chart-bar" style="color:#c084fc;font-size:.6rem"></i><span style="font-size:.58rem">Vertical Bar</span></div>
+<div class="p-4" style="display:flex;align-items:flex-end;gap:8px;height:160px;padding:12px">
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div class="bar-v" style="height:80px;width:100%;background:linear-gradient(to top,#c084fc,#a855f7);border-radius:4px 4px 0 0"></div><span style="font-size:.5rem;color:#9ca3af">Seattle</span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div class="bar-v" style="height:130px;width:100%;background:linear-gradient(to top,#c084fc,#a855f7);border-radius:4px 4px 0 0"></div><span style="font-size:.5rem;color:#9ca3af">Chicago</span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div class="bar-v" style="height:105px;width:100%;background:linear-gradient(to top,#c084fc,#a855f7);border-radius:4px 4px 0 0"></div><span style="font-size:.5rem;color:#9ca3af">Austin</span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div class="bar-v" style="height:90px;width:100%;background:linear-gradient(to top,#c084fc,#a855f7);border-radius:4px 4px 0 0"></div><span style="font-size:.5rem;color:#9ca3af">Beijing</span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div class="bar-v" style="height:55px;width:100%;background:linear-gradient(to top,#c084fc,#a855f7);border-radius:4px 4px 0 0"></div><span style="font-size:.5rem;color:#9ca3af">Chengdu</span></div>
+</div>
+</div>
+<div class="vis-mock" style="border-color:rgba(45,212,191,.15)">
+<div class="vis-titlebar"><i class="fas fa-percentage" style="color:#2dd4bf;font-size:.6rem"></i><span style="font-size:.58rem">100% Stacked %</span></div>
+<div class="p-4" style="display:flex;flex-direction:column;gap:6px;padding:12px">
+<div><div style="font-size:.6rem;color:#9ca3af;margin-bottom:3px">Seattle</div><div style="display:flex;height:16px;border-radius:3px;overflow:hidden"><div style="width:50%;background:rgba(204,255,0,.6)"></div><div style="width:30%;background:rgba(192,132,252,.5)"></div><div style="width:20%;background:rgba(45,212,191,.5)"></div></div></div>
+<div><div style="font-size:.6rem;color:#9ca3af;margin-bottom:3px">Chicago</div><div style="display:flex;height:16px;border-radius:3px;overflow:hidden"><div style="width:40%;background:rgba(204,255,0,.6)"></div><div style="width:35%;background:rgba(192,132,252,.5)"></div><div style="width:25%;background:rgba(45,212,191,.5)"></div></div></div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+<div class="step-box"><div class="step-l"><i class="fas fa-bars"></i> Horizontal Bar</div><p class="text-sm text-gray-400">Best when <span class="text-acid font-bold">labels are long</span> (city names, job titles). Bars go left-to-right. Sort by value descending for impact.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-chart-bar"></i> Vertical Bar</div><p class="text-sm text-gray-400">Classic bar chart. Best when <span class="text-acid font-bold">labels are short</span> (months, categories). Bars go bottom-to-top.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-layer-group"></i> H/V Stacked</div><p class="text-sm text-gray-400">Multiple series stacked. Shows <span class="text-acid font-bold">total + breakdown</span>. E.g., Active + InActive stacked per City = total headcount + composition.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-percentage"></i> H/V Stacked %</div><p class="text-sm text-gray-400">Each bar = 100%. Series show <span class="text-acid font-bold">% of total</span>. Perfect for "What % Active vs InActive per City?"</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-sort-amount-down"></i> Sort Bars</div><p class="text-sm text-gray-400">Three-dot menu on axis → Sort descending. Or drag a measure to <span class="text-acid font-bold">"Sort by column"</span> in the visual's sorting options.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-palette"></i> Bar Formatting</div>
+<p class="text-sm text-gray-400">Set bar colors per series. Add <span class="text-acid font-bold">data labels</span> inside bars (center position). Adjust bar width to 60-80% for spacing between bars.</p></div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== COMBO + PIE ===================== -->
+<section id="combo" class="py-28 px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <span class="badge badge-purple mb-4 mx-auto w-fit"><i class="fas fa-chart-line"></i> Chapter 07</span>
+      <h2 class="font-display text-4xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">COMBO + PIE + DONUT + TREEMAP</h2>
+      <p class="text-gray-400 text-lg max-w-3xl mx-auto">Four chart families that complete your visual toolkit</p>
+    </div>
+    <div class="max-w-7xl mx-auto reveal">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+        <!-- LEFT COLUMN: Combo -->
+        <div class="space-y-6">
+          <div class="vis-mock" style="border-color:rgba(204,255,0,.15)">
+            <div class="vis-titlebar"><i class="fas fa-chart-bar" style="color:#CCFF00;font-size:.6rem"></i><span style="font-size:.58rem">Combo Chart — Line + Clustered Column</span></div>
+            <div class="p-4"><svg viewBox="0 0 300 130" style="width:100%"><line x1="30" y1="10" x2="30" y2="100" stroke="rgba(255,255,255,.06)" stroke-width="1"/><line x1="88" y1="10" x2="88" y2="100" stroke="rgba(255,255,255,.06)" stroke-width="1"/><line x1="146" y1="10" x2="146" y2="100" stroke="rgba(255,255,255,.06)" stroke-width="1"/><line x1="204" y1="10" x2="204" y2="100" stroke="rgba(255,255,255,.06)" stroke-width="1"/><line x1="262" y1="10" x2="262" y2="100" stroke="rgba(255,255,255,.06)" stroke-width="1"/><rect x="16" y="55" width="28" height="45" rx="3" fill="rgba(204,255,0,.5)"/><rect x="74" y="35" width="28" height="65" rx="3" fill="rgba(204,255,0,.5)"/><rect x="132" y="45" width="28" height="55" rx="3" fill="rgba(204,255,0,.5)"/><rect x="190" y="25" width="28" height="75" rx="3" fill="rgba(204,255,0,.5)"/><rect x="248" y="38" width="28" height="62" rx="3" fill="rgba(204,255,0,.5)"/><polyline points="30,78 88,58 146,68 204,42 262,52" fill="none" stroke="#c084fc" stroke-width="2" stroke-dasharray="4,3"/><text x="30" y="115" fill="#6b7280" font-size="7" text-anchor="middle">Jan</text><text x="88" y="115" fill="#6b7280" font-size="7" text-anchor="middle">Feb</text><text x="146" y="115" fill="#6b7280" font-size="7" text-anchor="middle">Mar</text><text x="204" y="115" fill="#6b7280" font-size="7" text-anchor="middle">Apr</text><text x="262" y="115" fill="#6b7280" font-size="7" text-anchor="middle">May</text></svg></div>
+            <div class="step-box"><div class="step-l"><i class="fas fa-columns"></i> Combo Chart</div><p class="text-sm text-gray-400">X Axis: Month. Primary Y (columns): Hires count. Secondary Y (line): Attrition %. Format → "Combo chart" → choose "Line and clustered columns." Each axis has its own scale.</p></div>
+            <div class="step-box"><div class="step-l"><i class="fas fa-layer-group"></i> Combo Stacked</div><p class="text-sm text-gray-400">Same but with stacked columns. Two series on primary Y (Active + InActive stacked), one on secondary Y (line). Use when you need both composition and trend in one visual.</p></div>
+          </div>
+        </div>
+        <!-- ✅ LEFT COLUMN closed -->
+
+        <!-- RIGHT COLUMN: Pie / Donut / Treemap -->
+        <div class="space-y-6">
+          <div class="vis-mock" style="border-color:rgba(192,132,252,.15)">
+            <div class="vis-titlebar"><i class="fas fa-chart-pie" style="color:#c084fc;font-size:.6rem"></i><span style="font-size:.58rem">Pie / Donut / Treemap</span></div>
+            <div class="p-6">
+              <div style="display:flex;justify-content:center;gap:20px;align-items:flex-end;margin-bottom:16px">
+                <div style="text-align:center"><svg viewBox="0 0 100 100" style="width:110px;height:110px"><circle cx="50" cy="50" r="45" fill="none" stroke="rgba(204,255,0,.6)" stroke-width="18" stroke-dasharray="85 198" stroke-dashoffset="0"/><circle cx="50" cy="50" r="45" fill="none" stroke="rgba(192,132,252,.5)" stroke-width="18" stroke-dasharray="70 213" stroke-dashoffset="-85"/><circle cx="50" cy="50" r="45" fill="none" stroke="rgba(45,212,191,.5)" stroke-width="18" stroke-dasharray="48 235" stroke-dashoffset="-155"/></svg><div style="font-size:.6rem;color:#9ca3af;margin-top:5px">Pie</div></div>
+                <div style="text-align:center"><svg viewBox="0 0 100 100" style="width:110px;height:110px"><circle cx="50" cy="50" r="35" fill="none" stroke="rgba(204,255,0,.6)" stroke-width="16" stroke-dasharray="85 135" stroke-dashoffset="0"/><circle cx="50" cy="50" r="35" fill="none" stroke="rgba(192,132,252,.5)" stroke-width="16" stroke-dasharray="70 150" stroke-dashoffset="-85"/><circle cx="50" cy="50" r="35" fill="none" stroke="rgba(45,212,191,.5)" stroke-width="16" stroke-dasharray="48 172" stroke-dashoffset="-155"/></svg><div style="font-size:.6rem;color:#9ca3af;margin-top:5px">Donut</div></div>
+                <div style="text-align:center"><div style="display:flex;flex-direction:column;gap:3px;width:140px"><div style="height:30px;border-radius:4px 4px 0 0;background:rgba(204,255,0,.4)"></div><div style="height:25px;border-radius:4px 4px 0 0;background:rgba(192,132,252,.35)"></div><div style="height:20px;border-radius:4px 4px 0 0;background:rgba(45,212,191,.35)"></div></div><div style="font-size:.6rem;color:#9ca3af;margin-top:5px">Treemap</div></div>
+              </div>
+              <div class="step-box"><div class="step-l" style="color:#c084fc"><i class="fas fa-chart-pie"></i> Pie / Donut</div><p class="text-sm text-gray-400"><span class="text-purple-400 font-bold">Pie:</span> Full circle. <span class="text-purple-400 font-bold">Donut:</span> Ring with center hole (show KPI in center). Both: Details → enable "Donut" toggle. Use for <span class="text-white font-bold">5-7 categories max</span>.</p></div>
+              <div class="step-box"><div class="step-l" style="color:#c084fc"><i class="fas fa-th-large"></i> Treemap</div><p class="text-sm text-gray-400">Nested rectangles showing hierarchy. Size = value. Color = category. Perfect for <span class="text-white font-bold">budget allocation</span> or headcount by department.</p></div>
+            </div>
+          </div>
+        </div>
+        <!-- ✅ RIGHT COLUMN closed (this </div> was MISSING) -->
+
+      </div>
+      <!-- ✅ grid closed -->
+    </div>
+    <!-- ✅ inner max-w-7xl closed -->
+  </div>
+  <!-- ✅ outer max-w-7xl closed (this </div> was MISSING) -->
+</section>
+
+<!-- ===================== ADVANCED CHARTS ===================== -->
+<section id="advanced" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge mb-4 mx-auto w-fit"><i class="fas fa-fire"></i> Chapter 08</span>
+<h2 class="font-display text-4xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">ADVANCED CHARTS</h2>
+</div>
+<div class="max-w-5xl mx-auto reveal">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+
+<!-- Card 1: Ribbon -->
+<div class="vis-mock" style="border-color:rgba(204,255,0,.15)">
+<div class="vis-titlebar"><i class="fas fa-ribbon" style="color:#CCFF00;font-size:.6rem"></i><span style="font-size:.58rem">Ribbon Chart</span></div>
+<div class="p-4"><svg viewBox="0 0 260 100" style="width:100%"><line x1="20" y1="85" x2="240" y2="85" stroke="rgba(255,255,255,.06)"/>
+<path d="M20,80 L60,60 L100,65 L140,40 L180,50 L220,30 L220,85 Z" fill="rgba(204,255,0,.15)" stroke="#CCFF00" stroke-width="1.5"/>
+<path d="M20,75 L60,50 L100,55 L140,30 L180,35 L220,20 L220,85 Z" fill="rgba(192,132,252,.15)" stroke="#c084fc" stroke-width="1.5"/>
+<path d="M20,70 L60,45 L100,48 L140,25 L180,28 L220,15 L220,85 Z" fill="rgba(45,212,191,.15)" stroke="#2dd4bf" stroke-width="1.5"/>
+<text x="20" y="98" fill="#6b7280" font-size="7">2021</text><text x="100" y="98" fill="#6b7280" font-size="7">2022</text><text x="180" y="98" fill="#6b7280" font-size="7">2023</text>
+</svg></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-ribbon"></i> Ribbon Chart</div>
+<p class="text-sm text-400">Shows how multiple categories change over time. Each ribbon = one category's trend. Thicker ribbon at a point = higher value. Add to "Line and stacked column" family. Needs date + category + value fields.</p></div>
+</div>
+<!-- ✅ Ribbon vis-mock closed (WAS MISSING) -->
+
+<!-- Card 2: Waterfall -->
+<div class="vis-mock" style="border-color:rgba(192,132,252,.15)">
+<div class="vis-titlebar"><i class="fas fa-water" style="color:#c084fc;font-size:.6rem"></i><span style="font-size:.58rem">Waterfall Chart</span></div>
+<div class="p-4"><svg viewBox="0 0 260 100" style="width:100%">
+<rect x="15" y="35" width="35" height="45" rx="2" fill="rgba(204,255,0,.4)"/><rect x="60" y="50" width="35" height="30" rx="2" fill="rgba(239,68,68,.3)"/><rect x="105" y="45" width="35" height="35" rx="2" fill="rgba(239,68,68,.3)"/><rect x="150" y="60" width="35" height="20" rx="2" fill="rgba(239,68,68,.3)"/><rect x="195" y="25" width="35" height="55" rx="2" fill="rgba(204,255,0,.5)"/>
+<line x1="50" y1="80" x2="50" y2="85" stroke="#ef4444" stroke-width="1" stroke-dasharray="2,2"/><line x1="95" y1="80" x2="95" y2="85" stroke="#ef4444" stroke-width="1" stroke-dasharray="2,2"/><line x1="140" y1="80" x2="140" y2="85" stroke="#ef4444" stroke-width="1" stroke-dasharray="2,2"/><line x1="185" y1="80" x2="185" y2="85" stroke="#ef4444" stroke-width="1" stroke-dasharray="2,2"/>
+<text x="32" y="30" fill="#CCFF00" font-size="7" text-anchor="middle">+120</text><text x="77" y="45" fill="#ef4444" font-size="7" text-anchor="middle">-30</text><text x="122" y="40" fill="#ef4444" font-size="7" text-anchor="middle">-15</text><text x="167" y="55" fill="#ef4444" font-size="7" text-anchor="middle">-20</text><text x="212" y="20" fill="#CCFF00" font-size="7" text-anchor="middle">+50</text>
+</svg></div>
+<div class="step-box"><div class="step-l" style="color:#c084fc"><i class="fas fa-water"></i> Waterfall Chart</div>
+<p class="text-sm text-gray-400">Shows cumulative effect of sequential changes. Green = increase, Red = decrease. Final bar = total. Add under "Other chart" category. Needs: Category, Start value, End value (or auto-calculated).</p></div>
+</div>
+<!-- ✅ Waterfall vis-mock closed (WAS MISSING) -->
+
+<!-- Card 3: Funnel -->
+<div class="vis-mock" style="border-color:rgba(45,212,191,.15)">
+<div class="vis-titlebar"><i class="fas fa-filter" style="color:#2dd4bf;font-size:.6rem"></i><span style="font-size:.58rem">Funnel Chart</span></div>
+<div class="p-4 flex justify-center"><div style="display:flex;flex-direction:column;align-items:center;gap:3px">
+<div style="width:200px;height:32px;background:rgba(45,212,191,.3);border-radius:4px"></div>
+<div style="width:175px;height:32px;background:rgba(45,212,191,.25);border-radius:4px"></div>
+<div style="width:145px;height:32px;background:rgba(45,212,191,.2);border-radius:4px"></div>
+<div style="width:110px;height:32px;background:rgba(45,212,191,.15);border-radius:4px"></div>
+<div style="width:70px;height:32px;background:rgba(45,212,191,.1);border-radius:4px"></div>
+</div></div>
+<div class="step-box"><div class="step-l" style="color:#2dd4bf"><i class="fas fa-filter"></i> Funnel Chart</div>
+<p class="text-sm text-gray-400">Shows a pipeline: Applications → Screened → Interviewed → Offered → Hired. Each stage gets narrower. Add under "Other chart." Sort stages by count descending. <span class="text-teal-400 font-bold">Conversion %</span> shown between stages.</p></div>
+</div>
+<!-- ✅ Funnel vis-mock closed (WAS MISSING) -->
+
+<!-- Card 4: Scatter -->
+<div class="vis-mock" style="border-color:rgba(204,255,0,.15)">
+<div class="vis-titlebar"><i class="fas fa-braille" style="color:#CCFF00;font-size:.6rem"></i><span style="font-size:.58rem">Scatter Plot</span></div>
+<div class="p-6 flex justify-center"><svg viewBox="0 0 200 140" style="width:100%"><circle cx="60" cy="100" r="5" fill="rgba(204,255,0,.6)"/><circle cx="90" cy="70" r="5" fill="rgba(204,255,0,.6)"/><circle cx="120" cy="50" r="5" fill="rgba(204,255,0,.6)"/><circle cx="150" cy="30" r="5" fill="rgba(204,255,0,.6)"/><circle cx="75" cy="85" r="4" fill="rgba(192,132,252,.5)"/><circle cx="110" cy="60" r="4" fill="rgba(192,132,252,.5)"/><circle cx="140" cy="40" r="4" fill="rgba(192,132,252,.5)"/><line x1="40" y1="130" x2="170" y2="20" stroke="rgba(204,255,0,.15)" stroke-width="1" stroke-dasharray="4,4"/><text x="175" y="25" fill="#6b7280" font-size="7">Salary</text><text x="10" y="75" fill="#6b7280" font-size="7" transform="rotate(-90,10,75)">Tenure</text></svg></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-braille"></i> Scatter Plot</div>
+<p class="text-sm text-gray-400">X Axis = Salary, Y Axis = Tenure. Each dot = one employee. Reveals <span class="text-acid font-bold">correlation patterns</span>. Add trend line in Analytics pane. Use color saturation for a third measure (e.g., Bonus %).</p></div>
+</div>
+
+</div>
+<!-- ✅ grid closed -->
+</div>
+<!-- ✅ max-w-5xl closed -->
+</div>
+<!-- ✅ max-w-7xl closed -->
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== GEO + KPI + AI ===================== -->
+<section id="geo" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge badge-teal mb-4 mx-auto w-fit"><i class="fas fa-globe-americas"></i> Chapter 09-11</span>
+<h2 class="font-display text-4xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">GEO · KPI · AI CHARTS</h2>
+</div>
+<div class="max-w-5xl mx-auto reveal">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+<div class="vis-mock" style="border-color:rgba(45,212,191,.15)">
+<div class="vis-titlebar"><i class="fas fa-map-marker-alt" style="color:#2dd4bf;font-size:.6rem"></i><span style="font-size:.58rem">Filled Map</span></div>
+<div class="p-6 flex justify-center"><svg viewBox="0 0 120 80" style="width:140px"><path d="M60,5 L15,30 L10,55 L25,75 L55,80 L95,75 L110,55 L105,30Z" fill="rgba(45,212,191,.2)" stroke="rgba(45,212,191,.4)" stroke-width="1"/><circle cx="50" cy="45" r="5" fill="#2dd4bf"/><circle cx="80" cy="35" r="4" fill="#2dd4bf"/><circle cx="65" cy="60" r="3" fill="#2dd4bf"/></svg></div>
+<div class="step-box mt-3"><div class="step-l" style="color:#2dd4bf"><i class="fas fa-map"></i> Filled Map</div><p class="text-xs text-gray-400">Location → City. Size → Count. Color → Avg Salary. Only works with recognized geographies.</p></div>
+</div>
+<div class="vis-mock" style="border-color:rgba(204,255,0,.15)">
+<div class="vis-titlebar"><i class="fas fa-circle" style="color:#CCFF00;font-size:.6rem"></i><span style="font-size:.58rem">Bubble Map</span></div>
+<div class="p-6 flex justify-center"><svg viewBox="0 0 120 80" style="width:140px"><path d="M60,5 L15,30 L10,55 L25,75 L55,80 L95,75 L110,55 L105,30Z" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.06)" stroke-width="1"/><circle cx="50" cy="45" r="12" fill="rgba(204,255,0,.2)" stroke="#CCFF00" stroke-width="1"/><circle cx="80" cy="35" r="8" fill="rgba(204,255,0,.15)" stroke="#CCFF00" stroke-width="1"/><circle cx="65" cy="60" r="6" fill="rgba(204,255,0,.1)" stroke="#CCFF00" stroke-width="1"/></svg></div>
+<div class="step-box mt-3"><div class="step-l"><i class="fas fa-circle"></i> Bubble Map</div>
+<p class="text-xs text-gray-400">Location → City. Size → Hires (bubble size). Color → Avg Salary. Bubbles = proportional circles on map.</p></div>
+</div>
+<div class="vis-mock" style="border-color:rgba(192,132,252,.15)">
+<div class="vis-titlebar"><i class="fas fa-tachometer-alt" style="color:#c084fc;font-size:.6rem"></i><span style="font-size:.58rem">Gauge / KPI</span></div>
+<div class="p-6 flex justify-center"><svg viewBox="0 0 140 80" style="width:160px"><path d="M20,75 A50,50 0 0,1 120,75" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="12" stroke-linecap="round"/><path d="M20,75 A50,50 0 0,1 85,30" fill="none" stroke="#c084fc" stroke-width="12" stroke-linecap="round"/><text x="70" y="50" fill="#c084fc" font-size="14" font-weight="700" text-anchor="middle">73%</text><text x="70" y="65" fill="#6b7280" font-size="7" text-anchor="middle">Target: 80%</text></svg></div>
+<div class="step-box mt-3"><div class="step-l" style="color:#c084fc"><i class="fas fa-tachometer-alt"></i> Gauge Settings</div>
+<p class="text-xs text-gray-400">Value: current metric. Min: 0. Max: 100 (or target). Target line: dashed red line. Color rules: <50% red, 50-80% yellow, >80% green.</p></div>
+</div>
+</div>
+<div class="glass-card rounded-2xl p-8 border-purple-500/20 mt-8">
+<h3 class="text-xl font-bold mb-4 text-purple-400"><i class="fas fa-robot mr-2"></i> AI/ML Visuals</h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="p-5 bg-purple-500/5 border border-purple-500/15 rounded-xl">
+<div class="text-sm font-bold text-purple-400 mb-2"><i class="fas fa-key mr-1"></i> Key Influencers</div>
+<p class="text-xs text-gray-400">Analyzes what factors influence a metric (e.g., "What drives Employee Status = InActive?"). Shows top influencers ranked by impact strength. Add to report → select target measure and field to analyze.</p>
+</div>
+<div class="p-5 bg-purple-500/5 border border-purple-500/15 rounded-xl">
+<div class="text-sm font-bold text-purple-400 mb-2"><i class="fas fa-sitemap mr-1"></i> Decomposition Tree</div>
+<p class="text-xs text-gray-400">AI-powered breakdown tree. Click "+" to split by any dimension. Splits Salary → by Country → by City → keeps drilling. AI chooses the split that explains the most variance.</p>
+</div>
+<div class="p-5 bg-purple-500/5 border border-purple-500/15 rounded-xl">
+<div class="text-sm font-bold text-purple-400 mb-2"><i class="fas fa-question-circle mr-1"></i> Q&A Visual</div>
+<p class="text-xs text-gray-400">Natural language query box. Users type questions, AI generates visuals. <span class="text-purple-400 font-bold">Train:</span> Set synonyms (Salary = Compensation). <span class="text-purple-400 font-bold">Suggest:</span> Enable suggested questions card for users.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== CARD VISUALS ===================== -->
+<section id="card" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge mb-4 mx-auto w-fit"><i class="fas fa-id-card"></i> Chapter 12</span>
+<h2 class="font-display text-4xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">CARD VISUALS</h2>
+</div>
+<div class="max-w-5xl mx-auto reveal">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+<div class="vis-mock" style="border-color:rgba(204,255,0,.15)">
+<div class="vis-titlebar"><i class="fas fa-id-card" style="color:#CCFF00;font-size:.6rem"></i><span style="font-size:.58rem">Card Visual (New)</span></div>
+<div class="p-6 text-center">
+<div style="font-size:.65rem;color:#6b7280;margin-bottom:4px">TOTAL HIRES</div>
+<div style="font-size:2rem;font-weight:700;color:#CCFF00">315</div>
+<div style="font-size:.7rem;color:#22c55e;margin-top:2px"><i class="fas fa-arrow-up" style="font-size:.55rem"></i> +12% vs last year</div>
+<div style="width:60px;height:3px;background:#CCFF00;border-radius:2px;margin:8px auto 0"></div>
+</div>
+</div>
+<div class="vis-mock" style="border-color:rgba(192,132,252,.15)">
+<div class="vis-titlebar"><i class="fas fa-list-alt" style="color:#c084fc;font-size:.6rem"></i><span style="font-size:.58rem">Multi-Row Card</span></div>
+<div class="p-4 space-y-3">
+<div class="flex justify-between items-center"><span style="font-size:.7rem;color:#9ca3af">Avg Salary</span><span style="font-size:.85rem;font-weight:700;color:#e1e1e1">$103,742</span></div>
+<div class="flex justify-between items-center"><span style="font-size:.7rem;color:#9ca3af">Total Hires</span><span style="font-size:.85rem;font-weight:700;color:#e1e1e1">315</span></div>
+<div class="flex justify-between items-center"><span style="font-size:.7rem;color:#9ca3ca">Active Rate</span><span style="font-size:.85rem;font-weight:700;color:#22c55e">88.9%</span></div>
+<div class="flex justify-between items-center"><span style="font-size:.7rem;color:#9ca3af">Avg Tenure</span><span style="font-size:.85rem;font-weight:700;color:#2dd4bf">9.4 yrs</span></div>
+</div>
+</div>
+<div class="vis-mock" style="border-color:rgba(45,212,191,.15)">
+<div class="vis-titlebar"><i class="fas fa-chart-line" style="color:#2dd4bf;font-size:.6rem"></i><span style="font-size:.58rem">KPI Visual</span></div>
+<div class="p-5">
+<div style="font-size:.65rem;color:#6b7280;margin-bottom:2px">AVG TENURE</div>
+<div style="font-size:2rem;font-weight:700;color:#2dd4bf">9.4<span style="font-size:1rem"> yrs</span></div>
+<div style="height:4px;background:rgba(255,255,255,.06);border-radius:2px;margin:8px 0;position:relative"><div style="height:4px;width:70%;background:linear-gradient(90deg,#2dd4bf,transparent);border-radius:2px"></div><div style="position:absolute;left:70%;top:-4px;width:2px;height:12px;background:#ef4444;border-radius:1px"></div></div>
+<div style="font-size:.6rem;color:#6b7280;margin-top:8px">Target: <span style="color:#ef4444">8.0 yrs</span></div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="step-box"><div class="step-l"><i class="fas fa-border-all"></i> Card Formatting</div>
+<p class="text-sm text-gray-400">Background color, font size, label display. <span class="text-acid font-bold">Accent bar</span> = colored bar on left edge (Format → Card → "Show accent bar").</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-square"></i> Border — Rounded Rectangle</div>
+<p class="text-sm text-gray-400">Format → Card → Border → <span class="text-acid font-bold">Rounded corners: 12px</span>. Adjust border width and color. Remove border entirely for minimal look.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-cloud"></i> Shadow + Glow</div>
+<p class="text-sm text-gray-400">Format → Effects → Shadow: <span class="text-acid font-bold">4px offset, 8px blur</span>. Glow: increase blur to 20px + add border color match for neon effect.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-columns"></i> Multi-Row Card</div>
+<p class="text-sm text-gray-400">New Card visual → Add multiple fields to "Fields" well. Each field gets its own row. Best for <span class="text-acid font-bold">KPI dashboards</span> with 4-6 metrics side-by-side.</p></div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== DASHBOARD CREATION ===================== -->
+<section id="dashboard" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge mb-4 mx-auto w-fit"><i class="fas fa-tv"></i> Chapter 13</span>
+<h2 class="font-display text-4xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">DASHBOARD CREATION</h2>
+</div>
+<div class="max-w-5xl mx-auto reveal">
+<div class="vis-mock mb-10" style="border-color:rgba(204,255,0,.2)">
+<div style="padding:8px 16px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:10px">
+<div style="width:32px;height:32px;border-radius:8px;background:rgba(204,255,0,.15);display:flex;align-items:center;justify-content:center"><i class="fas fa-building text-acid" style="font-size:.8rem"></i></div>
+<span style="font-size:.8rem;font-weight:700;color:#e1e1e1;flex:1">HR Analytics Dashboard</span>
+<span style="font-size:.6rem;color:#6b7280">Last updated: Today</span>
+</div>
+<div style="padding:16px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+<div style="background:rgba(204,255,0,.05);border:1px solid rgba(204,255,0,.15);border-radius:10px;padding:12px;text-align:center"><div style="font-size:.6rem;color:#6b7280">TOTAL EMPLOYEES</div><div style="font-size:1.5rem;font-weight:700;color:#CCFF00">315</div></div>
+<div style="background:rgba(45,212,191,.05);border:1px solid rgba(45,212,191,.15);border-radius:10px;padding:12px;text-align:center"><div style="font-size:.6rem;color:#6b7280">ACTIVE RATE</div><div style="font-size:1.5rem;font-weight:700;color:#2dd4bf">88.9%</div></div>
+<div style="background:rgba(192,132,252,.05);border:1px solid rgba(192,132,252,.15);border-radius:10px;padding:12px;text-align:center"><div style="font-size:.6rem;color:#6b7280">AVG SALARY</div><div style="font-size:1.5rem;font-weight:700;color:#c084fc">$103K</div></div>
+</div>
+<div style="padding:12px 16px;display:grid;grid-template-columns:2fr 1fr;gap:8px">
+<div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:12px"><div style="font-size:.6rem;color:#6b7280;margin-bottom:4px">Hires by City</div><div style="display:flex;flex-direction:column;gap:4px"><div style="display:flex;justify-content:space-between;font-size:.65rem"><span style="color:#9ca3af">Seattle</span><span style="color:#CCFF00">6</span></div><div style="display:flex;justify-content:space-between;font-size:.65rem"><span style="color:#9ca3af">Chicago</span><span style="color:#CCFF00">14</span></div><div style="display:flex;justify-content:space-between;font-size:.65rem"><span style="color:#9ca3af">Austin</span><span style="color:#CCFF00">21</span></div></div></div>
+<div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:12px"><div style="font-size:.6rem;color:#6b7280;margin-bottom:4px">Status Split</div><div style="display:flex;flex-direction:column;gap:3px"><div style="height:50px;background:rgba(34,197,94,.15);border-radius:4px;position:relative"><div style="position:absolute;bottom:0;left:0;right:0;height:88%;background:rgba(34,197,94,.25);border-radius:0 0 4px 4px"></div><span style="position:absolute;bottom:2px;right:6px;font-size:.6rem;color:#22c55e;font-weight:600">Active: 280</span></div><div style="height:50px;background:rgba(239,68,68,.08);border-radius:4px;position:relative"><div style="position:absolute;bottom:0;left:0;right:0;height:12%;background:rgba(239,68,68,.25);border-radius:0 0 4px 4px"></div><span style="position:absolute;bottom:2px;right:6px;font-size:.6rem;color:#ef4444;font-weight:600">Inactive: 35</span></div></div></div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+<div class="step-box"><div class="step-l"><i class="fas fa-image"></i> Image as Logo</div>
+<p class="text-sm text-gray-400">Insert → Image → Place top-left. Resize to ~150x40px. <span class="text-acid font-bold">Set page background = dark color</span> for the logo to stand out. Lock position so it doesn't move accidentally.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-heading"></i> Dashboard Title</div>
+<p class="text-sm text-gray-400">Use a <span class="text-acid font-bold">Text Box</span> (Insert → Text Box) for the dashboard title — more styling control than page title. Syncopate font, acid green, large size. Place below logo.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-arrows-alt"></i> Interaction — Edit Interactions</div>
+<p class="text-sm text-gray-400">Format → Edit Interactions → Select visual A → click "none" on visual B → A won't filter B when clicked. <span class="text-acid font-bold">Crucial for KPI cards</span> — clicking a card shouldn't filter the trend chart below it.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-filter"></i> Filter → Disable Interactions</div>
+<p class="text-sm text-gray-400">Edit Interactions → set a slicer to <span class="text-acid font-bold">"None"</span> on a card → slicer still works but clicking card doesn't affect anything. Or disable slicer visuals from being filtered by other visuals.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-external-link-alt"></i> Drill Through to Another Page</div>
+<p class="text-sm text-gray-400">Right-click visual → Drill through → "City Detail Page." Create a target page. User clicks Seattle bar → navigates to Seattle detail page with pre-filtered data. No bookmark configuration needed.</p></div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== BOOKMARKS ===================== -->
+<section id="bookmarks" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge badge-purple mb-4 mx-auto w-fit"><i class="fas fa-bookmark"></i> Chapter 14</span>
+<h2 class="font-display text-4xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">BOOKMARKS & DYNAMIC VISUALS</h2>
+</div>
+<div class="max-w-5xl mx-auto reveal">
+<div class="vis-mock mb-8" style="border-color:rgba(192,132,252,.2)">
+<div class="vis-titlebar"><i class="fas fa-bookmark" style="color:#c084fc;font-size:.6rem"></i><span style="font-size:.58rem">Bookmark Workflow — Show/Hide with Button Click</span></div>
+<div class="p-6">
+<div style="display:flex;gap:8px;margin-bottom:16px;justify-content:center">
+<div style="padding:8px 16px;border-radius:8px;background:rgba(192,132,252,.15);border:1px solid rgba(192,132,252,.3);font-size:.7rem;color:#c084fc;font-weight:600;cursor:pointer">Overview</div>
+<div style="padding:8px 16px;border-radius:8px;border:1px solid rgba(255,255,255,.1);font-size:.7rem;color:#9ca3af;cursor:pointer">By City</div>
+<div style="padding:8px 16px;border-radius:8px;border:1px solid rgba(255,255,255,.1);font-size:.7rem;color:#9ca3af;cursor:pointer">By Dept</div>
+<div style="padding:8px 16px;border-radius:8px;border:1px solid rgba(255,255,255,.1);font-size:.7rem;color:#9ca3af;cursor:pointer">Attrition</div>
+</div>
+<p class="text-xs text-gray-500 text-center">Click a button → Bookmark activates → selected visuals show/hide → dashboard layout changes without navigating to a new page</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="step-box"><div class="step-l"><i class="fas fa-bookmark"></i> Add Bookmarks</div>
+<p class="text-sm text-gray-400">View tab → Bookmarks Pane → <span class="text-acid font-bold">"Add"</span>. This captures the current state of ALL visuals (filters, selections, visibility). Name it meaningfully: "Overview", "By City", "Attrition View".</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-square"></i> Add Button</div>
+<p class="text-sm text-gray-400">Insert → Buttons → choose shape. Add to canvas. In the button's Action pane → Type: <span class="text-acid font-bold">Bookmark</span> → select which bookmark to activate on click. Style the button (fill, text, border-radius).</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-cog"></i> Configure Button</div>
+<p class="text-sm text-gray-400">Button action → Bookmark → pick bookmark name. <span class="text-acid font-bold">On click</span> (not hover). Set button style: outline or filled. Add tooltip text for clarity. Group buttons with Shift+click for radio behavior.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-eye-slash"></i> Show/Hide with Selections</div>
+<p class="text-sm text-gray-400">Each bookmark captures which visuals are visible. View → Bookmarks → select bookmark → some visuals hide. This is the core of <span class="text-acid font-bold">dynamic dashboards</span> — one page, multiple views.</p></div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== RLS ===================== -->
+<section id="rls" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge mb-4 mx-auto w-fit"><i class="fas fa-shield-alt"></i> Chapter 15</span>
+<h2 class="font-display text-4xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">ROW LEVEL SECURITY</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">Complete step-by-step: Add Roles → Write DAX → Test → Publish</p>
+</div>
+<div class="max-w-5xl mx-auto reveal">
+<div class="vis-mock mb-10" style="border-color:rgba(239,68,68,.2)">
+<div class="vis-titlebar"><i class="fas fa-shield-alt" style="color:#ef4444;font-size:.6rem"></i><span style="font-size:.58rem">RLS Flow: Add Role → DAX → Test → Publish</span></div>
+<div class="p-6" style="display:flex;flex-direction:column;gap:12px;align-items:center">
+<div style="display:flex;align-items:center;gap:12px;width:100%"><div style="width:36px;height:36px;border-radius:8px;background:rgba(204,255,0,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="font-size:.7rem;color:#CCFF00;font-weight:800">1</span></div><div style="flex:1"><div style="font-size:.75rem;font-weight:700;color:#e1e1e1;margin-bottom:2px">Modeling → Manage Roles → "Add Role"</div><p style="font-size:.65rem;color:#9ca3af">Create role name. Select table. Enter DAX filter expression.</p></div></div>
+<div style="width:2px;height:16px;background:rgba(255,255,255,.08);margin-left:17px"></div>
+<div style="display:flex;align-items:center;gap:12px;width:100%"><div style="width:36px;height:36px;border-radius:8px;background:rgba(192,132,252,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="font-size:.7rem;color:#c084fc;font-weight:800">2</span></div><div style="flex:1"><div style="font-size:.75rem;font-weight:700;color:#e1e1e1;margin-bottom:2px">DAX Editor — Write Filter</div><p style="font-size:.65rem;color:#9ca3eb">[HR][City] = LOOKUPVALUE(UserTable[City], UserTable[Email], USERPRINCIPALNAME())</p></div></div>
+<div style="width:2px;height:16px;background:rgba(255,255,255,.08);margin-left:17px"></div>
+<div style="display:flex;align-items:center;gap:12px;width:100%"><div style="width:36px;height:36px;border-radius:8px;background:rgba(45,212,191,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="font-size:.7rem;color:#2dd4bf;font-weight:800">3</span></div>
+<div style="flex:1"><div style="font-size:.75rem;font-weight:700;color:#e1e1e1;margin-bottom:2px">Filtering Shelf → Assign Users</div><p style="font-size:.65rem;color:#9ca3af">Members tab → Add users/roles. Map email → role. Security tab → add RLS role to workspace.</p></div></div>
+<div style="width:2px;height:16px;background:rgba(255,255,255,.08);margin-left:17px"></div>
+<div style="display:flex;align-items:center;gap:12px;width:100%"><div style="width:36px;height:36px;border-radius:8px;background:rgba(204,255,0,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="font-size:.7rem;color:#CCFF00;font-weight:800">4</span></div>
+<div style="flex:1"><div style="font-size:.75rem;font-weight:700;color:#e1e1e1;margin-bottom:2px">Manage Roles → "View as Roles"</div><p style="font-size:.65rem;color:#9ca3af">Desktop only! Select role → preview as that user → verify data filtering is correct before publishing.</p></div></div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="glass-card rounded-2xl p-8 border-red-500/20"><h3 class="text-xl font-bold mb-4 text-red-400"><i class="fas fa-exclamation-triangle mr-2"></i> Common RLS Mistakes</h3>
+<div class="space-y-3">
+<div class="flex gap-3 items-start"><i class="fas fa-times text-red-500/50 mt-0.5 text-xs"></i><p class="text-sm text-gray-400"><span class="text-red-400 font-bold">Using CALCULATE inside RLS</span> — RLS is already a filter context. No CALCULATE needed. Just return a table expression directly.</p></div>
+<div class="flex gap-3 items-start"><i class="fas fa-times text-red-500/50 mt-0.5 text-xs"></i><p class="text-sm text-gray-400"><span class="text-red-400 font-bold">Testing only in Service</span> — RLS doesn't work in Power BI Service preview. Test in Desktop with "View as Roles."</p></div>
+<div class="flex gap-3 items-start"><i class="fas fa-times text-red-500/50 mt-0.5 text-xs"></i><p class="text-sm text-gray-400"><span class="text-red-400 font-bold">Not assigning users in workspace</span> — Even with perfect DAX, if users aren't mapped to roles, everyone sees everything.</p></div>
+</div>
+</div>
+<div class="glass-card rounded-2xl p-8 border-acid/20"><h3 class="text-xl font-bold mb-4 text-acid"><i class="fas fa-check-circle mr-2"></i> RLS Best Practices</h3>
+<div class="space-y-3">
+<div class="flex gap-3 items-start"><i class="fas fa-check text-acid/70 mt-0.5 text-xs"></i><p class="text-sm text-gray-400">Use a <span class="text-acid font-bold">separate UserMap table</span> (Email → Role/Region/City) — never hardcode emails in DAX.</p></div>
+<div class="flex gap-3 items-start"><i class="fas fa-check text-acid/70 mt-0.5 text-xs"></i><p class="text-sm text-gray-400">Test with <span class="text-acid font-bold">3-4 different user scenarios</span> before publishing. Document expected behavior.</p></div>
+<div class="flex gap-3 items-start"><i class="fas fa-check text-acid/70 mt-0.5 text-xs"></i><p class="text-sm text-gray-400">For dynamic RLS with hierarchies, use <span class="text-acid font-bold">PATHITEM</span> and <span class="text-acid font-bold">ISINSCOPE</span> to handle drill-down filtering.</p></div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<section class="py-20 px-6 border-t border-white/5">
+<div class="max-w-4xl mx-auto text-center">
+<p class="text-gray-500 text-sm mb-6">You have now covered every Power BI visual — from Table to RLS.</p>
+<a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20completed%20the%20visual%20guide." target="_blank" class="inline-block glow-btn bg-acid text-obsidian px-12 py-5 rounded-full text-sm font-bold uppercase tracking-widest"><i class="fab fa-whatsapp mr-2"></i> Start Building Dashboards</a>
+</div>
+</section>
+
+<footer class="border-t border-white/5 py-12 px-6">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+<a href="#" class="font-display text-xl font-bold tracking-tight"><span class="text-acid">V</span>IZONIS</a>
+<p class="text-xs text-gray-600">2024 Vizonis Academy. Complete Power BI Visualization Guide.</p>
+</div>
+</footer>
+
+<a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20want%20to%20learn%20Power%20BI%20visuals." target="_blank" class="whatsapp-float"><i class="fab fa-whatsapp text-white text-3xl"></i></a>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+gsap.utils.toArray('.reveal').forEach(el=>{gsap.to(el,{opacity:1,y:0,duration:.7,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 88%',toggleActions:'play none play none'}})});
+const sections=document.querySelectorAll('section[id]');
+const navLinks=document.querySelectorAll('.sub-nav-item');
+let ticking=false;
+window.addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(()=>{let c='';sections.forEach(s=>{if(scrollY>=s.offsetTop-120)c=s.id});navLinks.forEach(l=>{l.classList.toggle('active',l.getAttribute('href')==='#'+c)});ticking=false});ticking=true}},{passive:true});
+const c=document.getElementById('particles');for(let i=0;i<25;i++){const p=document.createElement('div');p.className='particle';const s=Math.random()*3+1;p.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;animation-duration:${Math.random()*12+8}s;animation-delay:${Math.random()*12}s;`;c.appendChild(p)}
+</script>
+</body>
+</html>
