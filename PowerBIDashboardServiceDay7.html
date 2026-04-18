@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vizonis Academy | Power BI — Dashboards & Power BI Service</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script>
+tailwind.config={theme:{extend:{colors:{obsidian:'#050505',charcoal:'#0F1115',acid:'#CCFF00',silver:'#E1E1E1',cardDark:'#0A0C10'},fontFamily:{sans:['Space Grotesk','sans-serif'],display:['Syncopate','sans-serif']}}}}
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:'Space Grotesk',sans-serif;background:#050505;color:#E1E1E1;overflow-x:hidden}
+.noise-overlay{position:fixed;inset:0;z-index:9000;pointer-events:none;opacity:.04;background-image:url('https://grainy-gradients.vercel.app/noise.svg')}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#050505}::-webkit-scrollbar-thumb{background:#CCFF00;border-radius:3px}
+.gradient-text{background:linear-gradient(to bottom,#FFF 0%,#9ca3af 50%,#111827 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.acid-gradient-text{background:linear-gradient(135deg,#CCFF00,#88cc00,#CCFF00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.teal-gradient-text{background:linear-gradient(135deg,#2dd4bf,#14b8a6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.purple-gradient-text{background:linear-gradient(135deg,#c084fc,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.glass-card{background:rgba(255,255,255,.03);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.08);transition:all .4s ease}
+.glass-card:hover{background:rgba(255,255,255,.06);border-color:rgba(204,255,0,.3);box-shadow:0 0 30px rgba(204,255,0,.08)}
+.glow-btn{position:relative;overflow:hidden;transition:all .3s ease}
+.glow-btn:hover{box-shadow:0 0 30px rgba(204,255,0,.4);transform:translateY(-2px)}
+.particle{position:absolute;border-radius:50%;background:#CCFF00;opacity:.15;animation:fp linear infinite}
+@keyframes fp{0%{transform:translateY(100vh) scale(0);opacity:0}10%{opacity:.15}90%{opacity:.15}100%{transform:translateY(-100px) scale(1);opacity:0}}
+.grid-bg{background-image:linear-gradient(rgba(204,255,0,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(204,255,0,.03) 1px,transparent 1px);background-size:60px 60px}
+.section-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(204,255,0,.3),transparent)}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:4px 14px;border-radius:9999px;font-size:.75rem;border:1px solid rgba(204,255,0,.3);background:rgba(204,255,0,.08);color:#CCFF00;font-weight:600}
+.badge-teal{border-color:rgba(45,212,191,.3);background:rgba(45,212,191,.08);color:#2dd4bf}
+.badge-purple{border-color:rgba(192,132,252,.3);background:rgba(192,132,252,.08);color:#c084fc}
+.sub-nav-item{padding:8px 12px;border-radius:8px;font-size:.65rem;text-transform:uppercase;letter-spacing:.08em;color:#6b7280;transition:all .2s;cursor:pointer;border:1px solid transparent;white-space:nowrap}
+.sub-nav-item:hover,.sub-nav-item.active{color:#CCFF00;background:rgba(204,255,0,.05);border-color:rgba(204,255,0,.15)}
+.step-box{background:rgba(204,255,0,.04);border:1px solid rgba(204,255,0,.15);border-radius:12px;padding:16px 20px;position:relative}
+.step-box .step-l{font-size:.65rem;text-transform:uppercase;letter-spacing:.15em;color:#CCFF00;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.vis-mock{background:#0A0C10;border:1px solid rgba(255,255,255,.08);border-radius:12px;overflow:hidden}
+.vis-titlebar{background:rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.06);padding:10px 16px;font-size:.7rem;color:#6b7280;display:flex;align-items:center;gap:8px}
+.vis-titlebar i{color:#9ca3af}
+@keyframes pulseGlow{0%,100%{box-shadow:0 0 20px rgba(204,255,0,.1)}50%{box-shadow:0 0 40px rgba(204,255,0,.25)}}
+.pulse-glow{animation:pulseGlow 3s ease-in-out infinite}
+.reveal{opacity:0;transform:translateY(40px)}
+.cat-label{display:inline-block;padding:3px 12px;border-radius:6px;font-size:.65rem;text-transform:uppercase;letter-spacing:.15em;font-weight:700;margin-bottom:8px}
+.whatsapp-float{position:fixed;bottom:30px;right:30px;z-index:8000;width:60px;height:60px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.4);transition:all .3s;cursor:pointer}
+.whatsapp-float:hover{transform:scale(1.1)}
+.compare-card{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:24px;transition:all .4s}
+.compare-card:hover{border-color:rgba(204,255,0,.25)}
+.number-highlight{font-family:'Syncopate',sans-serif;font-size:3rem;font-weight:700;line-height:1}
+.icon-box{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.timeline-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;position:relative}
+.timeline-dot::after{content:'';position:absolute;top:24px;left:50%;transform:translateX(-50%);width:1px;height:calc(100% + 32px);background:rgba(255,255,255,.08)}
+</style>
+</head>
+<body class="grid-bg">
+<div class="noise-overlay"></div>
+<div id="particles" class="fixed inset-0 z-0 pointer-events-none overflow-hidden"></div>
+
+<!-- ===================== NAVIGATION ===================== -->
+<nav class="fixed top-0 left-0 right-0 z-[7000] bg-obsidian/80 border-b border-white/5 backdrop-blur-md">
+<div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+<a href="#" class="font-display text-xl font-bold tracking-tight"><span class="text-acid">V</span>IZONIS</a>
+<div class="hidden lg:flex items-center gap-1 overflow-x-auto">
+<a href="#dashboard" class="sub-nav-item">Dashboard</a>
+<a href="#why-dashboard" class="sub-nav-item">Why</a>
+<a href="#dash-vs-visual" class="sub-nav-item">vs Visual</a>
+<a href="#best-practices" class="sub-nav-item">Best Practices</a>
+<a href="#uiux" class="sub-nav-item">UI/UX</a>
+<a href="#pbiservice" class="sub-nav-item">Service</a>
+<a href="#desktop-vs-service" class="sub-nav-item">Desktop vs Svc</a>
+<a href="#service-ui" class="sub-nav-item">Service UI</a>
+<a href="#workspaces" class="sub-nav-item">Workspaces</a>
+<a href="#publish" class="sub-nav-item">Publish</a>
+<a href="#properties" class="sub-nav-item">Properties</a>
+<a href="#download" class="sub-nav-item">Download</a>
+<a href="#subscriptions" class="sub-nav-item">Subscribe</a>
+<a href="#alerts" class="sub-nav-item">Alerts</a>
+</div>
+<a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20want%20to%20learn%20Power%20BI%20dashboards%20and%20service." target="_blank" class="glow-btn bg-acid text-obsidian px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest whitespace-nowrap">Enroll Now</a>
+</div>
+</nav>
+
+<!-- ===================== HERO ===================== -->
+<section class="relative min-h-screen flex flex-col justify-center items-center pt-20 overflow-hidden">
+<div class="hero-orb w-[500px] h-[500px] bg-acid top-1/4 -left-40" style="position:absolute;border-radius:50%;filter:blur(120px);opacity:.2;animation:of 8s ease-in-out infinite alternate"></div>
+<div class="hero-orb w-[400px] h-[400px] bg-purple-500 bottom-1/4 -right-32" style="position:absolute;border-radius:50%;filter:blur(120px);opacity:.15;animation:of 8s ease-in-out infinite alternate;animation-delay:-5s"></div>
+<style>@keyframes of{0%{transform:translate(0,0) scale(1)}100%{transform:translate(30px,-40px) scale(1.2)}}</style>
+<div class="relative z-10 text-center px-6 max-w-6xl mx-auto">
+<div class="badge badge-purple mb-8 mx-auto w-fit"><i class="fas fa-tachometer-alt"></i> Power BI Dashboards & Service</div>
+<h1 class="font-display text-5xl md:text-7xl lg:text-8xl font-bold leading-[.9] tracking-tighter mb-8">
+<span class="gradient-text block">DASHBOARDS</span>
+<span class="purple-gradient-text block mt-2">& POWER BI SERVICE</span>
+<span class="gradient-text block mt-2 text-2xl md:text-4xl lg:text-5xl">FROM BUILD TO BROADCAST</span>
+</h1>
+<p class="text-gray-400 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-12">What is a dashboard, why it matters, how to design one — then master the Power BI Service: publish, share, subscribe, and alert.</p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center">
+<a href="#dashboard" class="glow-btn bg-acid text-obsidian px-10 py-4 rounded-full text-sm font-bold uppercase tracking-widest">Start Learning <i class="fas fa-arrow-down ml-2"></i></a>
+<a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20want%20to%20learn%20Power%20BI%20dashboards%20and%20service." target="_blank" class="glow-btn border border-white/20 text-white px-10 py-4 rounded-full text-sm font-bold uppercase tracking-widest hover:border-acid hover:text-acid"><i class="fab fa-whatsapp mr-2"></i> Chat With Us</a>
+</div>
+</div>
+</section>
+
+<!-- ===================== WHAT IS A DASHBOARD ===================== -->
+<section id="dashboard" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge badge-purple mb-4 mx-auto w-fit"><i class="fas fa-tachometer-alt"></i> Chapter 01</span>
+<h2 class="font-display text-4xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">WHAT IS A DASHBOARD?</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">A single-page canvas that tells a complete data story at a glance</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start reveal">
+
+<!-- Left: Dashboard Mockup -->
+<div class="vis-mock pulse-glow" style="border-color:rgba(192,132,252,.2)">
+<div class="vis-titlebar"><i class="fas fa-tachometer-alt" style="color:#c084fc"></i> Dashboard — Single Page, Multiple Visuals</div>
+<div class="p-4">
+<svg viewBox="0 0 400 280" style="width:100%">
+<!-- Top KPI Row -->
+<rect x="10" y="10" width="90" height="50" rx="6" fill="rgba(204,255,0,.08)" stroke="rgba(204,255,0,.2)" stroke-width="1"/>
+<text x="55" y="32" fill="#CCFF00" font-size="11" text-anchor="middle" font-weight="700">$2.4M</text>
+<text x="55" y="48" fill="#6b7280" font-size="6" text-anchor="middle">Revenue</text>
+
+<rect x="108" y="10" width="90" height="50" rx="6" fill="rgba(192,132,252,.08)" stroke="rgba(192,132,252,.2)" stroke-width="1"/>
+<text x="153" y="32" fill="#c084fc" font-size="11" text-anchor="middle" font-weight="700">1,247</text>
+<text x="153" y="48" fill="#6b7280" font-size="6" text-anchor="middle">Employees</text>
+
+<rect x="206" y="10" width="90" height="50" rx="6" fill="rgba(45,212,191,.08)" stroke="rgba(45,212,191,.2)" stroke-width="1"/>
+<text x="251" y="32" fill="#2dd4bf" font-size="11" text-anchor="middle" font-weight="700">94.2%</text>
+<text x="251" y="48" fill="#6b7280" font-size="6" text-anchor="middle">Retention</text>
+
+<rect x="304" y="10" width="86" height="50" rx="6" fill="rgba(251,191,36,.08)" stroke="rgba(251,191,36,.2)" stroke-width="1"/>
+<text x="347" y="32" fill="#fbbf24" font-size="11" text-anchor="middle" font-weight="700">38</text>
+<text x="347" y="48" fill="#6b7280" font-size="6" text-anchor="middle">Open Roles</text>
+
+<!-- Main Chart Area -->
+<rect x="10" y="70" width="240" height="120" rx="6" fill="rgba(255,255,255,.02)" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
+<text x="20" y="86" fill="#9ca3af" font-size="7">Revenue by Month</text>
+<polyline points="30,170 60,155 90,160 120,140 150,130 180,120 210,110 230,100" fill="none" stroke="#CCFF00" stroke-width="2"/>
+<rect x="30" y="170" width="12" height="15" rx="1" fill="rgba(192,132,252,.4)"/><rect x="60" y="155" width="12" height="30" rx="1" fill="rgba(192,132,252,.4)"/><rect x="90" y="160" width="12" height="25" rx="1" fill="rgba(192,132,252,.4)"/><rect x="120" y="140" width="12" height="45" rx="1" fill="rgba(192,132,252,.4)"/><rect x="150" y="130" width="12" height="55" rx="1" fill="rgba(192,132,252,.4)"/>
+
+<!-- Side Donut -->
+<rect x="258" y="70" width="132" height="120" rx="6" fill="rgba(255,255,255,.02)" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
+<text x="268" y="86" fill="#9ca3af" font-size="7">By Department</text>
+<circle cx="324" cy="140" r="30" fill="none" stroke="rgba(204,255,0,.5)" stroke-width="10" stroke-dasharray="60 129" stroke-dashoffset="0"/>
+<circle cx="324" cy="140" r="30" fill="none" stroke="rgba(192,132,252,.4)" stroke-width="10" stroke-dasharray="50 139" stroke-dashoffset="-60"/>
+<circle cx="324" cy="140" r="30" fill="none" stroke="rgba(45,212,191,.4)" stroke-width="10" stroke-dasharray="79 110" stroke-dashoffset="-110"/>
+
+<!-- Bottom Table -->
+<rect x="10" y="198" width="380" height="72" rx="6" fill="rgba(255,255,255,.02)" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
+<text x="20" y="214" fill="#9ca3af" font-size="7">Top Performers</text>
+<rect x="20" y="222" width="360" height="1" fill="rgba(255,255,255,.06)"/>
+<text x="20" y="236" fill="#6b7280" font-size="6">Name</text><text x="100" y="236" fill="#6b7280" font-size="6">Dept</text><text x="170" y="236" fill="#6b7280" font-size="6">Salary</text><text x="250" y="236" fill="#6b7280" font-size="6">Rating</text><text x="330" y="236" fill="#6b7280" font-size="6">Status</text>
+<text x="20" y="252" fill="#e1e1e1" font-size="6">Robert Yang</text><text x="100" y="252" fill="#9ca3af" font-size="6">Engineering</text><text x="170" y="252" fill="#CCFF00" font-size="6">$256K</text><text x="250" y="252" fill="#CCFF00" font-size="6">4.8</text><text x="330" y="252" fill="#22c55e" font-size="6">● Active</text>
+<text x="20" y="264" fill="#e1e1e1" font-size="6">Sarah Kim</text><text x="100" y="264" fill="#9ca3af" font-size="6">Sales</text><text x="170" y="264" fill="#CCFF00" font-size="6">$198K</text><text x="250" y="264" fill="#CCFF00" font-size="6">4.6</text><text x="330" y="264" fill="#22c55e" font-size="6">● Active</text>
+</svg>
+</div>
+</div>
+
+<!-- Right: Explanation -->
+<div class="space-y-6">
+<div class="step-box"><div class="step-l"><i class="fas fa-layer-group"></i> Definition</div>
+<p class="text-sm text-gray-400">A dashboard is a <span class="text-white font-bold">single-page collection</span> of multiple visuals (KPIs, charts, tables, maps) arranged together to provide a consolidated, at-a-glance view of business performance.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-eye"></i> Purpose</div>
+<p class="text-sm text-gray-400">Instead of opening 10 separate reports and scrolling through tables, a stakeholder opens <span class="text-acid font-bold">one page</span> and immediately sees: revenue trend, headcount, top performers, and regional breakdown — all interconnected through slicers.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-cubes"></i> Components</div>
+<p class="text-sm text-gray-400">Every dashboard has: <span class="text-purple-400 font-bold">KPI cards</span> (top metrics), <span class="text-acid font-bold">core charts</span> (trend, comparison, composition), <span class="text-teal-400 font-bold">detail table</span> (drill-down data), and <span class="text-white font-bold">slicers/filters</span> (interactivity). The mockup on the left shows all four.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-mouse-pointer"></i> Key Rule</div>
+<p class="text-sm text-gray-400">A dashboard must fit on <span class="text-acid font-bold">one screen</span> — no scrolling. If you need to scroll, it's a report, not a dashboard. Every pixel should earn its place.</p></div>
+</div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== WHY WE NEED DASHBOARDS ===================== -->
+<section id="why-dashboard" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge mb-4 mx-auto w-fit"><i class="fas fa-question-circle"></i> Chapter 02</span>
+<h2 class="font-display text-4xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">WHY WE NEED DASHBOARDS</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">Raw data is useless without context — dashboards turn data into decisions</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 reveal">
+<div class="glass-card rounded-2xl p-8">
+<div class="icon-box bg-acid/10 text-acid mb-5"><i class="fas fa-bolt"></i></div>
+<h3 class="text-xl font-bold mb-3 text-white">Speed of Insight</h3>
+<p class="text-sm text-gray-400">A CEO doesn't have 30 minutes to parse a 50,000-row table. A dashboard answers "How are we doing?" in <span class="text-acid font-bold">under 5 seconds</span>.</p>
+</div>
+<div class="glass-card rounded-2xl p-8">
+<div class="icon-box bg-purple-500/10 text-purple-400 mb-5"><i class="fas fa-brain"></i></div>
+<h3 class="text-xl font-bold mb-3 text-white">Pattern Recognition</h3>
+<p class="text-sm text-gray-400">Human brains process visuals 60,000x faster than text. A declining trend line or a red cluster on a map triggers <span class="text-purple-400 font-bold">instant understanding</span>.</p>
+</div>
+<div class="glass-card rounded-2xl p-8">
+<div class="icon-box bg-teal-500/10 text-teal-400 mb-5"><i class="fas fa-filter"></i></div>
+<h3 class="text-xl font-bold mb-3 text-white">Self-Service Analytics</h3>
+<p class="text-sm text-gray-400">Stakeholders click slicers instead of emailing "Can you pull this for Q3?" — reducing the BI team's <span class="text-teal-400 font-bold">ad-hoc request load by 70%</span>.</p>
+</div>
+<div class="glass-card rounded-2xl p-8">
+<div class="icon-box bg-yellow-500/10 text-yellow-400 mb-5"><i class="fas fa-bullseye"></i></div>
+<h3 class="text-xl font-bold mb-3 text-white">Single Source of Truth</h3>
+<p class="text-sm text-gray-400">When Sales, Finance, and HR all look at the <span class="text-yellow-400 font-bold">same dashboard</span>, there are no more "my number vs your number" debates in meetings.</p>
+</div>
+<div class="glass-card rounded-2xl p-8">
+<div class="icon-box bg-red-500/10 text-red-400 mb-5"><i class="fas fa-exclamation-triangle"></i></div>
+<h3 class="text-xl font-bold mb-3 text-white">Proactive Alerts</h3>
+<p class="text-sm text-gray-400">Instead of discovering problems at month-end, dashboards with alerts flag anomalies <span class="text-red-400 font-bold">the moment they happen</span>.</p>
+</div>
+<div class="glass-card rounded-2xl p-8">
+<div class="icon-box bg-blue-500/10 text-blue-400 mb-5"><i class="fas fa-users"></i></div>
+<h3 class="text-xl font-bold mb-3 text-white">Stakeholder Alignment</h3>
+<p class="text-sm text-gray-400">Everyone from the intern to the board member looks at the <span class="text-blue-400 font-bold">same metrics</span>, creating a shared language of performance.</p>
+</div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== DASHBOARD VS INDIVIDUAL VISUAL ===================== -->
+<section id="dash-vs-visual" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge badge-teal mb-4 mx-auto w-fit"><i class="fas fa-exchange-alt"></i> Chapter 03</span>
+<h2 class="font-display text-4xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">DASHBOARD vs INDIVIDUAL VISUAL</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">One chart answers one question — a dashboard answers the entire meeting</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 reveal">
+
+<!-- Individual Visual -->
+<div class="compare-card">
+<div class="flex items-center gap-3 mb-6">
+<div class="icon-box bg-red-500/10 text-red-400"><i class="fas fa-chart-bar"></i></div>
+<div><h3 class="font-bold text-lg text-white">Individual Visual</h3><p class="text-xs text-gray-500">Single chart in isolation</p></div>
+</div>
+<div class="vis-mock mb-6" style="border-color:rgba(239,68,68,.15)">
+<div class="vis-titlebar"><i class="fas fa-chart-bar" style="color:#ef4444;font-size:.6rem"></i><span style="font-size:.58rem">Single Bar Chart — "Revenue by City"</span></div>
+<div class="p-4"><svg viewBox="0 0 280 120" style="width:100%">
+<rect x="20" y="50" width="35" height="50" rx="3" fill="rgba(239,68,68,.4)"/><rect x="70" y="30" width="35" height="70" rx="3" fill="rgba(239,68,68,.4)"/><rect x="120" y="60" width="35" height="40" rx="3" fill="rgba(239,68,68,.4)"/><rect x="170" y="20" width="35" height="80" rx="3" fill="rgba(239,68,68,.4)"/><rect x="220" y="45" width="35" height="55" rx="3" fill="rgba(239,68,68,.4)"/>
+<text x="37" y="115" fill="#6b7280" font-size="6" text-anchor="middle">NYC</text><text x="87" y="115" fill="#6b7280" font-size="6" text-anchor="middle">LA</text><text x="137" y="115" fill="#6b7280" font-size="6" text-anchor="middle">CHI</text><text x="187" y="115" fill="#6b7280" font-size="6" text-anchor="middle">HOU</text><text x="237" y="115" fill="#6b7280" font-size="6" text-anchor="middle">SEA</text>
+</svg></div>
+</div>
+<ul class="space-y-3 text-sm text-gray-400">
+<li class="flex items-start gap-3"><i class="fas fa-times text-red-400 mt-1 text-xs"></i><span>Answers <span class="text-white font-bold">only one question</span>: "Which city has highest revenue?"</span></li>
+<li class="flex items-start gap-3"><i class="fas fa-times text-red-400 mt-1 text-xs"></i><span><span class="text-white font-bold">No context</span> — Is this good? Bad? Compared to what?</span></li>
+<li class="flex items-start gap-3"><i class="fas fa-times text-red-400 mt-1 text-xs"></i><span><span class="text-white font-bold">No filters</span> — Can't slice by year, department, or region</span></li>
+<li class="flex items-start gap-3"><i class="fas fa-times text-red-400 mt-1 text-xs"></i><span><span class="text-white font-bold">No drill-through</span> — Can't click to see employee details</span></li>
+</ul>
+</div>
+
+<!-- Dashboard -->
+<div class="compare-card" style="border-color:rgba(204,255,0,.15)">
+<div class="flex items-center gap-3 mb-6">
+<div class="icon-box bg-acid/10 text-acid"><i class="fas fa-tachometer-alt"></i></div>
+<div><h3 class="font-bold text-lg text-acid">Dashboard</h3><p class="text-xs text-gray-500">Coordinated multi-visual canvas</p></div>
+</div>
+<div class="vis-mock mb-6 pulse-glow" style="border-color:rgba(204,255,0,.2)">
+<div class="vis-titlebar"><i class="fas fa-tachometer-alt" style="color:#CCFF00;font-size:.6rem"></i><span style="font-size:.58rem">Dashboard — Revenue KPI + Chart + Map + Table (all cross-filtered)</span></div>
+<div class="p-3"><svg viewBox="0 0 280 140" style="width:100%">
+<rect x="8" y="8" width="65" height="32" rx="4" fill="rgba(204,255,0,.08)" stroke="rgba(204,255,0,.2)" stroke-width=".8"/>
+<text x="40" y="22" fill="#CCFF00" font-size="7" text-anchor="middle" font-weight="700">$2.4M</text>
+<text x="40" y="34" fill="#6b7280" font-size="5" text-anchor="middle">Total Rev</text>
+<rect x="80" y="8" width="65" height="32" rx="4" fill="rgba(192,132,252,.08)" stroke="rgba(192,132,252,.2)" stroke-width=".8"/>
+<text x="112" y="22" fill="#c084fc" font-size="7" text-anchor="middle" font-weight="700">+12%</text>
+<text x="112" y="34" fill="#6b7280" font-size="5" text-anchor="middle">vs Last Yr</text>
+<rect x="152" y="8" width="65" height="32" rx="4" fill="rgba(45,212,191,.08)" stroke="rgba(45,212,191,.2)" stroke-width=".8"/>
+<text x="184" y="22" fill="#2dd4bf" font-size="7" text-anchor="middle" font-weight="700">5 Cities</text>
+<text x="184" y="34" fill="#6b7280" font-size="5" text-anchor="middle">Active</text>
+<rect x="224" y="8" width="48" height="32" rx="4" fill="rgba(251,191,36,.08)" stroke="rgba(251,191,36,.2)" stroke-width=".8"/>
+<text x="248" y="26" fill="#fbbf24" font-size="6" text-anchor="middle"> slicer</text>
+<rect x="8" y="46" width="170" height="50" rx="4" fill="rgba(255,255,255,.02)" stroke="rgba(255,255,255,.06)" stroke-width=".8"/>
+<text x="16" y="58" fill="#9ca3af" font-size="5">Revenue by City</text>
+<rect x="18" y="68" width="14" height="22" rx="1" fill="rgba(204,255,0,.4)"/><rect x="40" y="62" width="14" height="28" rx="1" fill="rgba(204,255,0,.5)"/><rect x="62" y="72" width="14" height="18" rx="1" fill="rgba(204,255,0,.3)"/><rect x="84" y="58" width="14" height="32" rx="1" fill="rgba(204,255,0,.6)"/><rect x="106" y="66" width="14" height="24" rx="1" fill="rgba(204,255,0,.4)"/>
+<rect x="186" y="46" width="86" height="50" rx="4" fill="rgba(255,255,255,.02)" stroke="rgba(255,255,255,.06)" stroke-width=".8"/>
+<text x="194" y="58" fill="#9ca3af" font-size="5">By Region</text>
+<circle cx="229" cy="76" r="14" fill="none" stroke="rgba(204,255,0,.5)" stroke-width="5" stroke-dasharray="30 58" stroke-dashoffset="0"/>
+<circle cx="229" cy="76" r="14" fill="none" stroke="rgba(192,132,252,.4)" stroke-width="5" stroke-dasharray="28 60" stroke-dashoffset="-30"/>
+<rect x="8" y="102" width="264" height="32" rx="4" fill="rgba(255,255,255,.02)" stroke="rgba(255,255,255,.06)" stroke-width=".8"/>
+<text x="16" y="114" fill="#9ca3af" font-size="5">Top Cities</text>
+<text x="16" y="128" fill="#e1e1e1" font-size="5">Houston $520K</text><text x="100" y="128" fill="#e1e1e1" font-size="5">LA $480K</text><text x="170" y="128" fill="#e1e1e1" font-size="5">NYC $410K</text>
+</svg></div>
+</div>
+<ul class="space-y-3 text-sm text-gray-400">
+<li class="flex items-start gap-3"><i class="fas fa-check text-acid mt-1 text-xs"></i><span>Answers <span class="text-acid font-bold">the full question</span>: "How is revenue performing, where, and vs last year?"</span></li>
+<li class="flex items-start gap-3"><i class="fas fa-check text-acid mt-1 text-xs"></i><span><span class="text-acid font-bold">Cross-filtering</span> — Click Houston bar → donut, table, KPI all update</span></li>
+<li class="flex items-start gap-3"><i class="fas fa-check text-acid mt-1 text-xs"></i><span><span class="text-acid font-bold">Slicers</span> — Filter by Year, Department, Region globally</span></li>
+<li class="flex items-start gap-3"><i class="fas fa-check text-acid mt-1 text-xs"></i><span><span class="text-acid font-bold">Drill-through</span> — Right-click → see employee-level detail page</span></li>
+</ul>
+</div>
+
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== BEST PRACTICES ===================== -->
+<section id="best-practices" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge mb-4 mx-auto w-fit"><i class="fas fa-star"></i> Chapter 04</span>
+<h2 class="font-display text-4xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">DASHBOARD BEST PRACTICES</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">Rules that separate amateur dashboards from production-grade ones</p>
+</div>
+
+<!-- 6 Rules Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12 reveal">
+<div class="glass-card rounded-2xl p-6">
+<div class="number-highlight text-acid/20 mb-2">01</div>
+<h3 class="font-bold text-white mb-2">One Screen, No Scroll</h3>
+<p class="text-sm text-gray-400">If users scroll, you've built a report. Dashboards = 1920×1080 (or 1366×768 for laptops). Every visual must fit without vertical scrolling.</p>
+</div>
+<div class="glass-card rounded-2xl p-6">
+<div class="number-highlight text-acid/20 mb-2">02</div>
+<h3 class="font-bold text-white mb-2">5–8 Visuals Maximum</h3>
+<p class="text-sm text-gray-400">More than 8 visuals creates cognitive overload. Each visual must answer a <span class="text-acid font-semibold">unique question</span> — no redundant charts.</p>
+</div>
+<div class="glass-card rounded-2xl p-6">
+<div class="number-highlight text-acid/20 mb-2">03</div>
+<h3 class="font-bold text-white mb-2">Top-Left Hierarchy</h3>
+<p class="text-sm text-gray-400">Most important KPIs go <span class="text-acid font-semibold">top-left</span> (Western reading pattern). Supporting charts middle, detail table bottom-right. Slicers top or left edge.</p>
+</div>
+<div class="glass-card rounded-2xl p-6">
+<div class="number-highlight text-acid/20 mb-2">04</div>
+<h3 class="font-bold text-white mb-2">Consistent Color Language</h3>
+<p class="text-sm text-gray-400">Green = good, Red = bad — across ALL visuals. Don't use green for "HR" in one chart and "above target" in another. One color = one meaning.</p>
+</div>
+<div class="glass-card rounded-2xl p-6">
+<div class="number-highlight text-acid/20 mb-2">05</div>
+<h3 class="font-bold text-white mb-2">Remove Chart Junk</h3>
+<p class="text-sm text-gray-400">No redundant legends, no gridlines unless needed, no 3D effects, no pie charts with 15 slices. If it doesn't add information, <span class="text-acid font-semibold">delete it</span>.</p>
+</div>
+<div class="glass-card rounded-2xl p-6">
+<div class="number-highlight text-acid/20 mb-2">06</div>
+<h3 class="font-bold text-white mb-2">Mobile-First Slicing</h3>
+<p class="text-sm text-gray-400">Use phone layout (916×540) for mobile views. Rearrange visuals: stack vertically, make slicers prominent, hide low-priority charts.</p>
+</div>
+</div>
+
+<!-- Layout Mockup -->
+<div class="max-w-4xl mx-auto reveal">
+<div class="vis-mock" style="border-color:rgba(204,255,0,.15)">
+<div class="vis-titlebar"><i class="fas fa-th-large" style="color:#CCFF00;font-size:.6rem"></i><span style="font-size:.58rem">Ideal Dashboard Layout — 1920×1080</span></div>
+<div class="p-4"><svg viewBox="0 0 480 270" style="width:100%">
+<!-- Slicers Top -->
+<rect x="8" y="8" width="120" height="40" rx="4" fill="rgba(192,132,252,.1)" stroke="rgba(192,132,252,.25)" stroke-width="1"/>
+<text x="68" y="22" fill="#c084fc" font-size="6" text-anchor="middle">SLICERS</text>
+<text x="68" y="36" fill="#6b7280" font-size="5" text-anchor="middle">Year / Dept / Region</text>
+
+<!-- KPI Row -->
+<rect x="136" y="8" width="85" height="40" rx="4" fill="rgba(204,255,0,.08)" stroke="rgba(204,255,0,.2)" stroke-width="1"/>
+<text x="178" y="22" fill="#CCFF00" font-size="6" text-anchor="middle">KPI 1</text><text x="178" y="36" fill="#6b7280" font-size="5" text-anchor="middle">Revenue</text>
+<rect x="229" y="8" width="85" height="40" rx="4" fill="rgba(204,255,0,.08)" stroke="rgba(204,255,0,.2)" stroke-width="1"/>
+<text x="271" y="22" fill="#CCFF00" font-size="6" text-anchor="middle">KPI 2</text><text x="271" y="36" fill="#6b7280" font-size="5" text-anchor="middle">Headcount</text>
+<rect x="322" y="8" width="85" height="40" rx="4" fill="rgba(204,255,0,.08)" stroke="rgba(204,255,0,.2)" stroke-width="1"/>
+<text x="364" y="22" fill="#CCFF00" font-size="6" text-anchor="middle">KPI 3</text><text x="364" y="36" fill="#6b7280" font-size="5" text-anchor="middle">Retention</text>
+<rect x="415" y="8" width="57" height="40" rx="4" fill="rgba(204,255,0,.08)" stroke="rgba(204,255,0,.2)" stroke-width="1"/>
+<text x="443" y="22" fill="#CCFF00" font-size="6" text-anchor="middle">KPI 4</text><text x="443" y="36" fill="#6b7280" font-size="5" text-anchor="middle">Cost</text>
+
+<!-- Main Charts -->
+<rect x="8" y="56" width="230" height="130" rx="4" fill="rgba(255,255,255,.02)" stroke="rgba(255,255,255,.08)" stroke-width="1"/>
+<text x="18" y="72" fill="#9ca3af" font-size="6">PRIMARY CHART (Trend)</text>
+<text x="123" y="155" fill="#374151" font-size="18" text-anchor="middle">Line / Area</text>
+
+<rect x="246" y="56" width="115" height="130" rx="4" fill="rgba(255,255,255,.02)" stroke="rgba(255,255,255,.08)" stroke-width="1"/>
+<text x="256" y="72" fill="#9ca3af" font-size="6">COMPOSITION</text>
+<text x="303" y="155" fill="#374151" font-size="16" text-anchor="middle">Donut</text>
+
+<rect x="369" y="56" width="103" height="130" rx="4" fill="rgba(255,255,255,.02)" stroke="rgba(255,255,255,.08)" stroke-width="1"/>
+<text x="379" y="72" fill="#9ca3af" font-size="6">COMPARISON</text>
+<text x="420" y="155" fill="#374151" font-size="16" text-anchor="middle">Bar</text>
+
+<!-- Bottom Detail -->
+<rect x="8" y="194" width="310" height="68" rx="4" fill="rgba(255,255,255,.02)" stroke="rgba(255,255,255,.08)" stroke-width="1"/>
+<text x="18" y="210" fill="#9ca3af" font-size="6">DETAIL TABLE (Bottom-Right)</text>
+<text x="163" y="248" fill="#374151" font-size="14" text-anchor="middle">Supporting Data</text>
+
+<rect x="326" y="194" width="146" height="68" rx="4" fill="rgba(255,255,255,.02)" stroke="rgba(255,255,255,.08)" stroke-width="1"/>
+<text x="336" y="210" fill="#9ca3af" font-size="6">MAP / SCATTER</text>
+<text x="399" y="248" fill="#374151" font-size="14" text-anchor="middle">Geo</text>
+
+<!-- Arrows showing reading flow -->
+<text x="240" y="268" fill="#CCFF00" font-size="5" text-anchor="middle" opacity=".5">← Reading flow: Top-Left → Bottom-Right →</text>
+</svg></div>
+</div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== TARGET AUDIENCE & UI/UX ===================== -->
+<section id="uiux" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge badge-teal mb-4 mx-auto w-fit"><i class="fas fa-palette"></i> Chapter 05</span>
+<h2 class="font-display text-4xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">TARGET AUDIENCE & UI/UX</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">Who sees the dashboard determines what the dashboard looks like</p>
+</div>
+
+<!-- Audience Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16 reveal">
+<div class="glass-card rounded-2xl p-6 text-center">
+<div class="w-16 h-16 rounded-full bg-acid/10 flex items-center justify-center mx-auto mb-4"><i class="fas fa-crown text-acid text-xl"></i></div>
+<h3 class="font-bold text-white mb-2">C-Suite</h3>
+<p class="text-xs text-gray-400 mb-3">CEO, CFO, COO</p>
+<p class="text-sm text-gray-500"><span class="text-acid font-semibold">3-5 KPIs only.</span> Large numbers, trend arrows, red/amber/green. No tables, no drill-downs.</p>
+</div>
+<div class="glass-card rounded-2xl p-6 text-center">
+<div class="w-16 h-16 rounded-full bg-purple-500/10 flex items-center justify-center mx-auto mb-4"><i class="fas fa-user-tie text-purple-400 text-xl"></i></div>
+<h3 class="font-bold text-white mb-2">Directors / VPs</h3>
+<p class="text-xs text-gray-400 mb-3">Department heads</p>
+<p class="text-sm text-gray-500"><span class="text-purple-400 font-semibold">KPIs + 3-4 charts.</span> Add comparisons, YoY trends, and slicers for their department scope.</p>
+</div>
+<div class="glass-card rounded-2xl p-6 text-center">
+<div class="w-16 h-16 rounded-full bg-teal-500/10 flex items-center justify-center mx-auto mb-4"><i class="fas fa-chart-line text-teal-400 text-xl"></i></div>
+<h3 class="font-bold text-white mb-2">Managers</h3>
+<p class="text-xs text-gray-400 mb-3">Team leads, supervisors</p>
+<p class="text-sm text-gray-500"><span class="text-teal-400 font-semibold">Full dashboard + drill-through.</span> Tables, details, cross-filtering. They need the "why."</p>
+</div>
+<div class="glass-card rounded-2xl p-6 text-center">
+<div class="w-16 h-16 rounded-full bg-blue-500/10 flex items-center justify-center mx-auto mb-4"><i class="fas fa-laptop-code text-blue-400 text-xl"></i></div>
+<h3 class="font-bold text-white mb-2">Analysts</h3>
+<p class="text-xs text-gray-400 mb-3">Data team, BI devs</p>
+<p class="text-sm text-gray-500"><span class="text-blue-400 font-semibold">Multi-page reports.</span> Raw data access, export options, DAX queries. Not really a "dashboard" user.</p>
+</div>
+</div>
+
+<!-- UI/UX Principles -->
+<div class="max-w-5xl mx-auto reveal">
+<div class="vis-mock mb-8" style="border-color:rgba(45,212,191,.15)">
+<div class="vis-titlebar"><i class="fas fa-palette" style="color:#2dd4bf;font-size:.6rem"></i><span style="font-size:.58rem">UI/UX Principles for Power BI Dashboards</span></div>
+<div class="p-6 space-y-4">
+<div class="flex items-start gap-4">
+<div class="timeline-dot bg-acid mt-1"></div>
+<div><p class="text-sm text-white font-semibold mb-1">Contrast & Hierarchy</p><p class="text-sm text-gray-400">Use font size (24px KPI vs 10px label), weight (bold numbers vs regular text), and color (acid green for key metrics, gray for secondary) to guide the eye. Never use more than <span class="text-acid font-bold">3 font sizes</span>.</p></div>
+</div>
+<div class="flex items-start gap-4">
+<div class="timeline-dot bg-purple-400 mt-1"></div>
+<div><p class="text-sm text-white font-semibold mb-1">Whitespace is a Feature</p><p class="text-sm text-gray-400">Padding between visuals = breathing room. <span class="text-purple-400 font-bold">16-24px gaps</span> between cards. Cramped dashboards feel overwhelming. Whitespace signals confidence and clarity.</p></div>
+</div>
+<div class="flex items-start gap-4">
+<div class="timeline-dot bg-teal-400 mt-1"></div>
+<div><p class="text-sm text-white font-semibold mb-1">Dark Background Advantage</p><p class="text-sm text-gray-400">Dark themes (#050505, #0A0C10) make colored data <span class="text-teal-400 font-bold">pop naturally</span>. Light themes require heavy borders and backgrounds. Always prefer dark for data-dense screens.</p></div>
+</div>
+<div class="flex items-start gap-4">
+<div class="timeline-dot bg-yellow-400 mt-1" style="--after-bg:none"></div>
+<div><p class="text-sm text-white font-semibold mb-1">Interactive, Not Cluttered</p><p class="text-sm text-gray-400">Use tooltips instead of data labels. Use cross-filtering instead of 5 redundant charts. Use bookmarks for <span class="text-yellow-400 font-bold">different views</span> instead of cramming everything on one page.</p></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== WHAT IS POWER BI SERVICE ===================== -->
+<section id="pbiservice" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge badge-purple mb-4 mx-auto w-fit"><i class="fas fa-cloud"></i> Chapter 06</span>
+<h2 class="font-display text-4xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">WHAT IS POWER BI SERVICE?</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">The cloud platform that turns .pbix files into shared, interactive experiences</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 reveal">
+
+<!-- Service UI Mockup -->
+<div class="vis-mock pulse-glow" style="border-color:rgba(192,132,252,.2)">
+<div class="vis-titlebar"><i class="fas fa-globe" style="color:#c084fc;font-size:.6rem"></i><span style="font-size:.58rem">Power BI Service — app.powerbi.com</span></div>
+<div class="p-4"><svg viewBox="0 0 380 200" style="width:100%">
+<!-- Browser Chrome -->
+<rect x="0" y="0" width="380" height="18" rx="6" fill="rgba(255,255,255,.04)"/>
+<circle cx="14" cy="9" r="3" fill="rgba(239,68,68,.5)"/><circle cx="26" cy="9" r="3" fill="rgba(251,191,36,.5)"/><circle cx="38" cy="9" r="3" fill="rgba(34,197,94,.5)"/>
+<rect x="60" y="4" width="200" height="10" rx="5" fill="rgba(255,255,255,.06)"/>
+<text x="160" y="12" fill="#6b7280" font-size="5" text-anchor="middle">app.powerbi.com</text>
+
+<!-- Left Nav -->
+<rect x="0" y="18" width="80" height="182" fill="rgba(255,255,255,.03)"/>
+<text x="40" y="38" fill="#c084fc" font-size="7" text-anchor="middle" font-weight="700">☰ Navigate</text>
+<text x="12" y="58" fill="#9ca3af" font-size="5.5">▸ Home</text>
+<text x="12" y="74" fill="#CCFF00" font-size="5.5">▸ My workspace</text>
+<text x="12" y="90" fill="#9ca3af" font-size="5.5">▸ Shared</text>
+<text x="12" y="106" fill="#9ca3af" font-size="5.5">▸ Apps</text>
+<text x="12" y="122" fill="#9ca3af" font-size="5.5">▸ Learn</text>
+<line x1="8" y1="135" x2="72" y2="135" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
+<text x="12" y="150" fill="#9ca3af" font-size="5.5">▸ Recent</text>
+<text x="12" y="166" fill="#9ca3af" font-size="5.5">▸ Favorites</text>
+
+<!-- Main Content -->
+<rect x="84" y="24" width="290" height="24" rx="4" fill="rgba(255,255,255,.03)"/>
+<text x="96" y="40" fill="#e1e1e1" font-size="7">My workspace</text>
+<text x="320" y="40" fill="#c084fc" font-size="6">+ New ▾</text>
+
+<!-- Workspace Items -->
+<rect x="84" y="56" width="140" height="70" rx="6" fill="rgba(204,255,0,.05)" stroke="rgba(204,255,0,.15)" stroke-width="1"/>
+<text x="96" y="74" fill="#CCFF00" font-size="6">📊 HR Dashboard</text>
+<text x="96" y="88" fill="#6b7280" font-size="5">Report • Modified 2h ago</text>
+<rect x="96" y="96" width="50" height="14" rx="3" fill="rgba(204,255,0,.1)"/>
+<text x="121" y="106" fill="#CCFF00" font-size="5" text-anchor="middle">Open</text>
+
+<rect x="232" y="56" width="140" height="70" rx="6" fill="rgba(192,132,252,.05)" stroke="rgba(192,132,252,.15)" stroke-width="1"/>
+<text x="244" y="74" fill="#c084fc" font-size="6">📋 Sales Report</text>
+<text x="244" y="88" fill="#6b7280" font-size="5">Report • Modified 1d ago</text>
+<rect x="244" y="96" width="50" height="14" rx="3" fill="rgba(192,132,252,.1)"/>
+<text x="269" y="106" fill="#c084fc" font-size="5" text-anchor="middle">Open</text>
+
+<rect x="84" y="134" width="140" height="55" rx="6" fill="rgba(45,212,191,.05)" stroke="rgba(45,212,191,.15)" stroke-width="1"/>
+<text x="96" y="152" fill="#2dd4bf" font-size="6">🗄️ Dataset: HR_Data</text>
+<text x="96" y="166" fill="#6b7280" font-size="5">Dataset • Scheduled refresh</text>
+
+<rect x="232" y="134" width="140" height="55" rx="6" fill="rgba(255,255,255,.02)" stroke="rgba(255,255,255,.08)" stroke-width="1"/>
+<text x="244" y="152" fill="#9ca3af" font-size="6">📁 Dataflow: ETL</text>
+<text x="244" y="166" fill="#6b7280" font-size="5">Dataflow • 3d ago</text>
+</svg></div>
+</div>
+
+<!-- Explanation -->
+<div class="space-y-6">
+<div class="step-box"><div class="step-l"><i class="fas fa-cloud-upload-alt"></i> What Is It?</div>
+<p class="text-sm text-gray-400">Power BI Service (<span class="text-purple-400 font-bold">app.powerbi.com</span>) is the <span class="text-white font-bold">cloud-based SaaS platform</span> where you publish, share, collaborate on, and manage Power BI content. It's the bridge between your .pbix file and your audience.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-share-alt"></i> Why We Need It</div>
+<p class="text-sm text-gray-400">Desktop is for <span class="text-acid font-bold">building</span>. Service is for <span class="text-purple-400 font-bold">distributing</span>. Without Service, your dashboards live only on your laptop. With Service, 500 people can view the same dashboard from a browser, phone, or Teams — always showing the latest data.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-sync-alt"></i> Key Capabilities</div>
+<p class="text-sm text-gray-400"><span class="text-white font-bold">Publish</span> reports from Desktop → <span class="text-white font-bold">Share</span> with users/groups → <span class="text-white font-bold">Subscribe</span> to scheduled emails → <span class="text-white font-bold">Alert</span> on data changes → <span class="text-white font-bold">Embed</span> in Teams/SharePoint → <span class="text-white font-bold">Refresh</span> datasets on schedule.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-lock"></i> Access</div>
+<p class="text-sm text-gray-400">Requires a <span class="text-acid font-bold">Pro ($10/user/mo)</span> or <span class="text-purple-400 font-bold">Premium ($20/user/mo)</span> license. Free license can view shared content in <span class="text-white font-bold">Premium capacity</span> workspaces only.</p></div>
+</div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== DESKTOP vs SERVICE ===================== -->
+<section id="desktop-vs-service" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge mb-4 mx-auto w-fit"><i class="fas fa-balance-scale"></i> Chapter 07</span>
+<h2 class="font-display text-4xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">DESKTOP vs SERVICE</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">Two different tools, one workflow — build locally, distribute globally</p>
+</div>
+<div class="max-w-5xl mx-auto reveal">
+<div class="vis-mock" style="border-color:rgba(204,255,0,.12)">
+<div class="vis-titlebar"><i class="fas fa-balance-scale" style="color:#CCFF00;font-size:.6rem"></i><span style="font-size:.58rem">Feature Comparison — Power BI Desktop vs Power BI Service</span></div>
+<div class="p-4">
+<div style="display:grid;grid-template-columns:140px 1fr 1fr;font-size:.7rem">
+<div style="padding:10px 14px;color:#6b7280;font-weight:700;font-size:.6rem;background:rgba(255,255,255,.03)">FEATURE</div>
+<div style="padding:10px 14px;color:#CCFF00;font-weight:700;font-size:.6rem;background:rgba(204,255,0,.05);text-align:center">DESKTOP</div>
+<div style="padding:10px 14px;color:#c084fc;font-weight:700;font-size:.6rem;background:rgba(192,132,252,.05);text-align:center">SERVICE</div>
+
+<div style="padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.04);color:#e1e1e1;font-size:.65rem">Data Modeling</div>
+<div style="padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.04);text-align:center"><i class="fas fa-check-circle text-acid"></i></div>
+<div style="padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.04);text-align:center"><i class="fas fa-times-circle text-red-500/50"></i></div>
+
+<div style="padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.04);color:#e1e1e1;font-size:.65rem">DAX / Measures</div>
+<div style="padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.04);text-align:center"><i class="fas fa-check-circle text-acid"></i></div>
+<div style="padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.04);text-align:center"><i class="fas fa-times-circle text-red-500/50"></i></div>
+
+<div style="padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.04);color:#e1e1e1;font-size:.65rem">Power Query (ETL)</div>
+<div style="padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.04);text-align:center"><i class="fas fa-check-circle text-acid"></i></div>
+<div style="padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.04);text-align:center"><i class="fas fa-times-circle text-red-500/50"></i></div>
+
+<div style="padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.04);color:#e1e1e1;font-size:.65rem">Build Visuals</div>
+<div style="padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.04);text-align:center"><i class="fas fa-check-circle text-acid"></i></div>
+<div style="padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.04);text-align:center"><i class="fas fa-minus-circle text-yellow-500/50" title="Limited editing"></i></div>
+
+<div style="padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.04);color:#e1e1e1;font-size:.65rem">Publish / Share</div>
+<div style="padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.04);text-align:center"><i class="fas fa-times-circle text-red-500/50"></i></div>
+<div style="padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.04);text-align:center"><i class="fas fa-check-circle text-purple-400"></i></div>
+
+<div style="padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.04);color:#e1e1e1;font-size:.65rem">Scheduled Refresh</div>
+<div style="padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.04);text-align:center"><i class="fas fa-times-circle text-red-500/50"></i></div>
+<div style="padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.04);text-align:center"><i class="fas fa-check-circle text-purple-400"></i></div>
+
+<div style="padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.04);color:#e1e1e1;font-size:.65rem">Subscriptions</div>
+<div style="padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.04);text-align:center"><i class="fas fa-times-circle text-red-500/50"></i></div>
+<div style="padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.04);text-align:center"><i class="fas fa-check-circle text-purple-400"></i></div>
+
+<div style="padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.04);color:#e1e1e1;font-size:.65rem">Alerts</div>
+<div style="padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.04);text-align:center"><i class="fas fa-times-circle text-red-500/50"></i></div>
+<div style="padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.04);text-align:center"><i class="fas fa-check-circle text-purple-400"></i></div>
+
+<div style="padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.04);color:#e1e1e1;font-size:.65rem">Row-Level Security</div>
+<div style="padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.04);text-align:center"><i class="fas fa-check-circle text-acid"></i></div>
+<div style="padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.04);text-align:center"><i class="fas fa-check-circle text-purple-400"></i></div>
+
+<div style="padding:8px 14px;color:#e1e1e1;font-size:.65rem">Web Access (Browser)</div>
+<div style="padding:8px 14px;text-align:center"><i class="fas fa-times-circle text-red-500/50"></i></div>
+<div style="padding:8px 14px;text-align:center"><i class="fas fa-check-circle text-purple-400"></i></div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+<div class="step-box"><div class="step-l"><i class="fas fa-desktop"></i> Desktop = Build</div>
+<p class="text-sm text-gray-400">Install the free app. Connect to data, model it, write DAX, build visuals, design dashboards. Everything happens <span class="text-acid font-bold">locally on your machine</span>. Save as .pbix file.</p></div>
+<div class="step-box"><div class="step-l" style="color:#c084fc"><i class="fas fa-globe"></i> Service = Distribute</div>
+<p class="text-sm text-gray-400">Open <span class="text-purple-400 font-bold">app.powerbi.com</span> in any browser. Publish your .pbix, set refresh schedules, share with stakeholders, set up subscriptions and alerts. Everything happens <span class="text-purple-400 font-bold">in the cloud</span>.</p></div>
+</div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== SERVICE UI OVERVIEW ===================== -->
+<section id="service-ui" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge badge-purple mb-4 mx-auto w-fit"><i class="fas fa-window-maximize"></i> Chapter 08</span>
+<h2 class="font-display text-4xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">SERVICE UI OVERVIEW</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">Tour of the Power BI Service interface — every pane, button, and menu explained</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 reveal">
+
+<!-- UI Mockup -->
+<div class="vis-mock" style="border-color:rgba(192,132,252,.15)">
+<div class="vis-titlebar"><i class="fas fa-window-maximize" style="color:#c084fc;font-size:.6rem"></i><span style="font-size:.58rem">Power BI Service — UI Components</span></div>
+<div class="p-4"><svg viewBox="0 0 380 240" style="width:100%">
+<!-- Top Bar -->
+<rect x="0" y="0" width="380" height="30" rx="6" fill="rgba(192,132,252,.06)"/>
+<text x="14" y="20" fill="#c084fc" font-size="7" font-weight="700">⬡ Power BI</text>
+<text x="80" y="20" fill="#9ca3af" font-size="6">Home</text>
+<text x="115" y="20" fill="#9ca3af" font-size="6">Workspaces</text>
+<text x="175" y="20" fill="#9ca3af" font-size="6">Learn</text>
+<text x="220" y="20" fill="#6b7280" font-size="6">🔍 Search</text>
+<text x="310" y="20" fill="#6b7280" font-size="6">⚙️ Settings</text>
+<text x="350" y="20" fill="#6b7280" font-size="6">👤</text>
+
+<!-- Left Nav -->
+<rect x="0" y="34" width="80" height="206" fill="rgba(255,255,255,.02)"/>
+<text x="10" y="54" fill="#c084fc" font-size="6" font-weight="700">NAVIGATION</text>
+<text x="10" y="72" fill="#CCFF00" font-size="5.5">● Home</text>
+<text x="10" y="88" fill="#9ca3af" font-size="5.5">○ Workspaces</text>
+<text x="10" y="104" fill="#9ca3af" font-size="5.5">○ Apps</text>
+<text x="10" y="120" fill="#9ca3af" font-size="5.5">○ Shared with me</text>
+<text x="10" y="136" fill="#9ca3af" font-size="5.5">○ Recent</text>
+<text x="10" y="152" fill="#9ca3af" font-size="5.5">○ Favorites</text>
+<line x1="8" y1="162" x2="72" y2="162" stroke="rgba(255,255,255,.06)"/>
+<text x="10" y="178" fill="#9ca3af" font-size="5.5">○ Org visuals</text>
+<text x="10" y="194" fill="#9ca3af" font-size="5.5">○ Data hubs</text>
+
+<!-- Main Content Area -->
+<text x="94" y="52" fill="#e1e1e1" font-size="7" font-weight="700">Home</text>
+<rect x="90" y="58" width="132" height="80" rx="6" fill="rgba(204,255,0,.04)" stroke="rgba(204,255,0,.12)" stroke-width="1"/>
+<text x="102" y="76" fill="#CCFF00" font-size="6">📊 Frequent</text>
+<text x="102" y="90" fill="#6b7280" font-size="5">HR Dashboard</text>
+<text x="102" y="102" fill="#6b7280" font-size="5">Sales Report</text>
+<text x="102" y="114" fill="#6b7280" font-size="5">Finance KPIs</text>
+
+<rect x="230" y="58" width="142" height="80" rx="6" fill="rgba(192,132,252,.04)" stroke="rgba(192,132,252,.12)" stroke-width="1"/>
+<text x="242" y="76" fill="#c084fc" font-size="6">🆕 Discover</text>
+<text x="242" y="90" fill="#6b7280" font-size="5">Recommended org</text>
+<text x="242" y="102" fill="#6b7280" font-size="5">Templates</text>
+<text x="242" y="114" fill="#6b7280" font-size="5">Learning paths</text>
+
+<rect x="90" y="146" width="282" height="40" rx="6" fill="rgba(45,212,191,.04)" stroke="rgba(45,212,191,.12)" stroke-width="1"/>
+<text x="102" y="162" fill="#2dd4bf" font-size="6">📋 Recent</text>
+<text x="102" y="178" fill="#6b7280" font-size="5">HR Dashboard (2h ago) • Sales Report (1d ago) • Attrition Analysis (3d ago)</text>
+
+<rect x="90" y="194" width="282" height="40" rx="6" fill="rgba(255,255,255,.02)" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
+<text x="102" y="210" fill="#9ca3af" font-size="6">📌 Pinned by org</text>
+<text x="102" y="226" fill="#6b7280" font-size="5">Company KPIs • Compliance Dashboard • Budget Tracker</text>
+</svg></div>
+</div>
+
+<!-- Right: Component Breakdown -->
+<div class="space-y-6">
+<div class="step-box"><div class="step-l"><i class="fas fa-compass"></i> Global Navigation (Left)</div>
+<p class="text-sm text-gray-400">Home = landing page with frequent/recent. <span class="text-acid font-bold">Workspaces</span> = your content containers. Apps = published apps from your org. Shared with me = content others sent you.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-home"></i> Home Page</div>
+<p class="text-sm text-gray-400">Three sections: <span class="text-acid font-bold">Frequent</span> (pinned by you), <span class="text-purple-400 font-bold">Discover</span> (org-recommended), and <span class="text-teal-400 font-bold">Recent</span> (last 30 days). Pin your top 6 dashboards for quick access.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-cog"></i> Top Bar Actions</div>
+<p class="text-sm text-gray-400"><span class="text-white font-bold">Search</span> = find any report/dataset across org. <span class="text-white font-bold">Settings</span> = manage account, gateways, admin portal. <span class="text-white font-bold">Profile</span> = license info, help, sign out.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-th-large"></i> Workspace View</div>
+<p class="text-sm text-gray-400">Inside a workspace: three tabs — <span class="text-acid font-bold">Content</span> (list view of all items), <span class="text-purple-400 font-bold">Workspaces</span> (browse other workspaces), and <span class="text-teal-400 font-bold">Access</span> (who has permissions).</p></div>
+</div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== WORKSPACES ===================== -->
+<section id="workspaces" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge badge-teal mb-4 mx-auto w-fit"><i class="fas fa-folder-open"></i> Chapter 09</span>
+<h2 class="font-display text-4xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">WORKSPACES</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">The container for everything — datasets, reports, dashboards, and dataflows</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 reveal">
+
+<!-- Types -->
+<div class="space-y-6">
+<div class="glass-card rounded-2xl p-6 border-l-4 border-l-acid">
+<div class="flex items-center gap-3 mb-3">
+<div class="icon-box bg-acid/10 text-acid"><i class="fas fa-user"></i></div>
+<div><h3 class="font-bold text-white">My Workspace</h3><p class="text-xs text-gray-500">Personal, default</p></div>
+</div>
+<p class="text-sm text-gray-400">Created automatically. <span class="text-acid font-bold">Only you</span> can access. Good for development and testing. <span class="text-red-400 font-bold">Never share from My Workspace</span> in production — it's not backed up, not recoverable if you leave.</p>
+</div>
+<div class="glass-card rounded-2xl p-6 border-l-4 border-l-purple-400">
+<div class="flex items-center gap-3 mb-3">
+<div class="icon-box bg-purple-500/10 text-purple-400"><i class="fas fa-users"></i></div>
+<div><h3 class="font-bold text-white">Standard Workspace</h3><p class="text-xs text-gray-500">Team collaboration</p></div>
+</div>
+<p class="text-sm text-gray-400">Create via "Workspaces" → <span class="text-purple-400 font-bold">"+ New workspace"</span>. Add members as <span class="text-white font-bold">Admin</span> (full control), <span class="text-white font-bold">Member</span> (edit/publish), <span class="text-white font-bold">Contributor</span> (edit only), or <span class="text-white font-bold">Viewer</span> (read-only). <span class="text-acid font-bold">Pro license required</span> for all members.</p>
+</div>
+<div class="glass-card rounded-2xl p-6 border-l-4 border-l-teal-400">
+<div class="flex items-center gap-3 mb-3">
+<div class="icon-box bg-teal-500/10 text-teal-400"><i class="fas fa-gem"></i></div>
+<div><h3 class="font-bold text-white">Premium Workspace</h3><p class="text-xs text-gray-500">Enterprise, no Pro needed for viewers</p></div>
+</div>
+<p class="text-sm text-gray-400">Assigned to <span class="text-teal-400 font-bold">Premium capacity (P/A/EM)</span> or <span class="text-teal-400 font-bold">Fabric capacity (F)</span>. Free users CAN view content. Larger dataset sizes (400GB vs 1GB). Dedicated resources = <span class="text-white font-bold">faster refresh, no throttling</span>.</p>
+</div>
+</div>
+
+<!-- Workspace Content Mockup -->
+<div class="vis-mock" style="border-color:rgba(45,212,191,.15)">
+<div class="vis-titlebar"><i class="fas fa-folder-open" style="color:#2dd4bf;font-size:.6rem"></i><span style="font-size:.58rem">Workspace Content View — "HR Analytics"</span></div>
+<div class="p-4"><svg viewBox="0 0 340 240" style="width:100%">
+<text x="10" y="20" fill="#e1e1e1" font-size="7" font-weight="700">HR Analytics workspace</text>
+<text x="240" y="20" fill="#2dd4bf" font-size="6">+ New ▾  ⋯</text>
+
+<text x="10" y="42" fill="#6b7280" font-size="6" font-weight="600">DASHBOARDS (1)</text>
+<rect x="10" y="50" width="320" height="30" rx="4" fill="rgba(204,255,0,.05)" stroke="rgba(204,255,0,.1)" stroke-width="1"/>
+<text x="22" y="70" fill="#CCFF00" font-size="6">📊 HR Dashboard</text>
+<text x="200" y="70" fill="#6b7280" font-size="5">Dashboard • 2h ago</text>
+
+<text x="10" y="100" fill="#6b7280" font-size="6" font-weight="600">REPORTS (3)</text>
+<rect x="10" y="108" width="320" height="28" rx="4" fill="rgba(192,132,252,.04)" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
+<text x="22" y="126" fill="#c084fc" font-size="6">📋 HR Report</text>
+<text x="200" y="126" fill="#6b7280" font-size="5">Report • 2h ago</text>
+<rect x="10" y="140" width="320" height="28" rx="4" fill="rgba(192,132,252,.04)" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
+<text x="22" y="158" fill="#c084fc" font-size="6">📋 Attrition Deep Dive</text>
+<text x="200" y="158" fill="#6b7280" font-size="5">Report • 1d ago</text>
+
+<text x="10" y="186" fill="#6b7280" font-size="6" font-weight="600">DATASETS (1)</text>
+<rect x="10" y="194" width="320" height="28" rx="4" fill="rgba(45,212,191,.04)" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
+<text x="22" y="212" fill="#2dd4bf" font-size="6">🗄️ HR_EmployeeData</text>
+<text x="200" y="212" fill="#6b7280" font-size="5">Dataset • Scheduled</text>
+</svg></div>
+</div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== HOW TO PUBLISH & VIEW ===================== -->
+<section id="publish" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge mb-4 mx-auto w-fit"><i class="fas fa-upload"></i> Chapter 10</span>
+<h2 class="font-display text-4xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">PUBLISH & VIEW DASHBOARDS</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">From your laptop to your stakeholder's browser — in 3 clicks</p>
+</div>
+<div class="max-w-5xl mx-auto reveal">
+
+<!-- Publish Steps -->
+<div class="vis-mock mb-8" style="border-color:rgba(204,255,0,.15)">
+<div class="vis-titlebar"><i class="fas fa-upload" style="color:#CCFF00;font-size:.6rem"></i><span style="font-size:.58rem">How to Publish — From Power BI Desktop</span></div>
+<div class="p-6 space-y-5">
+<div class="flex items-start gap-4">
+<div class="w-8 h-8 rounded-full bg-acid/20 flex items-center justify-center flex-shrink-0"><span class="text-acid font-bold text-sm">1</span></div>
+<div><p class="text-sm text-white font-semibold mb-1">Open your .pbix file in Power BI Desktop</p><p class="text-sm text-gray-400">Make sure all visuals are finalized, bookmarks are set, and the dashboard looks good at 1920×1080 resolution.</p></div>
+</div>
+<div class="flex items-start gap-4">
+<div class="w-8 h-8 rounded-full bg-acid/20 flex items-center justify-center flex-shrink-0"><span class="text-acid font-bold text-sm">2</span></div>
+<div><p class="text-sm text-white font-semibold mb-1">Click <span class="text-acid font-bold">Publish</span> button (Home ribbon)</p><p class="text-sm text-gray-400">A dialog opens showing your workspaces. Select the target workspace (e.g., "HR Analytics"). Click <span class="text-acid font-bold">Select</span>. A progress bar appears.</p></div>
+</div>
+<div class="flex items-start gap-4">
+<div class="w-8 h-8 rounded-full bg-acid/20 flex items-center justify-center flex-shrink-0"><span class="text-acid font-bold text-sm">3</span></div>
+<div><p class="text-sm text-white font-semibold mb-1">Success! Click the link to open in browser</p><p class="text-sm text-gray-400">Power BI Desktop shows "Success" with a <span class="text-acid font-bold">"Open 'HR Report' in Power BI"</span> link. Click it → browser opens → your report is live in the workspace. <span class="text-purple-400 font-bold">Note: Dashboards are created from pinning visuals, not published directly.</span></p></div>
+</div>
+</div>
+</div>
+
+<!-- View Dashboard Steps -->
+<div class="vis-mock mb-8" style="border-color:rgba(192,132,252,.15)">
+<div class="vis-titlebar"><i class="fas fa-eye" style="color:#c084fc;font-size:.6rem"></i><span style="font-size:.58rem">How to View a Dashboard in Power BI Service</span></div>
+<div class="p-6 space-y-5">
+<div class="flex items-start gap-4">
+<div class="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center flex-shrink-0"><span class="text-purple-400 font-bold text-sm">1</span></div>
+<div><p class="text-sm text-white font-semibold mb-1">Go to <span class="text-purple-400 font-bold">app.powerbi.com</span> and sign in</p><p class="text-sm text-gray-400">Use your work email (the one with Pro/Premium license). If your org uses SSO, you'll be auto-authenticated.</p></div>
+</div>
+<div class="flex items-start gap-4">
+<div class="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center flex-shrink-0"><span class="text-purple-400 font-bold text-sm">2</span></div>
+<div><p class="text-sm text-white font-semibold mb-1">Navigate to the workspace</p><p class="text-sm text-gray-400">Left nav → <span class="text-white font-bold">Workspaces</span> → click the workspace name. Or find it under "Recent" / "Frequent" on the Home page.</p></div>
+</div>
+<div class="flex items-start gap-4">
+<div class="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center flex-shrink-0"><span class="text-purple-400 font-bold text-sm">3</span></div>
+<div><p class="text-sm text-white font-semibold mb-1">Click the Dashboard tile to open it</p><p class="text-sm text-gray-400">Dashboard opens in <span class="text-purple-400 font-bold">Reading View</span> by default. Interact with slicers, hover for tooltips, click visuals for cross-filtering. Click "Edit" for Edit View (if you have permissions).</p></div>
+</div>
+</div>
+</div>
+
+<div class="step-box"><div class="step-l"><i class="fas fa-info-circle"></i> Important: Report vs Dashboard in Service</div>
+<p class="text-sm text-gray-400">When you <span class="text-acid font-bold">Publish</span> from Desktop, you publish a <span class="text-acid font-bold">Report</span> (multi-page, interactive). A <span class="text-purple-400 font-bold">Dashboard</span> is a separate entity in Service — you create it by <span class="text-purple-400 font-bold">pinning tiles</span> from a report onto a dashboard canvas. Dashboard = single page, fixed tiles. Report = multi-page, full interactivity.</p></div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== PROPERTIES OF REPORT ===================== -->
+<section id="properties" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge badge-teal mb-4 mx-auto w-fit"><i class="fas fa-sliders-h"></i> Chapter 11</span>
+<h2 class="font-display text-4xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">PROPERTIES OF REPORT</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">Metadata, storage, and configuration settings for published reports</p>
+</div>
+<div class="max-w-5xl mx-auto reveal">
+<div class="vis-mock mb-8" style="border-color:rgba(45,212,191,.15)">
+<div class="vis-titlebar"><i class="fas fa-sliders-h" style="color:#2dd4bf;font-size:.6rem"></i><span style="font-size:.58rem">Report Settings & Properties — Where to Find Them</span></div>
+<div class="p-4"><svg viewBox="0 0 400 200" style="width:100%">
+<!-- Settings Panel Mockup -->
+<rect x="0" y="0" width="400" height="24" rx="6" fill="rgba(255,255,255,.04)"/>
+<text x="14" y="16" fill="#2dd4bf" font-size="7" font-weight="700">⚙️ Settings for "HR Report"</text>
+<text x="340" y="16" fill="#6b7280" font-size="6">✕ Close</text>
+
+<!-- Setting Items -->
+<rect x="0" y="28" width="400" height="36" fill="rgba(255,255,255,.02)"/>
+<text x="14" y="44" fill="#e1e1e1" font-size="6.5" font-weight="600">Name</text>
+<text x="200" y="44" fill="#9ca3af" font-size="6.5">HR Report</text>
+<text x="340" y="44" fill="#2dd4bf" font-size="6">Edit</text>
+<line x1="14" y1="52" x2="386" y2="52" stroke="rgba(255,255,255,.04)"/>
+<text x="14" y="62" fill="#6b7280" font-size="5">Display name shown in workspace and navigation</text>
+
+<rect x="0" y="68" width="400" height="36" fill="rgba(255,255,255,.01)"/>
+<text x="14" y="84" fill="#e1e1e1" font-size="6.5" font-weight="600">Owner</text>
+<text x="200" y="84" fill="#9ca3af" font-size="6.5">john@company.com</text>
+<text x="340" y="84" fill="#6b7280" font-size="6">Read-only</text>
+
+<rect x="0" y="108" width="400" height="36" fill="rgba(255,255,255,.02)"/>
+<text x="14" y="124" fill="#e1e1e1" font-size="6.5" font-weight="600">Dataset</text>
+<text x="200" y="124" fill="#9ca3af" font-size="6.5">HR_EmployeeData</text>
+<text x="340" y="124" fill="#2dd4bf" font-size="6">Change</text>
+<line x1="14" y1="132" x2="386" y2="132" stroke="rgba(255,255,255,.04)"/>
+<text x="14" y="142" fill="#6b7280" font-size="5">Switch to a different dataset in the same workspace</text>
+
+<rect x="0" y="148" width="400" height="24" fill="rgba(255,255,255,.01)"/>
+<text x="14" y="164" fill="#e1e1e1" font-size="6.5" font-weight="600">Enhanced tooltips</text>
+<rect x="340" y="152" width="44" height="16" rx="8" fill="rgba(204,255,0,.2)"/>
+<circle cx="370" cy="160" r="6" fill="#CCFF00"/>
+
+<rect x="0" y="176" width="400" height="24" fill="rgba(255,255,255,.02)"/>
+<text x="14" y="192" fill="#e1e1e1" font-size="6.5" font-weight="600">Personalize visuals</text>
+<rect x="340" y="180" width="44" height="16" rx="8" fill="rgba(204,255,0,.2)"/>
+<circle cx="370" cy="188" r="6" fill="#CCFF00"/>
+</svg></div>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="step-box"><div class="step-l"><i class="fas fa-pen"></i> How to Access</div>
+<p class="text-sm text-gray-400">Open report in Service → Click <span class="text-acid font-bold">"⋯" (More options)</span> → <span class="text-acid font-bold">Settings</span>. Opens a side panel with all properties. Also accessible from workspace list → "⋯" on the report tile.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-exchange-alt"></i> Change Dataset</div>
+<p class="text-sm text-gray-400">Under Settings → Dataset → <span class="text-teal-400 font-bold">"Change dataset"</span>. Useful when you want to swap a dev dataset for a prod dataset without republishing. Both datasets must have <span class="text-white font-bold">identical schema</span>.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-magic"></i> Enhanced Tooltips</div>
+<p class="text-sm text-gray-400">Toggle ON in Settings. Lets you design <span class="text-acid font-bold">custom tooltip pages</span> in Desktop (small 320×280 pages with their own visuals) that appear on hover instead of the default tooltip.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-user-edit"></i> Personalize Visuals</div>
+<p class="text-sm text-gray-400">Toggle ON. Lets viewers <span class="text-acid font-bold">temporarily change</span> chart type, colors, and measures — without editing the report. Changes are per-user and don't save. Great for execs who want to "try a different view."</p></div>
+</div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== DOWNLOAD OPTIONS ===================== -->
+<section id="download" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge badge-purple mb-4 mx-auto w-fit"><i class="fas fa-download"></i> Chapter 12</span>
+<h2 class="font-display text-4xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">DOWNLOAD OPTIONS</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">Export dashboards and reports as PDF, PowerPoint, or Analyse in Excel</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal">
+
+<!-- PDF -->
+<div class="vis-mock" style="border-color:rgba(239,68,68,.15)">
+<div class="vis-titlebar"><i class="fas fa-file-pdf" style="color:#ef4444;font-size:.6rem"></i><span style="font-size:.58rem">Download as PDF</span></div>
+<div class="p-6 text-center">
+<div class="w-20 h-24 rounded-lg bg-red-500/10 flex items-center justify-center mx-auto mb-4"><i class="fas fa-file-pdf text-red-400 text-3xl"></i></div>
+<p class="text-sm text-gray-400 mb-4">Exports the <span class="text-white font-bold">current view</span> (with current filter context) as a static PDF document.</p>
+</div>
+<div class="step-box mx-4 mb-4"><div class="step-l" style="color:#ef4444"><i class="fas fa-route"></i> Steps</div>
+<p class="text-sm text-gray-400">Open report → <span class="text-white font-bold">File</span> → <span class="text-white font-bold">Download as PDF</span> → Choose orientation (Landscape/Portrait) → Choose <span class="text-red-400 font-bold">"Current page" or "All pages"</span> → Adjust wallpaper/background → Download.</p></div>
+<div class="px-4 pb-4"><p class="text-xs text-gray-500"><i class="fas fa-lightbulb text-yellow-500 mr-1"></i> <span class="text-yellow-400 font-semibold">Tip:</span> PDF captures the exact visual state including filters. But it's a <span class="text-white font-bold">snapshot</span> — no interactivity after export.</p></div>
+</div>
+
+<!-- PowerPoint -->
+<div class="vis-mock" style="border-color:rgba(251,146,60,.15)">
+<div class="vis-titlebar"><i class="fas fa-file-powerpoint" style="color:#fb923c;font-size:.6rem"></i><span style="font-size:.58rem">Export to PowerPoint</span></div>
+<div class="p-6 text-center">
+<div class="w-20 h-24 rounded-lg bg-orange-500/10 flex items-center justify-center mx-auto mb-4"><i class="fas fa-file-powerpoint text-orange-400 text-3xl"></i></div>
+<p class="text-sm text-gray-400 mb-4">Each report page becomes a <span class="text-white font-bold">PowerPoint slide</span> with visuals as images.</p>
+</div>
+<div class="step-box mx-4 mb-4"><div class="step-l" style="color:#fb923c"><i class="fas fa-route"></i> Steps</div>
+<p class="text-sm text-gray-400">Open report → <span class="text-white font-bold">File</span> → <span class="text-white font-bold">Export to PowerPoint</span> → Choose <span class="text-orange-400 font-bold">"Current page" or "All pages"</span> → Each visual becomes an editable image in PPTX → Download.</p></div>
+<div class="px-4 pb-4"><p class="text-xs text-gray-500"><i class="fas fa-lightbulb text-yellow-500 mr-1"></i> <span class="text-yellow-400 font-semibold">Tip:</span> Perfect for <span class="text-white font-bold">board presentations</span>. Visuals are high-res PNGs. You can add your own text/bullets around them in PowerPoint.</p></div>
+</div>
+
+<!-- Analyse in Excel -->
+<div class="vis-mock" style="border-color:rgba(34,197,94,.15)">
+<div class="vis-titlebar"><i class="fas fa-file-excel" style="color:#22c55e;font-size:.6rem"></i><span style="font-size:.58rem">Analyse in Excel</span></div>
+<div class="p-6 text-center">
+<div class="w-20 h-24 rounded-lg bg-green-500/10 flex items-center justify-center mx-auto mb-4"><i class="fas fa-file-excel text-green-400 text-3xl"></i></div>
+<p class="text-sm text-gray-400 mb-4">Opens an <span class="text-white font-bold">Excel workbook connected live</span> to the Power BI dataset via PivotTables.</p>
+</div>
+<div class="step-box mx-4 mb-4"><div class="step-l" style="color:#22c55e"><i class="fas fa-route"></i> Steps</div>
+<p class="text-sm text-gray-400">Open report → <span class="text-white font-bold">"⋯" More options</span> → <span class="text-white font-bold">"Analyse in Excel"</span> → Excel opens with a <span class="text-green-400 font-bold">PivotTable Field List</span> connected to your dataset → Drag fields to build your own analysis.</p></div>
+<div class="px-4 pb-4"><p class="text-xs text-gray-500"><i class="fas fa-lightbulb text-yellow-500 mr-1"></i> <span class="text-yellow-400 font-semibold">Tip:</span> This is <span class="text-white font-bold">not a static export</span> — it's a live connection. Changes to the dataset (after refresh) reflect in Excel. Requires <span class="text-green-400 font-bold">Excel desktop app</span> (not web version).</p></div>
+</div>
+
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== SUBSCRIPTIONS ===================== -->
+<section id="subscriptions" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge badge-teal mb-4 mx-auto w-fit"><i class="fas fa-envelope"></i> Chapter 13</span>
+<h2 class="font-display text-4xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">SUBSCRIPTIONS</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">Automated email delivery of dashboard snapshots on a schedule you define</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 reveal">
+
+<!-- Subscription Dialog Mockup -->
+<div class="vis-mock" style="border-color:rgba(45,212,191,.15)">
+<div class="vis-titlebar"><i class="fas fa-envelope" style="color:#2dd4bf;font-size:.6rem"></i><span style="font-size:.58rem">Subscribe to This Report — Dialog</span></div>
+<div class="p-4"><svg viewBox="0 0 340 260" style="width:100%">
+<text x="14" y="22" fill="#e1e1e1" font-size="7" font-weight="700">Subscribe to this report</text>
+
+<!-- Email Subject -->
+<text x="14" y="46" fill="#9ca3af" font-size="6">Email subject</text>
+<rect x="14" y="52" width="312" height="22" rx="4" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
+<text x="22" y="67" fill="#e1e1e1" font-size="6">HR Dashboard — Weekly Snapshot</text>
+
+<!-- Page Selection -->
+<text x="14" y="92" fill="#9ca3af" font-size="6">Page to send</text>
+<rect x="14" y="98" width="312" height="22" rx="4" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
+<text x="22" y="113" fill="#e1e1e1" font-size="6">Current page ▾</text>
+
+<!-- Attach Report -->
+<rect x="14" y="130" width="14" height="14" rx="3" fill="rgba(45,212,191,.2)" stroke="#2dd4bf" stroke-width="1"/>
+<text x="22" y="141" fill="#2dd4bf" font-size="5.5" font-weight="700">✓</text>
+<text x="34" y="141" fill="#e1e1e1" font-size="6">Attach current page of the report</text>
+<text x="34" y="154" fill="#6b7280" font-size="5">Includes a PNG snapshot of the report page</text>
+
+<!-- Schedule -->
+<text x="14" y="178" fill="#9ca3af" font-size="6">Schedule</text>
+<rect x="14" y="184" width="148" height="22" rx="4" fill="rgba(204,255,0,.06)" stroke="rgba(204,255,0,.15)" stroke-width="1"/>
+<text x="22" y="199" fill="#CCFF00" font-size="6">Every Monday</text>
+<rect x="170" y="184" width="78" height="22" rx="4" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
+<text x="178" y="199" fill="#e1e1e1" font-size="6">9:00 AM</text>
+<rect x="254" y="184" width="72" height="22" rx="4" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
+<text x="262" y="199" fill="#e1e1e1" font-size="6">GMT+5:30</text>
+
+<!-- Recipients -->
+<text x="14" y="226" fill="#9ca3af" font-size="6">Recipients</text>
+<rect x="14" y="232" width="312" height="22" rx="4" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
+<text x="22" y="247" fill="#e1e1e1" font-size="6">ceo@company.com; vp-hr@company.com</text>
+</svg></div>
+</div>
+
+<!-- Steps -->
+<div class="space-y-6">
+<div class="step-box"><div class="step-l"><i class="fas fa-route"></i> How to Create a Subscription</div>
+<p class="text-sm text-gray-400">Open report in Service → Click <span class="text-acid font-bold">"Subscribe"</span> (top bar) or <span class="text-acid font-bold">"⋯" → "Subscribe to this report"</span>. The subscription dialog opens (shown left).</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-clock"></i> Schedules</div>
+<p class="text-sm text-gray-400">Choose frequency: <span class="text-acid font-bold">Daily</span> (once per day), <span class="text-acid font-bold">Weekly</span> (pick day(s)), or <span class="text-acid font-bold">Monthly</span> (pick date). Set time and timezone. The email fires at the scheduled time with the <span class="text-white font-bold">latest data</span> (after last refresh).</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-paperclip"></i> Attach Report</div>
+<p class="text-sm text-gray-400">Toggle <span class="text-teal-400 font-bold">"Attach current page"</span> to include a PNG snapshot of the report in the email. Recipients don't need a Power BI license to <span class="text-white font-bold">view the attached image</span>. Without attachment, they need Pro to click through.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-users"></i> Recipients</div>
+<p class="text-sm text-gray-400">Add email addresses (internal or external). External recipients receive the attachment but <span class="text-red-400 font-bold">cannot click through</span> to the Power BI Service. Use distribution lists for teams. You can add <span class="text-acid font-bold">up to 50 recipients</span> per subscription.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-exclamation-triangle"></i> Prerequisites</div>
+<p class="text-sm text-gray-400"><span class="text-red-400 font-bold">Requires Pro or Premium license</span> for the creator. The workspace must have a <span class="text-white font-bold">gateway connection</span> if data source is on-premises (otherwise refresh fails before email fires). Dataset must refresh <span class="text-acid font-bold">before</span> the subscription time.</p></div>
+</div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== ALERTS ===================== -->
+<section id="alerts" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge mb-4 mx-auto w-fit"><i class="fas fa-bell"></i> Chapter 14</span>
+<h2 class="font-display text-4xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">ALERTS</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">Get notified automatically when a metric crosses your defined threshold</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 reveal">
+
+<!-- Alert Dialog Mockup -->
+<div class="vis-mock" style="border-color:rgba(251,191,36,.15)">
+<div class="vis-titlebar"><i class="fas fa-bell" style="color:#fbbf24;font-size:.6rem"></i><span style="font-size:.58rem">Manage Alerts — Dialog</span></div>
+<div class="p-4"><svg viewBox="0 0 340 240" style="width:100%">
+<text x="14" y="22" fill="#e1e1e1" font-size="7" font-weight="700">🔔 Manage alerts</text>
+<text x="14" y="40" fill="#6b7280" font-size="5.5">Alerts are checked once per day after dataset refresh</text>
+
+<!-- Alert Rule 1 -->
+<rect x="14" y="52" width="312" height="70" rx="6" fill="rgba(251,191,36,.04)" stroke="rgba(251,191,36,.15)" stroke-width="1"/>
+<text x="24" y="68" fill="#fbbf24" font-size="6" font-weight="700">Alert 1: Total Headcount</text>
+<text x="24" y="82" fill="#9ca3af" font-size="5.5">Rule: Drops below 1,200</text>
+<rect x="24" y="88" width="8" height="8" rx="4" fill="rgba(251,191,36,.3)"/>
+<text x="24" y="118" fill="#9ca3af" font-size="5.5">🔔 Email: hr-head@company.com</text>
+<text x="190" y="118" fill="#9ca3af" font-size="5.5">📱 Teams: HR Channel</text>
+
+<!-- Alert Rule 2 -->
+<rect x="14" y="130" width="312" height="70" rx="6" fill="rgba(204,255,0,.04)" stroke="rgba(204,255,0,.12)" stroke-width="1"/>
+<text x="24" y="146" fill="#CCFF00" font-size="6" font-weight="700">Alert 2: Avg Salary</text>
+<text x="24" y="160" fill="#9ca3af" font-size="5.5">Rule: Exceeds $200,000</text>
+<rect x="24" y="166" width="8" height="8" rx="4" fill="rgba(204,255,0,.3)"/>
+<text x="24" y="196" fill="#9ca3af" font-size="5.5">🔔 Email: cfo@company.com</text>
+<text x="190" y="196" fill="#9ca3af" font-size="5.5">📱 Teams: Finance Channel</text>
+
+<!-- Add New -->
+<rect x="14" y="210" width="312" height="26" rx="6" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.08)" stroke-width="1" stroke-dasharray="4,4"/>
+<text x="170" y="227" fill="#6b7280" font-size="6" text-anchor="middle">+ Add new alert rule</text>
+</svg></div>
+</div>
+
+<!-- Steps -->
+<div class="space-y-6">
+<div class="step-box"><div class="step-l" style="color:#fbbf24"><i class="fas fa-plus-circle"></i> How to Add an Alert</div>
+<p class="text-sm text-gray-400">In Power BI Service, open a report → <span class="text-acid font-bold">right-click on a KPI card, gauge, or card visual</span> → select <span class="text-acid font-bold">"Manage alerts"</span>. The alert dialog opens. Note: Alerts only work on <span class="text-white font-bold">card, gauge, KPI, and indicator</span> visuals — not bar charts or line charts.</p></div>
+<div class="step-box"><div class="step-l" style="color:#fbbf24"><i class="fas fa-ruler-horizontal"></i> Setting the Threshold</div>
+<p class="text-sm text-gray-400">Set a condition: <span class="text-acid font-bold">"Above"</span> or <span class="text-red-400 font-bold">"Below"</span> a specific number. Example: "Alert me when <span class="text-white font-bold">Total Headcount drops below 1,200</span>." The alert checks <span class="text-yellow-400 font-bold">once per day</span> after the dataset refreshes — it's not real-time.</p></div>
+<div class="step-box"><div class="step-l" style="color:#fbbf24"><i class="fas fa-envelope"></i> Email Notifications</div>
+<p class="text-sm text-gray-400">When the threshold is crossed, Power BI sends an email to your registered email. The email includes: the <span class="text-white font-bold">metric name</span>, the <span class="text-white font-bold">current value</span>, the <span class="text-white font-bold">threshold</span>, and a <span class="text-acid font-bold">"Click to open"</span> link that takes you directly to the report.</p></div>
+<div class="step-box"><div class="step-l" style="color:#fbbf24"><i class="fab fa-microsoft-teams"></i> Teams Notifications</div>
+<p class="text-sm text-gray-400">In the alert dialog, add a <span class="text-purple-400 font-bold">Microsoft Teams webhook URL</span> to also post alerts to a Teams channel. Go to Teams channel → <span class="text-white font-bold">Connectors</span> → <span class="text-white font-bold">Incoming Webhook</span> → copy URL → paste in Power BI alert settings. The alert posts as an <span class="text-purple-400 font-bold">adaptive card</span> in the channel.</p></div>
+<div class="step-box"><div class="step-l" style="color:#fbbf24"><i class="fas fa-exclamation-circle"></i> Limitations</div>
+<p class="text-sm text-gray-400"><span class="text-red-400 font-bold">Not real-time</span> — checks once/day after refresh. <span class="text-red-400 font-bold">Card/KPI/Gauge only</span> — no alerts on bar/line/pie charts. <span class="text-red-400 font-bold">Max 50 alerts per user</span> across all dashboards. <span class="text-red-400 font-bold">No custom frequency</span> — you can't choose "check every hour." For real-time, use <span class="text-acid font-bold">Data Alerts API</span> or <span class="text-acid font-bold">Power Automate</span>.</p></div>
+</div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== FOOTER CTA ===================== -->
+<section class="py-28 px-6">
+<div class="max-w-4xl mx-auto text-center reveal">
+<span class="badge badge-purple mb-6 mx-auto w-fit"><i class="fas fa-graduation-cap"></i> What's Next?</span>
+<h2 class="font-display text-3xl md:text-5xl font-bold tracking-tighter gradient-text mb-6">MASTER DAX & DATA MODELING</h2>
+<p class="text-gray-400 text-lg max-w-2xl mx-auto mb-10">Dashboards are the front-end. DAX and data modeling are the engine. Join the next module to write measures that power every visual on this page.</p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center">
+<a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20want%20to%20learn%20DAX%20and%20Data%20Modeling." target="_blank" class="glow-btn bg-acid text-obsidian px-10 py-4 rounded-full text-sm font-bold uppercase tracking-widest">Enroll for DAX Module <i class="fas fa-arrow-right ml-2"></i></a>
+<a href="#" class="glow-btn border border-white/20 text-white px-10 py-4 rounded-full text-sm font-bold uppercase tracking-widest hover:border-purple-400 hover:text-purple-400"><i class="fas fa-play mr-2"></i> Revisit Visuals Guide</a>
+</div>
+</div>
+</section>
+
+<!-- Footer -->
+<footer class="border-t border-white/5 py-12 px-6">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+<p class="text-gray-600 text-sm"><span class="font-display text-gray-400"><span class="text-acid">V</span>IZONIS</span> Academy — Power BI Complete Guide</p>
+<p class="text-gray-700 text-xs">Built for learners who prefer visuals over walls of text.</p>
+</div>
+</footer>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20want%20to%20learn%20Power%20BI." target="_blank" class="whatsapp-float"><i class="fab fa-whatsapp text-white text-2xl"></i></a>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+gsap.utils.toArray('.reveal').forEach(el=>{gsap.to(el,{opacity:1,y:0,duration:.7,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 88%',toggleActions:'play none play none'}})});
+const sections=document.querySelectorAll('section[id]');
+const navLinks=document.querySelectorAll('.sub-nav-item');
+let ticking=false;
+window.addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(()=>{let c='';sections.forEach(s=>{if(scrollY>=s.offsetTop-120)c=s.id});navLinks.forEach(l=>{l.classList.toggle('active',l.getAttribute('href')==='#'+c)});ticking=false});ticking=true}},{passive:true});
+const c=document.getElementById('particles');for(let i=0;i<25;i++){const p=document.createElement('div');p.className='particle';const s=Math.random()*3+1;p.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;animation-duration:${Math.random()*12+8}s;animation-delay:${Math.random()*12}s;`;c.appendChild(p)}
+</script>
+</body>
+</html>
