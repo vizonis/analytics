@@ -1,0 +1,1612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vizonis Academy | Power Query — The Complete Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        obsidian: '#050505',
+                        charcoal: '#0F1115',
+                        acid: '#CCFF00',
+                        silver: '#E1E1E1',
+                        glass: 'rgba(255,255,255,0.05)',
+                        cardDark: '#0A0C10',
+                        cardDark2: '#111318',
+                    },
+                    fontFamily: {
+                        sans: ['Space Grotesk', 'sans-serif'],
+                        display: ['Syncopate', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        html{scroll-behavior:smooth}
+        body{font-family:'Space Grotesk',sans-serif;background:#050505;color:#E1E1E1;overflow-x:hidden}
+        .noise-overlay{position:fixed;inset:0;z-index:9000;pointer-events:none;opacity:.04;background-image:url('https://grainy-gradients.vercel.app/noise.svg')}
+        ::-webkit-scrollbar{width:6px}
+        ::-webkit-scrollbar-track{background:#050505}
+        ::-webkit-scrollbar-thumb{background:#CCFF00;border-radius:3px}
+        .gradient-text{background:linear-gradient(to bottom,#FFFFFF 0%,#9ca3af 50%,#111827 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .acid-gradient-text{background:linear-gradient(135deg,#CCFF00 0%,#88cc00 50%,#CCFF00 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .glass-card{background:rgba(255,255,255,.03);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.08);transition:all .4s cubic-bezier(.25,.46,.45,.94)}
+        .glass-card:hover{background:rgba(255,255,255,.06);border-color:rgba(204,255,0,.3);box-shadow:0 0 30px rgba(204,255,0,.08)}
+        .neon-hover{transition:all .3s ease}
+        .neon-hover:hover{box-shadow:0 0 20px rgba(204,255,0,.3);border-color:#CCFF00!important}
+        .glow-btn{position:relative;overflow:hidden;transition:all .3s ease}
+        .glow-btn::before{content:'';position:absolute;inset:-2px;background:linear-gradient(45deg,#CCFF00,transparent,#CCFF00);z-index:-1;border-radius:inherit;opacity:0;transition:opacity .3s}
+        .glow-btn:hover::before{opacity:1}
+        .glow-btn:hover{box-shadow:0 0 30px rgba(204,255,0,.4);transform:translateY(-2px)}
+        .particle{position:absolute;border-radius:50%;background:#CCFF00;opacity:.15;animation:float-particle linear infinite}
+        @keyframes float-particle{0%{transform:translateY(100vh) scale(0);opacity:0}10%{opacity:.15}90%{opacity:.15}100%{transform:translateY(-100px) scale(1);opacity:0}}
+        .grid-bg{background-image:linear-gradient(rgba(204,255,0,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(204,255,0,.03) 1px,transparent 1px);background-size:60px 60px}
+        .section-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(204,255,0,.3),transparent)}
+        .badge{display:inline-flex;align-items:center;gap:6px;padding:4px 14px;border-radius:9999px;font-size:.75rem;border:1px solid rgba(204,255,0,.3);background:rgba(204,255,0,.08);color:#CCFF00;font-weight:600}
+        .whatsapp-float{position:fixed;bottom:30px;right:30px;z-index:8000;width:64px;height:64px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.4);transition:all .3s ease;cursor:pointer}
+        .whatsapp-float:hover{transform:scale(1.1);box-shadow:0 6px 30px rgba(37,211,102,.6)}
+        .whatsapp-float::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:2px solid rgba(37,211,102,.3);animation:wa-pulse 2s ease-out infinite}
+        @keyframes wa-pulse{0%{transform:scale(1);opacity:1}100%{transform:scale(1.5);opacity:0}}
+        .ticker-wrap{overflow:hidden}
+        .ticker{display:flex;gap:3rem;white-space:nowrap;animation:ticker 25s linear infinite}
+        @keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+        .marquee-mask{mask-image:linear-gradient(to right,transparent,black 10%,black 90%,transparent);-webkit-mask-image:linear-gradient(to right,transparent,black 10%,black 90%,transparent)}
+        .hero-orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.2;animation:orb-float 8s ease-in-out infinite alternate}
+        @keyframes orb-float{0%{transform:translate(0,0) scale(1)}100%{transform:translate(30px,-40px) scale(1.2)}}
+        .animated-border{position:relative;border-radius:16px;overflow:hidden}
+        .animated-border::before{content:'';position:absolute;inset:0;padding:1px;border-radius:16px;background:linear-gradient(var(--angle,0deg),#CCFF00,transparent 40%,transparent 60%,#CCFF00);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:border-rotate 4s linear infinite}
+        @keyframes border-rotate{to{--angle:360deg}}
+        @property --angle{syntax:'<angle>';initial-value:0deg;inherits:false}
+        .step-num{width:36px;height:36px;border-radius:10px;background:rgba(204,255,0,.1);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;color:#CCFF00;flex-shrink:0;border:1px solid rgba(204,255,0,.2)}
+        .code-block{background:#0A0C10;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:16px 20px;font-family:'Courier New',monospace;font-size:.82rem;line-height:1.7;overflow-x:auto;color:#9ca3af}
+        .code-block .keyword{color:#CCFF00}
+        .code-block .string{color:#f97316}
+        .code-block .comment{color:#4b5563}
+        .code-block .number{color:#60a5fa}
+        .code-block .fn{color:#c084fc}
+        .example-box{background:rgba(204,255,0,.04);border:1px solid rgba(204,255,0,.15);border-radius:12px;padding:16px 20px;margin-top:12px}
+        .example-box .ex-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.15em;color:#CCFF00;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+        .sub-nav-item{padding:8px 16px;border-radius:8px;font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;color:#6b7280;transition:all .2s;cursor:pointer;border:1px solid transparent}
+        .sub-nav-item:hover,.sub-nav-item.active{color:#CCFF00;background:rgba(204,255,0,.05);border-color:rgba(204,255,0,.15)}
+        .accordion-content{max-height:0;overflow:hidden;transition:max-height .5s ease}
+        .accordion-content.open{max-height:3000px}
+        .accordion-arrow{transition:transform .3s ease}
+        .accordion-arrow.rotated{transform:rotate(180deg)}
+        .data-type-card{position:relative;overflow:hidden}
+        .data-type-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;border-radius:0 0 12px 12px}
+        .dt-int::after{background:#60a5fa}
+        .dt-decimal::after{background:#a78bfa}
+        .dt-text::after{background:#f97316}
+        .dt-date::after{background:#34d399}
+        .dt-datetime::after{background:#2dd4bf}
+        .dt-boolean::after{background:#f472b6}
+        .transformation-grid{display:grid;grid-template-columns:1fr;gap:12px}
+        @media(min-width:768px){.transformation-grid{grid-template-columns:1fr 1fr}}
+    </style>
+</head>
+<body class="grid-bg">
+    <div class="noise-overlay"></div>
+    <div id="particles" class="fixed inset-0 z-0 pointer-events-none overflow-hidden"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-[7000] backdrop-blur-md bg-obsidian/70 border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="#" class="font-display text-2xl font-bold tracking-tight">
+                <span class="text-acid">V</span>IZONIS
+            </a>
+            <div class="hidden lg:flex items-center gap-4 overflow-x-auto">
+                <a href="#connect" class="sub-nav-item">Connect</a>
+                <a href="#datatypes" class="sub-nav-item">Data Types</a>
+                <a href="#classify" class="sub-nav-item">Classification</a>
+                <a href="#pbix" class="sub-nav-item">Save PBIX</a>
+                <a href="#transformations" class="sub-nav-item">Transform</a>
+                <a href="#split" class="sub-nav-item">Split</a>
+                <a href="#rows" class="sub-nav-item">Rows</a>
+                <a href="#pivot" class="sub-nav-item">Pivot</a>
+                <a href="#folder" class="sub-nav-item">Folder</a>
+            </div>
+            <a href="https://wa.me/916364671786?text=Hi%20Vizonis%20Academy!%20I'm%20interested%20in%20Power%20Query%20course." target="_blank"
+               class="glow-btn bg-acid text-obsidian px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest whitespace-nowrap">
+                Enroll Now
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="relative min-h-screen flex flex-col justify-center items-center pt-20 overflow-hidden">
+        <div class="hero-orb w-[500px] h-[500px] bg-acid top-1/4 -left-40" style="animation-delay:-2s"></div>
+        <div class="hero-orb w-[400px] h-[400px] bg-purple-500 bottom-1/4 -right-32" style="animation-delay:-5s;opacity:.1"></div>
+        <div class="relative z-10 text-center px-6 max-w-6xl mx-auto">
+            <div class="badge mb-8 mx-auto w-fit">
+                <i class="fas fa-broom"></i> Power Query — The Complete Masterclass
+            </div>
+            <h1 class="font-display text-5xl md:text-7xl lg:text-8xl font-bold leading-[.9] tracking-tighter mb-8">
+                <span class="gradient-text block">MASTER</span>
+                <span class="acid-gradient-text block mt-2">POWER QUERY</span>
+                <span class="gradient-text block mt-2 text-3xl md:text-5xl lg:text-6xl">STEP BY STEP</span>
+            </h1>
+            <p class="text-gray-400 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-12">
+                Every connector, every transformation, every shortcut — with real examples for each. This is the most detailed Power Query guide you'll ever need.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#connect" class="glow-btn bg-acid text-obsidian px-10 py-4 rounded-full text-sm font-bold uppercase tracking-widest">
+                    Start Learning <i class="fas fa-arrow-down ml-2"></i>
+                </a>
+                <a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20want%20to%20learn%20Power%20Query%20in%20depth." target="_blank"
+                   class="glow-btn border border-white/20 text-white px-10 py-4 rounded-full text-sm font-bold uppercase tracking-widest hover:border-acid hover:text-acid">
+                    <i class="fab fa-whatsapp mr-2"></i> Chat With Us
+                </a>
+            </div>
+        </div>
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
+            <span class="text-gray-600 text-xs uppercase tracking-[.3em]">Scroll</span>
+            <div class="w-5 h-8 border border-gray-700 rounded-full flex justify-center pt-1">
+                <div class="w-1 h-2 bg-acid rounded-full animate-bounce"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ticker -->
+    <div class="py-6 border-y border-white/5 marquee-mask overflow-hidden">
+        <div class="ticker">
+            <span class="text-2xl font-display font-bold text-white/10">POWER QUERY</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">CONNECT DATA</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">TRANSFORM</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">SPLIT COLUMN</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">PIVOT UNPIVOT</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">GROUP BY</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">FOLDER CONNECT</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">APPLIED STEPS</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">POWER QUERY</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">CONNECT DATA</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">TRANSFORM</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">SPLIT COLUMN</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">PIVOT UNPIVOT</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">GROUP BY</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">FOLDER CONNECT</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">APPLIED STEPS</span>
+            <span class="text-acid text-2xl">◆</span>
+        </div>
+    </div>
+
+    <!-- ===================== CHAPTER 1: CONNECT DATA SOURCES ===================== -->
+    <section id="connect" class="py-32 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <span class="badge mb-6 mx-auto w-fit"><i class="fas fa-plug"></i> Chapter 01</span>
+                <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">CONNECT DATA SOURCES</h2>
+                <p class="text-gray-400 text-lg max-w-3xl mx-auto">Power Query can connect to 200+ sources. Let's start with the 4 most common file types you'll use every day.</p>
+            </div>
+
+            <!-- Connect Excel -->
+            <div class="glass-card rounded-2xl p-8 md:p-10 mb-8 neon-hover border-green-500/20">
+                <div class="flex items-start gap-5">
+                    <div class="step-num bg-green-500/10 border-green-500/30 text-green-400">i</div>
+                    <div class="flex-1">
+                        <h3 class="text-2xl font-bold mb-2">Connect Excel</h3>
+                        <p class="text-gray-400 mb-4">Connect to <span class="text-green-400 font-semibold">.xlsx, .xls, .xlsm</span> files. Excel is the most common data source in Power BI. You can connect to individual sheets, named ranges, or tables.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <div class="text-xs text-gray-500 uppercase tracking-wider font-bold mb-3">Steps</div>
+                                <div class="space-y-2 text-sm text-gray-400">
+                                    <div class="flex items-start gap-2"><span class="text-acid font-bold">1.</span> Click <span class="text-white">Get Data</span> → <span class="text-white">Excel</span> → Browse to your file</div>
+                                    <div class="flex items-start gap-2"><span class="text-acid font-bold">2.</span> Navigator opens — shows all sheets & tables</div>
+                                    <div class="flex items-start gap-2"><span class="text-acid font-bold">3.</span> Select <span class="text-white">"Sales_Data"</span> sheet → check preview</div>
+                                    <div class="flex items-start gap-2"><span class="text-acid font-bold">4.</span> Check <span class="text-white">"Select multiple items"</span> if you need multiple sheets</div>
+                                    <div class="flex items-start gap-2"><span class="text-acid font-bold">5.</span> Click <span class="text-white">Transform Data</span> to open Power Query Editor</div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="example-box">
+                                    <div class="ex-label"><i class="fas fa-lightbulb"></i> Real Example</div>
+                                    <p class="text-sm text-gray-400">You have a <span class="text-white">"Monthly_Sales_2024.xlsx"</span> file with 3 sheets: Orders, Customers, Products. Connect all 3 sheets → they appear as 3 separate queries. You can then merge Orders with Customers on CustomerID — just like a SQL JOIN, but with clicks.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Connect CSV -->
+            <div class="glass-card rounded-2xl p-8 md:p-10 mb-8 neon-hover border-blue-500/20">
+                <div class="flex items-start gap-5">
+                    <div class="step-num bg-blue-500/10 border-blue-500/30 text-blue-400">ii</div>
+                    <div class="flex-1">
+                        <h3 class="text-2xl font-bold mb-2">Connect CSV</h3>
+                        <p class="text-gray-400 mb-4">Connect to <span class="text-blue-400 font-semibold">Comma-Separated Values</span> files. CSV files are plain text — no formulas, no formatting, just raw data. They're the universal format for data exchange between systems.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <div class="text-xs text-gray-500 uppercase tracking-wider font-bold mb-3">Steps</div>
+                                <div class="space-y-2 text-sm text-gray-400">
+                                    <div class="flex items-start gap-2"><span class="text-acid font-bold">1.</span> Click <span class="text-white">Get Data</span> → <span class="text-white">Text/CSV</span></div>
+                                    <div class="flex items-start gap-2"><span class="text-acid font-bold">2.</span> Preview window shows delimiter detection (auto-detects comma)</div>
+                                    <div class="flex items-start gap-2"><span class="text-acid font-bold">3.</span> Change <span class="text-white">File Origin</span> to <span class="text-white">65001: Unicode (UTF-8)</span> if special characters appear garbled</div>
+                                    <div class="flex items-start gap-2"><span class="text-acid font-bold">4.</span> Set <span class="text-white">Delimiter</span> if not comma (tab, semicolon, pipe)</div>
+                                    <div class="flex items-start gap-2"><span class="text-acid font-bold">5.</span> Click <span class="text-white">Transform Data</span></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="example-box">
+                                    <div class="ex-label"><i class="fas fa-lightbulb"></i> Real Example</div>
+                                    <p class="text-sm text-gray-400">Your ERP system exports daily stock data as <span class="text-white">"inventory_20240115.csv"</span>. The file has 50,000 rows with columns: SKU, ProductName, Warehouse, Qty, Price. Connect CSV → Power Query reads it in 2 seconds → you can then append yesterday's file, last week's file — building a historical inventory trend.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Connect PDF -->
+            <div class="glass-card rounded-2xl p-8 md:p-10 mb-8 neon-hover border-orange-500/20">
+                <div class="flex items-start gap-5">
+                    <div class="step-num bg-orange-500/10 border-orange-500/30 text-orange-400">iii</div>
+                    <div class="flex-1">
+                        <h3 class="text-2xl font-bold mb-2">Connect PDF</h3>
+                        <p class="text-gray-400 mb-4">Extract tabular data from <span class="text-orange-400 font-semibold">PDF documents</span>. Power Query scans PDF pages and detects tables. Perfect for extracting data from bank statements, vendor invoices, government reports.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <div class="text-xs text-gray-500 uppercase tracking-wider font-bold mb-3">Steps</div>
+                                <div class="space-y-2 text-sm text-gray-400">
+                                    <div class="flex items-start gap-2"><span class="text-acid font-bold">1.</span> Click <span class="text-white">Get Data</span> → <span class="text-white">PDF</span></div>
+                                    <div class="flex items-start gap-2"><span class="text-acid font-bold">2.</span> Navigator shows each page with detected tables</div>
+                                    <div class="flex items-start gap-2"><span class="text-acid font-bold">3.</span> Select <span class="text-white">Table 1 on Page 1</span> — preview shows extracted data</div>
+                                    <div class="flex items-start gap-2"><span class="text-acid font-bold">4.</span> Click <span class="text-white">Transform Data</span> — clean up column names, remove extra header rows</div>
+                                    <div class="flex items-start gap-2"><span class="text-acid font-bold">5.</span> Use <span class="text-white">Remove Top Rows</span> to delete the PDF's title row that got extracted as data</div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="example-box">
+                                    <div class="ex-label"><i class="fas fa-lightbulb"></i> Real Example</div>
+                                    <p class="text-sm text-gray-400">You receive a monthly <span class="text-white">"HDFC_Bank_Statement_Jan2024.pdf"</span>. It has 8 pages of transactions. Power Query extracts a table from each page → you get columns: Date, Description, Debit, Credit, Balance. Clean up the "Page 2 of 8" header rows → you now have bank data ready to merge with your accounting data.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Connect JSON -->
+            <div class="glass-card rounded-2xl p-8 md:p-10 neon-hover border-purple-500/20">
+                <div class="flex items-start gap-5">
+                    <div class="step-num bg-purple-500/10 border-purple-500/30 text-purple-400">iv</div>
+                    <div class="flex-1">
+                        <h3 class="text-2xl font-bold mb-2">Connect JSON</h3>
+                        <p class="text-gray-400 mb-4">Connect to <span class="text-purple-400 font-semibold">JavaScript Object Notation</span> files — the standard format for APIs and web data. JSON uses nested key-value pairs that Power Query automatically parses into tables.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <div class="text-xs text-gray-500 uppercase tracking-wider font-bold mb-3">Steps</div>
+                                <div class="space-y-2 text-sm text-gray-400">
+                                    <div class="flex items-start gap-2"><span class="text-acid font-bold">1.</span> Click <span class="text-white">Get Data</span> → <span class="text-white">JSON</span></div>
+                                    <div class="flex items-start gap-2"><span class="text-acid font-bold">2.</span> Power Query shows the JSON structure as a <span class="text-white">Record</span> or <span class="text-white">List</span></div>
+                                    <div class="flex items-start gap-2"><span class="text-acid font-bold">3.</span> Click <span class="text-white">"To Table"</span> in the formula bar to convert a List to a table</div>
+                                    <div class="flex items-start gap-2"><span class="text-acid font-bold">4.</span> Click the <span class="text-white">expand icon (two diverging arrows)</span> on the Record column to extract nested fields</div>
+                                    <div class="flex items-start gap-2"><span class="text-acid font-bold">5.</span> Select which nested fields you want as columns</div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="example-box">
+                                    <div class="ex-label"><i class="fas fa-lightbulb"></i> Real Example</div>
+                                    <p class="text-sm text-gray-400">You call a weather API and save the response as <span class="text-white">"weather_delhi.json"</span>. It contains: <span class="text-purple-400">{"city":"Delhi","temp":32,"humidity":65,"forecast":[{"day":"Mon","temp":33},{"day":"Tue","temp":30}]}</span>. Connect JSON → expand the "forecast" list → you get a table with day and temp columns. Now visualize Delhi's weekly weather in Power BI.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-4xl mx-auto"></div>
+
+    <!-- ===================== CHAPTER 2: BASIC OPERATIONS ===================== -->
+    <section class="py-32 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <span class="badge mb-6 mx-auto w-fit"><i class="fas fa-wrench"></i> Chapter 02</span>
+                <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">BASIC OPERATIONS</h2>
+                <p class="text-gray-400 text-lg max-w-3xl mx-auto">The fundamental actions you'll perform on every dataset — rename, change type, duplicate, and understand Applied Steps</p>
+            </div>
+
+            <div class="transformation-grid">
+                <!-- Rename Column -->
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="step-num">v</div>
+                        <h3 class="text-lg font-bold">Rename Column</h3>
+                    </div>
+                    <p class="text-sm text-gray-400 mb-3">Double-click any column header to rename it. Or right-click → Rename. This is the first thing you do after connecting data — fix messy column names.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                        <p class="text-sm text-gray-400"><span class="text-red-400">" Cust_Name  "</span> → <span class="text-green-400">"Customer Name"</span><br>
+                        <span class="text-red-400">"QTY_SOLD_JAN"</span> → <span class="text-green-400">"January Quantity"</span><br>
+                        <span class="text-red-400">"Column1"</span> → <span class="text-green-400">"Product Category"</span></p>
+                    </div>
+                </div>
+
+                <!-- Change Data Type -->
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="step-num">vi</div>
+                        <h3 class="text-lg font-bold">Change Data Type</h3>
+                    </div>
+                    <p class="text-sm text-gray-400 mb-3">Click the data type icon in the column header (shows "ABC" for text, "123" for number). Or use the Transform tab. This is critical — wrong types break everything downstream.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                        <p class="text-sm text-gray-400">Revenue column shows <span class="text-red-400">"1,500.00"</span> as Text → Change to <span class="text-green-400">Decimal Number</span> → now you can SUM it<br>
+                        Date column shows <span class="text-red-400">"15/01/2024"</span> as Text → Change to <span class="text-green-400">Date</span> → now you can use time intelligence</p>
+                    </div>
+                </div>
+
+                <!-- Rename Table -->
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="step-num">vii</div>
+                        <h3 class="text-lg font-bold">Rename Table</h3>
+                    </div>
+                    <p class="text-sm text-gray-400 mb-3">Double-click the query name in the left pane. Good naming conventions prevent confusion when you have 20+ queries.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                        <p class="text-sm text-gray-400"><span class="text-red-400">"Sheet1"</span> → <span class="text-green-400">"DimCustomer"</span><br>
+                        <span class="text-red-400">"inventory_20240115"</span> → <span class="text-green-400">"FactInventory"</span><br>
+                        <span class="text-red-400">"Table 0"</span> → <span class="text-green-400">"StgCurrencyExchange"</span></p>
+                    </div>
+                </div>
+
+                <!-- Duplicate -->
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="step-num">viii</div>
+                        <h3 class="text-lg font-bold">Duplicate</h3>
+                    </div>
+                    <p class="text-sm text-gray-400 mb-3">Right-click a query → Duplicate. Creates a complete independent copy with all applied steps. Useful when you need two versions of the same data with different transformations.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                        <p class="text-sm text-gray-400">Duplicate <span class="text-white">"Sales_Data"</span> → rename one to <span class="text-green-400">"Sales_Summary"</span> (keep aggregated) and other to <span class="text-green-400">"Sales_Detail"</span> (keep all rows). Two queries from one source, different transformations.</p>
+                    </div>
+                </div>
+
+                <!-- Reference -->
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="step-num">ix</div>
+                        <h3 class="text-lg font-bold">Reference</h3>
+                    </div>
+                    <p class="text-sm text-gray-400 mb-3">Right-click → Reference. Creates a new query that <span class="text-acid font-semibold">starts from the output of the original</span>. Changes to the original flow through. This is how you build transformation chains.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                        <p class="text-sm text-gray-400">Query 1: <span class="text-white">"RawSales"</span> (connect + clean). Reference it → Query 2: <span class="text-green-400">"SalesByRegion"</span> (group by region). Reference again → Query 3: <span class="text-green-400">"Top10Products"</span> (filter top 10). Chain of 3 queries, one source of truth.</p>
+                    </div>
+                </div>
+
+                <!-- Applied Steps -->
+                <div class="glass-card rounded-2xl p-6 neon-hover border-acid/30">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="step-num">x</div>
+                        <h3 class="text-lg font-bold text-acid">Applied Steps</h3>
+                    </div>
+                    <p class="text-sm text-gray-400 mb-3">The <span class="text-acid font-semibold">most important panel</span> in Power Query. Every action you take is recorded as a step. Think of it as a recipe — Power Query replays these steps on every refresh.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Example — Typical Step Chain</div>
+                        <div class="space-y-1 text-sm text-gray-400 mt-2">
+                            <div class="flex items-center gap-2"><span class="text-acid text-xs">▸</span> Source — Connected to Excel file</div>
+                            <div class="flex items-center gap-2"><span class="text-acid text-xs">▸</span> Navigation — Selected "Orders" sheet</div>
+                            <div class="flex items-center gap-2"><span class="text-acid text-xs">▸</span> Changed Type — Set column data types</div>
+                            <div class="flex items-center gap-2"><span class="text-acid text-xs">▸</span> Renamed Columns — Fixed 5 column names</div>
+                            <div class="flex items-center gap-2"><span class="text-acid text-xs">▸</span> Filtered Rows — Removed NULL customer IDs</div>
+                            <div class="flex items-center gap-2"><span class="text-acid text-xs">▸</span> Removed Duplicates — Based on Order ID</div>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-2">⚠️ Click any step to see data at that point. Delete a step = undo that action. Reorder steps carefully — dependencies matter.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-4xl mx-auto"></div>
+
+    <!-- ===================== CHAPTER 3: DATA TYPES ===================== -->
+    <section id="datatypes" class="py-32 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <span class="badge mb-6 mx-auto w-fit"><i class="fas fa-shapes"></i> Chapter 03</span>
+                <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">DATA TYPES</h2>
+                <p class="text-gray-400 text-lg max-w-3xl mx-auto">Every column must have the correct data type. Wrong data type = broken calculations, broken visuals, broken everything.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- INT -->
+                <div class="glass-card rounded-2xl p-6 neon-hover data-type-card dt-int">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center">
+                                <span class="text-blue-400 font-bold text-sm">#</span>
+                            </div>
+                            <div>
+                                <span class="text-xs text-gray-500 uppercase tracking-wider">i</span>
+                                <h3 class="text-lg font-bold">Whole Number (INT)</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-400 mb-3">Stores integers — no decimals. Used for counts, IDs, quantities. Range: -2 billion to +2 billion.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Examples</div>
+                        <div class="code-block text-xs">
+                            <span class="string">OrderID</span>: 10452<br>
+                            <span class="string">Quantity</span>: 7<br>
+                            <span class="string">EmployeeCount</span>: 250<br>
+                            <span class="string">Age</span>: 32
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DECIMAL -->
+                <div class="glass-card rounded-2xl p-6 neon-hover data-type-card dt-decimal">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
+                                <span class="text-purple-400 font-bold text-sm">#.</span>
+                            </div>
+                            <div>
+                                <span class="text-xs text-gray-500 uppercase tracking-wider">ii</span>
+                                <h3 class="text-lg font-bold">Decimal Number</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-400 mb-3">Stores numbers with decimal precision. Used for money, percentages, rates, measurements. Stores up to 15 significant digits.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Examples</div>
+                        <div class="code-block text-xs">
+                            <span class="string">Revenue</span>: 15432.50<br>
+                            <span class="string">TaxRate</span>: 0.18<br>
+                            <span class="string">ExchangeRate</span>: 83.4521<br>
+                            <span class="string">Discount%</span>: 12.5
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TEXT -->
+                <div class="glass-card rounded-2xl p-6 neon-hover data-type-card dt-text">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-orange-500/10 flex items-center justify-center">
+                                <span class="text-orange-400 font-bold text-sm">Ab</span>
+                            </div>
+                            <div>
+                                <span class="text-xs text-gray-500 uppercase tracking-wider">iii</span>
+                                <h3 class="text-lg font-bold">Text</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-400 mb-3">Stores any character string. Names, addresses, descriptions, categories. Max 500 million characters. The most common type — and the one most often incorrectly set.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Examples</div>
+                        <div class="code-block text-xs">
+                            <span class="string">CustomerName</span>: "Rahul Sharma"<br>
+                            <span class="string">City</span>: "Mumbai"<br>
+                            <span class="string">ProductCode</span>: "ELEC-TV-001"<br>
+                            <span class="string">Email</span>: "rahul@email.com"
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DATE -->
+                <div class="glass-card rounded-2xl p-6 neon-hover data-type-card dt-date">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center">
+                                <i class="fas fa-calendar text-green-400 text-sm"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs text-gray-500 uppercase tracking-wider">iv</span>
+                                <h3 class="text-lg font-bold">Date</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-400 mb-3">Stores dates only (no time). Range: Jan 1, 1900 to Dec 31, 9999. Essential for time intelligence — YEAR(), MONTH(), DAX time calculations all need Date type.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Examples</div>
+                        <div class="code-block text-xs">
+                            <span class="string">OrderDate</span>: 15/01/2024<br>
+                            <span class="string">BirthDate</span>: 22/03/1995<br>
+                            <span class="string">HireDate</span>: 01/07/2023
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DATETIME -->
+                <div class="glass-card rounded-2xl p-6 neon-hover data-type-card dt-datetime">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-teal-500/10 flex items-center justify-center">
+                                <i class="fas fa-clock text-teal-400 text-sm"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs text-gray-500 uppercase tracking-wider">v</span>
+                                <h3 class="text-lg font-bold">Date/Time</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-400 mb-3">Stores both date and time together. Used for transaction timestamps, log data, sensor readings. Power BI stores it as a decimal internally (days since 1900).</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Examples</div>
+                        <div class="code-block text-xs">
+                            <span class="string">CreatedAT</span>: 15/01/2024 14:32:05<br>
+                            <span class="string">LoginTime</span>: 15/01/2024 09:15:00<br>
+                            <span class="string">SensorRead</span>: 15/01/2024 23:59:59
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BOOLEAN -->
+                <div class="glass-card rounded-2xl p-6 neon-hover data-type-card dt-boolean">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-pink-500/10 flex items-center justify-center">
+                                <i class="fas fa-toggle-on text-pink-400 text-sm"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs text-gray-500 uppercase tracking-wider">vi</span>
+                                <h3 class="text-lg font-bold">Boolean (True/False)</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-400 mb-3">Stores only TRUE or FALSE. Used for flags, conditions, binary categorization. In Power Query, also accepts "true"/"false", 1/0, "yes"/"no" as boolean.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Examples</div>
+                        <div class="code-block text-xs">
+                            <span class="string">IsActive</span>: TRUE<br>
+                            <span class="string">IsPrimeCustomer</span>: FALSE<br>
+                            <span class="string">HasDiscount</span>: TRUE<br>
+                            <span class="string">IsDeleted</span>: FALSE
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card rounded-2xl p-6 mt-8 text-center border-red-500/20">
+                <p class="text-gray-400"><i class="fas fa-exclamation-triangle text-red-400 mr-2"></i><strong class="text-white">Common Mistake:</strong> A column shows <span class="text-red-400">"1,500"</span> with a comma. Power Query reads it as Text (because of the comma). You change it to Whole Number → it becomes <span class="text-green-400">1500</span>. Always check the data type icon in each column header — <span class="text-blue-400">"123"</span> = number, <span class="text-orange-400">"ABC"</span> = text, <span class="text-green-400">📅</span> = date.</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-4xl mx-auto"></div>
+
+    <!-- ===================== CHAPTER 4: DATA CLASSIFICATION ===================== -->
+    <section id="classify" class="py-32 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <span class="badge mb-6 mx-auto w-fit"><i class="fas fa-tags"></i> Chapter 04</span>
+                <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">DATA CLASSIFICATION</h2>
+                <p class="text-gray-400 text-lg max-w-3xl mx-auto">Every column in your data is either a Dimension or feeds into a Measure. Understanding this distinction is the foundation of data modeling.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Dimension -->
+                <div class="glass-card rounded-2xl p-8 neon-hover border-blue-500/20 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-40 h-40 bg-blue-500/5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+                    <div class="relative">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-14 h-14 rounded-xl bg-blue-500/10 flex items-center justify-center">
+                                <i class="fas fa-tags text-blue-400 text-2xl"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs text-blue-400 font-bold uppercase tracking-wider">i</span>
+                                <h3 class="text-2xl font-bold">Dimension</h3>
+                            </div>
+                        </div>
+                        <p class="text-gray-400 mb-4">Dimensions are <span class="text-blue-400 font-semibold">descriptive attributes</span> that provide context to your data. They answer "Who, What, Where, When". They are stored as <strong class="text-white">columns</strong> in your table.</p>
+                        <div class="example-box">
+                            <div class="ex-label"><i class="fas fa-lightbulb"></i> Dimension Examples</div>
+                            <div class="grid grid-cols-2 gap-2 text-sm text-gray-400 mt-2">
+                                <div class="bg-white/[0.03] rounded-lg p-2"><span class="text-blue-400">→</span> Customer Name</div>
+                                <div class="bg-white/[0.03] rounded-lg p-2"><span class="text-blue-400">→</span> Product Category</div>
+                                <div class="bg-white/[0.03] rounded-lg p-2"><span class="text-blue-400">→</span> City / State / Country</div>
+                                <div class="bg-white/[0.03] rounded-lg p-2"><span class="text-blue-400">→</span> Order Date</div>
+                                <div class="bg-white/[0.03] rounded-lg p-2"><span class="text-blue-400">→</span> Department</div>
+                                <div class="bg-white/[0.03] rounded-lg p-2"><span class="text-blue-400">→</span> Status (Active/Inactive)</div>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-4">💡 Dimensions are used to <strong class="text-gray-300">slice, filter, group, and drill</strong> your data. Put them on Axis, Legend, and Slicer fields in visuals.</p>
+                    </div>
+                </div>
+
+                <!-- Measure -->
+                <div class="glass-card rounded-2xl p-8 neon-hover border-acid/20 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-40 h-40 bg-acid/5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+                    <div class="relative">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-14 h-14 rounded-xl bg-acid/10 flex items-center justify-center">
+                                <i class="fas fa-calculator text-acid text-2xl"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs text-acid font-bold uppercase tracking-wider">ii</span>
+                                <h3 class="text-2xl font-bold">Measure</h3>
+                            </div>
+                        </div>
+                        <p class="text-gray-400 mb-4">Measures are <span class="text-acid font-semibold">calculated values</span> that answer "How Much". They are not stored as columns — they are <strong class="text-white">computed on the fly</strong> using DAX formulas based on filter context.</p>
+                        <div class="example-box">
+                            <div class="ex-label"><i class="fas fa-lightbulb"></i> Measure Examples (DAX)</div>
+                            <div class="code-block text-xs mt-2">
+                                <span class="comment">// Total Revenue</span><br>
+                                <span class="keyword">Total Revenue</span> = <span class="fn">SUM</span>(Sales[Amount])<br><br>
+                                <span class="comment">// Average Order Value</span><br>
+                                <span class="keyword">AOV</span> = <span class="fn">AVERAGE</span>(Sales[Amount])<br><br>
+                                <span class="comment">// Year to Date Sales</span><br>
+                                <span class="keyword">YTD Sales</span> = <span class="fn">TOTALYTD</span>(<span class="fn">SUM</span>(Sales[Amount]))<br><br>
+                                <span class="comment">// Count of Orders</span><br>
+                                <span class="keyword">Order Count</span> = <span class="fn">COUNTROWS</span>(Sales)
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-4">💡 Measures go in the <strong class="text-gray-300">Values</strong> area of visuals. They automatically respond to every filter/slicer — that's their power.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card rounded-2xl p-6 mt-8">
+                <div class="flex items-start gap-4">
+                    <div class="w-10 h-10 rounded-lg bg-acid/10 flex items-center justify-center shrink-0 mt-1">
+                        <i class="fas fa-table text-acid"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold mb-2">Quick Rule of Thumb</h4>
+                        <p class="text-sm text-gray-400">If you can <span class="text-blue-400 font-semibold">filter by it</span> → it's a <span class="text-blue-400">Dimension</span>. If you can <span class="text-acid font-semibold">sum/average/count it</span> → it becomes a <span class="text-acid">Measure</span>. A "Revenue" column in your table is NOT a measure — it's a dimension column with numeric data. You create a Measure called <span class="text-acid">"Total Revenue = SUM(Sales[Revenue])"</span> using DAX. The column is the raw ingredient; the measure is the cooked dish.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-4xl mx-auto"></div>
+
+    <!-- ===================== CHAPTER 5: SAVE PBIX ===================== -->
+    <section id="pbix" class="py-32 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <span class="badge mb-6 mx-auto w-fit"><i class="fas fa-save"></i> Chapter 05</span>
+                <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">SAVE YOUR WORK</h2>
+                <p class="text-gray-400 text-lg max-w-3xl mx-auto">Understanding the .pbix file and the Power BI workflow</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                <div>
+                    <div class="glass-card rounded-2xl p-8 mb-8">
+                        <h3 class="text-2xl font-bold mb-4"><i class="fas fa-file-powerpoint text-acid mr-3"></i>What is a .pbix File?</h3>
+                        <p class="text-gray-400 mb-4">A <span class="text-acid font-semibold">.pbix</span> file is Power BI's native format. It's a single file that contains <strong class="text-white">everything</strong>:</p>
+                        <ul class="space-y-3 text-sm text-gray-400">
+                            <li class="flex items-start gap-3"><i class="fas fa-database text-acid mt-1"></i><span>Your data model (all tables, relationships, DAX measures)</span></li>
+                            <li class="flex items-start gap-3"><i class="fas fa-broom text-purple-400 mt-1"></i><span>All Power Query transformations (the M code)</span></li>
+                            <li class="flex items-start gap-3"><i class="fas fa-palette text-blue-400 mt-1"></i><span>All report pages and visual configurations</span></li>
+                            <li class="flex items-start gap-3"><i class="fas fa-cog text-orange-400 mt-1"></i><span>Settings, themes, bookmarks, parameters</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="glass-card rounded-2xl p-8">
+                        <h3 class="text-2xl font-bold mb-4"><i class="fas fa-stream text-acid mr-3"></i>The Power BI Workflow</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start gap-4">
+                                <div class="w-8 h-8 rounded-full bg-acid text-obsidian flex items-center justify-center font-bold text-sm shrink-0">1</div>
+                                <div>
+                                    <div class="font-bold text-sm">Get Data</div>
+                                    <div class="text-gray-500 text-sm">Connect to data sources in Power Query</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="w-8 h-8 rounded-full bg-acid text-obsidian flex items-center justify-center font-bold text-sm shrink-0">2</div>
+                                <div>
+                                    <div class="font-bold text-sm">Transform</div>
+                                    <div class="text-gray-500 text-sm">Clean, reshape, prepare data in Power Query Editor</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="w-8 h-8 rounded-full bg-acid text-obsidian flex items-center justify-center font-bold text-sm shrink-0">3</div>
+                                <div>
+                                    <div class="font-bold text-sm">Model</div>
+                                    <div class="text-gray-500 text-sm">Create relationships, build DAX measures</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="w-8 h-8 rounded-full bg-acid text-obsidian flex items-center justify-center font-bold text-sm shrink-0">4</div>
+                                <div>
+                                    <div class="font-bold text-sm">Visualize</div>
+                                    <div class="text-gray-500 text-sm">Build report pages with interactive visuals</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="w-8 h-8 rounded-full bg-acid text-obsidian flex items-center justify-center font-bold text-sm shrink-0">5</div>
+                                <div>
+                                    <div class="font-bold text-sm">Save as .pbix</div>
+                                    <div class="text-gray-500 text-sm">File → Save As → "Sales_Dashboard.pbix"</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-bold mb-6"><i class="fas fa-keyboard text-acid mr-3"></i>Enter Data — Static Data & Master Lookup</h3>
+                    <p class="text-gray-400 mb-6">Sometimes you don't have a file — you need to type data directly into Power BI. Common for small lookup tables, mapping tables, or parameter lists.</p>
+
+                    <div class="glass-card rounded-2xl p-6 mb-6">
+                        <h4 class="font-bold mb-4">How to Enter Data</h4>
+                        <div class="space-y-2 text-sm text-gray-400">
+                            <div class="flex items-start gap-2"><span class="text-acid font-bold">1.</span> Click <span class="text-white">Enter Data</span> in the Home tab</div>
+                            <div class="flex items-start gap-2"><span class="text-acid font-bold">2.</span> A table grid opens — type column names in the header row</div>
+                            <div class="flex items-start gap-2"><span class="text-acid font-bold">3.</span> Type your data row by row</div>
+                            <div class="flex items-start gap-2"><span class="text-acid font-bold">4.</span> Set the table name (e.g., "PriorityMapping")</div>
+                            <div class="flex items-start gap-2"><span class="text-acid font-bold">5.</span> Click <span class="text-white">Load</span></div>
+                        </div>
+                    </div>
+
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Example — Priority Mapping Lookup Table</div>
+                        <div class="overflow-x-auto mt-2">
+                            <table class="w-full text-sm">
+                                <thead><tr class="border-b border-white/10">
+                                    <th class="text-left py-2 text-acid text-xs">PriorityCode</th>
+                                    <th class="text-left py-2 text-acid text-xs">PriorityName</th>
+                                    <th class="text-left py-2 text-acid text-xs">SortOrder</th>
+                                </tr></thead>
+                                <tbody class="text-gray-400">
+                                    <tr class="border-b border-white/5"><td class="py-1.5">H</td><td>Critical</td><td>1</td></tr>
+                                    <tr class="border-b border-white/5"><td class="py-1.5">M</td><td>Medium</td><td>2</td></tr>
+                                    <tr><td class="py-1.5">L</td><td>Low</td><td>3</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-3">Use Case: Your main data has "H", "M", "L" codes. You enter this lookup table, merge it with your main data on PriorityCode → now your report shows "Critical", "Medium", "Low" instead of cryptic codes. Also use SortOrder to ensure "Critical" always appears first in charts.</p>
+                    </div>
+
+                    <div class="glass-card rounded-2xl p-6 mt-6">
+                        <h4 class="font-bold mb-3"><i class="fas fa-sync text-acid mr-2"></i>Refresh — Two Types</h4>
+                        <div class="space-y-4">
+                            <div class="p-3 bg-white/[0.02] rounded-lg">
+                                <div class="font-bold text-sm text-cyan-400">Refresh Preview</div>
+                                <p class="text-xs text-gray-400 mt-1">Click <span class="text-white">Refresh Preview</span> in Power Query Editor. This only updates the preview you see — it does NOT update the actual data model. Fast, lightweight, for checking your transformations.</p>
+                            </div>
+                            <div class="p-3 bg-white/[0.02] rounded-lg">
+                                <div class="font-bold text-sm text-acid">Refresh All</div>
+                                <p class="text-xs text-gray-400 mt-1">Click <span class="text-white">Refresh All</span> on the Home tab (after closing Power Query Editor). This replays ALL applied steps on the actual source data and updates your data model. This is the real refresh. Use this when source data changes.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-4xl mx-auto"></div>
+
+    <!-- ===================== CHAPTER 6: SPLIT COLUMN ===================== -->
+    <section id="split" class="py-32 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <span class="badge mb-6 mx-auto w-fit"><i class="fas fa-cut"></i> Chapter 06</span>
+                <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">SPLIT COLUMN</h2>
+                <p class="text-gray-400 text-lg max-w-3xl mx-auto">7 ways to split a column — from simple delimiters to advanced pattern-based splits</p>
+            </div>
+
+            <div class="transformation-grid">
+                <!-- By Delimiter -->
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <h3 class="text-lg font-bold mb-2"><span class="text-acid">i.</span> Split By Delimiter</h3>
+                    <p class="text-sm text-gray-400 mb-3">Split at a specific character: comma, space, dash, pipe, etc.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                        <p class="text-sm text-gray-400">Column: <span class="text-red-400">"John,Smith,35"</span><br>Split by <span class="text-white">comma</span> → <span class="text-green-400">"John"</span> | <span class="text-green-400">"Smith"</span> | <span class="text-green-400">"35"</span></p>
+                    </div>
+                </div>
+
+                <!-- By Character -->
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <h3 class="text-lg font-bold mb-2"><span class="text-acid">ii.</span> Split By Character</h3>
+                    <p class="text-sm text-gray-400 mb-3">Split at every occurrence of a specific character.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                        <p class="text-sm text-gray-400">Column: <span class="text-red-400">"A-B-C-D"</span><br>Split by <span class="text-white">"-"</span> → <span class="text-green-400">"A"</span> | <span class="text-green-400">"B"</span> | <span class="text-green-400">"C"</span> | <span class="text-green-400">"D"</span></p>
+                    </div>
+                </div>
+
+                <!-- By Position -->
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <h3 class="text-lg font-bold mb-2"><span class="text-acid">iii.</span> Split By Position</h3>
+                    <p class="text-sm text-gray-400 mb-3">Split at fixed character positions — when data has no delimiter but consistent structure.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                        <p class="text-sm text-gray-400">Column: <span class="text-red-400">"20240115DELHI"</span><br>Split at positions <span class="text-white">0-8</span> and <span class="text-white">8-end</span> → <span class="text-green-400">"20240115"</span> | <span class="text-green-400">"DELHI"</span></p>
+                    </div>
+                </div>
+
+                <!-- By Lowercase to Uppercase -->
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <h3 class="text-lg font-bold mb-2"><span class="text-acid">iv.</span> Lowercase to Uppercase</h3>
+                    <p class="text-sm text-gray-400 mb-3">Split at the transition point from lowercase to uppercase letters. Perfect for camelCase names.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                        <p class="text-sm text-gray-400">Column: <span class="text-red-400">"totalRevenue"</span><br>Split at lowercase→uppercase → <span class="text-green-400">"total"</span> | <span class="text-green-400">"Revenue"</span><br>
+                        <span class="text-red-400">"customerName"</span> → <span class="text-green-400">"customer"</span> | <span class="text-green-400">"Name"</span></p>
+                    </div>
+                </div>
+
+                <!-- By Uppercase to Lowercase -->
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <h3 class="text-lg font-bold mb-2"><span class="text-acid">v.</span> Uppercase to Lowercase</h3>
+                    <p class="text-sm text-gray-400 mb-3">Split at the transition from uppercase to lowercase. For PascalCase or abbreviated codes.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                        <p class="text-sm text-gray-400">Column: <span class="text-red-400">"OrderID"</span><br>Split at uppercase→lowercase → <span class="text-green-400">"Order"</span> | <span class="text-green-400">"ID"</span><br>
+                        <span class="text-red-400">"ProductName"</span> → <span class="text-green-400">"Product"</span> | <span class="text-green-400">"Name"</span></p>
+                    </div>
+                </div>
+
+                <!-- By Digit to Non-Digit -->
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <h3 class="text-lg font-bold mb-2"><span class="text-acid">vi.</span> Digit to Non-Digit</h3>
+                    <p class="text-sm text-gray-400 mb-3">Split where numbers end and text begins (or vice versa). Extract numbers from mixed strings.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                        <p class="text-sm text-gray-400">Column: <span class="text-red-400">"Order12345"</span><br>Split at digit→non-digit → <span class="text-green-400">"Order"</span> | <span class="text-green-400">"12345"</span><br>
+                        <span class="text-red-400">"Room204B"</span> → <span class="text-green-400">"Room"</span> | <span class="text-green-400">"204"</span> | <span class="text-green-400">"B"</span></p>
+                    </div>
+                </div>
+
+                <!-- By Non-Digit to Digit -->
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <h3 class="text-lg font-bold mb-2"><span class="text-acid">vii.</span> Non-Digit to Digit</h3>
+                    <p class="text-sm text-gray-400 mb-3">Split where text ends and numbers begin. The reverse of the above.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                        <p class="text-sm text-gray-400">Column: <span class="text-red-400">"ABC500"</span><br>Split at non-digit→digit → <span class="text-green-400">"ABC"</span> | <span class="text-green-400">"500"</span><br>
+                        <span class="text-red-400">"Price: 299.99"</span> → <span class="text-green-400">"Price: "</span> | <span class="text-green-400">"299.99"</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-4xl mx-auto"></div>
+
+    <!-- ===================== CHAPTER 7: COLUMN & ROW OPERATIONS ===================== -->
+    <section id="rows" class="py-32 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <span class="badge mb-6 mx-auto w-fit"><i class="fas fa-table-cells"></i> Chapter 07</span>
+                <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">COLUMN & ROW OPERATIONS</h2>
+                <p class="text-gray-400 text-lg max-w-3xl mx-auto">Select, remove, keep, sort, replace — the daily operations you'll use on every dataset</p>
+            </div>
+
+            <div class="transformation-grid">
+                <!-- Choose Column -->
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <h3 class="text-lg font-bold mb-2"><i class="fas fa-hand-pointer text-acid mr-2"></i>Choose Column</h3>
+                    <p class="text-sm text-gray-400 mb-3">Select specific columns from many. Right-click columns → Choose Columns → check the ones you want.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                        <p class="text-sm text-gray-400">Source has 50 columns. You only need 5: OrderID, Customer, Date, Amount, Status. Choose Column → pick these 5 → 45 columns removed in one step.</p>
+                    </div>
+                </div>
+
+                <!-- Goto Column -->
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <h3 class="text-lg font-bold mb-2"><i class="fas fa-arrow-right text-acid mr-2"></i>Go To Column</h3>
+                    <p class="text-sm text-gray-400 mb-3">Press <span class="text-white">Ctrl+G</span> or right-click → Go To Column. Type the column name → instantly jumps to it. lifesaver when you have 100+ columns.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                        <p class="text-sm text-gray-400">Table has 150 columns. You need to check "Customer_Lifetime_Value". Instead of scrolling horizontally forever → Ctrl+G → type "CLV" → it searches and jumps there.</p>
+                    </div>
+                </div>
+
+                <!-- Remove Columns -->
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <h3 class="text-lg font-bold mb-2"><i class="fas fa-trash text-red-400 mr-2"></i>Remove Columns</h3>
+                    <p class="text-sm text-gray-400 mb-3">Select one or more columns (Ctrl+Click for multi-select) → Right-click → Remove Columns. The inverse of Choose Column.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                        <p class="text-sm text-gray-400">Select <span class="text-red-400">"TempColumn", "OldCode", "Notes"</span> → Remove Columns → these 3 are gone. Useful for removing PII columns like SSN before sharing data.</p>
+                    </div>
+                </div>
+
+                <!-- Remove Other Columns -->
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <h3 class="text-lg font-bold mb-2"><i class="fas fa-filter text-acid mr-2"></i>Remove Other Columns</h3>
+                    <p class="text-sm text-gray-400 mb-3">Select the columns you want to KEEP → Right-click → Remove Other Columns. Everything except your selection is deleted.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                        <p class="text-sm text-gray-400">Select <span class="text-green-400">"Date", "Product", "Revenue"</span> → Remove Other Columns → all 47 other columns are gone. Faster than Choose Column when you have few columns to keep.</p>
+                    </div>
+                </div>
+
+                <!-- Keep Top Rows -->
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <h3 class="text-lg font-bold mb-2"><i class="fas fa-arrow-up text-green-400 mr-2"></i>Keep Top Rows</h3>
+                    <p class="text-sm text-gray-400 mb-3">Home → Keep Rows → Keep Top Rows → Enter number. Keeps the first N rows, removes everything else.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                        <p class="text-sm text-gray-400">You have 100,000 rows but only need the <span class="text-green-400">latest 100 orders</span> for a quick demo dashboard. Keep Top Rows → 100 → done. (Assuming data is sorted by date descending.)</p>
+                    </div>
+                </div>
+
+                <!-- Keep Bottom Rows -->
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <h3 class="text-lg font-bold mb-2"><i class="fas fa-arrow-down text-green-400 mr-2"></i>Keep Bottom Rows</h3>
+                    <p class="text-sm text-gray-400 mb-3">Keeps the last N rows. Useful when data is sorted ascending and you want the most recent.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                        <p class="text-sm text-gray-400">Data sorted oldest-first. You want the <span class="text-green-400">last 50 rows</span> (newest transactions). Keep Bottom Rows → 50.</p>
+                    </div>
+                </div>
+
+                <!-- Remove Top Rows -->
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <h3 class="text-lg font-bold mb-2"><i class="fas fa-minus-circle text-red-400 mr-2"></i>Remove Top Rows</h3>
+                    <p class="text-sm text-gray-400 mb-3">Removes the first N rows. Most common use: removing header rows that Power Query incorrectly detected as data.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                        <p class="text-sm text-gray-400">CSV export has 3 title rows: <span class="text-red-400">"Company Report", "Generated on: Jan 15", "—"</span> followed by actual headers. Remove Top Rows → 3 → then use "Use First Row as Headers".</p>
+                    </div>
+                </div>
+
+                <!-- Remove Bottom Rows -->
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <h3 class="text-lg font-bold mb-2"><i class="fas fa-minus-circle text-red-400 mr-2"></i>Remove Bottom Rows</h3>
+                    <p class="text-sm text-gray-400 mb-3">Removes the last N rows. Common for removing footer rows like totals, notes, or disclaimer text.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                        <p class="text-sm text-gray-400">Excel file has <span class="text-red-400">"Grand Total: ₹45,00,000"</span> as the last row and <span class="text-red-400">"*Terms & Conditions apply"</span> as the second last. Remove Bottom Rows → 2.</p>
+                    </div>
+                </div>
+
+                <!-- Sort Ascending -->
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <h3 class="text-lg font-bold mb-2"><i class="fas fa-sort-amount-up text-acid mr-2"></i>Sort Ascending</h3>
+                    <p class="text-sm text-gray-400 mb-3">Click the column header dropdown → Sort Ascending (A→Z, 1→100, oldest→newest). Or click the A→Z button in the ribbon.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                        <p class="text-sm text-gray-400">Sort <span class="text-white">"ProductName"</span> Ascending → <span class="text-green-400">Aeropress, Beans, Cup, Grinder, Kettle...</span>. Sort <span class="text-white">"OrderDate"</span> Ascending → oldest orders first.</p>
+                    </div>
+                </div>
+
+                <!-- Sort Descending -->
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <h3 class="text-lg font-bold mb-2"><i class="fas fa-sort-amount-down text-acid mr-2"></i>Sort Descending</h3>
+                    <p class="text-sm text-gray-400 mb-3">Sort Z→A, 100→1, newest→oldest. Click column header dropdown → Sort Descending.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                        <p class="text-sm text-gray-400">Sort <span class="text-white">"Revenue"</span> Descending → <span class="text-green-400">₹5,00,000, ₹3,20,000, ₹1,80,000...</span> — highest first. Sort <span class="text-white">"OrderDate"</span> Descending → latest orders first.</p>
+                    </div>
+                </div>
+
+                <!-- Use First Row as Headers -->
+                <div class="glass-card rounded-2xl p-6 neon-hover border-acid/30">
+                    <h3 class="text-lg font-bold mb-2 text-acid"><i class="fas fa-heading text-acid mr-2"></i>Use First Row as Headers</h3>
+                    <p class="text-sm text-gray-400 mb-3">Promotes the first row to column headers. The most used button in Power Query. Click it in the Home tab or Transform tab.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                        <div class="text-sm text-gray-400">
+                            <span class="text-red-400">Before:</span> Column1="OrderID", Column2="CustomerName", Column3="Amount"<br>
+                            <span class="text-green-400">After:</span> OrderID | CustomerName | Amount<br>
+                            <span class="text-gray-500 text-xs">The first row values become the actual column names. All other rows shift up by one.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Replace Values -->
+                <div class="glass-card rounded-2xl p-6 neon-hover border-orange-500/20">
+                    <h3 class="text-lg font-bold mb-2"><i class="fas fa-find-and-replace text-orange-400 mr-2"></i>Replace Values (Ctrl+F)</h3>
+                    <p class="text-sm text-gray-400 mb-3">Find and replace values in a column. Shortcut: <span class="text-white">Ctrl+F</span> in Power Query. Choose which column, what to find, what to replace with.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                        <p class="text-sm text-gray-400">Column "Status": <span class="text-red-400">"N"</span> → Replace with <span class="text-green-400">"New"</span><br>
+                        <span class="text-red-400">"P"</span> → Replace with <span class="text-green-400">"In Progress"</span><br>
+                        <span class="text-red-400">"D"</span> → Replace with <span class="text-green-400">"Delivered"</span><br>
+                        <span class="text-red-400">"NULL"</span> → Replace with <span class="text-green-400">"Unknown"</span><br>
+                        <span class="text-red-400">"$"</span> → Replace with <span class="text-green-400">""</span> (remove dollar sign from amounts)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-4xl mx-auto"></div>
+
+    <!-- ===================== CHAPTER 8: PIVOT & UNPIVOT ===================== -->
+    <section id="pivot" class="py-32 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <span class="badge mb-6 mx-auto w-fit"><i class="fas fa-retweet"></i> Chapter 08</span>
+                <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">PIVOT & UNPIVOT</h2>
+                <p class="text-gray-400 text-lg max-w-3xl mx-auto">The two most powerful reshaping operations — and the ones that confuse beginners the most</p>
+            </div>
+
+            <!-- Unpivot -->
+            <div class="glass-card rounded-2xl p-8 md:p-10 mb-8 neon-hover border-purple-500/20">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-14 h-14 rounded-xl bg-purple-500/10 flex items-center justify-center">
+                        <i class="fas fa-arrows-alt-h text-purple-400 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold">Unpivot Columns</h3>
+                        <p class="text-gray-500 text-sm">Wide format → Tall format (most common operation)</p>
+                    </div>
+                </div>
+                <p class="text-gray-400 mb-6">Unpivot converts columns into rows. This is the <span class="text-purple-400 font-semibold">#1 transformation</span> in Power Query because most Excel reports are in wide format, but Power BI needs tall format for analysis.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <div class="text-xs text-red-400 uppercase tracking-wider font-bold mb-3">Before Unpivot (Wide — Bad for Power BI)</div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm border border-white/10 rounded-lg overflow-hidden">
+                                <thead><tr class="bg-red-500/10">
+                                    <th class="p-2 text-left text-xs">Country</th>
+                                    <th class="p-2 text-left text-xs">Jan</th>
+                                    <th class="p-2 text-left text-xs">Feb</th>
+                                    <th class="p-2 text-left text-xs">Mar</th>
+                                </tr></thead>
+                                <tbody class="text-gray-400">
+                                    <tr class="border-t border-white/5"><td class="p-2">India</td><td class="p-2">100</td><td class="p-2">150</td><td class="p-2">200</td></tr>
+                                    <tr class="border-t border-white/5"><td class="p-2">USA</td><td class="p-2">300</td><td class="p-2">250</td><td class="p-2">400</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-xs text-green-400 uppercase tracking-wider font-bold mb-3">After Unpivot (Tall — Perfect for Power BI)</div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm border border-white/10 rounded-lg overflow-hidden">
+                                <thead><tr class="bg-green-500/10">
+                                    <th class="p-2 text-left text-xs">Country</th>
+                                    <th class="p-2 text-left text-xs">Month</th>
+                                    <th class="p-2 text-left text-xs">Revenue</th>
+                                </tr></thead>
+                                <tbody class="text-gray-400">
+                                    <tr class="border-t border-white/5"><td class="p-2">India</td><td class="p-2">Jan</td><td class="p-2">100</td></tr>
+                                    <tr class="border-t border-white/5"><td class="p-2">India</td><td class="p-2">Feb</td><td class="p-2">150</td></tr>
+                                    <tr class="border-t border-white/5"><td class="p-2">India</td><td class="p-2">Mar</td><td class="p-2">200</td></tr>
+                                    <tr class="border-t border-white/5"><td class="p-2">USA</td><td class="p-2">Jan</td><td class="p-2">300</td></tr>
+                                    <tr class="border-t border-white/5"><td class="p-2">USA</td><td class="p-2">Feb</td><td class="p-2">250</td></tr>
+                                    <tr class="border-t border-white/5"><td class="p-2">USA</td><td class="p-2">Mar</td><td class="p-2">400</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="example-box mt-6">
+                    <div class="ex-label"><i class="fas fa-lightbulb"></i> How To Unpivot</div>
+                    <p class="text-sm text-gray-400">Select the columns to unpivot (Jan, Feb, Mar) → Right-click → <span class="text-white">Unpivot Columns</span>. The non-selected column (Country) stays as-is. Result: two new columns — <span class="text-purple-400">"Attribute"</span> (the month names) and <span class="text-purple-400">"Value"</span> (the numbers). Rename them to "Month" and "Revenue".</p>
+                </div>
+            </div>
+
+            <!-- Pivot -->
+            <div class="glass-card rounded-2xl p-8 md:p-10 neon-hover border-cyan-500/20">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-14 h-14 rounded-xl bg-cyan-500/10 flex items-center justify-center">
+                        <i class="fas fa-arrows-alt-v text-cyan-400 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold">Pivot Columns</h3>
+                        <p class="text-gray-500 text-sm">Tall format → Wide format (less common, but needed for crosstabs)</p>
+                    </div>
+                </div>
+                <p class="text-gray-400 mb-6">Pivot is the reverse of Unpivot — converts rows into columns. You need to select the column whose values will become new column names, and the column whose values will fill those columns.</p>
+
+                <div class="example-box">
+                    <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                    <p class="text-sm text-gray-400 mb-3">You have tall data: <span class="text-white">Student | Subject | Score</span> (3 rows per student). You want a report card format: <span class="text-white">Student | Math | Science | English</span> (1 row per student).</p>
+                    <p class="text-sm text-gray-400">Steps: Select <span class="text-white">"Subject"</span> column → Transform → Pivot Column → Value Column = <span class="text-white">"Score"</span> → Advanced: choose <span class="text-white">"Don't Aggregate"</span> (since 1 value per student-subject pair). Result: each subject becomes a column with the score value.</p>
+                </div>
+            </div>
+
+            <!-- Fill Down, Round, Rearrange, Group By -->
+            <div class="transformation-grid mt-8">
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <h3 class="text-lg font-bold mb-2"><i class="fas fa-arrow-down text-acid mr-2"></i>Fill Down</h3>
+                    <p class="text-sm text-gray-400 mb-3">Fills NULL/empty cells with the value from the cell above. Essential for grouped data where only the first row has the group label.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                        <p class="text-sm text-gray-400"><span class="text-red-400">India</span> | Delhi | 100<br>
+                        <span class="text-red-400">(null)</span> | Mumbai | 150<br>
+                        <span class="text-red-400">(null)</span> | Bangalore | 80<br>
+                        After Fill Down on Country:<br>
+                        <span class="text-green-400">India</span> | Delhi | 100<br>
+                        <span class="text-green-400">India</span> | Mumbai | 150<br>
+                        <span class="text-green-400">India</span> | Bangalore | 80</p>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <h3 class="text-lg font-bold mb-2"><i class="fas fa-circle-half-stroke text-acid mr-2"></i>Round Specific Decimals</h3>
+                    <p class="text-sm text-gray-400 mb-3">Transform → Round → select column → choose decimal places. Cleans up messy decimal values.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                        <p class="text-sm text-gray-400"><span class="text-red-400">15432.58723412</span> → Round to 2 decimals → <span class="text-green-400">15432.59</span><br>
+                        <span class="text-red-400">83.4521345</span> → Round to 2 decimals → <span class="text-green-400">83.45</span><br>
+                        Right-click column → Change Type → Fixed Decimal Number also helps.</p>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <h3 class="text-lg font-bold mb-2"><i class="fas fa-arrows-left-right text-acid mr-2"></i>Rearrange Columns</h3>
+                    <p class="text-sm text-gray-400 mb-3">Drag column headers left/right to reorder. Or select columns → right-click → Move → To Beginning / To End / Left / Right.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                        <p class="text-sm text-gray-400">Current order: <span class="text-red-400">Status, Amount, Date, Customer</span><br>
+                        Desired: <span class="text-green-400">Date, Customer, Amount, Status</span><br>
+                        Drag "Date" to first position, "Customer" to second, etc. Good practice: dates first, dimensions next, measures last.</p>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6 neon-hover border-acid/30">
+                    <h3 class="text-lg font-bold mb-2 text-acid"><i class="fas fa-layer-group text-acid mr-2"></i>Group By</h3>
+                    <p class="text-sm text-gray-400 mb-3">Transform → Group By. Aggregates rows by a column — like SQL GROUP BY. Choose grouping column and aggregation type.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                        <p class="text-sm text-gray-400">Group By <span class="text-white">"Category"</span><br>
+                        New column: <span class="text-white">"Total Revenue"</span> → Operation: <span class="text-green-400">Sum</span> → Column: Revenue<br>
+                        New column: <span class="text-white">"Order Count"</span> → Operation: <span class="text-green-400">Count Rows</span><br>
+                        Result: One row per category with total revenue and order count.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-4xl mx-auto"></div>
+
+    <!-- ===================== CHAPTER 9: LIVE DEMOS ===================== -->
+    <section id="transformations" class="py-32 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <span class="badge mb-6 mx-auto w-fit"><i class="fas fa-play-circle"></i> Chapter 09</span>
+                <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">LIVE DATA CLEANING DEMOS</h2>
+                <p class="text-gray-400 text-lg max-w-3xl mx-auto">Watch these real scenarios unfold step-by-step — messy data in, clean data out</p>
+            </div>
+
+            <!-- Live Unstructured Data Clean -->
+            <div class="glass-card rounded-2xl p-8 md:p-10 mb-8 neon-hover border-pink-500/20">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-14 h-14 rounded-xl bg-pink-500/10 flex items-center justify-center">
+                        <i class="fas fa-broom text-pink-400 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold">Live: Unstructured Data Clean</h3>
+                        <p class="text-gray-500 text-sm">When your data looks like a disaster zone</p>
+                    </div>
+                </div>
+                <p class="text-gray-400 mb-6">Scenario: You receive a text file with sales data that's completely unstructured — inconsistent formatting, mixed data types, extra spaces, wrong delimiters.</p>
+
+                <div class="space-y-4">
+                    <div class="p-4 bg-white/[0.02] rounded-xl border border-white/5">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="text-xs bg-red-500/20 text-red-400 px-2 py-0.5 rounded font-bold">BEFORE</span>
+                        </div>
+                        <div class="code-block text-xs">
+                            <span class="string">order_id</span>  |  <span class="string">cust_name</span>   |  <span class="string">amount</span>    |  <span class="string">date</span><br>
+                            <span class="number">001</span>       |  <span class="string">  rahul  </span>  |  <span class="string">$1,500.00</span> |  <span class="string">15/01/2024</span><br>
+                            <span class="number">002</span>       |  <span class="string">PRIYA</span>      |  <span class="string">$2,300</span>    |  <span class="string">01-15-2024</span><br>
+                            <span class="number">003</span>       |  <span class="string">amit kumar</span> |  <span class="string">900</span>       |  <span class="string">2024-01-15</span><br>
+                            <span class="number">004</span>       |  <span class="string">  SNEHA  </span>  |  <span class="string">$ 4,200.50 </span>| <span class="string">15-Jan-2024</span><br>
+                            <span class="number">005</span>       |  <span class="string">(null)</span>      |  <span class="string">$1,100</span>    |  <span class="string">16/01/2024</span>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-center"><i class="fas fa-arrow-down text-acid text-2xl animate-bounce"></i></div>
+
+                    <div class="p-4 bg-white/[0.02] rounded-xl border border-green-500/20">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="text-xs bg-green-500/20 text-green-400 px-2 py-0.5 rounded font-bold">AFTER — Applied Steps</span>
+                        </div>
+                        <div class="space-y-1 text-sm text-gray-400">
+                            <div><span class="text-acid">Step 1:</span> <span class="text-white">Trim</span> → removes extra spaces from "  rahul  " → "rahul"</div>
+                            <div><span class="text-acid">Step 2:</span> <span class="text-white">Replace Values</span> → "$" replaced with "" (empty) in amount column</div>
+                            <div><span class="text-acid">Step 3:</span> <span class="text-white">Replace Values</span> → "," replaced with "" in amount column</div>
+                            <div><span class="text-acid">Step 4:</span> <span class="text-white">Change Type</span> → amount to Decimal Number (900 → 900.00)</div>
+                            <div><span class="text-acid">Step 5:</span> <span class="text-white">Change Type</span> → date column to Date (all 4 formats auto-detected)</div>
+                            <div><span class="text-acid">Step 6:</span> <span class="text-white">Format</span> → cust_name to Title Case ("PRIYA" → "Priya")</div>
+                            <div><span class="text-acid">Step 7:</span> <span class="text-white">Replace Values</span> → null → "Unknown Customer"</div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-center"><i class="fas fa-arrow-down text-acid text-2xl animate-bounce"></i></div>
+
+                    <div class="p-4 bg-green-500/5 rounded-xl border border-green-500/20">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="text-xs bg-green-500/20 text-green-400 px-2 py-0.5 rounded font-bold">RESULT</span>
+                        </div>
+                        <div class="code-block text-xs">
+                            <span class="string">order_id</span> | <span class="string">cust_name</span>    | <span class="string">amount</span>  | <span class="string">date</span><br>
+                            <span class="number">001</span>      | <span class="string">Rahul</span>        | <span class="number">1500.00</span> | <span class="number">15/01/2024</span><br>
+                            <span class="number">002</span>      | <span class="string">Priya</span>        | <span class="number">2300.00</span> | <span class="number">15/01/2024</span><br>
+                            <span class="number">003</span>      | <span class="string">Amit Kumar</span>   | <span class="number">900.00</span>  | <span class="number">15/01/2024</span><br>
+                            <span class="number">004</span>      | <span class="string">Sneha</span>        | <span class="number">4200.50</span> | <span class="number">15/01/2024</span><br>
+                            <span class="number">005</span>      | <span class="string">Unknown Customer</span> | <span class="number">1100.00</span> | <span class="number">16/01/2024</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Live Unmerge Data Clean -->
+            <div class="glass-card rounded-2xl p-8 md:p-10 neon-hover border-cyan-500/20">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-14 h-14 rounded-xl bg-cyan-500/10 flex items-center justify-center">
+                        <i class="fas fa-object-ungroup text-cyan-400 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold">Live: Unmerge Data Clean</h3>
+                        <p class="text-gray-500 text-sm">When multiple data points are crammed into one column</p>
+                    </div>
+                </div>
+                <p class="text-gray-400 mb-6">Scenario: An address column contains city, state, and pincode all merged together. You need to split them into separate columns.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <div class="text-xs text-red-400 uppercase tracking-wider font-bold mb-3">Before — Single Merged Column</div>
+                        <div class="code-block text-xs">
+                            <span class="string">FullAddress</span><br>
+                            --------------------------<br>
+                            <span class="string">Koramangala, Bangalore, 560034</span><br>
+                            <span class="string">Bandra West, Mumbai, 400050</span><br>
+                            <span class="string">Connaught Place, New Delhi, 110001</span><br>
+                            <span class="string">T. Nagar, Chennai, 600017</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-xs text-green-400 uppercase tracking-wider font-bold mb-3">After — Applied Steps</div>
+                        <div class="space-y-2 text-sm text-gray-400">
+                            <div><span class="text-acid">Step 1:</span> <span class="text-white">Split Column by Delimiter</span> → "," → At each occurrence</div>
+                            <div><span class="text-acid">Step 2:</span> <span class="text-white">Trim</span> all 3 new columns (remove leading spaces)</div>
+                            <div><span class="text-acid">Step 3:</span> <span class="text-white">Rename</span>: FullAddress.1 → "Area", .2 → "City", .3 → "Pincode"</div>
+                            <div><span class="text-acid">Step 4:</span> <span class="text-white">Change Type</span> → Pincode to Whole Number</div>
+                        </div>
+                        <div class="code-block text-xs mt-3">
+                            <span class="string">Area</span> | <span class="string">City</span> | <span class="string">Pincode</span><br>
+                            ---------|--------|--------<br>
+                            Koramangala | Bangalore | <span class="number">560034</span><br>
+                            Bandra West | Mumbai | <span class="number">400050</span><br>
+                            Connaught Place | New Delhi | <span class="number">110001</span><br>
+                            T. Nagar | Chennai | <span class="number">600017</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-4xl mx-auto"></div>
+
+    <!-- ===================== CHAPTER 10: CONNECT FOLDER ===================== -->
+    <section id="folder" class="py-32 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <span class="badge mb-6 mx-auto w-fit"><i class="fas fa-folder-open"></i> Chapter 10</span>
+                <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">CONNECT FOLDER & AUTOMATE</h2>
+                <p class="text-gray-400 text-lg max-w-3xl mx-auto">The game-changer: connect to a folder, and Power Query automatically combines all files — no manual work when new files arrive</p>
+            </div>
+
+            <div class="animated-border mb-12">
+                <div class="bg-cardDark rounded-2xl p-8 md:p-10">
+                    <h3 class="text-2xl font-bold mb-4 text-center"><i class="fas fa-magic text-acid mr-3"></i>Why Connect Folder?</h3>
+                    <p class="text-gray-400 text-center max-w-3xl mx-auto mb-6">Imagine you receive a new CSV file every day: <span class="text-white">"sales_20240101.csv", "sales_20240102.csv", ...</span>. Instead of connecting each file manually (365 files = 365 connections), you connect to the <span class="text-acid font-semibold">folder</span> once — Power Query reads ALL files and combines them automatically. When a new file drops in tomorrow? It's automatically included on the next refresh.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                        <div class="bg-white/[0.03] rounded-xl p-4">
+                            <i class="fas fa-file-csv text-acid text-2xl mb-2"></i>
+                            <div class="text-sm font-bold">Day 1: 5 CSV files</div>
+                            <div class="text-xs text-gray-500">All combined automatically</div>
+                        </div>
+                        <div class="bg-white/[0.03] rounded-xl p-4">
+                            <i class="fas fa-file-csv text-acid text-2xl mb-2"></i>
+                            <div class="text-sm font-bold">Day 30: 30 CSV files</div>
+                            <div class="text-xs text-gray-500">Still automatic — zero extra work</div>
+                        </div>
+                        <div class="bg-white/[0.03] rounded-xl p-4">
+                            <i class="fas fa-file-csv text-acid text-2xl mb-2"></i>
+                            <div class="text-sm font-bold">Day 365: 365 CSV files</div>
+                            <div class="text-xs text-gray-500">Same single connection — just refresh</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step by step -->
+            <div class="space-y-6">
+                <div class="glass-card rounded-2xl p-8 neon-hover">
+                    <div class="flex items-start gap-5">
+                        <div class="step-num">1</div>
+                        <div class="flex-1">
+                            <h3 class="text-xl font-bold mb-3">Connect to Folder</h3>
+                            <p class="text-gray-400 mb-4">Click <span class="text-white">Get Data</span> → <span class="text-white">Folder</span> → Browse to the folder containing your CSV files → Click OK.</p>
+                            <div class="example-box">
+                                <div class="ex-label"><i class="fas fa-lightbulb"></i> What You See</div>
+                                <p class="text-sm text-gray-400">Power Query shows a table with 4 columns: <span class="text-acid">Content</span> (binary/file data), <span class="text-acid">Name</span> (filename like "Superstore_Jan.csv"), <span class="text-acid">Extension</span> (".csv"), <span class="text-acid">Date accessed</span>. This is a list of metadata about each file — NOT your actual data yet.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-8 neon-hover">
+                    <div class="flex items-start gap-5">
+                        <div class="step-num">2</div>
+                        <div class="flex-1">
+                            <h3 class="text-xl font-bold mb-3">Filter Only CSV Files</h3>
+                            <p class="text-gray-400 mb-4">Click the filter dropdown on the <span class="text-white">"Extension"</span> column → Uncheck everything except <span class="text-acid">".csv"</span>. This removes .xlsx, .pdf, .txt, or any other file types in that folder.</p>
+                            <div class="example-box">
+                                <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                                <p class="text-sm text-gray-400">Your folder has: <span class="text-red-400">readme.txt, sales_jan.csv, sales_feb.csv, summary.xlsx, notes.pdf</span><br>
+                                After filtering Extension = ".csv": <span class="text-green-400">sales_jan.csv, sales_feb.csv</span> — only 2 rows remain. The other files are ignored.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-8 neon-hover">
+                    <div class="flex items-start gap-5">
+                        <div class="step-num">3</div>
+                        <div class="flex-1">
+                            <h3 class="text-xl font-bold mb-3">Filter Superstore File Name</h3>
+                            <p class="text-gray-400 mb-4">Click the filter dropdown on the <span class="text-white">"Name"</span> column → Text Filters → <span class="text-white">Contains</span> → Type <span class="text-acid">"Superstore"</span>. This filters to only files with "Superstore" in the filename.</p>
+                            <div class="example-box">
+                                <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                                <p class="text-sm text-gray-400">Folder has: <span class="text-red-400">Superstore_Jan.csv, Superstore_Feb.csv, inventory_mar.csv, Superstore_Mar.csv</span><br>
+                                Filter Name contains "Superstore": <span class="text-green-400">Superstore_Jan.csv, Superstore_Feb.csv, Superstore_Mar.csv</span> — "inventory_mar.csv" is excluded.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-8 neon-hover border-acid/30">
+                    <div class="flex items-start gap-5">
+                        <div class="step-num bg-acid/20 border-acid/40">4</div>
+                        <div class="flex-1">
+                            <h3 class="text-xl font-bold mb-3 text-acid">Extract Data Using Double Arrows</h3>
+                            <p class="text-gray-400 mb-4">This is the magic step. In the <span class="text-white">"Content"</span> column header, you'll see <span class="text-acid font-bold">two green diverging arrows ⇊</span>. Click them. This tells Power Query: "Go inside each file, read the data, and combine everything into one table."</p>
+
+                            <div class="example-box">
+                                <div class="ex-label"><i class="fas fa-lightbulb"></i> What Happens When You Click Double Arrows</div>
+                                <div class="space-y-3 mt-2">
+                                    <div class="p-3 bg-white/[0.03] rounded-lg">
+                                        <div class="text-sm font-bold text-acid mb-1">Step 1: Preview Window Appears</div>
+                                        <p class="text-xs text-gray-400">Power Query shows a sample of the data from the first file. You see all columns detected. Check the preview — are the right columns showing?</p>
+                                    </div>
+                                    <div class="p-3 bg-white/[0.03] rounded-lg">
+                                        <div class="text-sm font-bold text-acid mb-1">Step 2: Check "Combine Files" at Bottom</div>
+                                        <p class="text-xs text-gray-400">At the bottom of the window, you see <span class="text-white">"Combine Files"</span> is checked. This means: combine data from ALL filtered files (not just the first one). Keep this checked!</p>
+                                    </div>
+                                    <div class="p-3 bg-white/[0.03] rounded-lg">
+                                        <div class="text-sm font-bold text-acid mb-1">Step 3: Click OK</div>
+                                        <p class="text-xs text-gray-400">Power Query creates TWO things: a <span class="text-purple-400">"Sample File"</span> query (template for transformations) and a <span class="text-acid">"Transform File"</span> function (applied to each file). Your combined data appears.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="example-box mt-4 border-green-500/20 bg-green-500/5">
+                                <div class="ex-label text-green-400"><i class="fas fa-check-circle"></i> Final Result</div>
+                                <p class="text-sm text-gray-400">Superstore_Jan.csv has 1,000 rows. Superstore_Feb.csv has 950 rows. Superstore_Mar.csv has 1,100 rows. After double arrows: <span class="text-green-400 font-bold">one combined table with 3,050 rows</span>. Plus a bonus column: <span class="text-acid">"Source.Name"</span> showing which file each row came from — perfect for filtering by month!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-8 neon-hover border-purple-500/20">
+                    <div class="flex items-start gap-5">
+                        <div class="step-num bg-purple-500/10 border-purple-500/30 text-purple-400">5</div>
+                        <div class="flex-1">
+                            <h3 class="text-xl font-bold mb-3">Clean the Sample File (Applies to ALL)</h3>
+                            <p class="text-gray-400 mb-4">Now here's the real magic: go to the <span class="text-purple-400">"Sample File"</span> query in the left panel. Any transformation you do here (rename columns, change types, filter rows, remove columns) <span class="text-purple-400 font-semibold">automatically applies to ALL files</span>.</p>
+                            <div class="example-box">
+                                <div class="ex-label"><i class="fas fa-lightbulb"></i> Example — Transform Once, Apply Everywhere</div>
+                                <p class="text-sm text-gray-400">In Sample File query:<br>
+                                <span class="text-acid">→</span> Rename "Order ID" to "OrderID"<br>
+                                <span class="text-acid">→</span> Change "Sales" column to Decimal Number<br>
+                                <span class="text-acid">→</span> Remove "Row ID" column<br>
+                                <span class="text-acid">→</span> Filter out rows where Sales = 0<br><br>
+                                These 4 steps apply to <span class="text-purple-400 font-bold">ALL 3 files automatically</span>. You don't touch Feb or Mar's data separately. This is the power of the Folder connector + Sample File pattern.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bonus: Source.Name column -->
+            <div class="glass-card rounded-2xl p-6 mt-8 text-center">
+                <p class="text-gray-400"><i class="fas fa-star text-acid mr-2"></i><strong class="text-white">Pro Tip:</strong> After combining, you get a <span class="text-acid">"Source.Name"</span> column showing the filename. Use <span class="text-white">Split Column → By Delimiter → "_"</span> on it to extract "Jan", "Feb", "Mar" as a separate Month column. Now you can analyze trends across months — all from a folder connection!</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-4xl mx-auto"></div>
+
+    <!-- CTA Section -->
+    <section class="py-32 px-6 relative overflow-hidden">
+        <div class="hero-orb w-[600px] h-[600px] bg-acid left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2" style="opacity:.08"></div>
+        <div class="max-w-4xl mx-auto relative z-10 text-center">
+            <span class="badge mb-6 mx-auto w-fit"><i class="fas fa-graduation-cap"></i> Ready to Practice?</span>
+            <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter mb-6">
+                <span class="gradient-text">LEARN BY DOING</span><br>
+                <span class="acid-gradient-text">NOT BY WATCHING</span>
+            </h2>
+            <p class="text-gray-400 text-lg max-w-2xl mx-auto mb-10">
+                Join Vizonis Academy's Power BI course and get hands-on with 50+ real-world datasets. Every transformation you learned here — you'll practice live with expert guidance.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="https://wa.me/916364671786?text=Hi%20Vizonis%20Academy!%20I%20want%20to%20enroll%20in%20the%20Power%20BI%20course.%20I%20read%20the%20Power%20Query%20guide." target="_blank"
+                   class="glow-btn bg-acid text-obsidian px-12 py-5 rounded-full text-sm font-bold uppercase tracking-widest inline-flex items-center justify-center gap-3">
+                    <i class="fab fa-whatsapp text-xl"></i> Enroll via WhatsApp
+                </a>
+                <a href="tel:+916364671786"
+                   class="glow-btn border border-white/20 text-white px-12 py-5 rounded-full text-sm font-bold uppercase tracking-widest inline-flex items-center justify-center gap-3 hover:border-acid hover:text-acid">
+                    <i class="fas fa-phone"></i> Call Us Now
+                </a>
+            </div>
+            <p class="text-gray-600 text-sm mt-6"><i class="fas fa-phone mr-1"></i> +91 6364671786 &nbsp;|&nbsp; <i class="fab fa-whatsapp mr-1"></i> Available 24/7 on WhatsApp</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 py-16 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <div class="font-display text-2xl font-bold mb-4"><span class="text-acid">V</span>IZONIS</div>
+                    <p class="text-gray-500 text-sm leading-relaxed">India's leading academy for Data Analytics & Business Intelligence training.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4 text-gray-400">Courses</h4>
+                    <ul class="space-y-2 text-sm text-gray-500">
+                        <li><a href="#" class="hover:text-acid transition-colors">Microsoft Power BI</a></li>
+                        <li><a href="#" class="hover:text-acid transition-colors">Power Query Masterclass</a></li>
+                        <li><a href="#" class="hover:text-acid transition-colors">DAX Deep Dive</a></li>
+                        <li><a href="#" class="hover:text-acid transition-colors">Microsoft Fabric</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4 text-gray-400">Guides</h4>
+                    <ul class="space-y-2 text-sm text-gray-500">
+                        <li><a href="#" class="hover:text-acid transition-colors">Power BI Getting Started</a></li>
+                        <li><a href="#" class="hover:text-acid transition-colors">Power Query Complete Guide</a></li>
+                        <li><a href="#" class="hover:text-acid transition-colors">DAX Formula Reference</a></li>
+                        <li><a href="#" class="hover:text-acid transition-colors">Interview Questions</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4 text-gray-400">Contact</h4>
+                    <ul class="space-y-3 text-sm text-gray-500">
+                        <li class="flex items-center gap-2"><i class="fab fa-whatsapp text-green-400"></i> <a href="https://wa.me/916364671786" target="_blank" class="hover:text-acid transition-colors">+91 6364671786</a></li>
+                        <li class="flex items-center gap-2"><i class="fas fa-phone text-acid"></i> <a href="tel:+916364671786" class="hover:text-acid transition-colors">+91 6364671786</a></li>
+                        <li class="flex items-center gap-2"><i class="fas fa-envelope text-gray-400"></i> info@vizonis.com</li>
+                    </ul>
+                    <div class="flex gap-4 mt-6">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-acid/10 hover:text-acid transition-all text-gray-500"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-acid/10 hover:text-acid transition-all text-gray-500"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-acid/10 hover:text-acid transition-all text-gray-500"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-gray-600 text-xs">© 2025 Vizonis Academy. All rights reserved.</p>
+                <p class="text-gray-700 text-xs">Built with <i class="fas fa-heart text-acid text-[10px]"></i> for aspiring data professionals</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/916364671786?text=Hi%20Vizonis%20Academy!%20I%20read%20the%20Power%20Query%20guide%20and%20want%20to%20learn%20more." target="_blank" class="whatsapp-float" aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp text-white text-3xl"></i>
+    </a>
+
+    <!-- WhatsApp Toast -->
+    <div id="wa-toast" class="fixed bottom-28 right-6 z-[7999] glass-card rounded-xl p-4 max-w-xs transform translate-x-[120%] transition-transform duration-500">
+        <div class="flex items-start gap-3">
+            <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center shrink-0">
+                <i class="fab fa-whatsapp text-green-400 text-lg"></i>
+            </div>
+            <div>
+                <p class="text-sm font-bold">Stuck on Power Query?</p>
+                <p class="text-xs text-gray-400 mt-1">Get instant help from our mentors on WhatsApp!</p>
+                <a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20have%20a%20Power%20Query%20doubt." target="_blank" class="text-xs text-green-400 font-bold mt-2 inline-block hover:text-green-300">Ask Now →</a>
+            </div>
+            <button onclick="closeToast()" class="text-gray-600 hover:text-white ml-2"><i class="fas fa-times text-xs"></i></button>
+        </div>
+    </div>
+
+    <script>
+        const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        gsap.utils.toArray('.glass-card, .animated-border').forEach((el, i) => {
+            gsap.from(el, {
+                y: 40, opacity: 0, duration: 0.8,
+                delay: i * 0.02,
+                ease: 'power3.out',
+                scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
+            });
+        });
+
+        gsap.utils.toArray('.example-box').forEach((box, i) => {
+            gsap.from(box, {
+                x: -20, opacity: 0, duration: 0.6, delay: 0.2,
+                ease: 'power2.out',
+                scrollTrigger: { trigger: box, start: 'top 90%', toggleActions: 'play none none none' }
+            });
+        });
+
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 25; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                const size = Math.random() * 4 + 2;
+                p.style.width = size + 'px';
+                p.style.height = size + 'px';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.animationDuration = (Math.random() * 15 + 10) + 's';
+                p.style.animationDelay = (Math.random() * 10) + 's';
+                container.appendChild(p);
+            }
+        }
+        createParticles();
+
+        function closeToast() {
+            document.getElementById('wa-toast').style.transform = 'translateX(120%)';
+        }
+        setTimeout(() => {
+            document.getElementById('wa-toast').style.transform = 'translateX(0)';
+        }, 6000);
+        setTimeout(() => { closeToast(); }, 22000);
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    lenis.scrollTo(target, { offset: -80 });
+                }
+            });
+        });
+
+        // Active sub-nav on scroll
+        const sections = document.querySelectorAll('section[id]');
+        const navItems = document.querySelectorAll('.sub-nav-item');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 120;
+                if (pageYOffset >= sectionTop) current = section.getAttribute('id');
+            });
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('href') === '#' + current) item.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
