@@ -1,0 +1,1611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vizonis Academy – Snowflake Gen AI Session Recap</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        @keyframes marquee {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+        .animate-marquee { animation: marquee 25s linear infinite; }
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            border-radius: 12px;
+            padding: 20px 24px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.7;
+            overflow-x: auto;
+            position: relative;
+        }
+        .code-block .keyword { color: #c084fc; }
+        .code-block .string { color: #86efac; }
+        .code-block .function { color: #67e8f9; }
+        .code-block .comment { color: #64748b; }
+        .code-block .param { color: #fbbf24; }
+        .copy-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: #94a3b8;
+            padding: 6px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover { background: rgba(255,255,255,0.2); color: #fff; }
+        .step-card { transition: all 0.3s ease; }
+        .step-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -12px rgba(0,0,0,0.15); }
+        .nav-link { transition: color 0.2s; }
+        .nav-link:hover { color: #0f172a; }
+        .toc-link { transition: all 0.2s; border-left: 3px solid transparent; }
+        .toc-link:hover { border-left-color: #0f172a; background: #f8fafc; }
+        .toc-link.active { border-left-color: #0f172a; background: #f1f5f9; font-weight: 600; }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+        .accordion-content.open { max-height: 3000px; }
+        .whatsapp-float {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            z-index: 999;
+            background: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(37,211,102,0.4);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .whatsapp-float:hover { transform: scale(1.1); box-shadow: 0 12px 32px rgba(37,211,102,0.5); }
+        .table-schema { border-collapse: collapse; width: 100%; }
+        .table-schema th { background: #f1f5f9; text-align: left; padding: 10px 16px; font-size: 13px; font-weight: 600; color: #334155; border-bottom: 2px solid #e2e8f0; }
+        .table-schema td { padding: 8px 16px; font-size: 13px; color: #475569; border-bottom: 1px solid #f1f5f9; }
+        .table-schema tr:hover td { background: #f8fafc; }
+        .badge { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 11px; font-weight: 600; }
+        .result-box { background: linear-gradient(135deg, #ecfdf5, #f0fdf4); border: 1px solid #bbf7d0; border-radius: 12px; padding: 16px 20px; }
+        .result-box .label { font-size: 11px; font-weight: 700; color: #166534; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+        .result-box .value { font-size: 15px; color: #14532d; font-weight: 500; }
+        @media print { .whatsapp-float, .no-print { display: none !important; } }
+    </style>
+</head>
+<body class="bg-white text-slate-900">
+
+    <!-- Top Banner -->
+    <div class="bg-slate-950 text-white py-2.5 px-4 text-center text-xs font-medium tracking-wide overflow-hidden no-print">
+        <div class="flex items-center justify-center gap-2">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-cyan-400"></i>
+            <span>Vizonis Academy — Snowflake Gen AI Session Complete Reference Guide</span>
+            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-cyan-400"></i>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200/80 no-print" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 bg-slate-950 rounded-lg flex items-center justify-center">
+                    <i data-lucide="snowflake" class="w-5 h-5 text-white"></i>
+                </div>
+                <div>
+                    <span class="font-semibold text-base tracking-tight">Vizonis Academy</span>
+                    <span class="text-slate-400 text-xs ml-2 hidden sm:inline">Snowflake Gen AI</span>
+                </div>
+            </div>
+            <div class="hidden md:flex items-center gap-6 text-sm text-slate-500">
+                <a href="#cortex-analyst" class="nav-link">Cortex Analyst</a>
+                <a href="#ai-functions" class="nav-link">AI Functions</a>
+                <a href="#why-ai" class="nav-link">Why AI?</a>
+                <a href="#sql-topics" class="nav-link">SQL Topics</a>
+                <a href="https://wa.me/916364671786" target="_blank" class="bg-slate-950 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-slate-800 transition-colors flex items-center gap-2">
+                    <i data-lucide="message-circle" class="w-4 h-4"></i> Ask Doubts
+                </a>
+            </div>
+            <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg hover:bg-slate-100">
+                <i data-lucide="menu" class="w-5 h-5"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden border-t border-slate-100 bg-white px-6 py-4 space-y-3">
+            <a href="#cortex-analyst" class="block text-sm text-slate-600 py-1">Cortex Analyst</a>
+            <a href="#ai-functions" class="block text-sm text-slate-600 py-1">AI Functions</a>
+            <a href="#why-ai" class="block text-sm text-slate-600 py-1">Why AI?</a>
+            <a href="#sql-topics" class="block text-sm text-slate-600 py-1">SQL Topics</a>
+            <a href="https://wa.me/916364671786" target="_blank" class="block text-sm text-green-600 font-medium py-1">WhatsApp: +91 6364671786</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0">
+            <img src="https://picsum.photos/seed/snowflake-genai-hero/1920/1080.jpg" alt="Hero Background" class="w-full h-full object-cover">
+            <div class="absolute inset-0" style="background: linear-gradient(to top, #0f172a 0%, rgba(15,23,42,0.7) 40%, rgba(15,23,42,0.4) 70%, rgba(15,23,42,0.5) 100%)"></div>
+        </div>
+        <!-- Floating decorative elements -->
+        <div class="absolute top-20 left-10 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-20 right-10 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
+        <div class="relative z-10 text-center px-6 max-w-5xl mx-auto">
+            <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-5 py-2 mb-8">
+                <i data-lucide="calendar" class="w-4 h-4 text-cyan-400"></i>
+                <span class="text-white/90 text-sm font-medium">Today's Session — Gen AI with Snowflake Cortex</span>
+            </div>
+            <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl font-400 text-white tracking-tight leading-[1.05] mb-6">
+                Build <em class="text-cyan-400">Gen AI</em> Solutions<br>
+                <span class="text-white/80">with Snowflake</span>
+            </h1>
+            <p class="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed">
+                Your complete session recap — Cortex Analyst setup, AI Functions, real examples, and everything you need to revise and practice.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#cortex-analyst" class="bg-white text-slate-900 px-8 py-3.5 rounded-lg font-medium text-sm hover:bg-slate-100 transition-colors flex items-center gap-2">
+                    Start Learning <i data-lucide="arrow-down" class="w-4 h-4"></i>
+                </a>
+                <a href="https://wa.me/916364671786?text=Hi%20Sir%2C%20I%20attended%20the%20Snowflake%20Gen%20AI%20session%20and%20have%20a%20doubt" target="_blank" class="border border-white/30 text-white px-8 py-3.5 rounded-lg font-medium text-sm hover:bg-white/10 transition-colors flex items-center gap-2">
+                    <i data-lucide="message-circle" class="w-4 h-4"></i> Ping on WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Session Overview Stats -->
+    <section class="bg-slate-950 py-16 no-print">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="text-center">
+                    <div class="text-3xl md:text-4xl font-semibold text-white mb-1">2</div>
+                    <div class="text-sm text-slate-400">Cortex Analysts Built</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl md:text-4xl font-semibold text-white mb-1">5</div>
+                    <div class="text-sm text-slate-400">AI Functions Practiced</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl md:text-4xl font-semibold text-white mb-1">5</div>
+                    <div class="text-sm text-slate-400">HR Tables Used</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl md:text-4xl font-semibold text-cyan-400 mb-1">100%</div>
+                    <div class="text-sm text-slate-400">Correct AI Responses</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content Area -->
+    <div class="max-w-7xl mx-auto px-6 py-16">
+        <div class="flex gap-12">
+
+            <!-- Sidebar TOC (Desktop) -->
+            <aside class="hidden lg:block w-64 flex-shrink-0 no-print">
+                <div class="sticky top-28">
+                    <h4 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-4">On This Page</h4>
+                    <nav class="space-y-1" id="tocNav">
+                        <a href="#what-is-cortex" class="toc-link block text-sm text-slate-600 py-2 px-3 rounded-r-lg">What is Cortex Analyst?</a>
+                        <a href="#hr-tables" class="toc-link block text-sm text-slate-600 py-2 px-3 rounded-r-lg">HR Tables Schema</a>
+                        <a href="#analyst-setup" class="toc-link block text-sm text-slate-600 py-2 px-3 rounded-r-lg">Analyst Setup Steps</a>
+                        <a href="#hr-playground" class="toc-link block text-sm text-slate-600 py-2 px-3 rounded-r-lg">HR Playground Q&A</a>
+                        <a href="#sales-analyst" class="toc-link block text-sm text-slate-600 py-2 px-3 rounded-r-lg">Sales Analyst Exercise</a>
+                        <a href="#ai-functions" class="toc-link block text-sm text-slate-600 py-2 px-3 rounded-r-lg">AI Functions</a>
+                        <a href="#why-ai" class="toc-link block text-sm text-slate-600 py-2 px-3 rounded-r-lg">Why AI over SQL Only?</a>
+                        <a href="#sql-topics" class="toc-link block text-sm text-slate-600 py-2 px-3 rounded-r-lg">Must-Know SQL Topics</a>
+                    </nav>
+                    <div class="mt-8 p-4 bg-slate-50 rounded-xl border border-slate-200">
+                        <div class="flex items-center gap-2 mb-2">
+                            <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                            <span class="text-xs font-semibold text-slate-700">Need Help?</span>
+                        </div>
+                        <p class="text-xs text-slate-500 leading-relaxed">Ping directly on WhatsApp for any doubts from this session.</p>
+                        <a href="https://wa.me/916364671786" target="_blank" class="inline-flex items-center gap-1.5 text-xs font-semibold text-green-600 mt-2 hover:text-green-700">
+                            +91 6364671786 <i data-lucide="external-link" class="w-3 h-3"></i>
+                        </a>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="flex-1 min-w-0">
+
+                <!-- ========== SECTION 1: What is Cortex Analyst ========== -->
+                <section id="what-is-cortex" class="mb-20 scroll-mt-28">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 bg-cyan-50 rounded-xl flex items-center justify-center">
+                            <i data-lucide="brain" class="w-5 h-5 text-cyan-600"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-widest text-cyan-600">Section 1</span>
+                            <h2 class="font-serif text-3xl md:text-4xl tracking-tight">What is Cortex Analyst?</h2>
+                        </div>
+                    </div>
+                    <div class="bg-slate-50 rounded-2xl p-8 border border-slate-200">
+                        <p class="text-slate-600 text-lg leading-relaxed mb-6">
+                            <strong class="text-slate-900">Snowflake Cortex Analyst</strong> is a fully managed, AI-powered feature inside Snowflake that lets you <strong class="text-slate-900">ask questions in plain English</strong> and get accurate answers directly from your data — <em>without writing any SQL</em>.
+                        </p>
+                        <div class="grid md:grid-cols-2 gap-6 mb-6">
+                            <div class="bg-white rounded-xl p-5 border border-slate-200">
+                                <div class="flex items-center gap-2 mb-3">
+                                    <i data-lucide="x-circle" class="w-5 h-5 text-red-400"></i>
+                                    <h4 class="font-semibold text-sm">Without Cortex Analyst</h4>
+                                </div>
+                                <ul class="space-y-2 text-sm text-slate-500">
+                                    <li class="flex items-start gap-2"><i data-lucide="minus" class="w-4 h-4 mt-0.5 text-red-300"></i>Write complex SQL queries manually</li>
+                                    <li class="flex items-start gap-2"><i data-lucide="minus" class="w-4 h-4 mt-0.5 text-red-300"></i>Need to know table names, joins, relationships</li>
+                                    <li class="flex items-start gap-2"><i data-lucide="minus" class="w-4 h-4 mt-0.5 text-red-300"></i>Business users depend on data team</li>
+                                    <li class="flex items-start gap-2"><i data-lucide="minus" class="w-4 h-4 mt-0.5 text-red-300"></i>Time consuming for ad-hoc analysis</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white rounded-xl p-5 border border-emerald-200">
+                                <div class="flex items-center gap-2 mb-3">
+                                    <i data-lucide="check-circle" class="w-5 h-5 text-emerald-500"></i>
+                                    <h4 class="font-semibold text-sm">With Cortex Analyst</h4>
+                                </div>
+                                <ul class="space-y-2 text-sm text-slate-500">
+                                    <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 text-emerald-400"></i>Ask in plain English: "Total sales by region"</li>
+                                    <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 text-emerald-400"></i>AI understands schema & relationships automatically</li>
+                                    <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 text-emerald-400"></i>Business users can self-serve instantly</li>
+                                    <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 text-emerald-400"></i>Instant insights, no waiting</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="bg-gradient-to-r from-cyan-50 to-blue-50 rounded-xl p-5 border border-cyan-200">
+                            <h4 class="font-semibold text-sm text-cyan-900 mb-2 flex items-center gap-2">
+                                <i data-lucide="lightbulb" class="w-4 h-4 text-cyan-600"></i> Simple Analogy
+                            </h4>
+                            <p class="text-sm text-cyan-800 leading-relaxed">
+                                Think of Cortex Analyst as a <strong>very smart assistant</strong> sitting on top of your database. You ask "How many employees left last year?" and it automatically writes the SQL, runs it, and gives you the answer — all in seconds.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Benefits -->
+                    <div class="mt-8 grid sm:grid-cols-3 gap-4">
+                        <div class="step-card bg-white rounded-xl p-6 border border-slate-200">
+                            <div class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center mb-4">
+                                <i data-lucide="shield-check" class="w-5 h-5 text-blue-600"></i>
+                            </div>
+                            <h4 class="font-semibold text-sm mb-2">Secure by Design</h4>
+                            <p class="text-xs text-slate-500 leading-relaxed">Data never leaves Snowflake. AI runs inside your account — zero data leakage.</p>
+                        </div>
+                        <div class="step-card bg-white rounded-xl p-6 border border-slate-200">
+                            <div class="w-10 h-10 bg-purple-50 rounded-lg flex items-center justify-center mb-4">
+                                <i data-lucide="zap" class="w-5 h-5 text-purple-600"></i>
+                            </div>
+                            <h4 class="font-semibold text-sm mb-2">No SQL Needed</h4>
+                            <p class="text-xs text-slate-500 leading-relaxed">Business stakeholders can directly ask questions without knowing SQL syntax.</p>
+                        </div>
+                        <div class="step-card bg-white rounded-xl p-6 border border-slate-200">
+                            <div class="w-10 h-10 bg-amber-50 rounded-lg flex items-center justify-center mb-4">
+                                <i data-lucide="target" class="w-5 h-5 text-amber-600"></i>
+                            </div>
+                            <h4 class="font-semibold text-sm mb-2">Accurate Results</h4>
+                            <p class="text-xs text-slate-500 leading-relaxed">Uses semantic models to understand context, ensuring correct aggregations and joins.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ========== SECTION 2: HR Tables Schema ========== -->
+                <section id="hr-tables" class="mb-20 scroll-mt-28">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 bg-violet-50 rounded-xl flex items-center justify-center">
+                            <i data-lucide="database" class="w-5 h-5 text-violet-600"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-widest text-violet-600">Section 2</span>
+                            <h2 class="font-serif text-3xl md:text-4xl tracking-tight">HR Analytics — 5 Tables</h2>
+                        </div>
+                    </div>
+                    <p class="text-slate-600 leading-relaxed mb-8">These are the 5 tables we used in our session to build the HR Analytics Cortex Analyst. Understanding the schema is critical — the AI uses these tables and their relationships to answer your questions.</p>
+
+                    <!-- Table Accordion -->
+                    <div class="space-y-3" id="tableAccordion">
+                        <!-- EMPLOYEES -->
+                        <div class="border border-slate-200 rounded-xl overflow-hidden">
+                            <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-6 py-4 bg-white hover:bg-slate-50 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                                        <i data-lucide="users" class="w-4 h-4 text-blue-600"></i>
+                                    </div>
+                                    <span class="font-semibold text-sm">EMPLOYEES</span>
+                                    <span class="badge bg-blue-50 text-blue-700">Core Table</span>
+                                </div>
+                                <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 transition-transform"></i>
+                            </button>
+                            <div class="accordion-content">
+                                <div class="px-6 pb-5">
+                                    <p class="text-sm text-slate-500 mb-3">Contains records of all employees with identity, contact, organizational placement, compensation, and work location details.</p>
+                                    <div class="overflow-x-auto rounded-lg border border-slate-200">
+                                        <table class="table-schema">
+                                            <thead><tr><th>Column</th><th>Type</th><th>Description</th></tr></thead>
+                                            <tbody>
+                                                <tr><td class="font-mono text-xs">EMPLOYEE_ID</td><td><span class="badge bg-purple-50 text-purple-700">PK</span></td><td>Unique identifier</td></tr>
+                                                <tr><td class="font-mono text-xs">FIRST_NAME</td><td>VARCHAR</td><td>Employee first name</td></tr>
+                                                <tr><td class="font-mono text-xs">LAST_NAME</td><td>VARCHAR</td><td>Employee last name</td></tr>
+                                                <tr><td class="font-mono text-xs">EMAIL</td><td>VARCHAR</td><td>Contact email</td></tr>
+                                                <tr><td class="font-mono text-xs">DEPARTMENT_ID</td><td><span class="badge bg-amber-50 text-amber-700">FK</span></td><td>Links to DEPARTMENTS</td></tr>
+                                                <tr><td class="font-mono text-xs">JOB_TITLE</td><td>VARCHAR</td><td>Role / designation</td></tr>
+                                                <tr><td class="font-mono text-xs">HIRE_DATE</td><td>DATE</td><td>Date of joining</td></tr>
+                                                <tr><td class="font-mono text-xs">SALARY</td><td>NUMBER</td><td>Compensation amount</td></tr>
+                                                <tr><td class="font-mono text-xs">CITY</td><td>VARCHAR</td><td>Work location city</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ATTENDANCE -->
+                        <div class="border border-slate-200 rounded-xl overflow-hidden">
+                            <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-6 py-4 bg-white hover:bg-slate-50 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                                        <i data-lucide="calendar-check" class="w-4 h-4 text-green-600"></i>
+                                    </div>
+                                    <span class="font-semibold text-sm">ATTENDANCE</span>
+                                    <span class="badge bg-green-50 text-green-700">Transactional</span>
+                                </div>
+                                <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 transition-transform"></i>
+                            </button>
+                            <div class="accordion-content">
+                                <div class="px-6 pb-5">
+                                    <p class="text-sm text-slate-500 mb-3">Captures daily attendance entries — one record per employee per date with attendance status.</p>
+                                    <div class="overflow-x-auto rounded-lg border border-slate-200">
+                                        <table class="table-schema">
+                                            <thead><tr><th>Column</th><th>Type</th><th>Description</th></tr></thead>
+                                            <tbody>
+                                                <tr><td class="font-mono text-xs">ATTENDANCE_ID</td><td><span class="badge bg-purple-50 text-purple-700">PK</span></td><td>Unique identifier</td></tr>
+                                                <tr><td class="font-mono text-xs">EMPLOYEE_ID</td><td><span class="badge bg-amber-50 text-amber-700">FK</span></td><td>Links to EMPLOYEES</td></tr>
+                                                <tr><td class="font-mono text-xs">DATE</td><td>DATE</td><td>Attendance date</td></tr>
+                                                <tr><td class="font-mono text-xs">STATUS</td><td>VARCHAR</td><td>Present / Absent / Leave / WFH</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ATTRITION -->
+                        <div class="border border-slate-200 rounded-xl overflow-hidden">
+                            <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-6 py-4 bg-white hover:bg-slate-50 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">
+                                        <i data-lucide="user-minus" class="w-4 h-4 text-red-600"></i>
+                                    </div>
+                                    <span class="font-semibold text-sm">ATTRITION</span>
+                                    <span class="badge bg-red-50 text-red-700">Event</span>
+                                </div>
+                                <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 transition-transform"></i>
+                            </button>
+                            <div class="accordion-content">
+                                <div class="px-6 pb-5">
+                                    <p class="text-sm text-slate-500 mb-3">Records employee attrition events — whether an employee left the organization and the departure date.</p>
+                                    <div class="overflow-x-auto rounded-lg border border-slate-200">
+                                        <table class="table-schema">
+                                            <thead><tr><th>Column</th><th>Type</th><th>Description</th></tr></thead>
+                                            <tbody>
+                                                <tr><td class="font-mono text-xs">ATTRITION_ID</td><td><span class="badge bg-purple-50 text-purple-700">PK</span></td><td>Unique identifier</td></tr>
+                                                <tr><td class="font-mono text-xs">EMPLOYEE_ID</td><td><span class="badge bg-amber-50 text-amber-700">FK</span></td><td>Links to EMPLOYEES</td></tr>
+                                                <tr><td class="font-mono text-xs">HAS_LEFT</td><td>BOOLEAN</td><td>True if employee left</td></tr>
+                                                <tr><td class="font-mono text-xs">DEPARTURE_DATE</td><td>DATE</td><td>Date employee left</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- DEPARTMENTS -->
+                        <div class="border border-slate-200 rounded-xl overflow-hidden">
+                            <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-6 py-4 bg-white hover:bg-slate-50 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
+                                        <i data-lucide="building-2" class="w-4 h-4 text-orange-600"></i>
+                                    </div>
+                                    <span class="font-semibold text-sm">DEPARTMENTS</span>
+                                    <span class="badge bg-orange-50 text-orange-700">Reference</span>
+                                </div>
+                                <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 transition-transform"></i>
+                            </button>
+                            <div class="accordion-content">
+                                <div class="px-6 pb-5">
+                                    <p class="text-sm text-slate-500 mb-3">Master list of organizational departments with identifier and name.</p>
+                                    <div class="overflow-x-auto rounded-lg border border-slate-200">
+                                        <table class="table-schema">
+                                            <thead><tr><th>Column</th><th>Type</th><th>Description</th></tr></thead>
+                                            <tbody>
+                                                <tr><td class="font-mono text-xs">DEPARTMENT_ID</td><td><span class="badge bg-purple-50 text-purple-700">PK</span></td><td>Unique identifier</td></tr>
+                                                <tr><td class="font-mono text-xs">DEPARTMENT_NAME</td><td>VARCHAR</td><td>Name of department</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- PERFORMANCE -->
+                        <div class="border border-slate-200 rounded-xl overflow-hidden">
+                            <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-6 py-4 bg-white hover:bg-slate-50 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center">
+                                        <i data-lucide="award" class="w-4 h-4 text-indigo-600"></i>
+                                    </div>
+                                    <span class="font-semibold text-sm">PERFORMANCE</span>
+                                    <span class="badge bg-indigo-50 text-indigo-700">Review</span>
+                                </div>
+                                <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 transition-transform"></i>
+                            </button>
+                            <div class="accordion-content">
+                                <div class="px-6 pb-5">
+                                    <p class="text-sm text-slate-500 mb-3">Employee performance reviews with numerical rating and commentary.</p>
+                                    <div class="overflow-x-auto rounded-lg border border-slate-200">
+                                        <table class="table-schema">
+                                            <thead><tr><th>Column</th><th>Type</th><th>Description</th></tr></thead>
+                                            <tbody>
+                                                <tr><td class="font-mono text-xs">REVIEW_ID</td><td><span class="badge bg-purple-50 text-purple-700">PK</span></td><td>Unique identifier</td></tr>
+                                                <tr><td class="font-mono text-xs">EMPLOYEE_ID</td><td><span class="badge bg-amber-50 text-amber-700">FK</span></td><td>Links to EMPLOYEES</td></tr>
+                                                <tr><td class="font-mono text-xs">REVIEW_DATE</td><td>DATE</td><td>Date of review</td></tr>
+                                                <tr><td class="font-mono text-xs">RATING</td><td>NUMBER</td><td>Numerical performance rating</td></tr>
+                                                <tr><td class="font-mono text-xs">COMMENTARY</td><td>TEXT</td><td>Review feedback text</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ER Diagram Visual -->
+                    <div class="mt-8 bg-slate-50 rounded-2xl p-6 border border-slate-200">
+                        <h4 class="font-semibold text-sm mb-4 flex items-center gap-2"><i data-lucide="git-branch" class="w-4 h-4 text-slate-500"></i> Relationship Map</h4>
+                        <div class="flex flex-wrap items-center justify-center gap-3 text-sm">
+                            <div class="bg-blue-100 text-blue-800 px-4 py-2 rounded-lg font-semibold">EMPLOYEES</div>
+                            <div class="flex flex-col items-center gap-1">
+                                <span class="text-[10px] text-slate-400">1:N</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4 text-slate-300"></i>
+                            </div>
+                            <div class="bg-green-100 text-green-800 px-4 py-2 rounded-lg font-semibold">ATTENDANCE</div>
+                            <span class="text-slate-300">|</span>
+                            <div class="bg-blue-100 text-blue-800 px-4 py-2 rounded-lg font-semibold">EMPLOYEES</div>
+                            <div class="flex flex-col items-center gap-1">
+                                <span class="text-[10px] text-slate-400">1:N</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4 text-slate-300"></i>
+                            </div>
+                            <div class="bg-red-100 text-red-800 px-4 py-2 rounded-lg font-semibold">ATTRITION</div>
+                            <span class="text-slate-300">|</span>
+                            <div class="bg-blue-100 text-blue-800 px-4 py-2 rounded-lg font-semibold">EMPLOYEES</div>
+                            <div class="flex flex-col items-center gap-1">
+                                <span class="text-[10px] text-slate-400">1:N</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4 text-slate-300"></i>
+                            </div>
+                            <div class="bg-indigo-100 text-indigo-800 px-4 py-2 rounded-lg font-semibold">PERFORMANCE</div>
+                            <span class="text-slate-300">|</span>
+                            <div class="bg-blue-100 text-blue-800 px-4 py-2 rounded-lg font-semibold">EMPLOYEES</div>
+                            <div class="flex flex-col items-center gap-1">
+                                <span class="text-[10px] text-slate-400">N:1</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4 text-slate-300"></i>
+                            </div>
+                            <div class="bg-orange-100 text-orange-800 px-4 py-2 rounded-lg font-semibold">DEPARTMENTS</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ========== SECTION 3: Cortex Analyst Setup Steps ========== -->
+                <section id="analyst-setup" class="mb-20 scroll-mt-28">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center">
+                            <i data-lucide="list-ordered" class="w-5 h-5 text-emerald-600"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-widest text-emerald-600">Section 3</span>
+                            <h2 class="font-serif text-3xl md:text-4xl tracking-tight">Step-by-Step Setup</h2>
+                        </div>
+                    </div>
+                    <p class="text-slate-600 leading-relaxed mb-8">Follow these exact 7 steps we did in the session to create your own Cortex Analyst.</p>
+
+                    <div class="space-y-4">
+                        <!-- Step 1 -->
+                        <div class="step-card bg-white rounded-xl p-6 border border-slate-200 flex gap-5">
+                            <div class="flex-shrink-0 w-10 h-10 bg-slate-950 text-white rounded-full flex items-center justify-center font-semibold text-sm">1</div>
+                            <div class="flex-1">
+                                <h4 class="font-semibold mb-1">Login to Snowflake</h4>
+                                <p class="text-sm text-slate-500 leading-relaxed">Login with your provided credentials. Then navigate to <strong class="text-slate-700">AI & ML</strong> in the left sidebar and select <strong class="text-slate-700">Analyst</strong>.</p>
+                            </div>
+                        </div>
+                        <!-- Step 2 -->
+                        <div class="step-card bg-white rounded-xl p-6 border border-slate-200 flex gap-5">
+                            <div class="flex-shrink-0 w-10 h-10 bg-slate-950 text-white rounded-full flex items-center justify-center font-semibold text-sm">2</div>
+                            <div class="flex-1">
+                                <h4 class="font-semibold mb-1">Click "Create with Autopilot"</h4>
+                                <p class="text-sm text-slate-500 leading-relaxed">You'll see a button to create a new analyst. Click <strong class="text-slate-700">"Create with Autopilot"</strong> — this auto-generates the semantic model for you.</p>
+                            </div>
+                        </div>
+                        <!-- Step 3 -->
+                        <div class="step-card bg-white rounded-xl p-6 border border-slate-200 flex gap-5">
+                            <div class="flex-shrink-0 w-10 h-10 bg-slate-950 text-white rounded-full flex items-center justify-center font-semibold text-sm">3</div>
+                            <div class="flex-1">
+                                <h4 class="font-semibold mb-1">Provide Context Screen <span class="badge bg-amber-50 text-amber-700 ml-2">Skipped</span></h4>
+                                <p class="text-sm text-slate-500 leading-relaxed">This is an <strong class="text-slate-700">optional</strong> screen where you can add business context. We skipped this in our session as it's not required for basic setup.</p>
+                            </div>
+                        </div>
+                        <!-- Step 4 -->
+                        <div class="step-card bg-white rounded-xl p-6 border border-slate-200 flex gap-5">
+                            <div class="flex-shrink-0 w-10 h-10 bg-slate-950 text-white rounded-full flex items-center justify-center font-semibold text-sm">4</div>
+                            <div class="flex-1">
+                                <h4 class="font-semibold mb-1">Name the Semantic View</h4>
+                                <p class="text-sm text-slate-500 leading-relaxed">We named it <code class="bg-slate-100 px-2 py-0.5 rounded text-xs font-mono text-cyan-700">HR_ANALYTICS</code>. Then select the <strong class="text-slate-700">database</strong> and <strong class="text-slate-700">schema</strong> where this semantic view will be saved.</p>
+                            </div>
+                        </div>
+                        <!-- Step 5 -->
+                        <div class="step-card bg-white rounded-xl p-6 border border-slate-200 flex gap-5">
+                            <div class="flex-shrink-0 w-10 h-10 bg-slate-950 text-white rounded-full flex items-center justify-center font-semibold text-sm">5</div>
+                            <div class="flex-1">
+                                <h4 class="font-semibold mb-1">Choose Tables</h4>
+                                <p class="text-sm text-slate-500 leading-relaxed">Select all <strong class="text-slate-700">5 tables</strong> — EMPLOYEES, ATTENDANCE, ATTRITION, DEPARTMENTS, PERFORMANCE. These become the input source for all questions.</p>
+                            </div>
+                        </div>
+                        <!-- Step 6 -->
+                        <div class="step-card bg-white rounded-xl p-6 border border-slate-200 flex gap-5">
+                            <div class="flex-shrink-0 w-10 h-10 bg-slate-950 text-white rounded-full flex items-center justify-center font-semibold text-sm">6</div>
+                            <div class="flex-1">
+                                <h4 class="font-semibold mb-1">Select All Columns & Create</h4>
+                                <p class="text-sm text-slate-500 leading-relaxed">For each table, <strong class="text-slate-700">select all columns</strong>. Then click <strong class="text-slate-700">"Create"</strong>. Wait a few seconds for Snowflake to build the semantic model.</p>
+                            </div>
+                        </div>
+                        <!-- Step 7 -->
+                        <div class="step-card bg-white rounded-xl p-6 border border-emerald-200 flex gap-5 bg-emerald-50/50">
+                            <div class="flex-shrink-0 w-10 h-10 bg-emerald-600 text-white rounded-full flex items-center justify-center font-semibold text-sm">7</div>
+                            <div class="flex-1">
+                                <h4 class="font-semibold mb-1">Add Relationships <span class="badge bg-emerald-100 text-emerald-700 ml-2">Critical</span></h4>
+                                <p class="text-sm text-slate-500 leading-relaxed">Map the relationships between tables (e.g., EMPLOYEES → DEPARTMENTS via DEPARTMENT_ID). <strong class="text-slate-700">This step is crucial</strong> — without proper relationships, the AI can't join tables correctly and will give wrong answers.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ========== SECTION 4: HR Playground Q&A ========== -->
+                <section id="hr-playground" class="mb-20 scroll-mt-28">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 bg-pink-50 rounded-xl flex items-center justify-center">
+                            <i data-lucide="message-square-text" class="w-5 h-5 text-pink-600"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-widest text-pink-600">Section 4</span>
+                            <h2 class="font-serif text-3xl md:text-4xl tracking-tight">HR Playground — Q&A We Tried</h2>
+                        </div>
+                    </div>
+                    <p class="text-slate-600 leading-relaxed mb-8">After setting up HR_ANALYTICS, we opened the Playground and asked these questions. Cortex gave <strong class="text-slate-900">100% correct answers</strong> for all of them.</p>
+
+                    <div class="space-y-4">
+                        <!-- Basic Q1 -->
+                        <div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
+                            <div class="px-6 py-4 flex items-center gap-3 border-b border-slate-100">
+                                <div class="w-7 h-7 bg-cyan-100 rounded-full flex items-center justify-center">
+                                    <i data-lucide="user" class="w-3.5 h-3.5 text-cyan-700"></i>
+                                </div>
+                                <span class="text-sm font-medium">What are the total employees we have?</span>
+                                <span class="badge bg-green-50 text-green-700 ml-auto">Basic</span>
+                            </div>
+                            <div class="px-6 py-4">
+                                <div class="result-box">
+                                    <div class="label">Cortex Response</div>
+                                    <div class="value">Returned the exact count of all employees from the EMPLOYEES table.</div>
+                                </div>
+                                <p class="text-xs text-slate-400 mt-2 flex items-center gap-1"><i data-lucide="info" class="w-3 h-3"></i> AI automatically used COUNT(*) on EMPLOYEES — no SQL needed from your side.</p>
+                            </div>
+                        </div>
+                        <!-- Basic Q2 -->
+                        <div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
+                            <div class="px-6 py-4 flex items-center gap-3 border-b border-slate-100">
+                                <div class="w-7 h-7 bg-cyan-100 rounded-full flex items-center justify-center">
+                                    <i data-lucide="user" class="w-3.5 h-3.5 text-cyan-700"></i>
+                                </div>
+                                <span class="text-sm font-medium">Employees by city</span>
+                                <span class="badge bg-green-50 text-green-700 ml-auto">Basic</span>
+                            </div>
+                            <div class="px-6 py-4">
+                                <div class="result-box">
+                                    <div class="label">Cortex Response</div>
+                                    <div class="value">Returned a breakdown of employee count grouped by each city from the EMPLOYEES table.</div>
+                                </div>
+                                <p class="text-xs text-slate-400 mt-2 flex items-center gap-1"><i data-lucide="info" class="w-3 h-3"></i> AI automatically used GROUP BY CITY — understood "by" means grouping.</p>
+                            </div>
+                        </div>
+                        <!-- Difficult Q3 -->
+                        <div class="bg-white rounded-xl border border-orange-200 overflow-hidden">
+                            <div class="px-6 py-4 flex items-center gap-3 border-b border-orange-100 bg-orange-50/30">
+                                <div class="w-7 h-7 bg-orange-100 rounded-full flex items-center justify-center">
+                                    <i data-lucide="user" class="w-3.5 h-3.5 text-orange-700"></i>
+                                </div>
+                                <span class="text-sm font-medium">Total attritions</span>
+                                <span class="badge bg-orange-100 text-orange-700 ml-auto">Advanced</span>
+                            </div>
+                            <div class="px-6 py-4">
+                                <div class="result-box">
+                                    <div class="label">Cortex Response</div>
+                                    <div class="value">Correctly counted employees from ATTRITION table where HAS_LEFT = TRUE.</div>
+                                </div>
+                                <p class="text-xs text-slate-400 mt-2 flex items-center gap-1"><i data-lucide="info" class="w-3 h-3"></i> AI understood "attrition" means looking at the ATTRITION table and filtering for actual departures.</p>
+                            </div>
+                        </div>
+                        <!-- Difficult Q4 -->
+                        <div class="bg-white rounded-xl border border-orange-200 overflow-hidden">
+                            <div class="px-6 py-4 flex items-center gap-3 border-b border-orange-100 bg-orange-50/30">
+                                <div class="w-7 h-7 bg-orange-100 rounded-full flex items-center justify-center">
+                                    <i data-lucide="user" class="w-3.5 h-3.5 text-orange-700"></i>
+                                </div>
+                                <span class="text-sm font-medium">Total attrition by city</span>
+                                <span class="badge bg-orange-100 text-orange-700 ml-auto">Advanced</span>
+                            </div>
+                            <div class="px-6 py-4">
+                                <div class="result-box">
+                                    <div class="label">Cortex Response</div>
+                                    <div class="value">Joined ATTRITION → EMPLOYEES, filtered HAS_LEFT=TRUE, and grouped by CITY — all automatically!</div>
+                                </div>
+                                <p class="text-xs text-slate-400 mt-2 flex items-center gap-1"><i data-lucide="info" class="w-3 h-3"></i> This required a JOIN + WHERE + GROUP BY — AI handled all three without being told.</p>
+                            </div>
+                        </div>
+                        <!-- Difficult Q5 -->
+                        <div class="bg-white rounded-xl border border-red-200 overflow-hidden">
+                            <div class="px-6 py-4 flex items-center gap-3 border-b border-red-100 bg-red-50/30">
+                                <div class="w-7 h-7 bg-red-100 rounded-full flex items-center justify-center">
+                                    <i data-lucide="user" class="w-3.5 h-3.5 text-red-700"></i>
+                                </div>
+                                <span class="text-sm font-medium">Top 5 highest rating by performance</span>
+                                <span class="badge bg-red-100 text-red-700 ml-auto">Expert</span>
+                            </div>
+                            <div class="px-6 py-4">
+                                <div class="result-box">
+                                    <div class="label">Cortex Response</div>
+                                    <div class="value">Joined PERFORMANCE → EMPLOYEES, ordered by RATING descending, limited to top 5 — with employee names.</div>
+                                </div>
+                                <p class="text-xs text-slate-400 mt-2 flex items-center gap-1"><i data-lucide="info" class="w-3 h-3"></i> Understood "top 5" means LIMIT 5, "highest rating" means ORDER BY DESC, and "by performance" means the PERFORMANCE table.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ========== SECTION 5: Sales Analyst Exercise ========== -->
+                <section id="sales-analyst" class="mb-20 scroll-mt-28">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center">
+                            <i data-lucide="shopping-cart" class="w-5 h-5 text-amber-600"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-widest text-amber-600">Section 5</span>
+                            <h2 class="font-serif text-3xl md:text-4xl tracking-tight">Sales Analyst — Superstore Exercise</h2>
+                        </div>
+                    </div>
+                    <div class="bg-amber-50 rounded-2xl p-6 border border-amber-200 mb-8">
+                        <h4 class="font-semibold text-sm text-amber-900 mb-2 flex items-center gap-2"><i data-lucide="alert-triangle" class="w-4 h-4"></i> Key Difference from HR Analyst</h4>
+                        <p class="text-sm text-amber-800 leading-relaxed">For the Sales Analyst, we used a <strong>single Superstore CSV file</strong> loaded into Snowflake. This means <strong>no relationship setup</strong> was needed — because all dimensions and measures were in one flat table (unlike HR which had 5 related tables).</p>
+                    </div>
+
+                    <div class="bg-white rounded-xl border border-slate-200 p-6 mb-6">
+                        <h4 class="font-semibold text-sm mb-4">Setup Steps (Same as HR, with one difference)</h4>
+                        <div class="grid sm:grid-cols-2 gap-3">
+                            <div class="flex items-start gap-2 text-sm text-slate-600">
+                                <i data-lucide="check" class="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Load Superstore CSV into Snowflake table</span>
+                            </div>
+                            <div class="flex items-start gap-2 text-sm text-slate-600">
+                                <i data-lucide="check" class="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Go to AI & ML → Analyst → Create with Autopilot</span>
+                            </div>
+                            <div class="flex items-start gap-2 text-sm text-slate-600">
+                                <i data-lucide="check" class="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Name: <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs font-mono">SALES_ANALYST</code></span>
+                            </div>
+                            <div class="flex items-start gap-2 text-sm text-slate-600">
+                                <i data-lucide="check" class="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Select the single Superstore table</span>
+                            </div>
+                            <div class="flex items-start gap-2 text-sm text-slate-600">
+                                <i data-lucide="check" class="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Select all columns</span>
+                            </div>
+                            <div class="flex items-start gap-2 text-sm text-orange-600">
+                                <i data-lucide="x" class="w-4 h-4 mt-0.5 flex-shrink-0"></i>
+                                <span><strong>No relationship step</strong> — single table!</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4 class="font-semibold text-sm mb-4">Questions We Asked:</h4>
+                    <div class="space-y-4">
+                        <div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
+                            <div class="px-6 py-4 flex items-center gap-3 border-b border-slate-100">
+                                <div class="w-7 h-7 bg-amber-100 rounded-full flex items-center justify-center"><i data-lucide="user" class="w-3.5 h-3.5 text-amber-700"></i></div>
+                                <span class="text-sm font-medium">Total sales and profit</span>
+                                <span class="badge bg-green-50 text-green-700 ml-auto">Basic</span>
+                            </div>
+                            <div class="px-6 py-4"><div class="result-box"><div class="label">Cortex Response</div><div class="value">Returned SUM of Sales and SUM of Profit from the Superstore table.</div></div></div>
+                        </div>
+                        <div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
+                            <div class="px-6 py-4 flex items-center gap-3 border-b border-slate-100">
+                                <div class="w-7 h-7 bg-amber-100 rounded-full flex items-center justify-center"><i data-lucide="user" class="w-3.5 h-3.5 text-amber-700"></i></div>
+                                <span class="text-sm font-medium">Breakup by sub-category</span>
+                                <span class="badge bg-green-50 text-green-700 ml-auto">Basic</span>
+                            </div>
+                            <div class="px-6 py-4"><div class="result-box"><div class="label">Cortex Response</div><div class="value">Returned sales/profit grouped by each sub-category.</div></div></div>
+                        </div>
+                        <div class="bg-white rounded-xl border border-red-200 overflow-hidden">
+                            <div class="px-6 py-4 flex items-center gap-3 border-b border-red-100 bg-red-50/30">
+                                <div class="w-7 h-7 bg-red-100 rounded-full flex items-center justify-center"><i data-lucide="user" class="w-3.5 h-3.5 text-red-700"></i></div>
+                                <span class="text-sm font-medium">How many repeat customers?</span>
+                                <span class="badge bg-red-100 text-red-700 ml-auto">Expert</span>
+                            </div>
+                            <div class="px-6 py-4">
+                                <div class="result-box">
+                                    <div class="label">Cortex Response</div>
+                                    <div class="value">Correctly identified customers with more than 1 order (COUNT > 1 per Customer ID) and returned the count.</div>
+                                </div>
+                                <p class="text-xs text-slate-400 mt-2 flex items-center gap-1"><i data-lucide="info" class="w-3 h-3"></i> AI understood "repeat" means customers appearing multiple times — used subquery/count logic automatically.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl border border-red-200 overflow-hidden">
+                            <div class="px-6 py-4 flex items-center gap-3 border-b border-red-100 bg-red-50/30">
+                                <div class="w-7 h-7 bg-red-100 rounded-full flex items-center justify-center"><i data-lucide="user" class="w-3.5 h-3.5 text-red-700"></i></div>
+                                <span class="text-sm font-medium">Ratio of one-time and repeat customers by category</span>
+                                <span class="badge bg-red-100 text-red-700 ml-auto">Expert</span>
+                            </div>
+                            <div class="px-6 py-4">
+                                <div class="result-box">
+                                    <div class="label">Cortex Response</div>
+                                    <div class="value">Classified customers as one-time vs repeat, then computed the ratio, grouped by each category — all correct!</div>
+                                </div>
+                                <p class="text-xs text-slate-400 mt-2 flex items-center gap-1"><i data-lucide="info" class="w-3 h-3"></i> This is a complex multi-step query: CASE WHEN + COUNT + GROUP BY + ratio calculation — AI nailed it.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ========== SECTION 6: AI Functions ========== -->
+                <section id="ai-functions" class="mb-20 scroll-mt-28">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center">
+                            <i data-lucide="function-square" class="w-5 h-5 text-indigo-600"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-widest text-indigo-600">Section 6</span>
+                            <h2 class="font-serif text-3xl md:text-4xl tracking-tight">Snowflake AI Functions</h2>
+                        </div>
+                    </div>
+                    <p class="text-slate-600 leading-relaxed mb-8">Snowflake Cortex AI Functions let you run AI directly inside SQL queries. No Python, no API keys, no external setup — just write SQL and call the function. We practiced 5 functions in our session.</p>
+
+                    <!-- Function 1: COMPLETE -->
+                    <div class="mb-8 bg-white rounded-2xl border border-slate-200 overflow-hidden">
+                        <div class="px-6 py-5 border-b border-slate-100 flex items-center gap-3">
+                            <div class="w-8 h-8 bg-violet-100 rounded-lg flex items-center justify-center">
+                                <span class="text-violet-700 font-bold text-xs">1</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-sm">SNOWFLAKE.CORTEX.COMPLETE()</h4>
+                                <p class="text-xs text-slate-400">Text Generation / Chat Completion</p>
+                            </div>
+                        </div>
+                        <div class="p-6 space-y-4">
+                            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
+                                <h5 class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-2">What it does</h5>
+                                <p class="text-sm text-slate-600 leading-relaxed">Generates human-like text responses for any prompt you give it. Think of it as ChatGPT but running inside your Snowflake SQL worksheet. You specify which model to use (like <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs font-mono">snowflake-arctic</code>) and the prompt.</p>
+                            </div>
+                            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
+                                <h5 class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-2">Why use it</h5>
+                                <p class="text-sm text-slate-600 leading-relaxed">Generate summaries, write emails, create documentation, answer questions — all from within your data pipeline. Since it runs inside Snowflake, your data stays secure.</p>
+                            </div>
+                            <div class="code-block">
+                                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<span class="keyword">SELECT</span> <span class="function">SNOWFLAKE.CORTEX.COMPLETE</span>(
+    <span class="string">'snowflake-arctic'</span>,
+    <span class="string">'Tell me what is special about bangalore for first time visitors'</span>
+);
+                            </div>
+                            <div class="result-box">
+                                <div class="label">Output</div>
+                                <div class="value">A detailed paragraph about Bangalore's weather, food, tech culture, parks, and tips for first-time visitors.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Function 2: SENTIMENT -->
+                    <div class="mb-8 bg-white rounded-2xl border border-slate-200 overflow-hidden">
+                        <div class="px-6 py-5 border-b border-slate-100 flex items-center gap-3">
+                            <div class="w-8 h-8 bg-violet-100 rounded-lg flex items-center justify-center">
+                                <span class="text-violet-700 font-bold text-xs">2</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-sm">SNOWFLAKE.CORTEX.SENTIMENT()</h4>
+                                <p class="text-xs text-slate-400">Sentiment Analysis</p>
+                            </div>
+                        </div>
+                        <div class="p-6 space-y-4">
+                            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
+                                <h5 class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-2">What it does</h5>
+                                <p class="text-sm text-slate-600 leading-relaxed">Analyzes a piece of text and returns whether the sentiment is <strong class="text-slate-900">positive</strong>, <strong class="text-slate-900">negative</strong>, or <strong class="text-slate-900">neutral</strong>. It reads between the lines — understands frustration even without explicit negative words.</p>
+                            </div>
+                            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
+                                <h5 class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-2">Why use it</h5>
+                                <p class="text-sm text-slate-600 leading-relaxed">Analyze customer feedback, product reviews, support tickets, social media mentions at scale. Run it on millions of rows to understand overall customer sentiment without reading each one.</p>
+                            </div>
+                            <div class="code-block">
+                                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<span class="keyword">SELECT</span> <span class="function">SNOWFLAKE.CORTEX.SENTIMENT</span>(
+    <span class="string">'I got my parcel yesterday and i had to followup with many people'</span>
+);
+                            </div>
+                            <div class="bg-red-50 rounded-xl p-4 border border-red-200">
+                                <div class="label" style="color: #991b1b;">Output: NEGATIVE</div>
+                                <div class="value" style="color: #7f1d1d;">Even though there's no explicit "bad" word, the AI understood that "had to followup with many people" indicates a frustrating experience.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Function 3: TRANSLATE -->
+                    <div class="mb-8 bg-white rounded-2xl border border-slate-200 overflow-hidden">
+                        <div class="px-6 py-5 border-b border-slate-100 flex items-center gap-3">
+                            <div class="w-8 h-8 bg-violet-100 rounded-lg flex items-center justify-center">
+                                <span class="text-violet-700 font-bold text-xs">3</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-sm">SNOWFLAKE.CORTEX.TRANSLATE()</h4>
+                                <p class="text-xs text-slate-400">Language Translation</p>
+                            </div>
+                        </div>
+                        <div class="p-6 space-y-4">
+                            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
+                                <h5 class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-2">What it does</h5>
+                                <p class="text-sm text-slate-600 leading-relaxed">Translates text from one language to another. You provide the text, source language code, and target language code. Supports 100+ languages.</p>
+                            </div>
+                            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
+                                <h5 class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-2">Why use it</h5>
+                                <p class="text-sm text-slate-600 leading-relaxed">Translate product descriptions, customer communications, support responses, or entire columns of multilingual data. Perfect for global companies with localized content needs.</p>
+                            </div>
+                            <div class="code-block">
+                                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<span class="keyword">SELECT</span> <span class="function">SNOWFLAKE.CORTEX.TRANSLATE</span>(
+    <span class="string">'Welcome to our data analytics course'</span>,
+    <span class="string">'en'</span>,  <span class="comment">-- source: English</span>
+    <span class="string">'hi'</span>   <span class="comment">-- target: Hindi</span>
+);
+                            </div>
+                            <div class="result-box">
+                                <div class="label">Output</div>
+                                <div class="value">हमारे डेटा एनालिटिक्स कोर्स में आपका स्वागत है</div>
+                            </div>
+                            <div class="bg-blue-50 rounded-xl p-4 border border-blue-200">
+                                <p class="text-xs text-blue-800 flex items-start gap-2"><i data-lucide="info" class="w-4 h-4 mt-0.5 flex-shrink-0"></i> <span>Common language codes: <strong>en</strong> (English), <strong>hi</strong> (Hindi), <strong>es</strong> (Spanish), <strong>fr</strong> (French), <strong>de</strong> (German), <strong>ja</strong> (Japanese), <strong>zh</strong> (Chinese), <strong>ta</strong> (Tamil), <strong>te</strong> (Telugu), <strong>kn</strong> (Kannada)</span></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Function 4: CLASSIFY_TEXT (Example 1) -->
+                    <div class="mb-8 bg-white rounded-2xl border border-slate-200 overflow-hidden">
+                        <div class="px-6 py-5 border-b border-slate-100 flex items-center gap-3">
+                            <div class="w-8 h-8 bg-violet-100 rounded-lg flex items-center justify-center">
+                                <span class="text-violet-700 font-bold text-xs">4</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-sm">SNOWFLAKE.CORTEX.CLASSIFY_TEXT() — Example 1</h4>
+                                <p class="text-xs text-slate-400">Text Classification — Support Ticket</p>
+                            </div>
+                        </div>
+                        <div class="p-6 space-y-4">
+                            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
+                                <h5 class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-2">What it does</h5>
+                                <p class="text-sm text-slate-600 leading-relaxed">Takes a text input and a list of categories, then <strong class="text-slate-900">classifies the text into the best matching category</strong>. It uses AI to understand context — not just keyword matching.</p>
+                            </div>
+                            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
+                                <h5 class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-2">Why use it</h5>
+                                <p class="text-sm text-slate-600 leading-relaxed">Automatically categorize support tickets, customer feedback, emails, or any unstructured text into predefined buckets. Saves hours of manual tagging and routing.</p>
+                            </div>
+                            <div class="code-block">
+                                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<span class="keyword">SELECT</span> <span class="function">SNOWFLAKE.CORTEX.CLASSIFY_TEXT</span>(
+    <span class="string">'I have made a transaction already but its not reflecting'</span>,
+    <span class="function">ARRAY_CONSTRUCT</span>(<span class="string">'Shipping'</span>, <span class="string">'Payment'</span>, <span class="string">'Technical'</span>)
+);
+                            </div>
+                            <div class="result-box">
+                                <div class="label">Output: Payment</div>
+                                <div class="value">The AI correctly identified this as a Payment issue — "transaction" and "not reflecting" relate to payment processing, not shipping or technical problems.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Function 5: CLASSIFY_TEXT (Example 2) -->
+                    <div class="mb-8 bg-white rounded-2xl border border-slate-200 overflow-hidden">
+                        <div class="px-6 py-5 border-b border-slate-100 flex items-center gap-3">
+                            <div class="w-8 h-8 bg-violet-100 rounded-lg flex items-center justify-center">
+                                <span class="text-violet-700 font-bold text-xs">5</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-sm">SNOWFLAKE.CORTEX.CLASSIFY_TEXT() — Example 2</h4>
+                                <p class="text-xs text-slate-400">Text Classification — HR Query</p>
+                            </div>
+                        </div>
+                        <div class="p-6 space-y-4">
+                            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
+                                <h5 class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-2">Same function, different domain</h5>
+                                <p class="text-sm text-slate-600 leading-relaxed">Here we used the same CLASSIFY_TEXT but for an HR context — categorizing an employee query into the right department category. This shows the function is <strong class="text-slate-900">domain-agnostic</strong>.</p>
+                            </div>
+                            <div class="code-block">
+                                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<span class="keyword">SELECT</span> <span class="function">SNOWFLAKE.CORTEX.CLASSIFY_TEXT</span>(
+    <span class="string">'I want to take multiple sick leave but i dont know whether my company allows me to take'</span>,
+    <span class="function">ARRAY_CONSTRUCT</span>(<span class="string">'Onboarding'</span>, <span class="string">'HR Policy'</span>, <span class="string">'Project'</span>)
+);
+                            </div>
+                            <div class="result-box">
+                                <div class="label">Output: HR Policy</div>
+                                <div class="value">Correctly classified as HR Policy — "sick leave" and "company allows" are policy-related, not about onboarding or projects.</div>
+                            </div>
+                            <div class="bg-gradient-to-r from-violet-50 to-indigo-50 rounded-xl p-4 border border-violet-200">
+                                <p class="text-xs text-violet-800 flex items-start gap-2"><i data-lucide="lightbulb" class="w-4 h-4 mt-0.5 flex-shrink-0"></i> <span><strong>Real-world use:</strong> You can run CLASSIFY_TEXT on an entire column of support tickets in a single query: <code class="bg-white/60 px-1.5 py-0.5 rounded text-xs font-mono">SELECT ticket_text, CLASSIFY_TEXT(ticket_text, ARRAY_CONSTRUCT('Billing', 'Technical', 'General')) FROM tickets</code></span></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Functions Summary -->
+                    <div class="bg-slate-950 rounded-2xl p-6 text-white">
+                        <h4 class="font-semibold text-sm mb-4 flex items-center gap-2"><i data-lucide="bookmark" class="w-4 h-4 text-cyan-400"></i> Quick Reference — All 5 Functions</h4>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm">
+                                <thead>
+                                    <tr class="border-b border-slate-800">
+                                        <th class="text-left py-3 pr-4 text-xs font-bold uppercase tracking-widest text-slate-400">Function</th>
+                                        <th class="text-left py-3 pr-4 text-xs font-bold uppercase tracking-widest text-slate-400">Purpose</th>
+                                        <th class="text-left py-3 text-xs font-bold uppercase tracking-widest text-slate-400">Example Use Case</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-slate-300">
+                                    <tr class="border-b border-slate-800/50">
+                                        <td class="py-3 pr-4 font-mono text-xs text-cyan-400">COMPLETE()</td>
+                                        <td class="py-3 pr-4">Generate text from prompt</td>
+                                        <td class="py-3">Summarize reports, write emails, answer questions</td>
+                                    </tr>
+                                    <tr class="border-b border-slate-800/50">
+                                        <td class="py-3 pr-4 font-mono text-xs text-cyan-400">SENTIMENT()</td>
+                                        <td class="py-3 pr-4">Detect positive/negative/neutral</td>
+                                        <td class="py-3">Analyze customer reviews, feedback, social media</td>
+                                    </tr>
+                                    <tr class="border-b border-slate-800/50">
+                                        <td class="py-3 pr-4 font-mono text-xs text-cyan-400">TRANSLATE()</td>
+                                        <td class="py-3 pr-4">Translate between languages</td>
+                                        <td class="py-3">Localize content, multilingual support</td>
+                                    </tr>
+                                    <tr class="border-b border-slate-800/50">
+                                        <td class="py-3 pr-4 font-mono text-xs text-cyan-400">CLASSIFY_TEXT()</td>
+                                        <td class="py-3 pr-4">Categorize text into labels</td>
+                                        <td class="py-3">Route support tickets, tag feedback, organize emails</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3 pr-4 font-mono text-xs text-slate-500 italic" colspan="3">+ Many more: EMBED_TEXT(), SUMMARIZE(), EXTRACTION(), COMPLETE_WITH_HISTORY()...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ========== SECTION 7: Why AI over SQL Only ========== -->
+                <section id="why-ai" class="mb-20 scroll-mt-28">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 bg-red-50 rounded-xl flex items-center justify-center">
+                            <i data-lucide="trending-up" class="w-5 h-5 text-red-600"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-widest text-red-600">Section 7</span>
+                            <h2 class="font-serif text-3xl md:text-4xl tracking-tight">Why SQL Alone Is NOT Enough</h2>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-slate-950 to-slate-900 rounded-2xl p-8 md:p-10 text-white mb-8 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl"></div>
+                        <div class="relative">
+                            <h3 class="font-serif text-2xl md:text-3xl mb-6 text-white/90">The Hard Truth About Today's Job Market</h3>
+                            <p class="text-slate-300 leading-relaxed mb-8 text-lg">
+                                Every student knows SQL. Every candidate writes SELECT, WHERE, GROUP BY in interviews. <strong class="text-white">SQL is now a baseline expectation, not a differentiator.</strong> The candidates who get selected are the ones who can combine SQL with AI capabilities.
+                            </p>
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div class="bg-white/5 backdrop-blur-sm rounded-xl p-5 border border-white/10">
+                                    <h4 class="font-semibold text-sm text-red-400 mb-3 flex items-center gap-2"><i data-lucide="alert-circle" class="w-4 h-4"></i> SQL-Only Candidate</h4>
+                                    <ul class="space-y-2 text-sm text-slate-400">
+                                        <li class="flex items-start gap-2"><i data-lucide="x" class="w-4 h-4 mt-0.5 text-red-400/60"></i>Can write queries but can't build AI solutions</li>
+                                        <li class="flex items-start gap-2"><i data-lucide="x" class="w-4 h-4 mt-0.5 text-red-400/60"></i>Needs manual effort for text analysis</li>
+                                        <li class="flex items-start gap-2"><i data-lucide="x" class="w-4 h-4 mt-0.5 text-red-400/60"></i>Can't enable self-service analytics</li>
+                                        <li class="flex items-start gap-2"><i data-lucide="x" class="w-4 h-4 mt-0.5 text-red-400/60"></i>Same resume as 1000 other applicants</li>
+                                        <li class="flex items-start gap-2"><i data-lucide="x" class="w-4 h-4 mt-0.5 text-red-400/60"></i>Salary expectations are lower</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-white/5 backdrop-blur-sm rounded-xl p-5 border border-cyan-500/30">
+                                    <h4 class="font-semibold text-sm text-cyan-400 mb-3 flex items-center gap-2"><i data-lucide="rocket" class="w-4 h-4"></i> SQL + AI Candidate</h4>
+                                    <ul class="space-y-2 text-sm text-slate-400">
+                                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 text-cyan-400/80"></i>Builds end-to-end AI-powered solutions</li>
+                                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 text-cyan-400/80"></i>Automates sentiment, classification, translation at scale</li>
+                                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 text-cyan-400/80"></i>Creates Cortex Analyst for business self-service</li>
+                                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 text-cyan-400/80"></i>Stands out — rare skill combination</li>
+                                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 text-cyan-400/80"></i>Commands 30-50% higher salary</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid sm:grid-cols-3 gap-4 mb-8">
+                        <div class="step-card bg-white rounded-xl p-6 border border-slate-200">
+                            <div class="text-3xl font-bold text-slate-900 mb-1">78%</div>
+                            <p class="text-sm text-slate-500">of data job postings now mention AI/ML skills as preferred or required</p>
+                        </div>
+                        <div class="step-card bg-white rounded-xl p-6 border border-slate-200">
+                            <div class="text-3xl font-bold text-cyan-600 mb-1">3x</div>
+                            <p class="text-sm text-slate-500">more interview calls for candidates with AI + SQL vs SQL alone</p>
+                        </div>
+                        <div class="step-card bg-white rounded-xl p-6 border border-slate-200">
+                            <div class="text-3xl font-bold text-emerald-600 mb-1">2025</div>
+                            <p class="text-sm text-slate-500">is the year AI-in-database goes mainstream — early learners win</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-emerald-50 rounded-2xl p-6 border border-emerald-200">
+                        <h4 class="font-semibold text-sm text-emerald-900 mb-3 flex items-center gap-2"><i data-lucide="graduation-cap" class="w-4 h-4"></i> What You Should Do Now</h4>
+                        <div class="space-y-3">
+                            <div class="flex items-start gap-3 text-sm text-emerald-800">
+                                <span class="w-6 h-6 bg-emerald-200 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">1</span>
+                                <span><strong>Master SQL basics</strong> — they are the foundation (topics listed in next section)</span>
+                            </div>
+                            <div class="flex items-start gap-3 text-sm text-emerald-800">
+                                <span class="w-6 h-6 bg-emerald-200 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">2</span>
+                                <span><strong>Practice Cortex Analyst</strong> — create analysts on different datasets (sales, finance, marketing)</span>
+                            </div>
+                            <div class="flex items-start gap-3 text-sm text-emerald-800">
+                                <span class="w-6 h-6 bg-emerald-200 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">3</span>
+                                <span><strong>Use AI Functions daily</strong> — COMPLETE, SENTIMENT, TRANSLATE, CLASSIFY_TEXT on real data</span>
+                            </div>
+                            <div class="flex items-start gap-3 text-sm text-emerald-800">
+                                <span class="w-6 h-6 bg-emerald-200 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">4</span>
+                                <span><strong>Build a portfolio project</strong> — end-to-end Gen AI solution on Snowflake to show in interviews</span>
+                            </div>
+                            <div class="flex items-start gap-3 text-sm text-emerald-800">
+                                <span class="w-6 h-6 bg-emerald-200 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">5</span>
+                                <span><strong>Put it on your resume</strong> — "Built Gen AI analytics using Snowflake Cortex Analyst & AI Functions" is a massive differentiator</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ========== SECTION 8: Must-Know SQL Topics ========== -->
+                <section id="sql-topics" class="mb-20 scroll-mt-28">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center">
+                            <i data-lucide="code-2" class="w-5 h-5 text-blue-600"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-widest text-blue-600">Section 8</span>
+                            <h2 class="font-serif text-3xl md:text-4xl tracking-tight">Must-Know SQL Topics for Interviews</h2>
+                        </div>
+                    </div>
+                    <p class="text-slate-600 leading-relaxed mb-8">AI is the future, but SQL is the foundation. You <strong>cannot</strong> build AI solutions without solid SQL. These are the topics that appear in <strong>90% of data interviews</strong>. Master them thoroughly.</p>
+
+                    <!-- Topic 1: SELECT -->
+                    <div class="mb-6 bg-white rounded-2xl border border-slate-200 overflow-hidden">
+                        <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-6 py-5 hover:bg-slate-50 transition-colors">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center text-blue-700 font-bold text-xs">1</div>
+                                <div class="text-left">
+                                    <span class="font-semibold text-sm">SELECT Command</span>
+                                    <p class="text-xs text-slate-400">The most fundamental SQL command</p>
+                                </div>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 transition-transform"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="px-6 pb-6">
+                                <p class="text-sm text-slate-600 mb-4">SELECT retrieves data from tables. Every query starts with SELECT.</p>
+                                <div class="code-block mb-3">
+                                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<span class="comment">-- Select all columns</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> employees;
+
+<span class="comment">-- Select specific columns</span>
+<span class="keyword">SELECT</span> first_name, last_name, salary <span class="keyword">FROM</span> employees;
+
+<span class="comment">-- Select with alias</span>
+<span class="keyword">SELECT</span> salary <span class="keyword">AS</span> monthly_salary, salary * 12 <span class="keyword">AS</span> annual_salary <span class="keyword">FROM</span> employees;
+
+<span class="comment">-- Select distinct values</span>
+<span class="keyword">SELECT DISTINCT</span> city <span class="keyword">FROM</span> employees;
+                                </div>
+                                <div class="bg-blue-50 rounded-lg p-3 text-xs text-blue-800">
+                                    <strong>Interview Tip:</strong> Always specify column names instead of SELECT * in production. Interviewers check this.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Topic 2: WHERE -->
+                    <div class="mb-6 bg-white rounded-2xl border border-slate-200 overflow-hidden">
+                        <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-6 py-5 hover:bg-slate-50 transition-colors">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center text-blue-700 font-bold text-xs">2</div>
+                                <div class="text-left">
+                                    <span class="font-semibold text-sm">WHERE Clause with All Operators</span>
+                                    <p class="text-xs text-slate-400">Filtering data — most tested topic</p>
+                                </div>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 transition-transform"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="px-6 pb-6">
+                                <p class="text-sm text-slate-600 mb-4">WHERE filters rows based on conditions. Master every operator.</p>
+                                <div class="code-block mb-3">
+                                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<span class="comment">-- Comparison: =, >, <, >=, <=, !=</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> employees <span class="keyword">WHERE</span> salary > 50000;
+
+<span class="comment">-- BETWEEN</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> employees <span class="keyword">WHERE</span> salary <span class="keyword">BETWEEN</span> 40000 <span class="keyword">AND</span> 80000;
+
+<span class="comment">-- IN</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> employees <span class="keyword">WHERE</span> city <span class="keyword">IN</span> (<span class="string">'Bangalore'</span>, <span class="string">'Mumbai'</span>, <span class="string">'Delhi'</span>);
+
+<span class="comment">-- LIKE (pattern matching)</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> employees <span class="keyword">WHERE</span> first_name <span class="keyword">LIKE</span> <span class="string">'R%'</span>;  <span class="comment">-- starts with R</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> employees <span class="keyword">WHERE</span> email <span class="keyword">LIKE</span> <span class="string">'%@gmail.com'</span>;
+
+<span class="comment">-- IS NULL / IS NOT NULL</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> employees <span class="keyword">WHERE</span> department_id <span class="keyword">IS NULL</span>;
+
+<span class="comment">-- Logical: AND, OR, NOT</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> employees <span class="keyword">WHERE</span> city = <span class="string">'Bangalore'</span> <span class="keyword">AND</span> salary > 60000;
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> employees <span class="keyword">WHERE</span> city = <span class="string">'Bangalore'</span> <span class="keyword">OR</span> city = <span class="string">'Mumbai'</span>;
+                                </div>
+                                <div class="bg-blue-50 rounded-lg p-3 text-xs text-blue-800">
+                                    <strong>Interview Tip:</strong> Know the difference between WHERE and HAVING. WHERE filters rows before GROUP BY, HAVING filters groups after.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Topic 3: ORDER BY -->
+                    <div class="mb-6 bg-white rounded-2xl border border-slate-200 overflow-hidden">
+                        <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-6 py-5 hover:bg-slate-50 transition-colors">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center text-blue-700 font-bold text-xs">3</div>
+                                <div class="text-left">
+                                    <span class="font-semibold text-sm">ORDER BY</span>
+                                    <p class="text-xs text-slate-400">Sorting results</p>
+                                </div>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 transition-transform"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="px-6 pb-6">
+                                <div class="code-block mb-3">
+                                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<span class="comment">-- Ascending (default)</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> employees <span class="keyword">ORDER BY</span> salary <span class="keyword">ASC</span>;
+
+<span class="comment">-- Descending</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> employees <span class="keyword">ORDER BY</span> salary <span class="keyword">DESC</span>;
+
+<span class="comment">-- Multiple columns</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> employees <span class="keyword">ORDER BY</span> city <span class="keyword">ASC</span>, salary <span class="keyword">DESC</span>;
+
+<span class="comment">-- With LIMIT</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> employees <span class="keyword">ORDER BY</span> salary <span class="keyword">DESC</span> <span class="keyword">LIMIT</span> 5;
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Topic 4: Aggregate Functions -->
+                    <div class="mb-6 bg-white rounded-2xl border border-slate-200 overflow-hidden">
+                        <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-6 py-5 hover:bg-slate-50 transition-colors">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center text-blue-700 font-bold text-xs">4</div>
+                                <div class="text-left">
+                                    <span class="font-semibold text-sm">Aggregate Functions</span>
+                                    <p class="text-xs text-slate-400">COUNT, SUM, AVG, MIN, MAX</p>
+                                </div>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 transition-transform"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="px-6 pb-6">
+                                <div class="code-block mb-3">
+                                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<span class="keyword">SELECT</span>
+    <span class="function">COUNT</span>(*) <span class="keyword">AS</span> total_employees,
+    <span class="function">COUNT</span>(<span class="keyword">DISTINCT</span> city) <span class="keyword">AS</span> unique_cities,
+    <span class="function">SUM</span>(salary) <span class="keyword">AS</span> total_salary,
+    <span class="function">AVG</span>(salary) <span class="keyword">AS</span> avg_salary,
+    <span class="function">MIN</span>(salary) <span class="keyword">AS</span> min_salary,
+    <span class="function">MAX</span>(salary) <span class="keyword">AS</span> max_salary
+<span class="keyword">FROM</span> employees;
+
+<span class="comment">-- With GROUP BY</span>
+<span class="keyword">SELECT</span> city, <span class="function">COUNT</span>(*) <span class="keyword">AS</span> emp_count, <span class="function">AVG</span>(salary) <span class="keyword">AS</span> avg_sal
+<span class="keyword">FROM</span> employees
+<span class="keyword">GROUP BY</span> city;
+
+<span class="comment">-- With HAVING</span>
+<span class="keyword">SELECT</span> city, <span class="function">COUNT</span>(*) <span class="keyword">AS</span> emp_count
+<span class="keyword">FROM</span> employees
+<span class="keyword">GROUP BY</span> city
+<span class="keyword">HAVING</span> <span class="function">COUNT</span>(*) > 10;
+                                </div>
+                                <div class="bg-blue-50 rounded-lg p-3 text-xs text-blue-800">
+                                    <strong>Interview Tip:</strong> COUNT(*) counts all rows including NULLs. COUNT(column_name) excludes NULLs. This is a very common interview question!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Topic 5: Text Functions -->
+                    <div class="mb-6 bg-white rounded-2xl border border-slate-200 overflow-hidden">
+                        <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-6 py-5 hover:bg-slate-50 transition-colors">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center text-blue-700 font-bold text-xs">5</div>
+                                <div class="text-left">
+                                    <span class="font-semibold text-sm">Text / String Functions</span>
+                                    <p class="text-xs text-slate-400">UPPER, LOWER, SUBSTRING, CONCAT, TRIM...</p>
+                                </div>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 transition-transform"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="px-6 pb-6">
+                                <div class="code-block mb-3">
+                                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<span class="keyword">SELECT</span>
+    <span class="function">UPPER</span>(first_name),            <span class="comment">-- Convert to uppercase</span>
+    <span class="function">LOWER</span>(email),                 <span class="comment">-- Convert to lowercase</span>
+    <span class="function">CONCAT</span>(first_name, <span class="string">' '</span>, last_name), <span class="comment">-- Concatenate strings</span>
+    <span class="function">SUBSTRING</span>(email, 1, 5),        <span class="comment">-- Extract characters</span>
+    <span class="function">LENGTH</span>(first_name),            <span class="comment">-- String length</span>
+    <span class="function">TRIM</span>(<span class="string">'  hello  '</span>),           <span class="comment">-- Remove leading/trailing spaces</span>
+    <span class="function">REPLACE</span>(email, <span class="string">'@'</span>, <span class="string">'[at]'</span>), <span class="comment">-- Replace substring</span>
+    <span class="function">LEFT</span>(phone, 4),               <span class="comment">-- First 4 characters</span>
+    <span class="function">RIGHT</span>(phone, 4)               <span class="comment">-- Last 4 characters</span>
+<span class="keyword">FROM</span> employees;
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Topic 6: Date Functions -->
+                    <div class="mb-6 bg-white rounded-2xl border border-slate-200 overflow-hidden">
+                        <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-6 py-5 hover:bg-slate-50 transition-colors">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center text-blue-700 font-bold text-xs">6</div>
+                                <div class="text-left">
+                                    <span class="font-semibold text-sm">Date Functions</span>
+                                    <p class="text-xs text-slate-400">DATE_TRUNC, DATEDIFF, DATEADD, CURRENT_DATE...</p>
+                                </div>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 transition-transform"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="px-6 pb-6">
+                                <div class="code-block mb-3">
+                                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<span class="keyword">SELECT</span>
+    <span class="function">CURRENT_DATE</span>(),                <span class="comment">-- Today's date</span>
+    <span class="function">CURRENT_TIMESTAMP</span>(),           <span class="comment">-- Current date + time</span>
+    <span class="function">YEAR</span>(hire_date),                <span class="comment">-- Extract year</span>
+    <span class="function">MONTH</span>(hire_date),               <span class="comment">-- Extract month (1-12)</span>
+    <span class="function">DAY</span>(hire_date),                 <span class="comment">-- Extract day</span>
+    <span class="function">DATEDIFF</span>(<span class="string">'day'</span>, hire_date, <span class="function">CURRENT_DATE</span>()), <span class="comment">-- Days between dates</span>
+    <span class="function">DATEADD</span>(<span class="string">'year'</span>, 1, hire_date),  <span class="comment">-- Add 1 year</span>
+    <span class="function">DATE_TRUNC</span>(<span class="string">'month'</span>, hire_date)  <span class="comment">-- Truncate to month start</span>
+<span class="keyword">FROM</span> employees;
+                                </div>
+                                <div class="bg-blue-50 rounded-lg p-3 text-xs text-blue-800">
+                                    <strong>Interview Tip:</strong> "Find employees with > 5 years experience" = DATEDIFF('year', hire_date, CURRENT_DATE()) > 5. Very commonly asked.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Topic 7: Logical Functions -->
+                    <div class="mb-6 bg-white rounded-2xl border border-slate-200 overflow-hidden">
+                        <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-6 py-5 hover:bg-slate-50 transition-colors">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center text-blue-700 font-bold text-xs">7</div>
+                                <div class="text-left">
+                                    <span class="font-semibold text-sm">Logical Functions</span>
+                                    <p class="text-xs text-slate-400">CASE WHEN, COALESCE, IFF, NULLIF</p>
+                                </div>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 transition-transform"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="px-6 pb-6">
+                                <div class="code-block mb-3">
+                                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<span class="comment">-- CASE WHEN (most important!)</span>
+<span class="keyword">SELECT</span> first_name, salary,
+    <span class="keyword">CASE</span>
+        <span class="keyword">WHEN</span> salary >= 80000 <span class="keyword">THEN</span> <span class="string">'High'</span>
+        <span class="keyword">WHEN</span> salary >= 50000 <span class="keyword">THEN</span> <span class="string">'Medium'</span>
+        <span class="keyword">ELSE</span> <span class="string">'Low'</span>
+    <span class="keyword">END AS</span> salary_band
+<span class="keyword">FROM</span> employees;
+
+<span class="comment">-- COALESCE (return first non-null value)</span>
+<span class="keyword">SELECT</span> <span class="function">COALESCE</span>(phone, mobile, email, <span class="string">'N/A'</span>) <span class="keyword">AS</span> contact <span class="keyword">FROM</span> employees;
+
+<span class="comment">-- IFF (Snowflake's inline IF)</span>
+<span class="keyword">SELECT</span> <span class="function">IFF</span>(salary > 60000, <span class="string">'Above Avg'</span>, <span class="string">'Below Avg'</span>) <span class="keyword">FROM</span> employees;
+
+<span class="comment">-- NULLIF (returns NULL if values match)</span>
+<span class="keyword">SELECT</span> <span class="function">NULLIF</span>(status, <span class="string">'N/A'</span>) <span class="keyword">FROM</span> employees;
+                                </div>
+                                <div class="bg-blue-50 rounded-lg p-3 text-xs text-blue-800">
+                                    <strong>Interview Tip:</strong> CASE WHEN is asked in 80% of interviews. Practice creating buckets, flags, and conditional calculations.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Topic 8: Rank Functions -->
+                    <div class="mb-6 bg-white rounded-2xl border border-slate-200 overflow-hidden">
+                        <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-6 py-5 hover:bg-slate-50 transition-colors">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center text-blue-700 font-bold text-xs">8</div>
+                                <div class="text-left">
+                                    <span class="font-semibold text-sm">Rank / Window Functions</span>
+                                    <p class="text-xs text-slate-400">RANK, DENSE_RANK, ROW_NUMBER, NTILE</p>
+                                </div>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 transition-transform"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="px-6 pb-6">
+                                <p class="text-sm text-slate-600 mb-4">Window functions perform calculations across a set of rows related to the current row — without collapsing the rows like GROUP BY.</p>
+                                <div class="code-block mb-4">
+                                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<span class="keyword">SELECT</span>
+    first_name, city, salary,
+    <span class="function">ROW_NUMBER</span>() <span class="keyword">OVER</span>(<span class="keyword">ORDER BY</span> salary <span class="keyword">DESC</span>) <span class="keyword">AS</span> row_num,
+    <span class="function">RANK</span>()       <span class="keyword">OVER</span>(<span class="keyword">ORDER BY</span> salary <span class="keyword">DESC</span>) <span class="keyword">AS</span> rank,
+    <span class="function">DENSE_RANK</span>()  <span class="keyword">OVER</span>(<span class="keyword">ORDER BY</span> salary <span class="keyword">DESC</span>) <span class="keyword">AS</span> dense_rank,
+    <span class="function">NTILE</span>(4)     <span class="keyword">OVER</span>(<span class="keyword">ORDER BY</span> salary <span class="keyword">DESC</span>) <span class="keyword">AS</span> quartile
+<span class="keyword">FROM</span> employees;
+
+<span class="comment">-- Partition by city</span>
+<span class="keyword">SELECT</span>
+    first_name, city, salary,
+    <span class="function">RANK</span>() <span class="keyword">OVER</span>(<span class="keyword">PARTITION BY</span> city <span class="keyword">ORDER BY</span> salary <span class="keyword">DESC</span>) <span class="keyword">AS</span> city_rank
+<span class="keyword">FROM</span> employees;
+                                </div>
+                                <div class="bg-amber-50 rounded-xl p-4 border border-amber-200 mb-3">
+                                    <h5 class="text-xs font-bold uppercase tracking-widest text-amber-700 mb-2">Key Difference</h5>
+                                    <div class="overflow-x-auto">
+                                        <table class="w-full text-xs">
+                                            <thead><tr class="border-b border-amber-200"><th class="text-left py-2 pr-4 text-amber-800">Salary</th><th class="text-left py-2 pr-4 text-amber-800">ROW_NUMBER</th><th class="text-left py-2 pr-4 text-amber-800">RANK</th><th class="text-left py-2 text-amber-800">DENSE_RANK</th></tr></thead>
+                                            <tbody class="text-amber-900">
+                                                <tr class="border-b border-amber-100"><td class="py-1.5 pr-4">10000</td><td class="py-1.5 pr-4">1</td><td class="py-1.5 pr-4">1</td><td class="py-1.5">1</td></tr>
+                                                <tr class="border-b border-amber-100"><td class="py-1.5 pr-4">10000</td><td class="py-1.5 pr-4">2</td><td class="py-1.5 pr-4">1</td><td class="py-1.5">1</td></tr>
+                                                <tr class="border-b border-amber-100"><td class="py-1.5 pr-4">9000</td><td class="py-1.5 pr-4">3</td><td class="py-1.5 pr-4">3</td><td class="py-1.5">2</td></tr>
+                                                <tr><td class="py-1.5 pr-4">8000</td><td class="py-1.5 pr-4">4</td><td class="py-1.5 pr-4">4</td><td class="py-1.5">3</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="bg-blue-50 rounded-lg p-3 text-xs text-blue-800">
+                                    <strong>Interview Tip:</strong> "Find the 2nd highest salary" → ROW_NUMBER = 2. "Top 3 employees per department" → PARTITION BY + RANK. These are guaranteed questions!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Topic 9: Joins -->
+                    <div class="mb-6 bg-white rounded-2xl border border-slate-200 overflow-hidden">
+                        <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-6 py-5 hover:bg-slate-50 transition-colors">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center text-blue-700 font-bold text-xs">9</div>
+                                <div class="text-left">
+                                    <span class="font-semibold text-sm">All Types of JOINs</span>
+                                    <p class="text-xs text-slate-400">INNER, LEFT, RIGHT, FULL, CROSS, SELF</p>
+                                </div>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 transition-transform"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="px-6 pb-6">
+                                <div class="code-block mb-4">
+                                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<span class="comment">-- INNER JOIN (only matching rows from both tables)</span>
+<span class="keyword">SELECT</span> e.first_name, d.department_name
+<span class="keyword">FROM</span> employees e
+<span class="keyword">INNER JOIN</span> departments d <span class="keyword">ON</span> e.department_id = d.department_id;
+
+<span class="comment">-- LEFT JOIN (all from left + matching from right)</span>
+<span class="keyword">SELECT</span> e.first_name, d.department_name
+<span class="keyword">FROM</span> employees e
+<span class="keyword">LEFT JOIN</span> departments d <span class="keyword">ON</span> e.department_id = d.department_id;
+<span class="comment">-- Employees without department will show NULL for department_name</span>
+
+<span class="comment">-- RIGHT JOIN (all from right + matching from left)</span>
+<span class="keyword">SELECT</span> e.first_name, d.department_name
+<span class="keyword">FROM</span> employees e
+<span class="keyword">RIGHT JOIN</span> departments d <span class="keyword">ON</span> e.department_id = d.department_id;
+<span class="comment">-- Departments without employees will show NULL for first_name</span>
+
+<span class="comment">-- FULL OUTER JOIN (all rows from both tables)</span>
+<span class="keyword">SELECT</span> e.first_name, d.department_name
+<span class="keyword">FROM</span> employees e
+<span class="keyword">FULL OUTER JOIN</span> departments d <span class="keyword">ON</span> e.department_id = d.department_id;
+
+<span class="comment">-- CROSS JOIN (every combination — Cartesian product)</span>
+<span class="keyword">SELECT</span> e.first_name, d.department_name
+<span class="keyword">FROM</span> employees e
+<span class="keyword">CROSS JOIN</span> departments d;
+
+<span class="comment">-- SELF JOIN (join table with itself)</span>
+<span class="keyword">SELECT</span> e1.first_name <span class="keyword">AS</span> employee, e2.first_name <span class="keyword">AS</span> manager
+<span class="keyword">FROM</span> employees e1
+<span class="keyword">LEFT JOIN</span> employees e2 <span class="keyword">ON</span> e1.manager_id = e2.employee_id;
+                                </div>
+                                <div class="bg-blue-50 rounded-lg p-3 text-xs text-blue-800">
+                                    <strong>Interview Tip:</strong> "Find departments with no employees" → LEFT JOIN + WHERE right_column IS NULL. "Find employees not in any department" → same pattern. These are top-5 most asked join questions.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </section>
+
+                <!-- ========== CTA / Contact Section ========== -->
+                <section class="mb-16">
+                    <div class="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 rounded-2xl p-8 md:p-12 text-center text-white relative overflow-hidden">
+                        <div class="absolute top-0 left-1/4 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl"></div>
+                        <div class="absolute bottom-0 right-1/4 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl"></div>
+                        <div class="relative">
+                            <div class="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-white/20">
+                                <i data-lucide="message-circle" class="w-8 h-8 text-green-400"></i>
+                            </div>
+                            <h2 class="font-serif text-3xl md:text-4xl mb-4">Got Doubts? Ping Me!</h2>
+                            <p class="text-slate-400 max-w-lg mx-auto mb-8 leading-relaxed">
+                                If anything from today's session is unclear — Cortex Analyst setup, AI functions, SQL topics, or anything else — just send a WhatsApp message. I'll respond as soon as possible.
+                            </p>
+                            <a href="https://wa.me/916364671786?text=Hi%20Sir%2C%20I%20attended%20the%20Snowflake%20Gen%20AI%20session%20and%20have%20a%20doubt" target="_blank" class="inline-flex items-center gap-3 bg-green-500 hover:bg-green-400 text-white px-8 py-4 rounded-xl font-semibold text-sm transition-colors shadow-lg shadow-green-500/25">
+                                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                                WhatsApp: +91 6364671786
+                            </a>
+                            <p class="text-xs text-slate-500 mt-4">Click the button above — it will open WhatsApp with a pre-filled message</p>
+                        </div>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 text-white py-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center">
+                        <i data-lucide="snowflake" class="w-4 h-4 text-white"></i>
+                    </div>
+                    <span class="font-semibold text-sm">Vizonis Academy</span>
+                </div>
+                <p class="text-xs text-slate-500 text-center">Snowflake Gen AI Session Reference Material — For attended students only</p>
+                <div class="flex items-center gap-4">
+                    <a href="https://wa.me/916364671786" target="_blank" class="text-slate-500 hover:text-white transition-colors">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/916364671786?text=Hi%20Sir%2C%20I%20attended%20the%20Snowflake%20Gen%20AI%20session%20and%20have%20a%20doubt" target="_blank" class="whatsapp-float no-print" title="Ping on WhatsApp">
+        <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Mobile menu toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu on link click
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mobileMenu').classList.add('hidden');
+            });
+        });
+
+        // Accordion toggle
+        function toggleAccordion(btn) {
+            const content = btn.nextElementSibling;
+            const icon = btn.querySelector('[data-lucide="chevron-down"]');
+            const isOpen = content.classList.contains('open');
+
+            // Close all others in the same parent
+            const parent = btn.closest('#tableAccordion, section');
+            if (parent) {
+                parent.querySelectorAll('.accordion-content.open').forEach(el => {
+                    if (el !== content) {
+                        el.classList.remove('open');
+                        const otherIcon = el.previousElementSibling?.querySelector('[data-lucide="chevron-down"]');
+                        if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
+                    }
+                });
+            }
+
+            content.classList.toggle('open');
+            if (icon) {
+                icon.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+            }
+        }
+
+        // Copy code function
+        function copyCode(btn) {
+            const codeBlock = btn.parentElement;
+            const text = codeBlock.innerText.replace('Copy', '').trim();
+            navigator.clipboard.writeText(text).then(() => {
+                const original = btn.textContent;
+                btn.textContent = 'Copied!';
+                btn.style.color = '#86efac';
+                setTimeout(() => {
+                    btn.textContent = original;
+                    btn.style.color = '#94a3b8';
+                }, 2000);
+            });
+        }
+
+        // Active TOC highlighting
+        const sections = document.querySelectorAll('section[id]');
+        const tocLinks = document.querySelectorAll('#tocNav .toc-link');
+
+        function highlightToc() {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 120;
+                if (window.scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+            tocLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', highlightToc);
+        highlightToc();
+    </script>
+</body>
+</html>
