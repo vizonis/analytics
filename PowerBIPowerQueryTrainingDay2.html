@@ -1,0 +1,1632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vizonis Academy | Power Query Transformations</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        obsidian: '#050505',
+                        charcoal: '#0F1115',
+                        acid: '#CCFF00',
+                        silver: '#E1E1E1',
+                        glass: 'rgba(255,255,255,0.05)',
+                        cardDark: '#0A0C10',
+                        cardDark2: '#111318',
+                    },
+                    fontFamily: {
+                        sans: ['Space Grotesk', 'sans-serif'],
+                        display: ['Syncopate', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        html{scroll-behavior:smooth}
+        body{font-family:'Space Grotesk',sans-serif;background:#050505;color:#E1E1E1;overflow-x:hidden}
+        .noise-overlay{position:fixed;inset:0;z-index:9000;pointer-events:none;opacity:.04;background-image:url('https://grainy-gradients.vercel.app/noise.svg')}
+        ::-webkit-scrollbar{width:6px}
+        ::-webkit-scrollbar-track{background:#050505}
+        ::-webkit-scrollbar-thumb{background:#CCFF00;border-radius:3px}
+        .gradient-text{background:linear-gradient(to bottom,#FFFFFF 0%,#9ca3af 50%,#111827 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .acid-gradient-text{background:linear-gradient(135deg,#CCFF00 0%,#88cc00 50%,#CCFF00 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .glass-card{background:rgba(255,255,255,.03);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.08);transition:all .4s cubic-bezier(.25,.46,.45,.94)}
+        .glass-card:hover{background:rgba(255,255,255,.06);border-color:rgba(204,255,0,.3);box-shadow:0 0 30px rgba(204,255,0,.08)}
+        .neon-hover{transition:all .3s ease}
+        .neon-hover:hover{box-shadow:0 0 20px rgba(204,255,0,.3);border-color:#CCFF00!important}
+        .glow-btn{position:relative;overflow:hidden;transition:all .3s ease}
+        .glow-btn::before{content:'';position:absolute;inset:-2px;background:linear-gradient(45deg,#CCFF00,transparent,#CCFF00);z-index:-1;border-radius:inherit;opacity:0;transition:opacity .3s}
+        .glow-btn:hover::before{opacity:1}
+        .glow-btn:hover{box-shadow:0 0 30px rgba(204,255,0,.4);transform:translateY(-2px)}
+        .particle{position:absolute;border-radius:50%;background:#CCFF00;opacity:.15;animation:float-particle linear infinite}
+        @keyframes float-particle{0%{transform:translateY(100vh) scale(0);opacity:0}10%{opacity:.15}90%{opacity:.15}100%{transform:translateY(-100px) scale(1);opacity:0}}
+        .grid-bg{background-image:linear-gradient(rgba(204,255,0,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(204,255,0,.03) 1px,transparent 1px);background-size:60px 60px}
+        .section-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(204,255,0,.3),transparent)}
+        .badge{display:inline-flex;align-items:center;gap:6px;padding:4px 14px;border-radius:9999px;font-size:.75rem;border:1px solid rgba(204,255,0,.3);background:rgba(204,255,0,.08);color:#CCFF00;font-weight:600}
+        .whatsapp-float{position:fixed;bottom:30px;right:30px;z-index:8000;width:64px;height:64px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.4);transition:all .3s ease;cursor:pointer}
+        .whatsapp-float:hover{transform:scale(1.1);box-shadow:0 6px 30px rgba(37,211,102,.6)}
+        .whatsapp-float::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:2px solid rgba(37,211,102,.3);animation:wa-pulse 2s ease-out infinite}
+        @keyframes wa-pulse{0%{transform:scale(1);opacity:1}100%{transform:scale(1.5);opacity:0}}
+        .ticker-wrap{overflow:hidden}
+        .ticker{display:flex;gap:3rem;white-space:nowrap;animation:ticker 25s linear infinite}
+        @keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+        .marquee-mask{mask-image:linear-gradient(to right,transparent,black 10%,black 90%,transparent);-webkit-mask-image:linear-gradient(to right,transparent,black 10%,black 90%,transparent)}
+        .hero-orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.2;animation:orb-float 8s ease-in-out infinite alternate}
+        @keyframes orb-float{0%{transform:translate(0,0) scale(1)}100%{transform:translate(30px,-40px) scale(1.2)}}
+        .animated-border{position:relative;border-radius:16px;overflow:hidden}
+        .animated-border::before{content:'';position:absolute;inset:0;padding:1px;border-radius:16px;background:linear-gradient(var(--angle,0deg),#CCFF00,transparent 40%,transparent 60%,#CCFF00);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:border-rotate 4s linear infinite}
+        @keyframes border-rotate{to{--angle:360deg}}
+        @property --angle{syntax:'<angle>';initial-value:0deg;inherits:false}
+        .step-num{width:36px;height:36px;border-radius:10px;background:rgba(204,255,0,.1);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;color:#CCFF00;flex-shrink:0;border:1px solid rgba(204,255,0,.2)}
+        .code-block{background:#0A0C10;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:16px 20px;font-family:'Courier New',monospace;font-size:.82rem;line-height:1.8;overflow-x:auto;color:#9ca3af}
+        .code-block .keyword{color:#CCFF00}
+        .code-block .string{color:#f97316}
+        .code-block .comment{color:#4b5563}
+        .code-block .number{color:#60a5fa}
+        .code-block .fn{color:#c084fc}
+        .code-block .bool{color:#f472b6}
+        .example-box{background:rgba(204,255,0,.04);border:1px solid rgba(204,255,0,.15);border-radius:12px;padding:16px 20px;margin-top:12px}
+        .example-box .ex-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.15em;color:#CCFF00;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+        .sub-nav-item{padding:8px 16px;border-radius:8px;font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;color:#6b7280;transition:all .2s;cursor:pointer;border:1px solid transparent;white-space:nowrap}
+        .sub-nav-item:hover,.sub-nav-item.active{color:#CCFF00;background:rgba(204,255,0,.05);border-color:rgba(204,255,0,.15)}
+        .transformation-grid{display:grid;grid-template-columns:1fr;gap:12px}
+        @media(min-width:768px){.transformation-grid{grid-template-columns:1fr 1fr}}
+        @media(min-width:1024px){.transformation-grid.tri{grid-template-columns:1fr 1fr 1fr}}
+        .arrow-flow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+        .arrow-flow .before{color:#f87171;text-decoration:line-through;text-decoration-color:rgba(248,113,113,.4)}
+        .arrow-flow .arrow{color:#CCFF00;font-weight:700}
+        .arrow-flow .after{color:#4ade80}
+        .join-diagram{display:flex;align-items:stretch;gap:0;border:1px solid rgba(255,255,255,.08);border-radius:12px;overflow:hidden}
+        .join-diagram .jd-left,.join-diagram .jd-right{flex:1;padding:16px}
+        .join-diagram .jd-left{background:rgba(96,165,250,.05);border-right:1px solid rgba(255,255,255,.08)}
+        .join-diagram .jd-right{background:rgba(204,255,0,.03);border-left:1px solid rgba(255,255,255,.08)}
+        .join-diagram .jd-result{background:rgba(204,255,0,.08);border-top:1px solid rgba(204,255,0,.2);padding:16px;width:100%}
+        .jd-row{display:flex;align-items:center;gap:8px;padding:4px 0;font-size:.8rem}
+        .jd-match{background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.2);border-radius:6px;padding:4px 8px;color:#4ade80}
+        .jd-miss{background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.2);border-radius:6px;padding:4px 8px;color:#f87171}
+        .jd-empty{color:#4b5563;font-style:italic;font-size:.75rem}
+    </style>
+</head>
+<body class="grid-bg">
+    <div class="noise-overlay"></div>
+    <div id="particles" class="fixed inset-0 z-0 pointer-events-none overflow-hidden"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-[7000] backdrop-blur-md bg-obsidian/70 border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="#" class="font-display text-2xl font-bold tracking-tight">
+                <span class="text-acid">V</span>IZONIS
+            </a>
+            <div class="hidden lg:flex items-center gap-3 overflow-x-auto">
+                <a href="#extract" class="sub-nav-item">Extract</a>
+                <a href="#case" class="sub-nav-item">Case</a>
+                <a href="#prefix" class="sub-nav-item">Prefix/Suffix</a>
+                <a href="#date" class="sub-nav-item">Date</a>
+                <a href="#logical" class="sub-nav-item">Logical</a>
+                <a href="#merge" class="sub-nav-item">Merge</a>
+                <a href="#joins" class="sub-nav-item">Joins</a>
+            </div>
+            <a href="https://wa.me/916364671786?text=Hi%20Vizonis%20Academy!%20I'm%20interested%20in%20Power%20Query%20Transformations." target="_blank"
+               class="glow-btn bg-acid text-obsidian px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest whitespace-nowrap">
+                Enroll Now
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="relative min-h-screen flex flex-col justify-center items-center pt-20 overflow-hidden">
+        <div class="hero-orb w-[500px] h-[500px] bg-acid top-1/4 -left-40" style="animation-delay:-2s"></div>
+        <div class="hero-orb w-[400px] h-[400px] bg-orange-500 bottom-1/4 -right-32" style="animation-delay:-5s;opacity:.1"></div>
+        <div class="relative z-10 text-center px-6 max-w-6xl mx-auto">
+            <div class="badge mb-8 mx-auto w-fit">
+                <i class="fas fa-wand-magic-sparkles"></i> Power Query — Transformations
+            </div>
+            <h1 class="font-display text-5xl md:text-7xl lg:text-8xl font-bold leading-[.9] tracking-tighter mb-8">
+                <span class="gradient-text block">TEXT, DATE</span>
+                <span class="acid-gradient-text block mt-2">& LOGICAL</span>
+                <span class="gradient-text block mt-2 text-3xl md:text-5xl lg:text-6xl">TRANSFORMATIONS</span>
+            </h1>
+            <p class="text-gray-400 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-12">
+                Extract substrings, manipulate dates, write conditional logic, and join tables — the complete transformations reference with real examples for every single function.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#extract" class="glow-btn bg-acid text-obsidian px-10 py-4 rounded-full text-sm font-bold uppercase tracking-widest">
+                    Start Learning <i class="fas fa-arrow-down ml-2"></i>
+                </a>
+                <a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20want%20to%20learn%20Power%20Query%20Transformations." target="_blank"
+                   class="glow-btn border border-white/20 text-white px-10 py-4 rounded-full text-sm font-bold uppercase tracking-widest hover:border-acid hover:text-acid">
+                    <i class="fab fa-whatsapp mr-2"></i> Chat With Us
+                </a>
+            </div>
+        </div>
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
+            <span class="text-gray-600 text-xs uppercase tracking-[.3em]">Scroll</span>
+            <div class="w-5 h-8 border border-gray-700 rounded-full flex justify-center pt-1">
+                <div class="w-1 h-2 bg-acid rounded-full animate-bounce"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ticker -->
+    <div class="py-6 border-y border-white/5 marquee-mask overflow-hidden">
+        <div class="ticker">
+            <span class="text-2xl font-display font-bold text-white/10">EXTRACT</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">UPPER CASE</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">DATE FUNCTIONS</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">IF ELSE</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">MERGE QUERY</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">INNER JOIN</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">LEFT JOIN</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">RIGHT JOIN</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">FULL OUTER JOIN</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">EXTRACT</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">UPPER CASE</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">DATE FUNCTIONS</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">IF ELSE</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">MERGE QUERY</span>
+            <span class="text-acid text-2xl">◆</span>
+        </div>
+    </div>
+
+    <!-- ===================== CHAPTER 1: EXTRACT ===================== -->
+    <section id="extract" class="py-32 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <span class="badge mb-6 mx-auto w-fit"><i class="fas fa-scissors"></i> Chapter 01</span>
+                <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">EXTRACT</h2>
+                <p class="text-gray-400 text-lg max-w-3xl mx-auto">Pull out specific parts of a text string — first few characters, last few, a range, or everything around a delimiter</p>
+            </div>
+
+            <div class="transformation-grid">
+                <!-- First Characters -->
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="step-num">i</div>
+                        <h3 class="text-lg font-bold">First Characters</h3>
+                    </div>
+                    <p class="text-sm text-gray-400 mb-3">Transform → Extract → First Characters → Enter count. Pulls N characters from the <span class="text-acid">beginning</span> of each value.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                        <div class="arrow-flow text-sm">
+                            <span class="before">"IN-DEL-001"</span>
+                            <span class="arrow">→ First 2 →</span>
+                            <span class="after">"IN"</span>
+                        </div>
+                        <div class="arrow-flow text-sm mt-1">
+                            <span class="before">"91-9876543210"</span>
+                            <span class="arrow">→ First 2 →</span>
+                            <span class="after">"91"</span>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-2">Use Case: Extract country code "IN", "US", "UK" from a combined country-code-id column. Or extract area code from phone numbers.</p>
+                    </div>
+                </div>
+
+                <!-- End Characters -->
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="step-num">ii</div>
+                        <h3 class="text-lg font-bold">End Characters</h3>
+                    </div>
+                    <p class="text-sm text-gray-400 mb-3">Transform → Extract → End Characters → Enter count. Pulls N characters from the <span class="text-acid">end</span> of each value.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                        <div class="arrow-flow text-sm">
+                            <span class="before">"INV-2024-001"</span>
+                            <span class="arrow">→ End 3 →</span>
+                            <span class="after">"001"</span>
+                        </div>
+                        <div class="arrow-flow text-sm mt-1">
+                            <span class="before">"₹15,00,000.00"</span>
+                            <span class="arrow">→ End 2 →</span>
+                            <span class="after">"00"</span>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-2">Use Case: Extract serial number from invoice codes, extract file extension from filenames (.csv, .xlsx).</p>
+                    </div>
+                </div>
+
+                <!-- Range -->
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="step-num">iii</div>
+                        <h3 class="text-lg font-bold">Range</h3>
+                    </div>
+                    <p class="text-sm text-gray-400 mb-3">Transform → Extract → Range → Enter starting position and count. Pulls N characters from a <span class="text-acid">specific position</span>.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                        <div class="arrow-flow text-sm">
+                            <span class="before">"20240115-DELHI"</span>
+                            <span class="arrow">→ Start 1, Count 4 →</span>
+                            <span class="after">"2024"</span>
+                        </div>
+                        <div class="arrow-flow text-sm mt-1">
+                            <span class="before">"20240115-DELHI"</span>
+                            <span class="arrow">→ Start 5, Count 2 →</span>
+                            <span class="after">"01"</span>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-2">Use Case: Extract year, month, day from a date string "20240115". Start 1,4 = Year. Start 5,2 = Month. Start 7,2 = Day.</p>
+                    </div>
+                </div>
+
+                <!-- Length -->
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="step-num">iv</div>
+                        <h3 class="text-lg font-bold">Length</h3>
+                    </div>
+                    <p class="text-sm text-gray-400 mb-3">Transform → Extract → Length. Returns the <span class="text-acid">number of characters</span> in each value. Doesn't extract — it calculates length as a new column.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                        <div class="arrow-flow text-sm">
+                            <span class="before">"Rahul"</span>
+                            <span class="arrow">→ Length →</span>
+                            <span class="after">5</span>
+                        </div>
+                        <div class="arrow-flow text-sm mt-1">
+                            <span class="before">"9876543210"</span>
+                            <span class="arrow">→ Length →</span>
+                            <span class="after">10</span>
+                        </div>
+                        <div class="arrow-flow text-sm mt-1">
+                            <span class="before">"" (empty)</span>
+                            <span class="arrow">→ Length →</span>
+                            <span class="after">0</span>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-2">Use Case: Validate phone numbers (should be 10 digits), validate PIN codes (should be 6), find empty strings (length = 0).</p>
+                    </div>
+                </div>
+
+                <!-- Text Before Delimiter -->
+                <div class="glass-card rounded-2xl p-6 neon-hover border-acid/20">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="step-num bg-acid/20 border-acid/40">v</div>
+                        <h3 class="text-lg font-bold text-acid">Text Before Delimiter</h3>
+                    </div>
+                    <p class="text-sm text-gray-400 mb-3">Extract everything <span class="text-acid">before</span> a specific character. One of the most used extract functions.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                        <div class="arrow-flow text-sm">
+                            <span class="before">"John.Smith@email.com"</span>
+                            <span class="arrow">→ Before "@" →</span>
+                            <span class="after">"John.Smith"</span>
+                        </div>
+                        <div class="arrow-flow text-sm mt-1">
+                            <span class="before">"Delhi, India, 110001"</span>
+                            <span class="arrow">→ Before "," →</span>
+                            <span class="after">"Delhi"</span>
+                        </div>
+                        <div class="arrow-flow text-sm mt-1">
+                            <span class="before">"Product: Laptop"</span>
+                            <span class="arrow">→ Before ": " →</span>
+                            <span class="after">"Product"</span>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-2">Use Case: Extract username from email, extract first value from comma-separated lists, extract label from "Label: Value" patterns.</p>
+                    </div>
+                </div>
+
+                <!-- Text After Delimiter -->
+                <div class="glass-card rounded-2xl p-6 neon-hover border-acid/20">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="step-num bg-acid/20 border-acid/40">vi</div>
+                        <h3 class="text-lg font-bold text-acid">Text After Delimiter</h3>
+                    </div>
+                    <p class="text-sm text-gray-400 mb-3">Extract everything <span class="text-acid">after</span> a specific character. The twin of "Before Delimiter".</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                        <div class="arrow-flow text-sm">
+                            <span class="before">"John.Smith@email.com"</span>
+                            <span class="arrow">→ After "@" →</span>
+                            <span class="after">"email.com"</span>
+                        </div>
+                        <div class="arrow-flow text-sm mt-1">
+                            <span class="before">"Product: Laptop"</span>
+                            <span class="arrow">→ After ": " →</span>
+                            <span class="after">"Laptop"</span>
+                        </div>
+                        <div class="arrow-flow text-sm mt-1">
+                            <span class="before">"Price: ₹45,000"</span>
+                            <span class="arrow">→ After ": " →</span>
+                            <span class="after">"₹45,000"</span>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-2">Use Case: Extract domain from email, extract value from "Key: Value" pairs, extract amount after currency symbol.</p>
+                    </div>
+                </div>
+
+                <!-- Text Between Delimiter -->
+                <div class="glass-card rounded-2xl p-6 neon-hover border-acid/20 md:col-span-2">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="step-num bg-acid/20 border-acid/40">vii</div>
+                        <h3 class="text-lg font-bold text-acid">Text Between Delimiters</h3>
+                    </div>
+                    <p class="text-sm text-gray-400 mb-3">Extract everything <span class="text-acid">between</span> two delimiters. You specify the start delimiter and end delimiter.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="example-box">
+                            <div class="ex-label"><i class="fas fa-lightbulb"></i> Example 1</div>
+                            <div class="arrow-flow text-sm">
+                                <span class="before">"[OrderID: 10452]"</span>
+                            </div>
+                            <div class="text-xs text-gray-500 mt-1">Start delimiter: <span class="text-white">"[OrderID: "</span></div>
+                            <div class="text-xs text-gray-500">End delimiter: <span class="text-white">"]"</span></div>
+                            <div class="arrow-flow text-sm mt-1">
+                                <span class="arrow">→ Between →</span>
+                                <span class="after">"10452"</span>
+                            </div>
+                        </div>
+                        <div class="example-box">
+                            <div class="ex-label"><i class="fas fa-lightbulb"></i> Example 2</div>
+                            <div class="arrow-flow text-sm">
+                                <span class="before">"Name: Rahul | Age: 30"</span>
+                            </div>
+                            <div class="text-xs text-gray-500 mt-1">Start delimiter: <span class="text-white">"Name: "</span></div>
+                            <div class="text-xs text-gray-500">End delimiter: <span class="text-white">" |"</span></div>
+                            <div class="arrow-flow text-sm mt-1">
+                                <span class="arrow">→ Between →</span>
+                                <span class="after">"Rahul"</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-3">Use Case: Extract values from bracketed text [like this], extract data between XML/HTML tags, pull values from structured log messages like "[ERROR] Message: something failed at Line:42".</p>
+                </div>
+            </div>
+
+            <!-- Visual summary -->
+            <div class="animated-border mt-12">
+                <div class="bg-cardDark rounded-2xl p-8">
+                    <h4 class="text-lg font-bold mb-6 text-center"><i class="fas fa-eye text-acid mr-2"></i>Visual Summary — All 7 Extract Functions on One Value</h4>
+                    <div class="code-block text-center">
+                        <span class="string">"IN-2024-DEL-001"</span>
+                    </div>
+                    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3 mt-6">
+                        <div class="bg-white/[0.03] rounded-lg p-3 text-center">
+                            <div class="text-[10px] text-gray-500 uppercase tracking-wider mb-1">First 2</div>
+                            <div class="text-acid font-bold text-sm">"IN"</div>
+                        </div>
+                        <div class="bg-white/[0.03] rounded-lg p-3 text-center">
+                            <div class="text-[10px] text-gray-500 uppercase tracking-wider mb-1">End 3</div>
+                            <div class="text-acid font-bold text-sm">"001"</div>
+                        </div>
+                        <div class="bg-white/[0.03] rounded-lg p-3 text-center">
+                            <div class="text-[10px] text-gray-500 uppercase tracking-wider mb-1">Range 4,4</div>
+                            <div class="text-acid font-bold text-sm">"2024"</div>
+                        </div>
+                        <div class="bg-white/[0.03] rounded-lg p-3 text-center">
+                            <div class="text-[10px] text-gray-500 uppercase tracking-wider mb-1">Length</div>
+                            <div class="text-acid font-bold text-sm">14</div>
+                        </div>
+                        <div class="bg-white/[0.03] rounded-lg p-3 text-center">
+                            <div class="text-[10px] text-gray-500 uppercase tracking-wider mb-1">Before "-"</div>
+                            <div class="text-acid font-bold text-sm">"IN"</div>
+                        </div>
+                        <div class="bg-white/[0.03] rounded-lg p-3 text-center">
+                            <div class="text-[10px] text-gray-500 uppercase tracking-wider mb-1">After "-"</div>
+                            <div class="text-acid font-bold text-sm">"2024-DEL-001"</div>
+                        </div>
+                        <div class="bg-white/[0.03] rounded-lg p-3 text-center">
+                            <div class="text-[10px] text-gray-500 uppercase tracking-wider mb-1">Between "-" & "-"</div>
+                            <div class="text-acid font-bold text-sm">"2024"</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-4xl mx-auto"></div>
+
+    <!-- ===================== CHAPTER 2: CASE TRANSFORMATIONS ===================== -->
+    <section id="case" class="py-32 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <span class="badge mb-6 mx-auto w-fit"><i class="fas fa-font"></i> Chapter 02</span>
+                <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">CASE TRANSFORMATIONS</h2>
+                <p class="text-gray-400 text-lg max-w-3xl mx-auto">Change the casing of text — normalize messy data into a consistent format</p>
+            </div>
+
+            <div class="transformation-grid">
+                <!-- Upper Case -->
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center">
+                            <span class="text-blue-400 font-bold text-lg">AB</span>
+                        </div>
+                        <h3 class="text-lg font-bold">Upper Case</h3>
+                    </div>
+                    <p class="text-sm text-gray-400 mb-3">Transform → Format → Upper Case. Converts all characters to UPPERCASE.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                        <div class="arrow-flow text-sm">
+                            <span class="before">"john doe"</span>
+                            <span class="arrow">→</span>
+                            <span class="after">"JOHN DOE"</span>
+                        </div>
+                        <div class="arrow-flow text-sm mt-1">
+                            <span class="before">"New Delhi"</span>
+                            <span class="arrow">→</span>
+                            <span class="after">"NEW DELHI"</span>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-2">Use Case: Standardize country codes ("in" → "IN"), state codes, category codes for consistent matching.</p>
+                    </div>
+                </div>
+
+                <!-- Lower Case -->
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center">
+                            <span class="text-green-400 font-bold text-lg">ab</span>
+                        </div>
+                        <h3 class="text-lg font-bold">Lower Case</h3>
+                    </div>
+                    <p class="text-sm text-gray-400 mb-3">Transform → Format → Lower Case. Converts all characters to lowercase.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                        <div class="arrow-flow text-sm">
+                            <span class="before">"JOHN DOE"</span>
+                            <span class="arrow">→</span>
+                            <span class="after">"john doe"</span>
+                        </div>
+                        <div class="arrow-flow text-sm mt-1">
+                            <span class="before">"Hello WORLD"</span>
+                            <span class="arrow">→</span>
+                            <span class="after">"hello world"</span>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-2">Use Case: Normalize emails for deduplication ("Rahul@email.com" and "rahul@email.com" should match).</p>
+                    </div>
+                </div>
+
+                <!-- Capitalize Each Word -->
+                <div class="glass-card rounded-2xl p-6 neon-hover border-acid/20 md:col-span-2">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-acid/10 flex items-center justify-center">
+                            <span class="text-acid font-bold text-lg">Ab</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-acid">Capitalize Each Word</h3>
+                    </div>
+                    <p class="text-sm text-gray-400 mb-3">Transform → Format → Capitalize Each Word. First letter of every word becomes uppercase, rest lowercase. Also called <span class="text-acid">Title Case</span> or <span class="text-acid">Proper Case</span>.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="example-box">
+                            <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                            <div class="arrow-flow text-sm">
+                                <span class="before">"john doe"</span>
+                                <span class="arrow">→</span>
+                                <span class="after">"John Doe"</span>
+                            </div>
+                            <div class="arrow-flow text-sm mt-1">
+                                <span class="before">"NEW DELHI"</span>
+                                <span class="arrow">→</span>
+                                <span class="after">"New Delhi"</span>
+                            </div>
+                            <div class="arrow-flow text-sm mt-1">
+                                <span class="before">"mUMBAI, mAHARASHTRA"</span>
+                                <span class="arrow">→</span>
+                                <span class="after">"Mumbai, Maharashtra"</span>
+                            </div>
+                        </div>
+                        <div class="example-box">
+                            <div class="ex-label"><i class="fas fa-exclamation-triangle text-orange-400"></i> Watch Out</div>
+                            <div class="arrow-flow text-sm">
+                                <span class="before">"O'BRIEN"</span>
+                                <span class="arrow">→</span>
+                                <span class="after">"O'brien" ⚠️</span>
+                            </div>
+                            <div class="arrow-flow text-sm mt-1">
+                                <span class="before">"MCDONALD'S"</span>
+                                <span class="arrow">→</span>
+                                <span class="after">"Mcdonald'S" ⚠️</span>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-2">Apostrophes break this function. For names with apostrophes, you'll need manual Replace Values after capitalizing.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-4xl mx-auto"></div>
+
+    <!-- ===================== CHAPTER 3: PREFIX & SUFFIX ===================== -->
+    <section id="prefix" class="py-32 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <span class="badge mb-6 mx-auto w-fit"><i class="fas fa-plus-circle"></i> Chapter 03</span>
+                <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">PREFIX & SUFFIX</h2>
+                <p class="text-gray-400 text-lg max-w-3xl mx-auto">Add text before or after every value in a column — without complex formulas</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Prefix -->
+                <div class="glass-card rounded-2xl p-8 neon-hover">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-14 h-14 rounded-xl bg-purple-500/10 flex items-center justify-center">
+                            <i class="fas fa-arrow-left text-purple-400 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold">Prefix</h3>
+                            <p class="text-gray-500 text-sm">Transform → Format → Prefix</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-4">Adds a fixed text string to the <span class="text-purple-400 font-semibold">beginning</span> of every value in the column.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Examples</div>
+                        <div class="arrow-flow text-sm">
+                            <span class="before">"9876543210"</span>
+                            <span class="arrow">+ Prefix "+91-" →</span>
+                            <span class="after">"+91-9876543210"</span>
+                        </div>
+                        <div class="arrow-flow text-sm mt-1">
+                            <span class="before">"Laptop"</span>
+                            <span class="arrow">+ Prefix "CAT-" →</span>
+                            <span class="after">"CAT-Laptop"</span>
+                        </div>
+                        <div class="arrow-flow text-sm mt-1">
+                            <span class="before">"1500"</span>
+                            <span class="arrow">+ Prefix "$" →</span>
+                            <span class="after">"$1500"</span>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-3">Use Case: Add country codes to phone numbers, add category prefixes to product codes, add currency symbols.</p>
+                </div>
+
+                <!-- Suffix -->
+                <div class="glass-card rounded-2xl p-8 neon-hover">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-14 h-14 rounded-xl bg-cyan-500/10 flex items-center justify-center">
+                            <i class="fas fa-arrow-right text-cyan-400 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold">Suffix</h3>
+                            <p class="text-gray-500 text-sm">Transform → Format → Suffix</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-4">Adds a fixed text string to the <span class="text-cyan-400 font-semibold">end</span> of every value in the column.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Examples</div>
+                        <div class="arrow-flow text-sm">
+                            <span class="before">"Rahul"</span>
+                            <span class="arrow">+ Suffix "@company.com" →</span>
+                            <span class="after">"Rahul@company.com"</span>
+                        </div>
+                        <div class="arrow-flow text-sm mt-1">
+                            <span class="before">"1500"</span>
+                            <span class="arrow">+ Suffix " USD" →</span>
+                            <span class="after">"1500 USD"</span>
+                        </div>
+                        <div class="arrow-flow text-sm mt-1">
+                            <span class="before">"Q1"</span>
+                            <span class="arrow">+ Suffix " 2024" →</span>
+                            <span class="after">"Q1 2024"</span>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-3">Use Case: Generate email addresses from employee names, add units to measurements (" kg", " cm"), add year to quarter codes.</p>
+                </div>
+            </div>
+
+            <div class="glass-card rounded-2xl p-6 mt-8 text-center">
+                <p class="text-gray-400"><i class="fas fa-lightbulb text-acid mr-2"></i><strong class="text-white">Pro Tip:</strong> Prefix + Suffix can be combined with Extract. First extract the username from "John.Smith@email.com" (Text Before "@" → "John.Smith"), then Suffix "@vizonis.com" → <span class="text-acid">"John.Smith@vizonis.com"</span>. Chain transformations for powerful results.</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-4xl mx-auto"></div>
+
+    <!-- ===================== CHAPTER 4: DATE TRANSFORMATIONS ===================== -->
+    <section id="date" class="py-32 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <span class="badge mb-6 mx-auto w-fit"><i class="fas fa-calendar-alt"></i> Chapter 04</span>
+                <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">DATE TRANSFORMATIONS</h2>
+                <p class="text-gray-400 text-lg max-w-3xl mx-auto">Extract every component from a date — year, month, quarter, day, week — and calculate age & duration</p>
+            </div>
+
+            <!-- Base date for all examples -->
+            <div class="glass-card rounded-2xl p-6 mb-12 text-center border-acid/20">
+                <p class="text-gray-400">For all examples below, our sample date value is:</p>
+                <div class="code-block inline-block mt-2 text-lg">
+                    <span class="number">15/01/2024</span> <span class="comment">(January 15, 2024 — a Monday)</span>
+                </div>
+            </div>
+
+            <div class="transformation-grid tri">
+                <!-- Year -->
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center"><i class="fas fa-calendar text-blue-400 text-sm"></i></div>
+                        <h3 class="font-bold">Year</h3>
+                    </div>
+                    <p class="text-xs text-gray-500 mb-2">Add Column → Date → Year → Year</p>
+                    <div class="arrow-flow text-sm">
+                        <span class="before">15/01/2024</span>
+                        <span class="arrow">→</span>
+                        <span class="after">2024</span>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-2">Use: Group sales by year, create year-over-year comparisons.</p>
+                </div>
+
+                <!-- Month -->
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center"><i class="fas fa-calendar-day text-purple-400 text-sm"></i></div>
+                        <h3 class="font-bold">Month</h3>
+                    </div>
+                    <p class="text-xs text-gray-500 mb-2">Add Column → Date → Month → Month</p>
+                    <div class="arrow-flow text-sm">
+                        <span class="before">15/01/2024</span>
+                        <span class="arrow">→</span>
+                        <span class="after">1</span>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-2">Use: Month-over-month analysis, seasonal trends, fiscal month grouping.</p>
+                </div>
+
+                <!-- Start of Month -->
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center"><i class="fas fa-angle-double-left text-green-400 text-sm"></i></div>
+                        <h3 class="font-bold">Start of Month</h3>
+                    </div>
+                    <p class="text-xs text-gray-500 mb-2">Add Column → Date → Month → Start of Month</p>
+                    <div class="arrow-flow text-sm">
+                        <span class="before">15/01/2024</span>
+                        <span class="arrow">→</span>
+                        <span class="after">01/01/2024</span>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-2">Use: Calculate MTD (Month-to-Date) by comparing each date to start of month.</p>
+                </div>
+
+                <!-- End of Month -->
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-10 h-10 rounded-lg bg-orange-500/10 flex items-center justify-center"><i class="fas fa-angle-double-right text-orange-400 text-sm"></i></div>
+                        <h3 class="font-bold">End of Month</h3>
+                    </div>
+                    <p class="text-xs text-gray-500 mb-2">Add Column → Date → Month → End of Month</p>
+                    <div class="arrow-flow text-sm">
+                        <span class="before">15/01/2024</span>
+                        <span class="arrow">→</span>
+                        <span class="after">31/01/2024</span>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-2">Use: Find how many days remain in month, calculate deadlines, determine billing periods.</p>
+                </div>
+
+                <!-- No of Days in Month -->
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-10 h-10 rounded-lg bg-pink-500/10 flex items-center justify-center"><i class="fas fa-hashtag text-pink-400 text-sm"></i></div>
+                        <h3 class="font-bold">Days in Month</h3>
+                    </div>
+                    <p class="text-xs text-gray-500 mb-2">Add Column → Date → Month → Days in Month</p>
+                    <div class="arrow-flow text-sm">
+                        <span class="before">15/01/2024</span>
+                        <span class="arrow">→</span>
+                        <span class="after">31</span>
+                    </div>
+                    <div class="arrow-flow text-sm mt-1">
+                        <span class="before">15/02/2024</span>
+                        <span class="arrow">→</span>
+                        <span class="after">29</span>
+                        <span class="text-xs text-gray-500">(leap year!)</span>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-2">Use: Calculate daily average by dividing monthly total by days-in-month.</p>
+                </div>
+
+                <!-- Quarter -->
+                <div class="glass-card rounded-2xl p-6 neon-hover border-acid/20">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-10 h-10 rounded-lg bg-acid/10 flex items-center justify-center"><i class="fas fa-th-large text-acid text-sm"></i></div>
+                        <h3 class="font-bold text-acid">Quarter</h3>
+                    </div>
+                    <p class="text-xs text-gray-500 mb-2">Add Column → Date → Quarter → Quarter</p>
+                    <div class="arrow-flow text-sm">
+                        <span class="before">15/01/2024</span>
+                        <span class="arrow">→</span>
+                        <span class="after">1</span>
+                    </div>
+                    <div class="arrow-flow text-sm mt-1">
+                        <span class="before">15/07/2024</span>
+                        <span class="arrow">→</span>
+                        <span class="after">3</span>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-2">Use: Q1-Q4 grouping, quarterly revenue reports, fiscal quarter comparisons.</p>
+                </div>
+
+                <!-- Name of Month -->
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-10 h-10 rounded-lg bg-teal-500/10 flex items-center justify-center"><i class="fas fa-spell-check text-teal-400 text-sm"></i></div>
+                        <h3 class="font-bold">Name of Month</h3>
+                    </div>
+                    <p class="text-xs text-gray-500 mb-2">Add Column → Date → Month → Name of Month</p>
+                    <div class="arrow-flow text-sm">
+                        <span class="before">15/01/2024</span>
+                        <span class="arrow">→</span>
+                        <span class="after">"January"</span>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-2">Use: Display "January" instead of "1" on chart axis labels for readability.</p>
+                </div>
+
+                <!-- Week Day -->
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-10 h-10 rounded-lg bg-indigo-500/10 flex items-center justify-center"><i class="fas fa-calendar-week text-indigo-400 text-sm"></i></div>
+                        <h3 class="font-bold">Week Day</h3>
+                    </div>
+                    <p class="text-xs text-gray-500 mb-2">Add Column → Date → Day → Day of Week</p>
+                    <div class="arrow-flow text-sm">
+                        <span class="before">15/01/2024</span>
+                        <span class="arrow">→</span>
+                        <span class="after">1</span>
+                        <span class="text-xs text-gray-500">(Monday = 1)</span>
+                    </div>
+                    <div class="arrow-flow text-sm mt-1">
+                        <span class="before">20/01/2024</span>
+                        <span class="arrow">→</span>
+                        <span class="after">6</span>
+                        <span class="text-xs text-gray-500">(Saturday = 6)</span>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-2">Use: Flag weekends (6,7), calculate weekday vs weekend sales patterns.</p>
+                </div>
+
+                <!-- Name of Day -->
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center"><i class="fas fa-calendar-check text-amber-400 text-sm"></i></div>
+                        <h3 class="font-bold">Name of Day</h3>
+                    </div>
+                    <p class="text-xs text-gray-500 mb-2">Add Column → Date → Day → Name of Day</p>
+                    <div class="arrow-flow text-sm">
+                        <span class="before">15/01/2024</span>
+                        <span class="arrow">→</span>
+                        <span class="after">"Monday"</span>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-2">Use: Show "Monday" instead of "1" on charts, group by day name for heatmap analysis.</p>
+                </div>
+
+                <!-- Week of Year -->
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-10 h-10 rounded-lg bg-rose-500/10 flex items-center justify-center"><i class="fas fa-list-ol text-rose-400 text-sm"></i></div>
+                        <h3 class="font-bold">Week of Year</h3>
+                    </div>
+                    <p class="text-xs text-gray-500 mb-2">Add Column → Date → Week → Week of Year</p>
+                    <div class="arrow-flow text-sm">
+                        <span class="before">15/01/2024</span>
+                        <span class="arrow">→</span>
+                        <span class="after">3</span>
+                        <span class="text-xs text-gray-500">(3rd week of 2024)</span>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-2">Use: "Week 3 sales were ₹50L" — compare week-over-week performance.</p>
+                </div>
+
+                <!-- Week of Month -->
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-10 h-10 rounded-lg bg-sky-500/10 flex items-center justify-center"><i class="fas fa-layer-group text-sky-400 text-sm"></i></div>
+                        <h3 class="font-bold">Week of Month</h3>
+                    </div>
+                    <p class="text-xs text-gray-500 mb-2">Add Column → Date → Week → Week of Month</p>
+                    <div class="arrow-flow text-sm">
+                        <span class="before">15/01/2024</span>
+                        <span class="arrow">→</span>
+                        <span class="after">3</span>
+                        <span class="text-xs text-gray-500">(3rd week of January)</span>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-2">Use: "Week 1 of month typically has highest orders" — analyze intra-month patterns.</p>
+                </div>
+            </div>
+
+            <!-- Age & Duration -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-12">
+                <!-- Age -->
+                <div class="glass-card rounded-2xl p-8 neon-hover border-acid/20">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-14 h-14 rounded-xl bg-acid/10 flex items-center justify-center">
+                            <i class="fas fa-user text-acid text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-acid">Age</h3>
+                            <p class="text-gray-500 text-sm">Add Column → Date → Age</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-4">Calculates the <span class="text-acid font-semibold">age in years</span> between a date column and today's date. Perfect for calculating employee age, customer age, asset age.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Example</div>
+                        <div class="text-sm text-gray-400 space-y-2">
+                            <div class="arrow-flow">
+                                <span class="before">DOB: 22/03/1995</span>
+                                <span class="arrow">→ Age →</span>
+                                <span class="after">28</span>
+                                <span class="text-xs text-gray-500">(as of 2024)</span>
+                            </div>
+                            <div class="arrow-flow">
+                                <span class="before">DOB: 15/08/1988</span>
+                                <span class="arrow">→ Age →</span>
+                                <span class="after">35</span>
+                            </div>
+                            <div class="arrow-flow">
+                                <span class="before">Hire Date: 01/07/2020</span>
+                                <span class="arrow">→ Age →</span>
+                                <span class="after">3</span>
+                                <span class="text-xs text-gray-500">(tenure in years)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Duration.Days -->
+                <div class="glass-card rounded-2xl p-8 neon-hover border-orange-500/20">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-14 h-14 rounded-xl bg-orange-500/10 flex items-center justify-center">
+                            <i class="fas fa-hourglass-half text-orange-400 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-orange-400">Duration.Days</h3>
+                            <p class="text-gray-500 text-sm">Subtract two date columns</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-4">Calculate the <span class="text-orange-400 font-semibold">difference in days</span> between two dates. Unlike Age (which returns years), this returns the exact number of days.</p>
+                    <div class="example-box">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> How To Do It</div>
+                        <div class="text-sm text-gray-400 space-y-2">
+                            <p>Add Column → Custom Column → Formula:</p>
+                            <div class="code-block text-xs">
+                                <span class="fn">Duration.Days</span>( [<span class="string">EndDate</span>] - [<span class="string">StartDate</span>] )
+                            </div>
+                        </div>
+                    </div>
+                    <div class="example-box mt-3">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> Examples</div>
+                        <div class="text-sm text-gray-400 space-y-2">
+                            <div class="arrow-flow">
+                                <span class="before">Order: 01/01/2024 → Delivery: 05/01/2024</span>
+                            </div>
+                            <div class="arrow-flow">
+                                <span class="arrow">Duration.Days =</span>
+                                <span class="after">4 days</span>
+                            </div>
+                            <div class="arrow-flow mt-2">
+                                <span class="before">Invoice: 15/12/2023 → Payment: 20/01/2024</span>
+                            </div>
+                            <div class="arrow-flow">
+                                <span class="arrow">Duration.Days =</span>
+                                <span class="after">36 days</span>
+                                <span class="text-xs text-gray-500">(payment delay)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-3">Use Case: Order-to-delivery time, payment delay analysis, project duration, employee tenure in days, SLA compliance tracking.</p>
+                </div>
+            </div>
+
+            <!-- Date summary -->
+            <div class="animated-border mt-12">
+                <div class="bg-cardDark rounded-2xl p-8">
+                    <h4 class="text-lg font-bold mb-6 text-center"><i class="fas fa-calendar text-acid mr-2"></i>All Date Transformations on One Date: 15/01/2024 (Monday)</h4>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-3">
+                        <div class="bg-white/[0.03] rounded-lg p-3 text-center">
+                            <div class="text-[10px] text-gray-500 uppercase mb-1">Year</div>
+                            <div class="text-acid font-bold">2024</div>
+                        </div>
+                        <div class="bg-white/[0.03] rounded-lg p-3 text-center">
+                            <div class="text-[10px] text-gray-500 uppercase mb-1">Month</div>
+                            <div class="text-acid font-bold">1</div>
+                        </div>
+                        <div class="bg-white/[0.03] rounded-lg p-3 text-center">
+                            <div class="text-[10px] text-gray-500 uppercase mb-1">Start of Month</div>
+                            <div class="text-acid font-bold text-sm">01/01/24</div>
+                        </div>
+                        <div class="bg-white/[0.03] rounded-lg p-3 text-center">
+                            <div class="text-[10px] text-gray-500 uppercase mb-1">End of Month</div>
+                            <div class="text-acid font-bold text-sm">31/01/24</div>
+                        </div>
+                        <div class="bg-white/[0.03] rounded-lg p-3 text-center">
+                            <div class="text-[10px] text-gray-500 uppercase mb-1">Days in Month</div>
+                            <div class="text-acid font-bold">31</div>
+                        </div>
+                        <div class="bg-white/[0.03] rounded-lg p-3 text-center">
+                            <div class="text-[10px] text-gray-500 uppercase mb-1">Quarter</div>
+                            <div class="text-acid font-bold">Q1</div>
+                        </div>
+                        <div class="bg-white/[0.03] rounded-lg p-3 text-center">
+                            <div class="text-[10px] text-gray-500 uppercase mb-1">Month Name</div>
+                            <div class="text-acid font-bold text-sm">January</div>
+                        </div>
+                        <div class="bg-white/[0.03] rounded-lg p-3 text-center">
+                            <div class="text-[10px] text-gray-500 uppercase mb-1">Week Day</div>
+                            <div class="text-acid font-bold">1 (Mon)</div>
+                        </div>
+                        <div class="bg-white/[0.03] rounded-lg p-3 text-center">
+                            <div class="text-[10px] text-gray-500 uppercase mb-1">Day Name</div>
+                            <div class="text-acid font-bold text-sm">Monday</div>
+                        </div>
+                        <div class="bg-white/[0.03] rounded-lg p-3 text-center">
+                            <div class="text-[10px] text-gray-500 uppercase mb-1">Week of Year</div>
+                            <div class="text-acid font-bold">3</div>
+                        </div>
+                        <div class="bg-white/[0.03] rounded-lg p-3 text-center">
+                            <div class="text-[10px] text-gray-500 uppercase mb-1">Week of Month</div>
+                            <div class="text-acid font-bold">3</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-4xl mx-auto"></div>
+
+    <!-- ===================== CHAPTER 5: LOGICAL TRANSFORMATIONS ===================== -->
+    <section id="logical" class="py-32 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <span class="badge mb-6 mx-auto w-fit"><i class="fas fa-code-branch"></i> Chapter 05</span>
+                <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">LOGICAL TRANSFORMATIONS</h2>
+                <p class="text-gray-400 text-lg max-w-3xl mx-auto">Conditional logic in Power Query — IF ELSE and Nested IF using Custom Columns with M formula language</p>
+            </div>
+
+            <!-- IF ELSE -->
+            <div class="glass-card rounded-2xl p-8 md:p-10 mb-8 neon-hover border-acid/20">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-14 h-14 rounded-xl bg-acid/10 flex items-center justify-center">
+                        <i class="fas fa-code-branch text-acid text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-acid">IF ELSE</h3>
+                        <p class="text-gray-500 text-sm">Add Column → Custom Column</p>
+                    </div>
+                </div>
+                <p class="text-gray-400 mb-6">The most fundamental conditional logic. Power Query uses M language syntax: <span class="text-acid font-mono">if [condition] then [true_value] else [false_value]</span>. Note: <span class="text-acid">NO commas</span> — M language uses <span class="text-acid">then/else</span> keywords, not Excel's IF(condition, true, false).</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <div class="text-sm font-bold mb-3">Syntax</div>
+                        <div class="code-block">
+                            <span class="keyword">if</span> [<span class="string">ColumnName</span>] <span class="keyword">then</span> <span class="string">"Value A"</span><br>
+                            <span class="keyword">else</span> <span class="string">"Value B"</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-sm font-bold mb-3">With Comparison</div>
+                        <div class="code-block">
+                            <span class="keyword">if</span> [<span class="string">Revenue</span>] <span class="keyword">>=</span> <span class="number">10000</span><br>
+                            <span class="keyword">then</span> <span class="string">"High Value"</span><br>
+                            <span class="keyword">else</span> <span class="string">"Low Value"</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-box mt-6">
+                    <div class="ex-label"><i class="fas fa-lightbulb"></i> Real Examples</div>
+                    <div class="space-y-4">
+                        <div class="p-3 bg-white/[0.03] rounded-lg">
+                            <div class="text-sm font-bold text-acid mb-2">Example 1: Categorize Revenue</div>
+                            <div class="code-block text-xs">
+                                <span class="comment">// New column: "Revenue Category"</span><br>
+                                <span class="keyword">if</span> [<span class="string">Revenue</span>] >= <span class="number">50000</span> <span class="keyword">then</span> <span class="string">"Platinum"</span><br>
+                                <span class="keyword">else if</span> [<span class="string">Revenue</span>] >= <span class="number">20000</span> <span class="keyword">then</span> <span class="string">"Gold"</span><br>
+                                <span class="keyword">else if</span> [<span class="string">Revenue</span>] >= <span class="number">5000</span> <span class="keyword">then</span> <span class="string">"Silver"</span><br>
+                                <span class="keyword">else</span> <span class="string">"Bronze"</span>
+                            </div>
+                            <div class="text-xs text-gray-500 mt-2">Input: Revenue = 35000 → Output: <span class="text-green-400">"Gold"</span></div>
+                        </div>
+                        <div class="p-3 bg-white/[0.03] rounded-lg">
+                            <div class="text-sm font-bold text-acid mb-2">Example 2: Check Null Values</div>
+                            <div class="code-block text-xs">
+                                <span class="comment">// New column: "Email Status"</span><br>
+                                <span class="keyword">if</span> [<span class="string">Email</span>] = <span class="keyword">null</span> <span class="keyword">then</span> <span class="string">"Missing"</span><br>
+                                <span class="keyword">else</span> <span class="string">"Available"</span>
+                            </div>
+                            <div class="text-xs text-gray-500 mt-2">Input: Email = null → Output: <span class="text-red-400">"Missing"</span> | Input: Email = "rahul@email.com" → Output: <span class="text-green-400">"Available"</span></div>
+                        </div>
+                        <div class="p-3 bg-white/[0.03] rounded-lg">
+                            <div class="text-sm font-bold text-acid mb-2">Example 3: Date-Based Logic</div>
+                            <div class="code-block text-xs">
+                                <span class="comment">// New column: "Order Priority"</span><br>
+                                <span class="keyword">if</span> <span class="fn">Date.DayOfWeek</span>([<span class="string">OrderDate</span>]) >= <span class="number">6</span><br>
+                                <span class="keyword">then</span> <span class="string">"Weekend Order"</span><br>
+                                <span class="keyword">else</span> <span class="string">"Weekday Order"</span>
+                            </div>
+                            <div class="text-xs text-gray-500 mt-2">Input: OrderDate = 20/01/2024 (Saturday, day 6) → Output: <span class="text-orange-400">"Weekend Order"</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nested IF ELSE -->
+            <div class="glass-card rounded-2xl p-8 md:p-10 neon-hover border-purple-500/20">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-14 h-14 rounded-xl bg-purple-500/10 flex items-center justify-center">
+                        <i class="fas fa-sitemap text-purple-400 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-purple-400">Nested IF ELSE</h3>
+                        <p class="text-gray-500 text-sm">Multiple conditions chained together</p>
+                    </div>
+                </div>
+                <p class="text-gray-400 mb-6">When you have more than 2 outcomes, chain <span class="text-purple-400 font-semibold">else if</span> blocks. Each condition is checked top-to-bottom — the first match wins. Power Query doesn't have a SWITCH function like DAX, so nested IF is your only option.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <div class="text-sm font-bold mb-3">Syntax Pattern</div>
+                        <div class="code-block text-xs">
+                            <span class="keyword">if</span> [<span class="string">Col</span>] = <span class="string">"A"</span> <span class="keyword">then</span> <span class="string">"Result 1"</span><br>
+                            <span class="keyword">else if</span> [<span class="string">Col</span>] = <span class="string">"B"</span> <span class="keyword">then</span> <span class="string">"Result 2"</span><br>
+                            <span class="keyword">else if</span> [<span class="string">Col</span>] = <span class="string">"C"</span> <span class="keyword">then</span> <span class="string">"Result 3"</span><br>
+                            <span class="keyword">else</span> <span class="string">"Default Result"</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-sm font-bold mb-3">With AND/OR Conditions</div>
+                        <div class="code-block text-xs">
+                            <span class="keyword">if</span> [<span class="string">Revenue</span>] >= <span class="number">10000</span><br>
+                            &nbsp;&nbsp;<span class="keyword">and</span> [<span class="string">Qty</span>] >= <span class="number">50</span><br>
+                            <span class="keyword">then</span> <span class="string">"Bulk Premium"</span><br>
+                            <span class="keyword">else if</span> [<span class="string">Revenue</span>] >= <span class="number">10000</span><br>
+                            <span class="keyword">then</span> <span class="string">"Premium"</span><br>
+                            <span class="keyword">else if</span> [<span class="string">Qty</span>] >= <span class="number">50</span><br>
+                            <span class="keyword">then</span> <span class="string">"Bulk"</span><br>
+                            <span class="keyword">else</span> <span class="string">"Standard"</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <div class="ex-label"><i class="fas fa-lightbulb"></i> Real Example — Employee Band Calculation</div>
+                    <div class="code-block text-xs mt-2">
+                        <span class="comment">// New column: "Salary Band"</span><br>
+                        <span class="keyword">if</span> [<span class="string">AnnualSalary</span>] >= <span class="number">2500000</span> <span class="keyword">then</span> <span class="string">"Band E - Director"</span><br>
+                        <span class="keyword">else if</span> [<span class="string">AnnualSalary</span>] >= <span class="number">1800000</span> <span class="keyword">then</span> <span class="string">"Band D - Senior Manager"</span><br>
+                        <span class="keyword">else if</span> [<span class="string">AnnualSalary</span>] >= <span class="number">1200000</span> <span class="keyword">then</span> <span class="string">"Band C - Manager"</span><br>
+                        <span class="keyword">else if</span> [<span class="string">AnnualSalary</span>] >= <span class="number">700000</span> <span class="keyword">then</span> <span class="string">"Band B - Lead"</span><br>
+                        <span class="keyword">else if</span> [<span class="string">AnnualSalary</span>] >= <span class="number">400000</span> <span class="keyword">then</span> <span class="string">"Band A - Associate"</span><br>
+                        <span class="keyword">else</span> <span class="string">"Band T - Trainee"</span>
+                    </div>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mt-4">
+                        <div class="bg-white/[0.03] rounded-lg p-2 text-center text-xs">
+                            <span class="text-gray-500">₹30,00,000 →</span>
+                            <span class="text-green-400 font-bold"> Band E</span>
+                        </div>
+                        <div class="bg-white/[0.03] rounded-lg p-2 text-center text-xs">
+                            <span class="text-gray-500">₹15,00,000 →</span>
+                            <span class="text-blue-400 font-bold"> Band C</span>
+                        </div>
+                        <div class="bg-white/[0.03] rounded-lg p-2 text-center text-xs">
+                            <span class="text-gray-500">₹3,50,000 →</span>
+                            <span class="text-orange-400 font-bold"> Band T</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-xl p-4 mt-6 border-yellow-500/20 bg-yellow-500/5">
+                    <p class="text-sm text-gray-400"><i class="fas fa-exclamation-triangle text-yellow-400 mr-2"></i><strong class="text-yellow-400">Common Mistakes:</strong><br>
+                    <span class="text-red-400">❌</span> Using commas: <span class="text-red-400">if [x] > 5, "Yes", "No"</span> — This is Excel syntax, NOT Power Query!<br>
+                    <span class="text-green-400">✅</span> Using then/else: <span class="text-green-400">if [x] > 5 then "Yes" else "No"</span> — Correct M language syntax.<br>
+                    <span class="text-red-400">❌</span> Forgetting to handle null: <span class="text-red-400">if [Revenue] > 1000 then "High"</span> — Crashes if Revenue is null.<br>
+                    <span class="text-green-400">✅</span> Handle nulls: <span class="text-green-400">if [Revenue] = null then "N/A" else if [Revenue] > 1000 then "High" else "Low"</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-4xl mx-auto"></div>
+
+    <!-- ===================== CHAPTER 6: MERGE QUERY ===================== -->
+    <section id="merge" class="py-32 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <span class="badge mb-6 mx-auto w-fit"><i class="fas fa-object-group"></i> Chapter 06</span>
+                <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">MERGE QUERY</h2>
+                <p class="text-gray-400 text-lg max-w-3xl mx-auto">Combine two tables based on a common column — Power Query's version of SQL JOINs</p>
+            </div>
+
+            <div class="glass-card rounded-2xl p-8 md:p-10 mb-12 neon-hover">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-14 h-14 rounded-xl bg-acid/10 flex items-center justify-center">
+                        <i class="fas fa-link text-acid text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold">How Merge Query Works</h3>
+                        <p class="text-gray-500 text-sm">Home → Merge Queries</p>
+                    </div>
+                </div>
+                <div class="space-y-4 text-sm text-gray-400">
+                    <div class="flex items-start gap-3 p-3 bg-white/[0.02] rounded-lg">
+                        <span class="text-acid font-bold">1.</span>
+                        <span>Click <span class="text-white">Merge Queries</span> (merge into current query) or <span class="text-white">Merge Queries as New</span> (creates a new query)</span>
+                    </div>
+                    <div class="flex items-start gap-3 p-3 bg-white/[0.02] rounded-lg">
+                        <span class="text-acid font-bold">2.</span>
+                        <span>Select the <span class="text-white">second table</span> from the dropdown</span>
+                    </div>
+                    <div class="flex items-start gap-3 p-3 bg-white/[0.02] rounded-lg">
+                        <span class="text-acid font-bold">3.</span>
+                        <span>Click the <span class="text-white">matching column</span> in the left table (e.g., CustomerID), then click the matching column in the right table. They'll highlight in green.</span>
+                    </div>
+                    <div class="flex items-start gap-3 p-3 bg-white/[0.02] rounded-lg">
+                        <span class="text-acid font-bold">4.</span>
+                        <span>Choose the <span class="text-white">Join Kind</span> from the dropdown (Left, Right, Full Outer, Inner)</span>
+                    </div>
+                    <div class="flex items-start gap-3 p-3 bg-white/[0.02] rounded-lg">
+                        <span class="text-acid font-bold">5.</span>
+                        <span>Click <span class="text-white">OK</span> — a new column appears with a <span class="text-white">"Table"</span> link in each row</span>
+                    </div>
+                    <div class="flex items-start gap-3 p-3 bg-white/[0.02] rounded-lg">
+                        <span class="text-acid font-bold">6.</span>
+                        <span>Click the <span class="text-acid">expand icon (two diverging arrows ⇊</span>) on the new column → Select which columns you want from the second table → Click OK</span>
+                    </div>
+                </div>
+
+                <div class="example-box mt-6">
+                    <div class="ex-label"><i class="fas fa-lightbulb"></i> Our Sample Tables for Join Examples</div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+                        <div>
+                            <div class="text-xs text-blue-400 font-bold uppercase tracking-wider mb-2">Left Table: Orders</div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-xs border border-white/10 rounded-lg overflow-hidden">
+                                    <thead><tr class="bg-blue-500/10"><th class="p-2 text-left">OrderID</th><th class="p-2 text-left">CustomerID</th><th class="p-2 text-left">Amount</th></tr></thead>
+                                    <tbody class="text-gray-400">
+                                        <tr class="border-t border-white/5"><td class="p-2">101</td><td class="p-2 text-blue-400">C1</td><td class="p-2">5000</td></tr>
+                                        <tr class="border-t border-white/5"><td class="p-2">102</td><td class="p-2 text-blue-400">C2</td><td class="p-2">3000</td></tr>
+                                        <tr class="border-t border-white/5"><td class="p-2">103</td><td class="p-2 text-blue-400">C3</td><td class="p-2">7000</td></tr>
+                                        <tr class="border-t border-white/5"><td class="p-2">104</td><td class="p-2 text-red-400">C5</td><td class="p-2">2000</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="text-xs text-acid font-bold uppercase tracking-wider mb-2">Right Table: Customers</div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-xs border border-white/10 rounded-lg overflow-hidden">
+                                    <thead><tr class="bg-acid/10"><th class="p-2 text-left">CustomerID</th><th class="p-2 text-left">Name</th><th class="p-2 text-left">City</th></tr></thead>
+                                    <tbody class="text-gray-400">
+                                        <tr class="border-t border-white/5"><td class="p-2 text-acid">C1</td><td class="p-2">Rahul</td><td class="p-2">Delhi</td></tr>
+                                        <tr class="border-t border-white/5"><td class="p-2 text-acid">C2</td><td class="p-2">Priya</td><td class="p-2">Mumbai</td></tr>
+                                        <tr class="border-t border-white/5"><td class="p-2 text-acid">C3</td><td class="p-2">Amit</td><td class="p-2">Bangalore</td></tr>
+                                        <tr class="border-t border-white/5"><td class="p-2 text-orange-400">C4</td><td class="p-2">Sneha</td><td class="p-2">Chennai</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-3">Key observations: Orders has C5 (not in Customers). Customers has C4 (not in Orders). C1, C2, C3 exist in both tables. This mismatch is what makes different join types matter.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== CHAPTER 7: JOIN TYPES ===================== -->
+    <section id="joins" class="pb-32 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <span class="badge mb-6 mx-auto w-fit"><i class="fas fa-project-diagram"></i> Chapter 07</span>
+                <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">JOIN TYPES</h2>
+                <p class="text-gray-400 text-lg max-w-3xl mx-auto">4 types of joins — each returns different data based on what matches and what doesn't</p>
+            </div>
+
+            <div class="space-y-12">
+                <!-- INNER JOIN -->
+                <div class="glass-card rounded-2xl p-8 neon-hover border-green-500/20">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="step-num bg-green-500/10 border-green-500/30 text-green-400">i</div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-green-400">INNER JOIN</h3>
+                            <p class="text-gray-500 text-sm">Only matching rows from BOTH tables. Non-matching rows are dropped.</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-6">The strictest join. If a CustomerID exists in Orders but NOT in Customers — it's gone. If a CustomerID exists in Customers but NOT in Orders — gone. <span class="text-green-400 font-semibold">Only C1, C2, C3 survive</span>.</p>
+
+                    <div class="join-diagram">
+                        <div class="jd-left">
+                            <div class="text-xs text-blue-400 font-bold uppercase tracking-wider mb-2">Orders (Left)</div>
+                            <div class="jd-row"><span class="jd-match">C1 — 101 — 5000</span></div>
+                            <div class="jd-row"><span class="jd-match">C2 — 102 — 3000</span></div>
+                            <div class="jd-row"><span class="jd-match">C3 — 103 — 7000</span></div>
+                            <div class="jd-row"><span class="jd-miss">C5 — 104 — 2000 ✗ DROPPED</span></div>
+                        </div>
+                        <div class="jd-right">
+                            <div class="text-xs text-acid font-bold uppercase tracking-wider mb-2">Customers (Right)</div>
+                            <div class="jd-row"><span class="jd-match">C1 — Rahul — Delhi</span></div>
+                            <div class="jd-row"><span class="jd-match">C2 — Priya — Mumbai</span></div>
+                            <div class="jd-row"><span class="jd-match">C3 — Amit — Bangalore</span></div>
+                            <div class="jd-row"><span class="jd-miss">C4 — Sneha — Chennai ✗ DROPPED</span></div>
+                        </div>
+                        <div class="jd-result">
+                            <div class="text-xs text-green-400 font-bold uppercase tracking-wider mb-2">Result — 3 Rows</div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-xs">
+                                    <thead><tr class="border-b border-white/10"><th class="py-1.5 text-left text-gray-500">OrderID</th><th class="py-1.5 text-left text-gray-500">CustomerID</th><th class="py-1.5 text-left text-gray-500">Amount</th><th class="py-1.5 text-left text-gray-500">Name</th><th class="py-1.5 text-left text-gray-500">City</th></tr></thead>
+                                    <tbody class="text-gray-400">
+                                        <tr class="border-b border-white/5"><td class="py-1.5">101</td><td class="py-1.5">C1</td><td class="py-1.5">5000</td><td class="py-1.5 text-green-400">Rahul</td><td class="py-1.5">Delhi</td></tr>
+                                        <tr class="border-b border-white/5"><td class="py-1.5">102</td><td class="py-1.5">C2</td><td class="py-1.5">3000</td><td class="py-1.5 text-green-400">Priya</td><td class="py-1.5">Mumbai</td></tr>
+                                        <tr><td class="py-1.5">103</td><td class="py-1.5">C3</td><td class="py-1.5">7000</td><td class="py-1.5 text-green-400">Amit</td><td class="py-1.5">Bangalore</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="example-box mt-4">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> When to Use</div>
+                        <p class="text-sm text-gray-400">When you ONLY want data that has a valid match in both tables. Example: Orders where the customer exists in the master customer list. Orphan orders (C5) and customers with no orders (C4) are excluded. This is the <span class="text-green-400">safest join</span> — no null values in the result.</p>
+                    </div>
+                </div>
+
+                <!-- LEFT JOIN -->
+                <div class="glass-card rounded-2xl p-8 neon-hover border-blue-500/20">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="step-num bg-blue-500/10 border-blue-500/30 text-blue-400">ii</div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-blue-400">LEFT JOIN</h3>
+                            <p class="text-gray-500 text-sm">ALL rows from left table + matching rows from right. No match = null.</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-6">The most commonly used join (80% of merges). Every row from the left table (Orders) is kept. If there's a match in the right table, you get the data. If not, you get <span class="text-blue-400 font-semibold">null</span> for the right-side columns. <span class="text-blue-400">C5 survives with null name/city.</span></p>
+
+                    <div class="join-diagram">
+                        <div class="jd-left">
+                            <div class="text-xs text-blue-400 font-bold uppercase tracking-wider mb-2">Orders (Left) — ALL KEPT</div>
+                            <div class="jd-row"><span class="jd-match">C1 — 101 — 5000 ✓</span></div>
+                            <div class="jd-row"><span class="jd-match">C2 — 102 — 3000 ✓</span></div>
+                            <div class="jd-row"><span class="jd-match">C3 — 103 — 7000 ✓</span></div>
+                            <div class="jd-row"><span class="jd-match">C5 — 104 — 2000 ✓ (no match → null)</span></div>
+                        </div>
+                        <div class="jd-right">
+                            <div class="text-xs text-acid font-bold uppercase tracking-wider mb-2">Customers (Right)</div>
+                            <div class="jd-row"><span class="jd-match">C1 — Rahul — Delhi ✓</span></div>
+                            <div class="jd-row"><span class="jd-match">C2 — Priya — Mumbai ✓</span></div>
+                            <div class="jd-row"><span class="jd-match">C3 — Amit — Bangalore ✓</span></div>
+                            <div class="jd-row"><span class="jd-miss">C4 — Sneha — Chennai ✗ IGNORED</span></div>
+                        </div>
+                        <div class="jd-result">
+                            <div class="text-xs text-blue-400 font-bold uppercase tracking-wider mb-2">Result — 4 Rows</div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-xs">
+                                    <thead><tr class="border-b border-white/10"><th class="py-1.5 text-left text-gray-500">OrderID</th><th class="py-1.5 text-left text-gray-500">CustomerID</th><th class="py-1.5 text-left text-gray-500">Amount</th><th class="py-1.5 text-left text-gray-500">Name</th><th class="py-1.5 text-left text-gray-500">City</th></tr></thead>
+                                    <tbody class="text-gray-400">
+                                        <tr class="border-b border-white/5"><td class="py-1.5">101</td><td class="py-1.5">C1</td><td class="py-1.5">5000</td><td class="py-1.5 text-green-400">Rahul</td><td class="py-1.5">Delhi</td></tr>
+                                        <tr class="border-b border-white/5"><td class="py-1.5">102</td><td class="py-1.5">C2</td><td class="py-1.5">3000</td><td class="py-1.5 text-green-400">Priya</td><td class="py-1.5">Mumbai</td></tr>
+                                        <tr class="border-b border-white/5"><td class="py-1.5">103</td><td class="py-1.5">C3</td><td class="py-1.5">7000</td><td class="py-1.5 text-green-400">Amit</td><td class="py-1.5">Bangalore</td></tr>
+                                        <tr><td class="py-1.5">104</td><td class="py-1.5 text-red-400">C5</td><td class="py-1.5">2000</td><td class="py-1.5 text-red-400">null</td><td class="py-1.5 text-red-400">null</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="example-box mt-4">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> When to Use</div>
+                        <p class="text-sm text-gray-400"><span class="text-blue-400 font-bold">Default choice for 80% of scenarios.</span> You never want to lose orders — even if the customer data is missing. The null values in the last row tell you: "Order 104 has a CustomerID (C5) that doesn't exist in the master list" — this is a <span class="text-white">data quality issue</span> you can now identify and fix.</p>
+                    </div>
+                </div>
+
+                <!-- RIGHT JOIN -->
+                <div class="glass-card rounded-2xl p-8 neon-hover border-purple-500/20">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="step-num bg-purple-500/10 border-purple-500/30 text-purple-400">iii</div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-purple-400">RIGHT JOIN</h3>
+                            <p class="text-gray-500 text-sm">ALL rows from right table + matching rows from left. Reverse of Left Join.</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-6">Every row from the <span class="text-purple-400">right table</span> (Customers) is kept. If there's no matching order, you get null for order columns. <span class="text-purple-400">C4 (Sneha) survives with null order data.</span> C5 from Orders is dropped because it has no match.</p>
+
+                    <div class="join-diagram">
+                        <div class="jd-left">
+                            <div class="text-xs text-blue-400 font-bold uppercase tracking-wider mb-2">Orders (Left)</div>
+                            <div class="jd-row"><span class="jd-match">C1 — 101 — 5000 ✓</span></div>
+                            <div class="jd-row"><span class="jd-match">C2 — 102 — 3000 ✓</span></div>
+                            <div class="jd-row"><span class="jd-match">C3 — 103 — 7000 ✓</span></div>
+                            <div class="jd-row"><span class="jd-miss">C5 — 104 — 2000 ✗ DROPPED</span></div>
+                        </div>
+                        <div class="jd-right">
+                            <div class="text-xs text-acid font-bold uppercase tracking-wider mb-2">Customers (Right) — ALL KEPT</div>
+                            <div class="jd-row"><span class="jd-match">C1 — Rahul — Delhi ✓</span></div>
+                            <div class="jd-row"><span class="jd-match">C2 — Priya — Mumbai ✓</span></div>
+                            <div class="jd-row"><span class="jd-match">C3 — Amit — Bangalore ✓</span></div>
+                            <div class="jd-row"><span class="jd-match">C4 — Sneha — Chennai ✓ (no match → null)</span></div>
+                        </div>
+                        <div class="jd-result">
+                            <div class="text-xs text-purple-400 font-bold uppercase tracking-wider mb-2">Result — 4 Rows</div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-xs">
+                                    <thead><tr class="border-b border-white/10"><th class="py-1.5 text-left text-gray-500">OrderID</th><th class="py-1.5 text-left text-gray-500">CustomerID</th><th class="py-1.5 text-left text-gray-500">Amount</th><th class="py-1.5 text-left text-gray-500">Name</th><th class="py-1.5 text-left text-gray-500">City</th></tr></thead>
+                                    <tbody class="text-gray-400">
+                                        <tr class="border-b border-white/5"><td class="py-1.5">101</td><td class="py-1.5">C1</td><td class="py-1.5">5000</td><td class="py-1.5 text-green-400">Rahul</td><td class="py-1.5">Delhi</td></tr>
+                                        <tr class="border-b border-white/5"><td class="py-1.5">102</td><td class="py-1.5">C2</td><td class="py-1.5">3000</td><td class="py-1.5 text-green-400">Priya</td><td class="py-1.5">Mumbai</td></tr>
+                                        <tr class="border-b border-white/5"><td class="py-1.5">103</td><td class="py-1.5">C3</td><td class="py-1.5">7000</td><td class="py-1.5 text-green-400">Amit</td><td class="py-1.5">Bangalore</td></tr>
+                                        <tr><td class="py-1.5 text-red-400">null</td><td class="py-1.5 text-purple-400">C4</td><td class="py-1.5 text-red-400">null</td><td class="py-1.5 text-green-400">Sneha</td><td class="py-1.5">Chennai</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="example-box mt-4">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> When to Use</div>
+                        <p class="text-sm text-gray-400">When you want to answer: "Which customers have <span class="text-purple-400">never placed an order</span>?" The last row shows Sneha (C4) with null order data — she's in the customer list but has zero orders. <span class="text-white">Pro Tip:</span> In practice, most people just swap the tables and use a Left Join instead of a Right Join — it's less confusing.</p>
+                    </div>
+                </div>
+
+                <!-- FULL OUTER JOIN -->
+                <div class="glass-card rounded-2xl p-8 neon-hover border-orange-500/20">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="step-num bg-orange-500/10 border-orange-500/30 text-orange-400">iv</div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-orange-400">FULL OUTER JOIN</h3>
+                            <p class="text-gray-500 text-sm">ALL rows from BOTH tables. Matches where possible, nulls where not.</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-6">The most inclusive join. <span class="text-orange-400 font-semibold">Nothing is dropped.</span> Every row from both tables appears in the result. C5 (no customer match) gets null for name/city. C4 (no order match) gets null for order data. <span class="text-orange-400">5 rows total</span> — all data preserved.</p>
+
+                    <div class="join-diagram">
+                        <div class="jd-left">
+                            <div class="text-xs text-blue-400 font-bold uppercase tracking-wider mb-2">Orders (Left) — ALL KEPT</div>
+                            <div class="jd-row"><span class="jd-match">C1 — 101 — 5000 ✓</span></div>
+                            <div class="jd-row"><span class="jd-match">C2 — 102 — 3000 ✓</span></div>
+                            <div class="jd-row"><span class="jd-match">C3 — 103 — 7000 ✓</span></div>
+                            <div class="jd-row"><span class="jd-match">C5 — 104 — 2000 ✓ (null right)</span></div>
+                        </div>
+                        <div class="jd-right">
+                            <div class="text-xs text-acid font-bold uppercase tracking-wider mb-2">Customers (Right) — ALL KEPT</div>
+                            <div class="jd-row"><span class="jd-match">C1 — Rahul — Delhi ✓</span></div>
+                            <div class="jd-row"><span class="jd-match">C2 — Priya — Mumbai ✓</span></div>
+                            <div class="jd-row"><span class="jd-match">C3 — Amit — Bangalore ✓</span></div>
+                            <div class="jd-row"><span class="jd-match">C4 — Sneha — Chennai ✓ (null left)</span></div>
+                        </div>
+                        <div class="jd-result">
+                            <div class="text-xs text-orange-400 font-bold uppercase tracking-wider mb-2">Result — 5 Rows (Nothing Dropped)</div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-xs">
+                                    <thead><tr class="border-b border-white/10"><th class="py-1.5 text-left text-gray-500">OrderID</th><th class="py-1.5 text-left text-gray-500">CustID</th><th class="py-1.5 text-left text-gray-500">Amount</th><th class="py-1.5 text-left text-gray-500">Name</th><th class="py-1.5 text-left text-gray-500">City</th></tr></thead>
+                                    <tbody class="text-gray-400">
+                                        <tr class="border-b border-white/5"><td class="py-1.5">101</td><td class="py-1.5">C1</td><td class="py-1.5">5000</td><td class="py-1.5 text-green-400">Rahul</td><td class="py-1.5">Delhi</td></tr>
+                                        <tr class="border-b border-white/5"><td class="py-1.5">102</td><td class="py-1.5">C2</td><td class="py-1.5">3000</td><td class="py-1.5 text-green-400">Priya</td><td class="py-1.5">Mumbai</td></tr>
+                                        <tr class="border-b border-white/5"><td class="py-1.5">103</td><td class="py-1.5">C3</td><td class="py-1.5">7000</td><td class="py-1.5 text-green-400">Amit</td><td class="py-1.5">Bangalore</td></tr>
+                                        <tr class="border-b border-white/5"><td class="py-1.5 text-red-400">null</td><td class="py-1.5 text-orange-400">C5</td><td class="py-1.5">2000</td><td class="py-1.5 text-red-400">null</td><td class="py-1.5 text-red-400">null</td></tr>
+                                        <tr><td class="py-1.5 text-red-400">null</td><td class="py-1.5 text-orange-400">C4</td><td class="py-1.5 text-red-400">null</td><td class="py-1.5 text-green-400">Sneha</td><td class="py-1.5">Chennai</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="example-box mt-4">
+                        <div class="ex-label"><i class="fas fa-lightbulb"></i> When to Use</div>
+                        <p class="text-sm text-gray-400"><span class="text-orange-400 font-bold">Data reconciliation / audit scenarios.</span> "Show me EVERYTHING — orders without customers AND customers without orders." Used when you need a complete picture for data quality checks. After this join, filter for rows where Name is null (orders with bad CustomerID) OR Amount is null (customers with no orders) to generate a <span class="text-white">data quality exception report</span>.</p>
+                    </div>
+                </div>
+
+                <!-- Join Summary -->
+                <div class="animated-border">
+                    <div class="bg-cardDark rounded-2xl p-8">
+                        <h4 class="text-lg font-bold mb-6 text-center"><i class="fas fa-table text-acid mr-2"></i>Quick Join Reference — Same Data, Different Results</h4>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div class="bg-green-500/5 border border-green-500/20 rounded-xl p-4 text-center">
+                                <div class="text-green-400 font-bold text-sm mb-1">Inner Join</div>
+                                <div class="text-3xl font-bold text-white">3</div>
+                                <div class="text-xs text-gray-500">rows (C1,C2,C3)</div>
+                                <div class="text-xs text-green-400 mt-1">✓ No nulls</div>
+                            </div>
+                            <div class="bg-blue-500/5 border border-blue-500/20 rounded-xl p-4 text-center">
+                                <div class="text-blue-400 font-bold text-sm mb-1">Left Join</div>
+                                <div class="text-3xl font-bold text-white">4</div>
+                                <div class="text-xs text-gray-500">rows (+C5, null right)</div>
+                                <div class="text-xs text-blue-400 mt-1">✓ Keeps all orders</div>
+                            </div>
+                            <div class="bg-purple-500/5 border border-purple-500/20 rounded-xl p-4 text-center">
+                                <div class="text-purple-400 font-bold text-sm mb-1">Right Join</div>
+                                <div class="text-3xl font-bold text-white">4</div>
+                                <div class="text-xs text-gray-500">rows (+C4, null left)</div>
+                                <div class="text-xs text-purple-400 mt-1">✓ Keeps all customers</div>
+                            </div>
+                            <div class="bg-orange-500/5 border border-orange-500/20 rounded-xl p-4 text-center">
+                                <div class="text-orange-400 font-bold text-sm mb-1">Full Outer</div>
+                                <div class="text-3xl font-bold text-white">5</div>
+                                <div class="text-xs text-gray-500">rows (C4+C5, mixed nulls)</div>
+                                <div class="text-xs text-orange-400 mt-1">✓ Nothing dropped</div>
+                            </div>
+                        </div>
+                        <div class="glass-card rounded-xl p-4 mt-6 text-center">
+                            <p class="text-sm text-gray-400"><i class="fas fa-star text-acid mr-2"></i><strong class="text-white">Rule of Thumb:</strong> Start with <span class="text-blue-400">Left Join</span> — it covers 80% of use cases. Use <span class="text-green-400">Inner Join</span> only when you strictly need valid matches only. Use <span class="text-orange-400">Full Outer Join</span> for data audits. Avoid <span class="text-purple-400">Right Join</span> — just swap tables and use Left Join instead.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-4xl mx-auto"></div>
+
+    <!-- CTA Section -->
+    <section class="py-32 px-6 relative overflow-hidden">
+        <div class="hero-orb w-[600px] h-[600px] bg-acid left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2" style="opacity:.08"></div>
+        <div class="max-w-4xl mx-auto relative z-10 text-center">
+            <span class="badge mb-6 mx-auto w-fit"><i class="fas fa-graduation-cap"></i> Ready to Practice?</span>
+            <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter mb-6">
+                <span class="gradient-text">MASTER EVERY</span><br>
+                <span class="acid-gradient-text">TRANSFORMATION</span>
+            </h2>
+            <p class="text-gray-400 text-lg max-w-2xl mx-auto mb-10">
+                Join Vizonis Academy's Power BI course and practice every transformation you learned here — with real datasets, live mentoring, and project-based learning.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="https://wa.me/916364671786?text=Hi%20Vizonis%20Academy!%20I%20read%20the%20Power%20Query%20Transformations%20guide%20and%20want%20to%20enroll." target="_blank"
+                   class="glow-btn bg-acid text-obsidian px-12 py-5 rounded-full text-sm font-bold uppercase tracking-widest inline-flex items-center justify-center gap-3">
+                    <i class="fab fa-whatsapp text-xl"></i> Enroll via WhatsApp
+                </a>
+                <a href="tel:+916364671786"
+                   class="glow-btn border border-white/20 text-white px-12 py-5 rounded-full text-sm font-bold uppercase tracking-widest inline-flex items-center justify-center gap-3 hover:border-acid hover:text-acid">
+                    <i class="fas fa-phone"></i> Call Us Now
+                </a>
+            </div>
+            <p class="text-gray-600 text-sm mt-6"><i class="fas fa-phone mr-1"></i> +91 6364671786 &nbsp;|&nbsp; <i class="fab fa-whatsapp mr-1"></i> Available 24/7 on WhatsApp</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 py-16 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <div class="font-display text-2xl font-bold mb-4"><span class="text-acid">V</span>IZONIS</div>
+                    <p class="text-gray-500 text-sm leading-relaxed">India's leading academy for Data Analytics & Business Intelligence training.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4 text-gray-400">Courses</h4>
+                    <ul class="space-y-2 text-sm text-gray-500">
+                        <li><a href="#" class="hover:text-acid transition-colors">Microsoft Power BI</a></li>
+                        <li><a href="#" class="hover:text-acid transition-colors">Power Query Masterclass</a></li>
+                        <li><a href="#" class="hover:text-acid transition-colors">DAX Deep Dive</a></li>
+                        <li><a href="#" class="hover:text-acid transition-colors">Microsoft Fabric</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4 text-gray-400">Guides</h4>
+                    <ul class="space-y-2 text-sm text-gray-500">
+                        <li><a href="#" class="hover:text-acid transition-colors">Power BI Getting Started</a></li>
+                        <li><a href="#" class="hover:text-acid transition-colors">Power Query Basics</a></li>
+                        <li><a href="#" class="hover:text-acid transition-colors">Query Transformations</a></li>
+                        <li><a href="#" class="hover:text-acid transition-colors">DAX Formula Reference</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4 text-gray-400">Contact</h4>
+                    <ul class="space-y-3 text-sm text-gray-500">
+                        <li class="flex items-center gap-2"><i class="fab fa-whatsapp text-green-400"></i> <a href="https://wa.me/916364671786" target="_blank" class="hover:text-acid transition-colors">+91 6364671786</a></li>
+                        <li class="flex items-center gap-2"><i class="fas fa-phone text-acid"></i> <a href="tel:+916364671786" class="hover:text-acid transition-colors">+91 636464671786</a></li>
+                        <li class="flex items-center gap-2"><i class="fas fa-envelope text-gray-400"></i> info@vizonis.com</li>
+                    </ul>
+                    <div class="flex gap-4 mt-6">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-acid/10 hover:text-acid transition-all text-gray-500"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-acid/10 hover:text-acid transition-all text-gray-500"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-acid/10 hover:text-acid transition-all text-gray-500"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-gray-600 text-xs">© 2025 Vizonis Academy. All rights reserved.</p>
+                <p class="text-gray-700 text-xs">Built with <i class="fas fa-heart text-acid text-[10px]"></i> for aspiring data professionals</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20read%20the%20Power%20Query%20Transformations%20guide." target="_blank" class="whatsapp-float" aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp text-white text-3xl"></i>
+    </a>
+
+    <!-- WhatsApp Toast -->
+    <div id="wa-toast" class="fixed bottom-28 right-6 z-[7999] glass-card rounded-xl p-4 max-w-xs transform translate-x-[120%] transition-transform duration-500">
+        <div class="flex items-start gap-3">
+            <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center shrink-0">
+                <i class="fab fa-whatsapp text-green-400 text-lg"></i>
+            </div>
+            <div>
+                <p class="text-sm font-bold">Confused about IF ELSE syntax?</p>
+                <p class="text-xs text-gray-400 mt-1">Get instant help from our mentors — they'll clarify in 2 minutes!</p>
+                <a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20have%20a%20doubt%20about%20Power%20Query%20transformations." target="_blank" class="text-xs text-green-400 font-bold mt-2 inline-block hover:text-green-300">Ask Now →</a>
+            </div>
+            <button onclick="closeToast()" class="text-gray-600 hover:text-white ml-2"><i class="fas fa-times text-xs"></i></button>
+        </div>
+    </div>
+
+    <script>
+        const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        gsap.utils.toArray('.glass-card, .animated-border').forEach((el, i) => {
+            gsap.from(el, {
+                y: 40, opacity: 0, duration: 0.8,
+                delay: i * 0.02,
+                ease: 'power3.out',
+                scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
+            });
+        });
+
+        gsap.utils.toArray('.example-box').forEach((box) => {
+            gsap.from(box, {
+                x: -20, opacity: 0, duration: 0.6, delay: 0.2,
+                ease: 'power2.out',
+                scrollTrigger: { trigger: box, start: 'top 90%', toggleActions: 'play none none none' }
+            });
+        });
+
+        gsap.utils.toArray('.join-diagram').forEach((jd) => {
+            gsap.from(jd, {
+                scale: 0.95, opacity: 0, duration: 0.8,
+                ease: 'power3.out',
+                scrollTrigger: { trigger: jd, start: 'top 85%', toggleActions: 'play none none none' }
+            });
+        });
+
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 25; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                const size = Math.random() * 4 + 2;
+                p.style.width = size + 'px';
+                p.style.height = size + 'px';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.animationDuration = (Math.random() * 15 + 10) + 's';
+                p.style.animationDelay = (Math.random() * 10) + 's';
+                container.appendChild(p);
+            }
+        }
+        createParticles();
+
+        function closeToast() {
+            document.getElementById('wa-toast').style.transform = 'translateX(120%)';
+        }
+        setTimeout(() => {
+            document.getElementById('wa-toast').style.transform = 'translateX(0)';
+        }, 6000);
+        setTimeout(() => { closeToast(); }, 22000);
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    lenis.scrollTo(target, { offset: -80 });
+                }
+            });
+        });
+
+        const sections = document.querySelectorAll('section[id]');
+        const navItems = document.querySelectorAll('.sub-nav-item');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 120;
+                if (pageYOffset >= sectionTop) current = section.getAttribute('id');
+            });
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('href') === '#' + current) item.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
