@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vizonis Academy | SQL, Joins, Relationships & Assignment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+    <script>
+        tailwind.config={theme:{extend:{colors:{obsidian:'#050505',charcoal:'#0F1115',acid:'#CCFF00',silver:'#E1E1E1',glass:'rgba(255,255,255,0.05)',cardDark:'#0A0C10'},fontFamily:{sans:['Space Grotesk','sans-serif'],display:['Syncopate','sans-serif']}}}}
+    </script>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:'Space Grotesk',sans-serif;background:#050505;color:#E1E1E1;overflow-x:hidden}
+        .noise-overlay{position:fixed;inset:0;z-index:9000;pointer-events:none;opacity:.04;background-image:url('https://grainy-gradients.vercel.app/noise.svg')}
+        ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#050505}::-webkit-scrollbar-thumb{background:#CCFF00;border-radius:3px}
+        .gradient-text{background:linear-gradient(to bottom,#FFF 0%,#9ca3af 50%,#111827 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .acid-gradient-text{background:linear-gradient(135deg,#CCFF00,#88cc00,#CCFF00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .glass-card{background:rgba(255,255,255,.03);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.08);transition:all .4s cubic-bezier(.25,.46,.45,.94)}
+        .glass-card:hover{background:rgba(255,255,255,.06);border-color:rgba(204,255,0,.3);box-shadow:0 0 30px rgba(204,255,0,.08)}
+        .neon-hover{transition:all .3s ease}.neon-hover:hover{box-shadow:0 0 20px rgba(204,255,0,.3);border-color:#CCFF00!important}
+        .glow-btn{position:relative;overflow:hidden;transition:all .3s ease}
+        .glow-btn::before{content:'';position:absolute;inset:-2px;background:linear-gradient(45deg,#CCFF00,transparent,#CCFF00);z-index:-1;border-radius:inherit;opacity:0;transition:opacity .3s}
+        .glow-btn:hover::before{opacity:1}.glow-btn:hover{box-shadow:0 0 30px rgba(204,255,0,.4);transform:translateY(-2px)}
+        .particle{position:absolute;border-radius:50%;background:#CCFF00;opacity:.15;animation:fp linear infinite}
+        @keyframes fp{0%{transform:translateY(100vh) scale(0);opacity:0}10%{opacity:.15}90%{opacity:.15}100%{transform:translateY(-100px) scale(1);opacity:0}}
+        .grid-bg{background-image:linear-gradient(rgba(204,255,0,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(204,255,0,.03) 1px,transparent 1px);background-size:60px 60px}
+        .section-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(204,255,0,.3),transparent)}
+        .badge{display:inline-flex;align-items:center;gap:6px;padding:4px 14px;border-radius:9999px;font-size:.75rem;border:1px solid rgba(204,255,0,.3);background:rgba(204,255,0,.08);color:#CCFF00;font-weight:600}
+        .whatsapp-float{position:fixed;bottom:30px;right:30px;z-index:8000;width:64px;height:64px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.4);transition:all .3s ease;cursor:pointer}
+        .whatsapp-float:hover{transform:scale(1.1);box-shadow:0 6px 30px rgba(37,211,102,.6)}
+        .whatsapp-float::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:2px solid rgba(37,211,102,.3);animation:wap 2s ease-out infinite}
+        @keyframes wap{0%{transform:scale(1);opacity:1}100%{transform:scale(1.5);opacity:0}}
+        .ticker{display:flex;gap:3rem;white-space:nowrap;animation:tick 25s linear infinite}
+        @keyframes tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+        .marquee-mask{mask-image:linear-gradient(to right,transparent,black 10%,black 90%,transparent);-webkit-mask-image:linear-gradient(to right,transparent,black 10%,black 90%,transparent)}
+        .hero-orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.2;animation:of 8s ease-in-out infinite alternate}
+        @keyframes of{0%{transform:translate(0,0) scale(1)}100%{transform:translate(30px,-40px) scale(1.2)}}
+        .step-num{width:36px;height:36px;border-radius:10px;background:rgba(204,255,0,.1);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;color:#CCFF00;flex-shrink:0;border:1px solid rgba(204,255,0,.2)}
+        .code-block{background:#0A0C10;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px 18px;font-family:'Courier New',monospace;font-size:.78rem;line-height:1.7;overflow-x:auto;color:#9ca3af}
+        .code-block .kw{color:#CCFF00}.code-block .str{color:#f97316}.code-block .cmt{color:#4b5563}.code-block .num{color:#60a5fa}.code-block .fn{color:#c084fc}
+        .ex-box{background:rgba(204,255,0,.04);border:1px solid rgba(204,255,0,.15);border-radius:12px;padding:14px 18px;margin-top:10px}
+        .ex-box .ex-l{font-size:.7rem;text-transform:uppercase;letter-spacing:.15em;color:#CCFF00;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+        .sub-nav-item{padding:8px 14px;border-radius:8px;font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:#6b7280;transition:all .2s;cursor:pointer;border:1px solid transparent;white-space:nowrap}
+        .sub-nav-item:hover,.sub-nav-item.active{color:#CCFF00;background:rgba(204,255,0,.05);border-color:rgba(204,255,0,.15)}
+        .tg{display:grid;grid-template-columns:1fr;gap:12px}@media(min-width:768px){.tg{grid-template-columns:1fr 1fr}}
+        .af{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.af .bef{color:#f87171;text-decoration:line-through;text-decoration-color:rgba(248,113,113,.4)}.af .ar{color:#CCFF00;font-weight:700}.af .aft{color:#4ade80}
+        .er-table{width:100%;border-collapse:separate;border-spacing:0;font-size:.72rem}
+        .er-table th{padding:8px 10px;text-align:left;border-bottom:2px solid rgba(204,255,0,.3);font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:.65rem}
+        .er-table td{padding:6px 10px;border-bottom:1px solid rgba(255,255,255,.05)}
+        .er-table tr:hover td{background:rgba(255,255,255,.02)}
+        .pk{color:#CCFF00;font-weight:700}.fk{color:#60a5fa}
+    </style>
+</head>
+<body class="grid-bg">
+<div class="noise-overlay"></div>
+<div id="particles" class="fixed inset-0 z-0 pointer-events-none overflow-hidden"></div>
+
+<!-- Nav -->
+<nav class="fixed top-0 left-0 right-0 z-[7000] backdrop-blur-md bg-obsidian/70 border-b border-white/5">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <a href="#" class="font-display text-2xl font-bold tracking-tight"><span class="text-acid">V</span>IZONIS</a>
+        <div class="hidden lg:flex items-center gap-2 overflow-x-auto">
+            <a href="#sql" class="sub-nav-item">SQL</a>
+            <a href="#modes" class="sub-nav-item">Import/DQ</a>
+            <a href="#hr" class="sub-nav-item">HR Joins</a>
+            <a href="#prod" class="sub-nav-item">Production</a>
+            <a href="#rel" class="sub-nav-item">Relationships</a>
+            <a href="#jvr" class="sub-nav-item">Joins vs Rel</a>
+            <a href="#assignment" class="sub-nav-item">Assignment</a>
+        </div>
+        <a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20need%20help%20with%20SQL%20and%20Relationships%20in%20Power%20BI." target="_blank" class="glow-btn bg-acid text-obsidian px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest whitespace-nowrap">Enroll Now</a>
+    </div>
+</nav>
+
+<!-- Hero -->
+<section class="relative min-h-screen flex flex-col justify-center items-center pt-20 overflow-hidden">
+    <div class="hero-orb w-[500px] h-[500px] bg-acid top-1/4 -left-40"></div>
+    <div class="hero-orb w-[400px] h-[400px] bg-blue-500 bottom-1/4 -right-32" style="animation-delay:-5s;opacity:.1"></div>
+    <div class="relative z-10 text-center px-6 max-w-6xl mx-auto">
+        <div class="badge mb-8 mx-auto w-fit"><i class="fas fa-database"></i> SQL, Joins, Relationships & Assignment</div>
+        <h1 class="font-display text-5xl md:text-7xl lg:text-8xl font-bold leading-[.9] tracking-tighter mb-8">
+            <span class="gradient-text block">SQL TO</span>
+            <span class="acid-gradient-text block mt-2">RELATIONSHIPS</span>
+            <span class="gradient-text block mt-2 text-3xl md:text-5xl lg:text-6xl">& ASSIGNMENT</span>
+        </h1>
+        <p class="text-gray-400 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-12">Connect SQL databases, understand Import vs DirectQuery, master joins vs relationships with real production data, and complete the Apache Logs parsing assignment.</p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="#sql" class="glow-btn bg-acid text-obsidian px-10 py-4 rounded-full text-sm font-bold uppercase tracking-widest">Start Learning <i class="fas fa-arrow-down ml-2"></i></a>
+            <a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20need%20help%20with%20Power%20BI%20SQL%20connection." target="_blank" class="glow-btn border border-white/20 text-white px-10 py-4 rounded-full text-sm font-bold uppercase tracking-widest hover:border-acid hover:text-acid"><i class="fab fa-whatsapp mr-2"></i> Chat With Us</a>
+        </div>
+    </div>
+</section>
+
+<!-- Ticker -->
+<div class="py-6 border-y border-white/5 marquee-mask overflow-hidden"><div class="ticker">
+<span class="text-2xl font-display font-bold text-white/10">SQL SERVER</span><span class="text-acid text-2xl">◆</span>
+<span class="text-2xl font-display font-bold text-white/10">IMPORT MODE</span><span class="text-acid text-2xl">◆</span>
+<span class="text-2xl font-display font-bold text-white/10">DIRECT QUERY</span><span class="text-acid text-2xl">◆</span>
+<span class="text-2xl font-display font-bold text-white/10">MERGE JOINS</span><span class="text-acid text-2xl">◆</span>
+<span class="text-2xl font-display font-bold text-white/10">RELATIONSHIPS</span><span class="text-acid text-2xl">◆</span>
+<span class="text-2xl font-display font-bold text-white/10">ONE TO MANY</span><span class="text-acid text-2xl">◆</span>
+<span class="text-2xl font-display font-bold text-white/10">APACHE LOGS</span><span class="text-acid text-2xl">◆</span>
+<span class="text-2xl font-display font-bold text-white/10">SQL SERVER</span><span class="text-acid text-2xl">◆</span>
+<span class="text-2xl font-display font-bold text-white/10">IMPORT MODE</span><span class="text-acid text-2xl">◆</span>
+<span class="text-2xl font-display font-bold text-white/10">DIRECT QUERY</span><span class="text-acid text-2xl">◆</span>
+<span class="text-2xl font-display font-bold text-white/10">MERGE JOINS</span><span class="text-acid text-2xl">◆</span>
+<span class="text-2xl font-display font-bold text-white/10">RELATIONSHIPS</span><span class="text-acid text-2xl">◆</span>
+<span class="text-2xl font-display font-bold text-white/10">ONE TO MANY</span><span class="text-acid text-2xl">◆</span>
+<span class="text-2xl font-display font-bold text-white/10">APACHE LOGS</span><span class="text-acid text-2xl">◆</span>
+</div></div>
+
+<!-- ===== CH1: CONNECT SQL ===== -->
+<section id="sql" class="py-32 px-6 relative">
+<div class="max-w-7xl mx-auto">
+    <div class="text-center mb-20">
+        <span class="badge mb-6 mx-auto w-fit"><i class="fas fa-plug"></i> Chapter 01</span>
+        <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">CONNECT SQL DATABASE</h2>
+        <p class="text-gray-400 text-lg max-w-3xl mx-auto">The most common enterprise data source — connect Power BI directly to SQL Server</p>
+    </div>
+    <div class="glass-card rounded-2xl p-8 md:p-10 neon-hover border-blue-500/20">
+        <div class="flex items-center gap-4 mb-6">
+            <div class="w-14 h-14 rounded-xl bg-blue-500/10 flex items-center justify-center"><i class="fas fa-server text-blue-400 text-2xl"></i></div>
+            <div><h3 class="text-2xl font-bold">Step-by-Step: SQL Server Connection</h3><p class="text-gray-500 text-sm">Works for SQL Server, Azure SQL, Amazon RDS, MySQL, PostgreSQL</p></div>
+        </div>
+        <div class="space-y-4">
+            <div class="flex items-start gap-4 p-3 bg-white/[0.02] rounded-lg"><span class="step-num">1</span><div><span class="font-bold text-sm">Get Data → Database → SQL Server</span><p class="text-gray-500 text-xs mt-1">For MySQL: Get Data → Database → MySQL. For PostgreSQL: Get Data → Database → PostgreSQL.</p></div></div>
+            <div class="flex items-start gap-4 p-3 bg-white/[0.02] rounded-lg"><span class="step-num">2</span><div><span class="font-bold text-sm">Enter Server Name</span><p class="text-gray-500 text-xs mt-1">Local: <span class="text-white">localhost</span> or <span class="text-white">.\SQLEXPRESS</span>. Remote: <span class="text-white">10.0.0.5,1433</span> (IP,port). Azure: <span class="text-white">myserver.database.windows.net</span></p></div></div>
+            <div class="flex items-start gap-4 p-3 bg-white/[0.02] rounded-lg"><span class="step-num">3</span><div><span class="font-bold text-sm">Enter Database Name</span><p class="text-gray-500 text-xs mt-1">The specific database: <span class="text-white">Production</span>, <span class="text-white">HR_Analytics</span>, <span class="text-white">Sales_DW</span>. Leave blank to see all databases.</p></div></div>
+            <div class="flex items-start gap-4 p-3 bg-white/[0.02] rounded-lg"><span class="step-num">4</span><div><span class="font-bold text-sm">Credentials</span><p class="text-gray-500 text-xs mt-1"><span class="text-white">Windows Authentication</span> (uses your AD login — most common in companies) OR <span class="text-white">Database Authentication</span> (username + password). For Azure: use "SQL Server Authentication" with AAD credentials.</p></div></div>
+            <div class="flex items-start gap-4 p-3 bg-white/[0.02] rounded-lg"><span class="step-num">5</span><div><span class="font-bold text-sm">Choose Mode</span><p class="text-gray-500 text-xs mt-1">Critical decision: <span class="text-acid">Import</span> or <span class="text-orange-400">DirectQuery</span> — explained in next section.</p></div></div>
+            <div class="flex items-start gap-4 p-3 bg-white/[0.02] rounded-lg"><span class="step-num">6</span><div><span class="font-bold text-sm">Select Tables</span><p class="text-gray-500 text-xs mt-1">Navigator shows all tables/views. Select <span class="text-white">dbo.Brands, dbo.Categories, dbo.Products, dbo.Customers</span>. Check "Select related tables" for auto-selecting related tables.</p></div></div>
+            <div class="flex items-start gap-4 p-3 bg-white/[0.02] rounded-lg"><span class="step-num">7</span><div><span class="font-bold text-sm">Transform Data or Load</span><p class="text-gray-500 text-xs mt-1">Click <span class="text-white">Transform Data</span> to open Power Query (clean data first) OR <span class="text-white">Load</span> to go directly to the model.</p></div></div>
+        </div>
+        <div class="ex-box mt-6">
+            <div class="ex-l"><i class="fas fa-lightbulb"></i> Connection String (Advanced)</div>
+            <div class="code-block text-xs">Data Source=<span class="str">localhost</span>;Initial Catalog=<span class="str">Production</span>;Integrated Security=<span class="kw">SSPI</span>;</div>
+            <p class="text-xs text-gray-500 mt-2">You can copy-paste this in "Advanced Options" instead of filling fields. Useful for sharing connections with team members.</p>
+        </div>
+    </div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===== CH2: IMPORT VS DIRECTQUERY ===== -->
+<section id="modes" class="py-32 px-6 relative">
+<div class="max-w-7xl mx-auto">
+    <div class="text-center mb-20">
+        <span class="badge mb-6 mx-auto w-fit"><i class="fas fa-exchange-alt"></i> Chapter 02</span>
+        <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">IMPORT vs DIRECTQUERY</h2>
+        <p class="text-gray-400 text-lg max-w-3xl mx-auto">The most important decision when connecting — get it wrong and your entire report suffers</p>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+        <div class="glass-card rounded-2xl p-8 neon-hover border-acid/30">
+            <div class="flex items-center gap-3 mb-6"><div class="w-12 h-12 rounded-xl bg-acid/10 flex items-center justify-center"><i class="fas fa-download text-acid text-xl"></i></div><div><h3 class="text-xl font-bold text-acid">Import Mode</h3><p class="text-gray-500 text-xs">Copy data into Power BI's engine</p></div></div>
+            <p class="text-sm text-gray-400 mb-4">Power BI copies ALL data from SQL into its own <span class="text-acid font-semibold">VertiPaq engine</span> (in-memory columnar database). After loading, the SQL connection is no longer needed for querying.</p>
+            <ul class="space-y-2 text-sm text-gray-400">
+                <li><i class="fas fa-check text-acid mr-2 text-xs"></i>Lightning-fast queries (milliseconds)</li>
+                <li><i class="fas fa-check text-acid mr-2 text-xs"></i>Full DAX & Power Query capabilities</li>
+                <li><i class="fas fa-check text-acid mr-2 text-xs"></i>Works offline after loading</li>
+                <li><i class="fas fa-check text-acid mr-2 text-xs"></i>Can handle 10M+ rows (compressed ~10x)</li>
+                <li><i class="fas fa-times text-red-400 mr-2 text-xs"></i>Data is a snapshot — must refresh for updates</li>
+                <li><i class="fas fa-times text-red-400 mr-2 text-xs"></i>Large datasets = long initial load time</li>
+            </ul>
+        </div>
+        <div class="glass-card rounded-2xl p-8 neon-hover border-orange-500/30">
+            <div class="flex items-center gap-3 mb-6"><div class="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center"><i class="fas fa-bolt text-orange-400 text-xl"></i></div><div><h3 class="text-xl font-bold text-orange-400">DirectQuery Mode</h3><p class="text-gray-500 text-xs">Query SQL Server in real-time</p></div></div>
+            <p class="text-sm text-gray-400 mb-4">Power BI does NOT store data. Every time you click a visual, it sends a SQL query to the server. The server does the work and returns results.</p>
+            <ul class="space-y-2 text-sm text-gray-400">
+                <li><i class="fas fa-check text-orange-400 mr-2 text-xs"></i>Always shows live/latest data</li>
+                <li><i class="fas fa-check text-orange-400 mr-2 text-xs"></i>No data size limit (1B+ rows fine)</li>
+                <li><i class="fas fa-check text-orange-400 mr-2 text-xs"></i>No initial load wait</li>
+                <li><i class="fas fa-times text-red-400 mr-2 text-xs"></i>Slower visuals (each click = SQL round-trip)</li>
+                <li><i class="fas fa-times text-red-400 mr-2 text-xs"></i>Limited DAX functions (no time intelligence calc)</li>
+                <li><i class="fas fa-times text-red-400 mr-2 text-xs"></i>Requires constant network connection</li>
+                <li><i class="fas fa-times text-red-400 mr-2 text-xs"></i>Puts load on SQL Server</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 10M Live Use Case -->
+    <div class="glass-card rounded-2xl p-8 md:p-10 neon-hover border-purple-500/20">
+        <div class="flex items-center gap-4 mb-6">
+            <div class="w-14 h-14 rounded-xl bg-purple-500/10 flex items-center justify-center"><i class="fas fa-chart-bar text-purple-400 text-2xl"></i></div>
+            <div><h3 class="text-2xl font-bold">Live Use Case: 10 Million Records</h3><p class="text-gray-500 text-sm">Why Import Mode wins for this scenario</p></div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div class="bg-white/[0.03] rounded-xl p-4 text-center"><div class="text-3xl font-bold text-purple-400">10M</div><div class="text-xs text-gray-500">rows in SQL table</div></div>
+            <div class="bg-white/[0.03] rounded-xl p-4 text-center"><div class="text-3xl font-bold text-acid">~45MB</div><div class="text-xs text-gray-500">after VertiPaq compression</div></div>
+            <div class="bg-white/[0.03] rounded-xl p-4 text-center"><div class="text-3xl font-bold text-green-400">&lt;1s</div><div class="text-xs text-gray-500">query response time</div></div>
+        </div>
+        <div class="ex-box">
+            <div class="ex-l"><i class="fas fa-lightbulb"></i> What Actually Happens</div>
+            <div class="space-y-2 text-sm text-gray-400 mt-2">
+                <p><span class="text-white font-bold">SQL Table Size:</span> 10M rows × 15 columns ≈ 2.5 GB uncompressed on disk.</p>
+                <p><span class="text-acid font-bold">Import Mode:</span> Power BI reads 2.5 GB → VertiPaq compresses to ~45 MB (55x compression!) → stored in RAM. Load time: ~3-4 minutes. After that, every visual click: <span class="text-green-400 font-bold">50-200ms</span>. Blazing fast.</p>
+                <p><span class="text-orange-400 font-bold">DirectQuery:</span> Zero load time. But every click sends a SQL query. Simple bar chart = SQL with GROUP BY on 10M rows. Response: <span class="text-red-400 font-bold">3-15 seconds</span>. Users see loading spinners. Multiple users clicking = SQL Server crashes under load.</p>
+                <p class="text-white font-bold mt-2">Verdict: For 10M records, Import Mode is the clear winner. 3-minute one-time load vs permanent slowness.</p>
+            </div>
+        </div>
+        <div class="glass-card rounded-xl p-4 mt-6">
+            <h4 class="font-bold text-sm mb-3"><i class="fas fa-balance-scale text-acid mr-2"></i>Quick Decision Guide</h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                <div class="p-3 bg-acid/5 border border-acid/20 rounded-lg"><span class="text-acid font-bold">Use Import When:</span><ul class="text-gray-400 text-xs mt-1 space-y-1"><li>• Data is under 1-2 GB compressed</li><li>• Data doesn't change every minute</li><li>• You need complex DAX measures</li><li>• You need offline access</li><li>• Multiple users viewing same report</li></ul></div>
+                <div class="p-3 bg-orange-500/5 border border-orange-500/20 rounded-lg"><span class="text-orange-400 font-bold">Use DirectQuery When:</span><ul class="text-gray-400 text-xs mt-1 space-y-1"><li>• Data is 50GB+ (too big for memory)</li><li>• Real-time/near-real-time needed</li><li>• Regulatory requirement: no data copy</li><li>• Dashboard is simple (no complex DAX)</li><li>• Few concurrent users (1-5)</li></ul></div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===== CH3: HR JOINS USE CASE ===== -->
+<section id="hr" class="py-32 px-6 relative">
+<div class="max-w-7xl mx-auto">
+    <div class="text-center mb-20">
+        <span class="badge mb-6 mx-auto w-fit"><i class="fas fa-users"></i> Chapter 03</span>
+        <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">JOINS USE CASE: HR DATA</h2>
+        <p class="text-gray-400 text-lg max-w-3xl mx-auto">Typical HR scenario — 4 tables that need to be merged using Power Query Merge</p>
+    </div>
+
+    <!-- 4 HR Tables -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div class="glass-card rounded-xl p-4"><div class="text-xs text-blue-400 font-bold uppercase mb-2"><i class="fas fa-user mr-1"></i> Employees</div>
+            <div class="text-xs text-gray-400 space-y-0.5"><div><span class="pk">emp_id</span> (PK)</div><div>emp_name</div><div>dept_id <span class="fk">(FK)</span></div><div>manager_id</div><div>hire_date</div></div>
+        </div>
+        <div class="glass-card rounded-xl p-4"><div class="text-xs text-purple-400 font-bold uppercase mb-2"><i class="fas fa-building mr-1"></i> Departments</div>
+            <div class="text-xs text-gray-400 space-y-0.5"><div><span class="pk">dept_id</span> (PK)</div><div>dept_name</div><div>location</div><div>budget</div></div>
+        </div>
+        <div class="glass-card rounded-xl p-4"><div class="text-xs text-green-400 font-bold uppercase mb-2"><i class="fas fa-money-bill mr-1"></i> Salaries</div>
+            <div class="text-xs text-gray-400 space-y-0.5"><div><span class="pk">salary_id</span> (PK)</div><div>emp_id <span class="fk">(FK)</span></div><div>amount</div><div>effective_date</div></div>
+        </div>
+        <div class="glass-card rounded-xl p-4"><div class="text-xs text-orange-400 font-bold uppercase mb-2"><i class="fas fa-calendar-check mr-1"></i> Attendance</div>
+            <div class="text-xs text-gray-400 space-y-0.5"><div><span class="pk">att_id</span> (PK)</div><div>emp_id <span class="fk">(FK)</span></div><div>date</div><div>status</div></div>
+        </div>
+    </div>
+
+    <!-- Merge Steps -->
+    <div class="space-y-6">
+        <div class="glass-card rounded-2xl p-6 neon-hover">
+            <h4 class="font-bold mb-3"><span class="text-acid">Merge 1:</span> Employees ← Left Join → Departments <span class="text-xs text-gray-500">(on dept_id)</span></h4>
+            <p class="text-sm text-gray-400 mb-3">Why Left Join? Every employee MUST appear — even if their department was deleted. Null dept_name = data issue to flag.</p>
+            <div class="ex-box"><div class="ex-l"><i class="fas fa-lightbulb"></i> Result</div>
+            <div class="overflow-x-auto"><table class="er-table"><thead><tr><th>emp_id</th><th>emp_name</th><th>dept_id</th><th>dept_name</th><th>location</th></tr></thead>
+            <tbody class="text-gray-400"><tr><td>101</td><td>Rahul</td><td>1</td><td class="text-green-400">Engineering</td><td>Bangalore</td></tr><tr><td>102</td><td>Priya</td><td>2</td><td class="text-green-400">HR</td><td>Mumbai</td></tr><tr><td>103</td><td>Amit</td><td class="text-red-400">99</td><td class="text-red-400">null</td><td class="text-red-400">null</td></tr></tbody></table></div>
+            <p class="text-xs text-red-400 mt-2">⚠️ Row 3 shows emp_id 103 with dept_id 99 — no matching department! This is a data quality issue discovered by the Left Join.</p></div>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 neon-hover">
+            <h4 class="font-bold mb-3"><span class="text-acid">Merge 2:</span> Result1 ← Left Join → Salaries <span class="text-xs text-gray-500">(on emp_id)</span></h4>
+            <p class="text-sm text-gray-400 mb-3">Left Join because you want all employees — even new hires who haven't received their first salary yet.</p>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 neon-hover">
+            <h4 class="font-bold mb-3"><span class="text-acid">Merge 3:</span> Result2 ← Left Join → Attendance <span class="text-xs text-gray-500">(on emp_id)</span></h4>
+            <p class="text-sm text-gray-400 mb-3">Left Join because you need all employees, even those with zero attendance records (another data quality flag).</p>
+        </div>
+    </div>
+
+    <div class="glass-card rounded-2xl p-6 mt-8 border-acid/20">
+        <p class="text-sm text-gray-400"><i class="fas fa-star text-acid mr-2"></i><strong class="text-white">Key Insight:</strong> In Power Query Merge, we combine tables <span class="text-acid">before loading to the model</span>. The output is a single flat table with all columns. This is different from Relationships (Model view) where tables stay separate and are connected dynamically at query time.</p>
+    </div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===== CH4: PRODUCTION DATA ===== -->
+<section id="prod" class="py-32 px-6 relative">
+<div class="max-w-7xl mx-auto">
+    <div class="text-center mb-20">
+        <span class="badge mb-6 mx-auto w-fit"><i class="fas fa-industry"></i> Chapter 04</span>
+        <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">JOINS USE CASE: PRODUCTION DATA</h2>
+        <p class="text-gray-400 text-lg max-w-3xl mx-auto">Bicycle production database — 4 tables from Excel showing real-world relationships</p>
+    </div>
+
+    <!-- ER Diagram Reference -->
+    <div class="glass-card rounded-2xl p-8 neon-hover border-acid/30 mb-12">
+        <h3 class="text-xl font-bold mb-6 text-center"><i class="fas fa-project-diagram text-acid mr-2"></i>ER Diagram — Production Database</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+                <div class="text-xs text-blue-400 font-bold uppercase tracking-wider mb-3">Blue Tables (Orders Side)</div>
+                <div class="space-y-2">
+                    <div class="bg-blue-500/5 border border-blue-500/20 rounded-lg p-3"><div class="font-bold text-sm text-blue-400">customers</div><div class="text-xs text-gray-500"><span class="pk">customer_id*</span> | first_name | last_name | email | city | state | zip_code</div></div>
+                    <div class="bg-blue-500/5 border border-blue-500/20 rounded-lg p-3"><div class="font-bold text-sm text-blue-400">orders</div><div class="text-xs text-gray-500"><span class="pk">order_id*</span> | customer_id <span class="fk">(FK→customers)</span> | order_date | required_date | shipped_date | status | store_id</div></div>
+                    <div class="bg-blue-500/5 border border-blue-500/20 rounded-lg p-3"><div class="font-bold text-sm text-blue-400">order_items</div><div class="text-xs text-gray-500"><span class="pk">item_id*</span> | order_id <span class="fk">(FK→orders)</span> | product_id <span class="fk">(FK→products)</span> | quantity | list_price | discount</div></div>
+                </div>
+            </div>
+            <div>
+                <div class="text-xs text-red-400 font-bold uppercase tracking-wider mb-3">Red Tables (Product Side)</div>
+                <div class="space-y-2">
+                    <div class="bg-red-500/5 border border-red-500/20 rounded-lg p-3"><div class="font-bold text-sm text-red-400">brands</div><div class="text-xs text-gray-500"><span class="pk">brand_id*</span> | brand_name</div></div>
+                    <div class="bg-red-500/5 border border-red-500/20 rounded-lg p-3"><div class="font-bold text-sm text-red-400">categories</div><div class="text-xs text-gray-500"><span class="pk">category_id*</span> | category_name</div></div>
+                    <div class="bg-red-500/5 border border-red-500/20 rounded-lg p-3"><div class="font-bold text-sm text-red-400">products</div><div class="text-xs text-gray-500"><span class="pk">product_id*</span> | product_name | brand_id <span class="fk">(FK→brands)</span> | category_id <span class="fk">(FK→categories)</span> | model_year | list_price</div></div>
+                </div>
+            </div>
+        </div>
+        <!-- Relationship lines -->
+        <div class="mt-6 flex flex-wrap justify-center gap-4 text-xs">
+            <div class="bg-white/[0.03] rounded-lg px-4 py-2 border border-white/5"><span class="text-blue-400">customers</span> <span class="text-acid">1——∞</span> <span class="text-blue-400">orders</span></div>
+            <div class="bg-white/[0.03] rounded-lg px-4 py-2 border border-white/5"><span class="text-blue-400">orders</span> <span class="text-acid">1——∞</span> <span class="text-blue-400">order_items</span></div>
+            <div class="bg-white/[0.03] rounded-lg px-4 py-2 border border-white/5"><span class="text-red-400">products</span> <span class="text-acid">1——∞</span> <span class="text-red-400">order_items</span></div>
+            <div class="bg-white/[0.03] rounded-lg px-4 py-2 border border-white/5"><span class="text-red-400">brands</span> <span class="text-acid">1——∞</span> <span class="text-red-400">products</span></div>
+            <div class="bg-white/[0.03] rounded-lg px-4 py-2 border border-white/5"><span class="text-red-400">categories</span> <span class="text-acid">1——∞</span> <span class="text-red-400">products</span></div>
+        </div>
+    </div>
+
+    <!-- Sample Data from Excel -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+        <div class="glass-card rounded-2xl p-6 neon-hover">
+            <h4 class="font-bold mb-3 text-red-400"><i class="fas fa-tag mr-2"></i>Brands Table (9 rows)</h4>
+            <div class="overflow-x-auto"><table class="er-table"><thead><tr><th>brand_id</th><th>brand_name</th></tr></thead>
+            <tbody class="text-gray-400 text-xs">
+                <tr><td class="pk">1</td><td>Electra</td></tr><tr><td class="pk">2</td><td>Haro</td></tr><tr><td class="pk">3</td><td>Heller</td></tr>
+                <tr><td class="pk">4</td><td>Pure Cycles</td></tr><tr><td class="pk">5</td><td>Ritchey</td></tr><tr><td class="pk">6</td><td>Strider</td></tr>
+                <tr><td class="pk">7</td><td>Sun Bicycles</td></tr><tr><td class="pk">8</td><td>Surly</td></tr><tr><td class="pk">9</td><td>Atlas</td></tr>
+            </tbody></table></div>
+        </div>
+        <div class="glass-card rounded-2xl p-6 neon-hover">
+            <h4 class="font-bold mb-3 text-red-400"><i class="fas fa-layer-group mr-2"></i>Categories Table (7 rows)</h4>
+            <div class="overflow-x-auto"><table class="er-table"><thead><tr><th>category_id</th><th>category_name</th></tr></thead>
+            <tbody class="text-gray-400 text-xs">
+                <tr><td class="pk">1</td><td>Children Bicycles</td></tr><tr><td class="pk">2</td><td>Comfort Bicycles</td></tr><tr><td class="pk">3</td><td>Cruisers Bicycles</td></tr>
+                <tr><td class="pk">4</td><td>Cyclocross Bicycles</td></tr><tr><td class="pk">5</td><td>Electric Bikes</td></tr><tr><td class="pk">6</td><td>Mountain Bikes</td></tr><tr><td class="pk">7</td><td>Road Bikes</td></tr>
+            </tbody></table></div>
+        </div>
+    </div>
+
+    <div class="glass-card rounded-2xl p-6 neon-hover border-acid/20 mb-8">
+        <h4 class="font-bold mb-3 text-red-400"><i class="fas fa-bicycle mr-2"></i>Products Table (321 rows) — Sample</h4>
+        <div class="overflow-x-auto"><table class="er-table"><thead><tr><th>product_id</th><th>product_name</th><th>brand_id</th><th>category_id</th><th>model_year</th><th>list_price</th></tr></thead>
+        <tbody class="text-gray-400 text-xs">
+            <tr><td class="pk">1</td><td>Trek 820 - 2016</td><td class="fk">9</td><td class="fk">6</td><td>2016</td><td>$379.99</td></tr>
+            <tr><td class="pk">2</td><td>Ritchey Timberwolf Frameset - 2016</td><td class="fk">5</td><td class="fk">6</td><td>2016</td><td>$749.99</td></tr>
+            <tr><td class="pk">9</td><td>Trek Conduit+ - 2016</td><td class="fk">9</td><td class="fk">5</td><td>2016</td><td>$2,999.99</td></tr>
+            <tr><td class="pk">12</td><td>Electra Townie Original 21D - 2016</td><td class="fk">1</td><td class="fk">3</td><td>2016</td><td>$549.99</td></tr>
+            <tr><td class="pk">83</td><td>Trek Boy's Kickster - 2015/2017</td><td class="fk">9</td><td class="fk">1</td><td>2017</td><td>$149.99</td></tr>
+            <tr><td class="pk">160</td><td>Trek Domane SL 8 Disc - 2018</td><td class="fk">9</td><td class="fk">7</td><td>2018</td><td>$5,499.99</td></tr>
+            <tr><td class="pk">321</td><td>Trek Checkpoint ALR 5 - 2019</td><td class="fk">9</td><td class="fk">7</td><td>2019</td><td>$1,999.99</td></tr>
+        </tbody></table></div>
+        <p class="text-xs text-gray-500 mt-3"><span class="text-white">brand_id = 1</span> → Electra (9 brands make these products). <span class="text-white">brand_id = 9</span> → Atlas (the most popular brand with 100+ products). <span class="text-white">category_id = 6</span> → Mountain Bikes (the largest category). <span class="text-white">category_id = 5</span> → Electric Bikes (highest avg price ~$3,500).</p>
+    </div>
+
+    <!-- Production Merge Strategy -->
+    <div class="glass-card rounded-2xl p-8 neon-hover">
+        <h3 class="text-xl font-bold mb-4"><i class="fas fa-code-branch text-acid mr-2"></i>Production Merge Strategy (Power Query)</h3>
+        <div class="space-y-3 text-sm text-gray-400">
+            <div class="p-3 bg-white/[0.02] rounded-lg"><span class="text-acid font-bold">Step 1:</span> <span class="text-white">Products</span> ← Left Join → <span class="text-white">Brands</span> on brand_id → Get brand_name column → Now each product has its brand name.</div>
+            <div class="p-3 bg-white/[0.02] rounded-lg"><span class="text-acid font-bold">Step 2:</span> Result ← Left Join → <span class="text-white">Categories</span> on category_id → Get category_name → Now each product has both brand_name and category_name.</div>
+            <div class="p-3 bg-white/[0.02] rounded-lg"><span class="text-acid font-bold">Step 3:</span> <span class="text-white">Orders</span> ← Left Join → <span class="text-white">Customers</span> on customer_id → Get customer_name, city, state.</div>
+            <div class="p-3 bg-white/[0.02] rounded-lg"><span class="text-acid font-bold">Step 4:</span> OrderResult ← Left Join → <span class="text-white">Order Items</span> on order_id → Get product_id, quantity, list_price.</div>
+            <div class="p-3 bg-white/[0.02] rounded-lg"><span class="text-acid font-bold">Step 5:</span> FinalResult ← Left Join → <span class="text-white">Enriched Products (from Step 2)</span> on product_id → Get brand_name, category_name.</div>
+        </div>
+        <div class="ex-box mt-4">
+            <div class="ex-l"><i class="fas fa-lightbulb"></i> Final Merged Table Sample</div>
+            <div class="overflow-x-auto mt-2"><table class="er-table text-xs">
+                <thead><tr><th>order_id</th><th>customer</th><th>city</th><th>product_name</th><th>brand</th><th>category</th><th>qty</th><th>price</th></tr></thead>
+                <tbody class="text-gray-400"><tr><td>1</td><td>Debra Burks</td><td>Orchard Park</td><td>Trek 820 - 2016</td><td class="text-green-400">Atlas</td><td class="text-green-400">Mountain Bikes</td><td>2</td><td>$379.99</td></tr>
+                <tr><td>2</td><td>Kasha Todd</td><td>Campbell</td><td>Electra Townie 21D</td><td class="text-green-400">Electra</td><td class="text-green-400">Cruisers Bicycles</td><td>1</td><td>$549.99</td></tr></tbody>
+            </table></div>
+        </div>
+    </div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===== CH5: RELATIONSHIPS ===== -->
+<section id="rel" class="py-32 px-6 relative">
+<div class="max-w-7xl mx-auto">
+    <div class="text-center mb-20">
+        <span class="badge mb-6 mx-auto w-fit"><i class="fas fa-link"></i> Chapter 05</span>
+        <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">RELATIONSHIPS</h2>
+        <p class="text-gray-400 text-lg max-w-3xl mx-auto">Model View connections — tables stay separate, linked by keys, queried dynamically</p>
+    </div>
+
+    <div class="tg">
+        <!-- One to Many -->
+        <div class="glass-card rounded-2xl p-6 neon-hover border-acid/30">
+            <div class="flex items-center gap-3 mb-4"><div class="step-num bg-acid/20 border-acid/40">∞</div><h3 class="text-lg font-bold text-acid">One to Many (1:N)</h3></div>
+            <p class="text-sm text-gray-400 mb-3">The <span class="text-acid">most common</span> relationship. One row in the "One" table matches many rows in the "Many" table. The "1" side has the Primary Key. The "N" side has the Foreign Key.</p>
+            <div class="ex-box"><div class="ex-l"><i class="fas fa-lightbulb"></i> Production Examples</div>
+                <div class="text-sm text-gray-400 space-y-1 mt-1">
+                    <p><span class="text-acid">1 brand</span> → Many products (Atlas has 100+ products)</p>
+                    <p><span class="text-acid">1 category</span> → Many products (Mountain Bikes has 80+ products)</p>
+                    <p><span class="text-acid">1 customer</span> → Many orders</p>
+                    <p><span class="text-acid">1 order</span> → Many order_items</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Many to One -->
+        <div class="glass-card rounded-2xl p-6 neon-hover border-blue-500/20">
+            <div class="flex items-center gap-3 mb-4"><div class="step-num bg-blue-500/10 border-blue-500/30 text-blue-400">1</div><h3 class="text-lg font-bold text-blue-400">Many to One (N:1)</h3></div>
+            <p class="text-sm text-gray-400 mb-3">The <span class="text-blue-400">exact same thing</span> as One to Many — just viewed from the other direction. Power BI shows "1:N" regardless. Many products → 1 brand. Many orders → 1 customer.</p>
+            <div class="ex-box"><div class="ex-l"><i class="fas fa-lightbulb"></i> It's the Same Relationship</div>
+                <p class="text-sm text-gray-400 mt-1">brands <span class="text-acid">1——∞</span> products is identical to products <span class="text-blue-400">∞——1</span> brands. Power BI always displays "1:N" with the cardinality dot on the "1" side. The cross-filter direction is what matters (single vs both).</p>
+            </div>
+        </div>
+
+        <!-- One to One -->
+        <div class="glass-card rounded-2xl p-6 neon-hover border-purple-500/20">
+            <div class="flex items-center gap-3 mb-4"><div class="step-num bg-purple-500/10 border-purple-500/30 text-purple-400">1</div><h3 class="text-lg font-bold text-purple-400">One to One (1:1)</h3></div>
+            <p class="text-sm text-gray-400 mb-3">One row in Table A matches exactly one row in Table B. Used for splitting wide tables — e.g., employee basic info in one table, employee compensation in another.</p>
+            <div class="ex-box"><div class="ex-l"><i class="fas fa-lightbulb"></i> Example</div>
+                <p class="text-sm text-gray-400 mt-1">Employees (emp_id, name, dept) <span class="text-purple-400">1:1</span> Employee_Salary (emp_id, basic, hra, da). Each employee has exactly one salary record. Join key = emp_id on both sides. Both sides have unique values.</p>
+            </div>
+        </div>
+
+        <!-- Many to Many -->
+        <div class="glass-card rounded-2xl p-6 neon-hover border-red-500/20">
+            <div class="flex items-center gap-3 mb-4"><div class="step-num bg-red-500/10 border-red-500/30 text-red-400">∞</div><h3 class="text-lg font-bold text-red-400">Many to Many (M:N)</h3></div>
+            <p class="text-sm text-gray-400 mb-3"><span class="text-red-400 font-bold">⚠️ Avoid this!</span> Multiple rows in A match multiple rows in B. Creates ambiguous results and can cause incorrect aggregations. Power BI warns you with a yellow indicator.</p>
+            <div class="ex-box"><div class="ex-l"><i class="fas fa-exclamation-triangle text-red-400"></i> Problem Example</div>
+                <p class="text-sm text-gray-400 mt-1">Students ↔ Classes (without an enrollment bridge table). Student "Rahul" is in Math AND Science. Class "Math" has Rahul AND Priya. The relationship is ambiguous — Power BI doesn't know which student-class combinations are valid.</p>
+            </div>
+            <div class="ex-box mt-2 border-green-500/20 bg-green-500/5"><div class="ex-l text-green-400"><i class="fas fa-check-circle"></i> Solution: Bridge Table</div>
+                <p class="text-sm text-gray-400 mt-1">Students <span class="text-acid">1:N</span> Enrollment <span class="text-acid">N:1</span> Classes. Convert M:N into TWO 1:N relationships using a bridge/junction table. This is the standard pattern.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auto vs Manual -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-12">
+        <div class="glass-card rounded-2xl p-8 neon-hover">
+            <h3 class="text-xl font-bold mb-4"><i class="fas fa-magic text-acid mr-2"></i>Automatic Relationships</h3>
+            <p class="text-sm text-gray-400 mb-4">When you load multiple tables, Power BI <span class="text-acid font-semibold">auto-detects</span> relationships based on:</p>
+            <ul class="space-y-2 text-sm text-gray-400">
+                <li><i class="fas fa-check text-acid mr-2 text-xs"></i>Matching column names (e.g., "brand_id" in both tables)</li>
+                <li><i class="fas fa-check text-acid mr-2 text-xs"></i>Matching data types</li>
+                <li><i class="fas fa-check text-acid mr-2 text-xs"></i>One column being a primary key (unique values)</li>
+            </ul>
+            <div class="ex-box"><div class="ex-l"><i class="fas fa-lightbulb"></i> Production Auto-Detection</div>
+                <p class="text-sm text-gray-400 mt-1">Load Brands + Products → Power BI auto-creates: <span class="text-acid">brands[brand_id] 1——∞ products[brand_id]</span>. Same for categories↔products, customers↔orders. It figures out 5 relationships automatically!</p>
+            </div>
+        </div>
+        <div class="glass-card rounded-2xl p-8 neon-hover">
+            <h3 class="text-xl font-bold mb-4"><i class="fas fa-hand-pointer text-orange-400 mr-2"></i>Manual Relationships</h3>
+            <p class="text-sm text-gray-400 mb-4">When auto-detection fails (different column names, same name but wrong columns), you create relationships manually in <span class="text-orange-400 font-semibold">Model View</span>:</p>
+            <ul class="space-y-2 text-sm text-gray-400">
+                <li><i class="fas fa-arrow-right text-orange-400 mr-2 text-xs"></i>Go to <span class="text-white">Model View</span> (icon on left sidebar)</li>
+                <li><i class="fas fa-arrow-right text-orange-400 mr-2 text-xs"></i>Click the column in Table A → drag to column in Table B</li>
+                <li><i class="fas fa-arrow-right text-orange-400 mr-2 text-xs"></i>A dialog opens — verify cardinality and cross-filter direction</li>
+                <li><i class="fas fa-arrow-right text-orange-400 mr-2 text-xs"></i>Click <span class="text-white">OK</span></li>
+            </ul>
+            <div class="ex-box"><div class="ex-l"><i class="fas fa-lightbulb"></i> When Manual Is Needed</div>
+                <p class="text-sm text-gray-400 mt-1">Products has <span class="text-white">"brand_id"</span> but Brands has <span class="text-white">"id"</span>. Different names → no auto-detection. You manually drag products[brand_id] → brands[id]. Also needed when auto-detect creates wrong relationships.</p>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===== CH6: JOINS VS RELATIONSHIPS ===== -->
+<section id="jvr" class="py-32 px-6 relative">
+<div class="max-w-7xl mx-auto">
+    <div class="text-center mb-20">
+        <span class="badge mb-6 mx-auto w-fit"><i class="fas fa-balance-scale"></i> Chapter 06</span>
+        <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">WHEN TO USE JOINS vs RELATIONSHIPS</h2>
+        <p class="text-gray-400 text-lg max-w-3xl mx-auto">The #1 confusion for Power BI beginners — they solve different problems</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+        <div class="glass-card rounded-2xl p-8 neon-hover border-purple-500/20">
+            <h3 class="text-2xl font-bold mb-4 text-purple-400"><i class="fas fa-code-branch mr-2"></i>Use MERGE (Joins) When...</h3>
+            <ul class="space-y-3 text-sm text-gray-400">
+                <li class="flex items-start gap-3"><i class="fas fa-check text-purple-400 mt-0.5"></i><span>You want a <strong class="text-white">single flat table</strong> as output</span></li>
+                <li class="flex items-start gap-3"><i class="fas fa-check text-purple-400 mt-0.5"></i><span>You need to <strong class="text-white">clean/transform</strong> the joined data further</span></li>
+                <li class="flex items-start gap-3"><i class="fas fa-check text-purple-400 mt-0.5"></i><span>Joining from <strong class="text-white">different data sources</strong> (SQL + Excel + API)</span></li>
+                <li class="flex items-start gap-3"><i class="fas fa-check text-purple-400 mt-0.5"></i><span>You need <strong class="text-white">Left/Right/Full Outer</strong> joins (not just inner)</span></li>
+                <li class="flex items-start gap-3"><i class="fas fa-check text-purple-400 mt-0.5"></i><span>Creating a <strong class="text-white">denormalized/star schema</strong> table for the model</span></li>
+                <li class="flex items-start gap-3"><i class="fas fa-check text-purple-400 mt-0.5"></i><span><strong class="text-white">One-time</strong> operation — merge once, load once</span></li>
+            </ul>
+        </div>
+        <div class="glass-card rounded-2xl p-8 neon-hover border-acid/20">
+            <h3 class="text-2xl font-bold mb-4 text-acid"><i class="fas fa-link mr-2"></i>Use RELATIONSHIPS When...</h3>
+            <ul class="space-y-3 text-sm text-gray-400">
+                <li class="flex items-start gap-3"><i class="fas fa-check text-acid mt-0.5"></i><span>You want tables to stay <strong class="text-white">separate</strong> but connected</span></li>
+                <li class="flex items-start gap-3"><i class="fas fa-check text-acid mt-0.5"></i><span>Same source database — <strong class="text-white">SQL handles the join</strong> at query time</span></li>
+                <li class="flex items-start gap-3"><i class="fas fa-check text-acid mt-0.5"></i><span>You need <strong class="text-white">dynamic filtering</strong> (click a brand → products filter automatically)</span></li>
+                <li class="flex items-start gap-3"><i class="fas fa-check text-acid mt-0.5"></i><span><strong class="text-white">Multiple report pages</strong> using the same model (no re-merging)</span></li>
+                <li class="flex items-start gap-3"><i class="fas fa-check text-acid mt-0.5"></i><span>Better <strong class="text-white">performance</strong> — VertiPaq optimizes relationships natively</span></li>
+                <li class="flex items-start gap-3"><i class="fas fa-check text-acid mt-0.5"></i><span><strong class="text-white">1:N only</strong> — all relationships should be one-to-many</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Production: What to use -->
+    <div class="glass-card rounded-2xl p-8 neon-hover border-acid/30">
+        <h3 class="text-xl font-bold mb-4"><i class="fas fa-industry text-acid mr-2"></i>Production Database — The Right Approach</h3>
+        <p class="text-sm text-gray-400 mb-4">Since all tables come from the <strong class="text-white">same SQL database</strong>, use <span class="text-acid font-bold">Relationships</span> — NOT Merge:</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-400">
+            <div class="p-3 bg-acid/5 border border-acid/20 rounded-lg"><span class="text-acid font-bold">✅ DO: Use Relationships</span><ul class="text-xs mt-1 space-y-1"><li>• Load all 4 tables separately to the model</li><li>• Let Power BI auto-detect 5 relationships</li><li>• Click a brand → products filter → order_items filter</li><li>• Build a report with brand slicer, category chart, product details</li><li>• All filtering happens automatically via relationships</li></ul></div>
+            <div class="p-3 bg-red-500/5 border border-red-500/20 rounded-lg"><span class="text-red-400 font-bold">❌ DON'T: Merge Everything</span><ul class="text-xs mt-1 space-y-1"><li>• Don't merge all tables into one mega-table</li><li>• You lose the ability to filter across dimensions</li><li>• Report becomes rigid — can't add new visuals easily</li><li>• Duplicate data (brand_name repeated per product)</li><li>• Slower model with denormalized data</li></ul></div>
+        </div>
+        <p class="text-xs text-gray-500 mt-4"><i class="fas fa-info-circle text-acid mr-1"></i><strong class="text-white">Exception:</strong> If you need to create a specific flattened export (e.g., "give me one table with all order details including brand and category names for the accounting team"), THEN merge. For interactive dashboards, always use relationships.</p>
+    </div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===== CH7: ASSIGNMENT ===== -->
+<section id="assignment" class="py-32 px-6 relative">
+<div class="max-w-7xl mx-auto">
+    <div class="text-center mb-20">
+        <span class="badge mb-6 mx-auto w-fit" style="border-color:rgba(248,113,113,.3);background:rgba(248,113,113,.08);color:#f87171"><i class="fas fa-clipboard-check"></i> Assignment</span>
+        <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">APACHE LOGS PARSING</h2>
+        <p class="text-gray-400 text-lg max-w-3xl mx-auto">Parse unstructured Apache server logs into a clean, analysis-ready dataset using Power Query</p>
+    </div>
+
+    <!-- Raw Log Format -->
+    <div class="glass-card rounded-2xl p-8 neon-hover border-red-500/20 mb-12">
+        <h3 class="text-xl font-bold mb-4"><i class="fas fa-file-alt text-red-400 mr-2"></i>Raw Log Format (apache_logs table)</h3>
+        <p class="text-sm text-gray-400 mb-4">Each row is a single unstructured string like this:</p>
+        <div class="code-block text-xs leading-relaxed">
+<span class="str">83.149.9.216 - - [17/May/2015:10:05:03 +0000] "GET /presentations/logstash-monitorama-2013/images/kibana-search.png HTTP/1.1" 200 73221 "http://semicomplete.com/presentations/logstash-monitorama-2013/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.77 Safari/537.36"</span>
+        </div>
+        <p class="text-xs text-gray-500 mt-3">This single string contains: IP, timestamp, HTTP method, resource path, protocol, response code, size, referrer, user agent — all crammed together with spaces and special characters as delimiters.</p>
+    </div>
+
+    <!-- Step by Step -->
+    <h3 class="text-2xl font-bold mb-8 text-center">Step-by-Step Solution</h3>
+
+    <!-- Step 1: IP Address -->
+    <div class="glass-card rounded-2xl p-6 neon-hover mb-4">
+        <div class="flex items-center gap-3 mb-3"><div class="step-num">1</div><h4 class="font-bold">Extract IP Address</h4></div>
+        <p class="text-sm text-gray-400 mb-3">The IP is everything <span class="text-acid">before the first space</span>. Use Text Before Delimiter.</p>
+        <div class="code-block text-xs"><span class="fn">Text.BeforeDelimiter</span>([<span class="str">log_column</span>], <span class="str">" "</span>)</div>
+        <div class="ex-box"><div class="ex-l"><i class="fas fa-lightbulb"></i> Result</div><p class="text-sm"><span class="aft">83.149.9.216</span></p></div>
+    </div>
+
+    <!-- Step 2: Timestamp -->
+    <div class="glass-card rounded-2xl p-6 neon-hover mb-4">
+        <div class="flex items-center gap-3 mb-3"><div class="step-num">2</div><h4 class="font-bold">Extract Timestamp</h4></div>
+        <p class="text-sm text-gray-400 mb-3">Timestamp is between <span class="text-acid">[</span> and <span class="text-acid">]</span>. Use Text Between Delimiters.</p>
+        <div class="code-block text-xs"><span class="fn">Text.BetweenDelimiters</span>([<span class="str">log_column</span>], <span class="str">"["</span>, <span class="str">"]"</span>)</div>
+        <div class="ex-box"><div class="ex-l"><i class="fas fa-lightbulb"></i> Result</div><p class="text-sm"><span class="aft">17/May/2015:10:05:03 +0000</span></p></div>
+    </div>
+
+    <!-- Step 3: HTTP Method & Resource -->
+    <div class="glass-card rounded-2xl p-6 neon-hover mb-4">
+        <div class="flex items-center gap-3 mb-3"><div class="step-num">3</div><h4 class="font-bold">Extract HTTP Method & Resource</h4></div>
+        <p class="text-sm text-gray-400 mb-3">The request is inside the <span class="text-acid">first pair of double quotes</span>. Extract it, then split by space.</p>
+        <div class="code-block text-xs">
+<span class="cmt">// Step 3a: Extract everything in first ""</span><br>
+<span class="kw">let</span> request = <span class="fn">Text.BetweenDelimiters</span>([<span class="str">log_column</span>], <span class="str">'"'</span>, <span class="str">'"'</span>)<br>
+<span class="cmt">// Step 3b: Split by space → first part = method, rest = resource</span><br>
+<span class="kw">let</span> parts = <span class="fn">Text.Split</span>(request, <span class="str">" "</span>)<br>
+<span class="cmt">// Step 3c: HTTP Method = parts{0}</span><br>
+<span class="cmt">// Step 3d: Resource = parts{1}</span>
+        </div>
+        <div class="ex-box"><div class="ex-l"><i class="fas fa-lightbulb"></i> Result</div>
+            <p class="text-sm">Method: <span class="aft">GET</span> | Resource: <span class="aft">/presentations/logstash-monitorama-2013/images/kibana-search.png</span></p>
+        </div>
+    </div>
+
+    <!-- Step 4: Response Code & Size -->
+    <div class="glass-card rounded-2xl p-6 neon-hover mb-4">
+        <div class="flex items-center gap-3 mb-3"><div class="step-num">4</div><h4 class="font-bold">Extract Response Code & Size</h4></div>
+        <p class="text-sm text-gray-400 mb-3">After the closing quote of the request, there are two numbers: response code and size. Use Text After Delimiter on the last quote, then split.</p>
+        <div class="code-block text-xs">
+<span class="cmt">// After extracting the request string from "", get what comes after:</span><br>
+<span class="kw">let</span> afterQuote = <span class="fn">Text.AfterDelimiter</span>([<span class="str">log_column</span>], <span class="str">'" '</span>, {<span class="kw">occurrence</span>: <span class="num">1</span>})<br>
+<span class="cmt">// Split by space → first number = response code, second = size</span><br>
+<span class="kw">let</span> nums = <span class="fn">Text.Split</span>(<span class="fn">Text.BeforeDelimiter</span>(afterQuote, <span class="str">" "</span>), <span class="str">" "</span>)
+        </div>
+        <div class="ex-box"><div class="ex-l"><i class="fas fa-lightbulb"></i> Result</div><p class="text-sm">Response Code: <span class="aft">200</span> | Size: <span class="aft">73221</span></p></div>
+    </div>
+
+    <!-- Step 5: Referrer & User Agent -->
+    <div class="glass-card rounded-2xl p-6 neon-hover mb-4">
+        <div class="flex items-center gap-3 mb-3"><div class="step-num">5</div><h4 class="font-bold">Extract Referrer & User Agent</h4></div>
+        <p class="text-sm text-gray-400 mb-3">Referrer = text inside <span class="text-acid">second pair of quotes</span>. User Agent = text inside <span class="text-acid">third/last pair of quotes</span>. Use Text.BetweenDelimiters with occurrence parameter.</p>
+        <div class="code-block text-xs">
+<span class="cmt">// Referrer (2nd occurrence of "")</span><br>
+<span class="fn">Text.BetweenDelimiters</span>([<span class="str">log_column</span>], <span class="str">'"'</span>, <span class="str">'"'</span>, {<span class="kw">occurrence</span>: <span class="num">2</span>})<br><br>
+<span class="cmt">// User Agent (3rd/last occurrence of "")</span><br>
+<span class="fn">Text.BetweenDelimiters</span>([<span class="str">log_column</span>], <span class="str">'"'</span>, <span class="str">'"'</span>, {<span class="kw">occurrence</span>: <span class="num">3</span>})
+        </div>
+    </div>
+
+    <!-- Step 6: Custom Column - Response Description -->
+    <div class="glass-card rounded-2xl p-6 neon-hover mb-4 border-acid/20">
+        <div class="flex items-center gap-3 mb-3"><div class="step-num bg-acid/20 border-acid/40">6</div><h4 class="font-bold text-acid">Custom Column: Response Description</h4></div>
+        <p class="text-sm text-gray-400 mb-3">Add Column → Custom Column → Name: "Response Description"</p>
+        <div class="code-block text-xs">
+<span class="keyword">if</span> [<span class="string">Response Code</span>] = <span class="string">"200"</span> <span class="keyword">then</span> <span class="string">"OK - The request has succeeded."</span><br>
+<span class="keyword">else if</span> [<span class="string">Response Code</span>] = <span class="string">"404"</span> <span class="keyword">then</span> <span class="string">"Not Found - The server could not find the requested resource."</span><br>
+<span class="keyword">else if</span> [<span class="string">Response Code</span>] = <span class="string">"500"</span> <span class="keyword">then</span> <span class="string">"Internal Server Error - The server encountered an unexpected condition."</span><br>
+<span class="keyword">else</span> <span class="string">"Unknown - Code not mapped."</span>
+        </div>
+    </div>
+
+    <!-- Step 7: Format Columns -->
+    <div class="glass-card rounded-2xl p-6 neon-hover mb-4">
+        <div class="flex items-center gap-3 mb-3"><div class="step-num">7</div><h4 class="font-bold">Change Data Types</h4></div>
+        <div class="space-y-2 text-sm text-gray-400">
+            <div class="p-2 bg-white/[0.02] rounded flex items-center gap-3"><span class="text-acid font-bold w-32">Response Code</span><span class="ar">→</span><span class="aft">Text</span><span class="text-xs text-gray-500">(Keep as text to preserve leading zeros, enable IF ELSE matching)</span></div>
+            <div class="p-2 bg-white/[0.02] rounded flex items-center gap-3"><span class="text-acid font-bold w-32">Timestamp</span><span class="ar">→</span><span class="aft">Date/Time</span><span class="text-xs text-gray-500">(Power Query auto-parses "17/May/2015:10:05:03 +0000")</span></div>
+            <div class="p-2 bg-white/[0.02] rounded flex items-center gap-3"><span class="text-acid font-bold w-32">Size</span><span class="ar">→</span><span class="aft">Whole Number</span><span class="text-xs text-gray-500">(Bytes as integer)</span></div>
+        </div>
+    </div>
+
+    <!-- Step 8: Size in MB -->
+    <div class="glass-card rounded-2xl p-6 neon-hover mb-4 border-purple-500/20">
+        <div class="flex items-center gap-3 mb-3"><div class="step-num bg-purple-500/10 border-purple-500/30 text-purple-400">8</div><h4 class="font-bold text-purple-400">Custom Column: Size in MB</h4></div>
+        <div class="code-block text-xs">
+<span class="cmt">// Add Column → Custom Column → Name: "Size_MB"</span><br>
+<span class="fn">Number.Round</span>([<span class="string">Size</span>] / (<span class="num">1024</span> * <span class="num">1024</span>), <span class="num">2</span>)
+        </div>
+        <div class="ex-box"><div class="ex-l"><i class="fas fa-lightbulb"></i> Result</div>
+            <p class="text-sm">Size: 73221 → Size_MB: <span class="aft">0.07</span> | Size: 1048576 → Size_MB: <span class="aft">1.00</span></p>
+        </div>
+    </div>
+
+    <!-- Step 9: Hour & Time Period -->
+    <div class="glass-card rounded-2xl p-6 neon-hover mb-4 border-orange-500/20">
+        <div class="flex items-center gap-3 mb-3"><div class="step-num bg-orange-500/10 border-orange-500/30 text-orange-400">9</div><h4 class="font-bold text-orange-400">Extract Hour & Create Time Period</h4></div>
+        <div class="code-block text-xs">
+<span class="cmt">// Add Column → Custom Column → Name: "Hour"</span><br>
+<span class="fn">Date.Hour</span>([<span class="string">Timestamp</span>])<br><br>
+<span class="cmt">// Add Column → Custom Column → Name: "Time Period"</span><br>
+<span class="keyword">if</span> [<span class="string">Hour</span>] < <span class="num">12</span> <span class="keyword">then</span> <span class="string">"Morning"</span><br>
+<span class="keyword">else if</span> [<span class="string">Hour</span>] <= <span class="num">14</span> <span class="keyword">then</span> <span class="string">"Afternoon"</span><br>
+<span class="keyword">else if</span> [<span class="string">Hour</span>] <= <span class="num">17</span> <span class="keyword">then</span> <span class="string">"Evening"</span><br>
+<span class="keyword">else</span> <span class="string">"Night"</span>
+        </div>
+    </div>
+
+    <!-- Final Sample Output -->
+    <div class="glass-card rounded-2xl p-8 neon-hover border-green-500/20">
+        <h3 class="text-xl font-bold mb-4 text-green-400"><i class="fas fa-check-circle mr-2"></i>Final Cleaned Dataset — Sample Output</h3>
+        <div class="overflow-x-auto"><table class="er-table text-xs">
+            <thead><tr><th>IP Address</th><th>Timestamp</th><th>HTTP Method</th><th>Resource</th><th>Response Code</th><th>Response Desc</th><th>Size_MB</th><th>Hour</th><th>Time Period</th><th>Referrer</th></tr></thead>
+            <tbody class="text-gray-400">
+                <tr><td>83.149.9.216</td><td>17/May/2015 10:05:03</td><td>GET</td><td>/presentations/.../kibana-search.png</td><td>200</td><td class="text-green-400">OK - Succeeded</td><td>0.07</td><td>10</td><td class="text-acid">Morning</td><td>http://semicomplete.com/...</td></tr>
+                <tr><td>83.149.9.217</td><td>17/May/2015 14:15:45</td><td>GET</td><td>/unknown/path</td><td>404</td><td class="text-red-400">Not Found</td><td>0.00</td><td>14</td><td class="text-orange-400">Afternoon</td><td>http://example.com</td></tr>
+                <tr><td>83.149.9.218</td><td>17/May/2015 16:45:32</td><td>GET</td><td>/api/v1/data</td><td>200</td><td class="text-green-400">OK - Succeeded</td><td>0.05</td><td>16</td><td class="text-purple-400">Evening</td><td>http://analytics.com</td></tr>
+                <tr><td>83.149.9.219</td><td>17/May/2015 20:30:11</td><td>GET</td><td>/images/logo.png</td><td>304</td><td class="text-yellow-400">Unknown - Not mapped</td><td>0.00</td><td>20</td><td class="text-blue-400">Night</td><td>http://media.com</td></tr>
+            </tbody>
+        </table></div>
+        <p class="text-xs text-gray-500 mt-4"><i class="fas fa-info-circle text-acid mr-1"></i>User Agent column is excluded from this view for readability but should be included in your actual dataset. The final table should have 10 columns as specified.</p>
+    </div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- CTA -->
+<section class="py-32 px-6 relative overflow-hidden">
+    <div class="hero-orb w-[600px] h-[600px] bg-acid left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2" style="opacity:.08"></div>
+    <div class="max-w-4xl mx-auto relative z-10 text-center">
+        <span class="badge mb-6 mx-auto w-fit"><i class="fas fa-graduation-cap"></i> Stuck on the Assignment?</span>
+        <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter mb-6"><span class="gradient-text">GET EXPERT</span><br><span class="acid-gradient-text">HELP NOW</span></h2>
+        <p class="text-gray-400 text-lg max-w-2xl mx-auto mb-10">Our mentors will walk you through the Apache Logs assignment step-by-step on a live screen share. Complete it in 1 session.</p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20need%20help%20with%20the%20Apache%20Logs%20assignment%20in%20Power%20Query." target="_blank" class="glow-btn bg-acid text-obsidian px-12 py-5 rounded-full text-sm font-bold uppercase tracking-widest inline-flex items-center justify-center gap-3"><i class="fab fa-whatsapp text-xl"></i> Get Help on WhatsApp</a>
+            <a href="tel:+916364671786" class="glow-btn border border-white/20 text-white px-12 py-5 rounded-full text-sm font-bold uppercase tracking-widest inline-flex items-center justify-center gap-3 hover:border-acid hover:text-acid"><i class="fas fa-phone"></i> Call +91 6364671786</a>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="border-t border-white/5 py-16 px-6">
+    <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+            <div><div class="font-display text-2xl font-bold mb-4"><span class="text-acid">V</span>IZONIS</div><p class="text-gray-500 text-sm">India's leading academy for Data Analytics & BI training.</p></div>
+            <div><h4 class="font-bold text-sm uppercase tracking-wider mb-4 text-gray-400">Courses</h4><ul class="space-y-2 text-sm text-gray-500"><li><a href="#" class="hover:text-acid transition-colors">Power BI Complete</a></li><li><a href="#" class="hover:text-acid transition-colors">Power Query Masterclass</a></li><li><a href="#" class="hover:text-acid transition-colors">DAX Deep Dive</a></li><li><a href="#" class="hover:text-acid transition-colors">Microsoft Fabric</a></li></ul></div>
+            <div><h4 class="font-bold text-sm uppercase tracking-wider mb-4 text-gray-400">Guides</h4><ul class="space-y-2 text-sm text-gray-500"><li><a href="#" class="hover:text-acid transition-colors">Getting Started</a></li><li><a href="#" class="hover:text-acid transition-colors">Power Query Basics</a></li><li><a href="#" class="hover:text-acid transition-colors">Transformations</a></li><li><a href="#" class="hover:text-acid transition-colors">SQL & Relationships</a></li></ul></div>
+            <div><h4 class="font-bold text-sm uppercase tracking-wider mb-4 text-gray-400">Contact</h4><ul class="space-y-3 text-sm text-gray-500"><li class="flex items-center gap-2"><i class="fab fa-whatsapp text-green-400"></i><a href="https://wa.me/916364671786" target="_blank" class="hover:text-acid transition-colors">+91 6364671786</a></li><li class="flex items-center gap-2"><i class="fas fa-phone text-acid"></i><a href="tel:+916364671786" class="hover:text-acid transition-colors">+91 6364671786</a></li></ul></div>
+        </div>
+        <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4"><p class="text-gray-600 text-xs">© 2025 Vizonis Academy. All rights reserved.</p><p class="text-gray-700 text-xs">Built with <i class="fas fa-heart text-acid text-[10px]"></i> for aspiring data professionals</p></div>
+    </div>
+</footer>
+
+<a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20need%20help%20with%20SQL%20connections%20and%20relationships." target="_blank" class="whatsapp-float" aria-label="Chat on WhatsApp"><i class="fab fa-whatsapp text-white text-3xl"></i></a>
+
+<div id="wa-toast" class="fixed bottom-28 right-6 z-[7999] glass-card rounded-xl p-4 max-w-xs transform translate-x-[120%] transition-transform duration-500">
+    <div class="flex items-start gap-3">
+        <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center shrink-0"><i class="fab fa-whatsapp text-green-400 text-lg"></i></div>
+        <div><p class="text-sm font-bold">Struggling with the assignment?</p><p class="text-xs text-gray-400 mt-1">Our mentors solve it with you live!</p><a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20Help%20me%20with%20Apache%20Logs%20assignment." target="_blank" class="text-xs text-green-400 font-bold mt-2 inline-block">Get Help →</a></div>
+        <button onclick="document.getElementById('wa-toast').style.transform='translateX(120%)'" class="text-gray-600 hover:text-white ml-2"><i class="fas fa-times text-xs"></i></button>
+    </div>
+</div>
+
+<script>
+const lenis=new Lenis({duration:1.2,easing:t=>Math.min(1,1.001-Math.pow(2,-10*t))});
+function raf(t){lenis.raf(t);requestAnimationFrame(raf)}requestAnimationFrame(raf);
+gsap.registerPlugin(ScrollTrigger);
+gsap.utils.toArray('.glass-card').forEach((e,i)=>{gsap.from(e,{y:40,opacity:0,duration:.8,delay:i*.02,ease:'power3.out',scrollTrigger:{trigger:e,start:'top 85%',toggleActions:'play none none none'}})});
+gsap.utils.toArray('.ex-box').forEach(e=>{gsap.from(e,{x:-20,opacity:0,duration:.6,delay:.2,ease:'power2.out',scrollTrigger:{trigger:e,start:'top 90%',toggleActions:'play none none none'}})});
+function cp(){const c=document.getElementById('particles');for(let i=0;i<20;i++){const p=document.createElement('div');p.className='particle';const s=Math.random()*4+2;p.style.width=s+'px';p.style.height=s+'px';p.style.left=Math.random()*100+'%';p.style.animationDuration=(Math.random()*15+10)+'s';p.style.animationDelay=(Math.random()*10)+'s';c.appendChild(p)}}cp();
+setTimeout(()=>{document.getElementById('wa-toast').style.transform='translateX(0)'},6000);
+setTimeout(()=>{document.getElementById('wa-toast').style.transform='translateX(120%)'},22000);
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',function(e){const t=document.querySelector(this.getAttribute('href'));if(t){e.preventDefault();lenis.scrollTo(t,{offset:-80})}})});
+const secs=document.querySelectorAll('section[id]'),navs=document.querySelectorAll('.sub-nav-item');
+window.addEventListener('scroll',()=>{let c='';secs.forEach(s=>{if(pageYOffset>=s.offsetTop-120)c=s.getAttribute('id')});navs.forEach(n=>{n.classList.remove('active');if(n.getAttribute('href')==='#'+c)n.classList.add('active')})});
+</script>
+</body>
+</html>
