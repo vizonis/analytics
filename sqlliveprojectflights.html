@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vizonis Academy — IndiGo Flight Operations SQL Case Study</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+            50% { box-shadow: 0 0 0 12px rgba(16, 185, 129, 0); }
+        }
+        .pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .float-anim { animation: float 3s ease-in-out infinite; }
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            border-radius: 12px;
+            padding: 16px 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+        .code-block .keyword { color: #c084fc; }
+        .code-block .string { color: #86efac; }
+        .code-block .comment { color: #64748b; }
+        .question-card {
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+        .question-card:hover {
+            border-left-color: #0f172a;
+            background: #f8fafc;
+            transform: translateX(4px);
+        }
+        .level-easy { border-left-color: #22c55e !important; }
+        .level-easy:hover { border-left-color: #16a34a !important; }
+        .level-medium { border-left-color: #f59e0b !important; }
+        .level-medium:hover { border-left-color: #d97706 !important; }
+        .level-hard { border-left-color: #ef4444 !important; }
+        .level-hard:hover { border-left-color: #dc2626 !important; }
+        .level-expert { border-left-color: #8b5cf6 !important; }
+        .level-expert:hover { border-left-color: #7c3aed !important; }
+        .section-nav-link {
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+        .section-nav-link:hover, .section-nav-link.active {
+            border-left-color: #0f172a;
+            background: #f1f5f9;
+        }
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #0f172a, #10b981);
+            z-index: 9999;
+            transition: width 0.1s;
+        }
+        .whatsapp-float {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            z-index: 999;
+            background: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(37,211,102,0.4);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .whatsapp-float:hover { transform: scale(1.1); box-shadow: 0 12px 32px rgba(37,211,102,0.5); }
+        .airport-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            background: #f1f5f9;
+            color: #334155;
+            border: 1px solid #e2e8f0;
+        }
+        .airport-chip .city { color: #64748b; font-weight: 400; }
+        @media print {
+            .whatsapp-float, .no-print, .progress-bar { display: none !important; }
+        }
+    </style>
+</head>
+<body class="bg-white text-slate-900">
+
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+
+    <!-- Top Banner -->
+    <div class="bg-slate-950 text-white py-2.5 px-4 text-center text-xs font-medium tracking-wide no-print">
+        <div class="flex items-center justify-center gap-2">
+            <i data-lucide="plane" class="w-3.5 h-3.5 text-emerald-400"></i>
+            <span>Vizonis Academy — SQL Assignment: IndiGo Flight Operations & Revenue Analysis</span>
+            <i data-lucide="plane" class="w-3.5 h-3.5 text-emerald-400"></i>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200/80 no-print" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="https://vizonis.com" target="_blank" class="flex items-center gap-3">
+                <div class="w-9 h-9 bg-slate-950 rounded-lg flex items-center justify-center">
+                    <i data-lucide="graduation-cap" class="w-5 h-5 text-white"></i>
+                </div>
+                <div>
+                    <span class="font-semibold text-base tracking-tight">Vizonis Academy</span>
+                    <span class="text-slate-400 text-xs ml-2 hidden sm:inline">vizonis.com</span>
+                </div>
+            </a>
+            <div class="hidden md:flex items-center gap-6 text-sm text-slate-500">
+                <a href="#dataset" class="hover:text-slate-900 transition-colors">Dataset</a>
+                <a href="#exercises" class="hover:text-slate-900 transition-colors">Exercises</a>
+                <a href="#business-cases" class="hover:text-slate-900 transition-colors">Business Cases</a>
+                <a href="#submission" class="hover:text-slate-900 transition-colors">Submit</a>
+                <a href="https://wa.me/916364671786?text=Hi%20Sir%2C%20I%20have%20a%20doubt%20in%20the%20IndiGo%20SQL%20assignment" target="_blank" class="bg-slate-950 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-slate-800 transition-colors flex items-center gap-2">
+                    <i data-lucide="message-circle" class="w-4 h-4"></i> Doubts?
+                </a>
+            </div>
+            <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg hover:bg-slate-100">
+                <i data-lucide="menu" class="w-5 h-5"></i>
+            </button>
+        </div>
+        <div id="mobileMenu" class="hidden md:hidden border-t border-slate-100 bg-white px-6 py-4 space-y-3">
+            <a href="#dataset" class="block text-sm text-slate-600 py-1">Dataset</a>
+            <a href="#exercises" class="block text-sm text-slate-600 py-1">Exercises</a>
+            <a href="#business-cases" class="block text-sm text-slate-600 py-1">Business Cases</a>
+            <a href="#submission" class="block text-sm text-slate-600 py-1">Submit</a>
+            <a href="https://wa.me/916364671786" target="_blank" class="block text-sm text-green-600 font-medium py-1">WhatsApp: +91 6364671786</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
+        <div class="absolute inset-0 opacity-20">
+            <img src="https://picsum.photos/seed/indigo-airline-sky/1920/1080.jpg" alt="" class="w-full h-full object-cover">
+        </div>
+        <div class="absolute top-20 left-10 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-10 right-10 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl"></div>
+        <div class="relative z-10 py-20 md:py-28 px-6">
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-5 py-2 mb-8">
+                    <i data-lucide="file-text" class="w-4 h-4 text-emerald-400"></i>
+                    <span class="text-white/90 text-sm font-medium">SQL Assignment — 50+ Questions — 9 Sections</span>
+                </div>
+                <h1 class="font-serif text-4xl md:text-6xl lg:text-7xl font-400 text-white tracking-tight leading-[1.05] mb-6">
+                    IndiGo Flight Operations<br>
+                    <span class="text-emerald-400">&</span> Revenue Analysis
+                </h1>
+                <p class="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto mb-4 leading-relaxed">
+                    A complete hands-on SQL case study with <strong class="text-white">100,000 real flight records</strong>. Analyze delays, pricing, routes, and passenger behavior.
+                </p>
+                <p class="text-sm text-slate-500 mb-10">Difficulty: Beginner → Advanced | Duration: 4–6 hours | Tool: Snowflake</p>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="https://hercules-cdn.com/file_YmyBWLbbTJ8ok4n0bJEJmYI7" target="_blank" class="pulse-glow bg-emerald-500 hover:bg-emerald-400 text-white px-8 py-4 rounded-xl font-semibold text-sm transition-colors flex items-center gap-3">
+                        <i data-lucide="download" class="w-5 h-5"></i>
+                        Download CSV Dataset
+                    </a>
+                    <a href="#exercises" class="border border-white/30 text-white px-8 py-4 rounded-xl font-medium text-sm hover:bg-white/10 transition-colors flex items-center gap-2">
+                        Start Exercises <i data-lucide="arrow-down" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Stats -->
+    <section class="bg-slate-950 py-12 border-t border-slate-800 no-print">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
+                <div>
+                    <div class="text-2xl md:text-3xl font-semibold text-white">100K</div>
+                    <div class="text-xs text-slate-400 mt-1">Flight Records</div>
+                </div>
+                <div>
+                    <div class="text-2xl md:text-3xl font-semibold text-white">15</div>
+                    <div class="text-xs text-slate-400 mt-1">Data Columns</div>
+                </div>
+                <div>
+                    <div class="text-2xl md:text-3xl font-semibold text-white">8</div>
+                    <div class="text-xs text-slate-400 mt-1">Airport Codes</div>
+                </div>
+                <div>
+                    <div class="text-2xl md:text-3xl font-semibold text-white">50+</div>
+                    <div class="text-xs text-slate-400 mt-1">SQL Questions</div>
+                </div>
+                <div>
+                    <div class="text-2xl md:text-3xl font-semibold text-emerald-400">9</div>
+                    <div class="text-xs text-slate-400 mt-1">Difficulty Levels</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dataset & Setup Section -->
+    <section id="dataset" class="py-20 scroll-mt-20">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center">
+                    <i data-lucide="database" class="w-5 h-5 text-emerald-600"></i>
+                </div>
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-widest text-emerald-600">Step 0</span>
+                    <h2 class="font-serif text-3xl md:text-4xl tracking-tight">Dataset & Setup</h2>
+                </div>
+            </div>
+
+            <!-- Download Card -->
+            <div class="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-2xl p-8 border border-emerald-200 mb-8">
+                <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
+                    <div class="float-anim w-16 h-16 bg-emerald-500 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-emerald-500/25">
+                        <i data-lucide="file-spreadsheet" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-semibold text-lg mb-1">Download the CSV File</h3>
+                        <p class="text-sm text-slate-600 mb-3">Click the button below to download the IndiGo flight dataset (100,000 records). Then load it into your Snowflake account.</p>
+                        <a href="https://hercules-cdn.com/file_YmyBWLbbTJ8ok4n0bJEJmYI7" target="_blank" class="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-3 rounded-lg font-semibold text-sm transition-colors">
+                            <i data-lucide="download" class="w-4 h-4"></i> Download CSV (hercules-cdn.com)
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Setup Steps -->
+            <div class="bg-white rounded-2xl border border-slate-200 p-8 mb-8">
+                <h3 class="font-semibold text-lg mb-6 flex items-center gap-2">
+                    <i data-lucide="list-checks" class="w-5 h-5 text-slate-500"></i>
+                    How to Load Data in Snowflake
+                </h3>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="flex items-start gap-3 p-4 bg-slate-50 rounded-xl">
+                        <div class="w-7 h-7 bg-slate-900 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">1</div>
+                        <div>
+                            <p class="text-sm font-medium">Download the CSV</p>
+                            <p class="text-xs text-slate-500">Use the download button above</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3 p-4 bg-slate-50 rounded-xl">
+                        <div class="w-7 h-7 bg-slate-900 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">2</div>
+                        <div>
+                            <p class="text-sm font-medium">Login to Snowflake</p>
+                            <p class="text-xs text-slate-500">Use your provided credentials</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3 p-4 bg-slate-50 rounded-xl">
+                        <div class="w-7 h-7 bg-slate-900 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">3</div>
+                        <div>
+                            <p class="text-sm font-medium">Create a Database & Schema</p>
+                            <p class="text-xs text-slate-500"><code class="bg-white px-1.5 py-0.5 rounded text-xs font-mono">CREATE DATABASE indigo_db;</code></p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3 p-4 bg-slate-50 rounded-xl">
+                        <div class="w-7 h-7 bg-slate-900 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">4</div>
+                        <div>
+                            <p class="text-sm font-medium">Create the FLIGHTS table</p>
+                            <p class="text-xs text-slate-500">Use the DDL provided below</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3 p-4 bg-slate-50 rounded-xl">
+                        <div class="w-7 h-7 bg-slate-900 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">5</div>
+                        <div>
+                            <p class="text-sm font-medium">Load CSV using Snowsight UI</p>
+                            <p class="text-xs text-slate-500">Go to Tables → Load Data → Upload CSV</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3 p-4 bg-slate-50 rounded-xl">
+                        <div class="w-7 h-7 bg-slate-900 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">6</div>
+                        <div>
+                            <p class="text-sm font-medium">Verify data</p>
+                            <p class="text-xs text-slate-500"><code class="bg-white px-1.5 py-0.5 rounded text-xs font-mono">SELECT COUNT(*) FROM flights;</code></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DDL -->
+            <div class="mb-8">
+                <h3 class="font-semibold text-sm mb-3 flex items-center gap-2"><i data-lucide="code-2" class="w-4 h-4 text-slate-400"></i> Table Creation DDL — Run This First</h3>
+                <div class="code-block">
+<button class="copy-btn" onclick="copyCode(this)" style="position:absolute;top:12px;right:12px;background:rgba(255,255,255,0.1);border:none;color:#94a3b8;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;transition:all 0.2s;">Copy</button>
+<span class="keyword">CREATE TABLE</span> FLIGHTS (
+    flight_id            <span class="string">VARCHAR</span>,
+    date                 <span class="string">DATE</span>,
+    departure_airport    <span class="string">VARCHAR</span>,
+    arrival_airport      <span class="string">VARCHAR</span>,
+    scheduled_departure  <span class="string">TIME</span>,
+    scheduled_arrival    <span class="string">TIME</span>,
+    delay_minutes        <span class="string">NUMBER</span>,
+    flight_duration_mins <span class="string">NUMBER</span>,
+    ticket_price_inr     <span class="string">NUMBER</span>,
+    passenger_count      <span class="string">NUMBER</span>,
+    seat_capacity        <span class="string">NUMBER</span>,
+    load_factor          <span class="string">FLOAT</span>,
+    booking_channel      <span class="string">VARCHAR</span>,
+    fare_class           <span class="string">VARCHAR</span>,
+    weather_condition    <span class="string">VARCHAR</span>
+);
+                </div>
+            </div>
+
+            <!-- Column Reference -->
+            <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden mb-8">
+                <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-6 py-5 hover:bg-slate-50 transition-colors">
+                    <span class="font-semibold text-sm flex items-center gap-2"><i data-lucide="table" class="w-4 h-4 text-slate-400"></i> Column Reference Table</span>
+                    <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 transition-transform"></i>
+                </button>
+                <div class="accordion-content">
+                    <div class="px-6 pb-6">
+                        <div class="overflow-x-auto rounded-lg border border-slate-200">
+                            <table class="w-full text-sm">
+                                <thead><tr class="bg-slate-50"><th class="text-left px-4 py-3 text-xs font-bold uppercase tracking-wider text-slate-500 border-b border-slate-200">Column</th><th class="text-left px-4 py-3 text-xs font-bold uppercase tracking-wider text-slate-500 border-b border-slate-200">Type</th><th class="text-left px-4 py-3 text-xs font-bold uppercase tracking-wider text-slate-500 border-b border-slate-200">Description</th><th class="text-left px-4 py-3 text-xs font-bold uppercase tracking-wider text-slate-500 border-b border-slate-200">Sample Values</th></tr></thead>
+                                <tbody class="text-slate-600">
+                                    <tr class="border-b border-slate-100"><td class="px-4 py-2.5 font-mono text-xs">flight_id</td><td class="px-4 py-2.5 text-xs text-slate-400">VARCHAR</td><td class="px-4 py-2.5 text-xs">Unique flight identifier</td><td class="px-4 py-2.5 text-xs text-slate-400">6E-2341</td></tr>
+                                    <tr class="border-b border-slate-100"><td class="px-4 py-2.5 font-mono text-xs">date</td><td class="px-4 py-2.5 text-xs text-slate-400">DATE</td><td class="px-4 py-2.5 text-xs">Flight date</td><td class="px-4 py-2.5 text-xs text-slate-400">2024-01-15</td></tr>
+                                    <tr class="border-b border-slate-100"><td class="px-4 py-2.5 font-mono text-xs">departure_airport</td><td class="px-4 py-2.5 text-xs text-slate-400">VARCHAR</td><td class="px-4 py-2.5 text-xs">Origin airport code</td><td class="px-4 py-2.5 text-xs text-slate-400">DEL, BLR, BOM...</td></tr>
+                                    <tr class="border-b border-slate-100"><td class="px-4 py-2.5 font-mono text-xs">arrival_airport</td><td class="px-4 py-2.5 text-xs text-slate-400">VARCHAR</td><td class="px-4 py-2.5 text-xs">Destination airport code</td><td class="px-4 py-2.5 text-xs text-slate-400">MAA, HYD, CCU...</td></tr>
+                                    <tr class="border-b border-slate-100"><td class="px-4 py-2.5 font-mono text-xs">scheduled_departure</td><td class="px-4 py-2.5 text-xs text-slate-400">TIME</td><td class="px-4 py-2.5 text-xs">Scheduled departure time</td><td class="px-4 py-2.5 text-xs text-slate-400">08:30:00</td></tr>
+                                    <tr class="border-b border-slate-100"><td class="px-4 py-2.5 font-mono text-xs">scheduled_arrival</td><td class="px-4 py-2.5 text-xs text-slate-400">TIME</td><td class="px-4 py-2.5 text-xs">Scheduled arrival time</td><td class="px-4 py-2.5 text-xs text-slate-400">11:15:00</td></tr>
+                                    <tr class="border-b border-slate-100"><td class="px-4 py-2.5 font-mono text-xs">delay_minutes</td><td class="px-4 py-2.5 text-xs text-slate-400">NUMBER</td><td class="px-4 py-2.5 text-xs">Delay in minutes (0 = on-time)</td><td class="px-4 py-2.5 text-xs text-slate-400">0, 15, 45, 120</td></tr>
+                                    <tr class="border-b border-slate-100"><td class="px-4 py-2.5 font-mono text-xs">flight_duration_mins</td><td class="px-4 py-2.5 text-xs text-slate-400">NUMBER</td><td class="px-4 py-2.5 text-xs">Total flight duration</td><td class="px-4 py-2.5 text-xs text-slate-400">150, 240, 180</td></tr>
+                                    <tr class="border-b border-slate-100"><td class="px-4 py-2.5 font-mono text-xs">ticket_price_inr</td><td class="px-4 py-2.5 text-xs text-slate-400">NUMBER</td><td class="px-4 py-2.5 text-xs">Ticket price in Indian Rupees</td><td class="px-4 py-2.5 text-xs text-slate-400">3500, 8500, 15000</td></tr>
+                                    <tr class="border-b border-slate-100"><td class="px-4 py-2.5 font-mono text-xs">passenger_count</td><td class="px-4 py-2.5 text-xs text-slate-400">NUMBER</td><td class="px-4 py-2.5 text-xs">Number of passengers on flight</td><td class="px-4 py-2.5 text-xs text-slate-400">156, 180, 142</td></tr>
+                                    <tr class="border-b border-slate-100"><td class="px-4 py-2.5 font-mono text-xs">seat_capacity</td><td class="px-4 py-2.5 text-xs text-slate-400">NUMBER</td><td class="px-4 py-2.5 text-xs">Total seats available</td><td class="px-4 py-2.5 text-xs text-slate-400">180, 186, 210</td></tr>
+                                    <tr class="border-b border-slate-100"><td class="px-4 py-2.5 font-mono text-xs">load_factor</td><td class="px-4 py-2.5 text-xs text-slate-400">FLOAT</td><td class="px-4 py-2.5 text-xs">Passenger load factor (0.0 – 1.0)</td><td class="px-4 py-2.5 text-xs text-slate-400">0.85, 0.92, 0.67</td></tr>
+                                    <tr class="border-b border-slate-100"><td class="px-4 py-2.5 font-mono text-xs">booking_channel</td><td class="px-4 py-2.5 text-xs text-slate-400">VARCHAR</td><td class="px-4 py-2.5 text-xs">How the ticket was booked</td><td class="px-4 py-2.5 text-xs text-slate-400">Mobile App, Website, Agent</td></tr>
+                                    <tr class="border-b border-slate-100"><td class="px-4 py-2.5 font-mono text-xs">fare_class</td><td class="px-4 py-2.5 text-xs text-slate-400">VARCHAR</td><td class="px-4 py-2.5 text-xs">Ticket fare category</td><td class="px-4 py-2.5 text-xs text-slate-400">Saver, Flexi, Business</td></tr>
+                                    <tr><td class="px-4 py-2.5 font-mono text-xs">weather_condition</td><td class="px-4 py-2.5 text-xs text-slate-400">VARCHAR</td><td class="px-4 py-2.5 text-xs">Weather at departure</td><td class="px-4 py-2.5 text-xs text-slate-400">Clear, Rain, Fog, Storm</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Airport Reference -->
+            <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200">
+                <h3 class="font-semibold text-sm mb-4 flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-slate-400"></i> Airport Code Reference — Keep This Handy</h3>
+                <div class="flex flex-wrap gap-2">
+                    <span class="airport-chip">AMD <span class="city">→ Ahmedabad</span></span>
+                    <span class="airport-chip">BLR <span class="city">→ Bengaluru</span></span>
+                    <span class="airport-chip">BOM <span class="city">→ Mumbai</span></span>
+                    <span class="airport-chip">CCU <span class="city">→ Kolkata</span></span>
+                    <span class="airport-chip">DEL <span class="city">→ Delhi</span></span>
+                    <span class="airport-chip">HYD <span class="city">→ Hyderabad</span></span>
+                    <span class="airport-chip">MAA <span class="city">→ Chennai</span></span>
+                    <span class="airport-chip">PNQ <span class="city">→ Pune</span></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="max-w-7xl mx-auto px-6"><div class="border-t border-slate-200"></div></div>
+
+    <!-- ========== EXERCISES SECTION ========== -->
+    <section id="exercises" class="py-20 scroll-mt-20">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-xs font-bold uppercase tracking-widest text-slate-400">Hands-On Practice</span>
+                <h2 class="font-serif text-4xl md:text-5xl tracking-tight mt-3 mb-4">SQL Exercises</h2>
+                <p class="text-slate-500 max-w-2xl mx-auto">50+ questions across 9 sections, progressing from beginner to advanced. Write your queries in Snowflake and verify results.</p>
+            </div>
+
+            <!-- ===== Section 1: Basic Exploration ===== -->
+            <div class="mb-16" id="sec1">
+                <div class="flex items-center gap-3 mb-2">
+                    <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center"><span class="text-green-700 font-bold text-xs">1</span></div>
+                    <h3 class="font-serif text-2xl tracking-tight">Basic Data Exploration</h3>
+                </div>
+                <p class="text-sm text-slate-500 mb-6 ml-11">Before analyzing, you must understand the data. These queries help you explore what's inside the table. <strong>Every data analyst's first step.</strong></p>
+
+                <div class="space-y-3 ml-11">
+                    <div class="question-card level-easy bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q1</span>
+                        <p class="text-sm text-slate-700">Display all columns for the first 10 flights in the dataset.</p>
+                    </div>
+                    <div class="question-card level-easy bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q2</span>
+                        <p class="text-sm text-slate-700">Display only the flight_id, date, departure_airport, arrival_airport, and ticket_price_inr columns for all flights.</p>
+                    </div>
+                    <div class="question-card level-easy bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q3</span>
+                        <p class="text-sm text-slate-700">Find all flights that departed from Delhi (DEL).</p>
+                    </div>
+                    <div class="question-card level-easy bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q4</span>
+                        <p class="text-sm text-slate-700">Find all flights from Bengaluru (BLR) to Mumbai (BOM).</p>
+                    </div>
+                    <div class="question-card level-easy bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q5</span>
+                        <p class="text-sm text-slate-700">List all flights where the ticket price is greater than ₹10,000.</p>
+                    </div>
+                    <div class="question-card level-easy bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q6</span>
+                        <p class="text-sm text-slate-700">Find all flights with a delay of more than 60 minutes.</p>
+                    </div>
+                    <div class="question-card level-easy bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q7</span>
+                        <p class="text-sm text-slate-700">List all flights where weather_condition was 'Fog' or 'Storm'.</p>
+                    </div>
+                    <div class="question-card level-easy bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q8</span>
+                        <p class="text-sm text-slate-700">Display flights with fare_class 'Business' and ticket price less than ₹8,000.</p>
+                    </div>
+                    <div class="question-card level-easy bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q9</span>
+                        <p class="text-sm text-slate-700">Show the top 20 most expensive flights by ticket price (descending order).</p>
+                    </div>
+                    <div class="question-card level-easy bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q10</span>
+                        <p class="text-sm text-slate-700">Find flights where the passenger_name column has '6E' in the flight_id using LIKE.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== Section 2: Aggregations ===== -->
+            <div class="mb-16" id="sec2">
+                <div class="flex items-center gap-3 mb-2">
+                    <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center"><span class="text-green-700 font-bold text-xs">2</span></div>
+                    <h3 class="font-serif text-2xl tracking-tight">Aggregations & Business Metrics</h3>
+                </div>
+                <p class="text-sm text-slate-500 mb-6 ml-11">Business leaders don't want raw data — they want <strong>numbers and KPIs</strong>. Aggregation functions (COUNT, SUM, AVG, MIN, MAX) are the foundation of every dashboard.</p>
+
+                <div class="space-y-3 ml-11">
+                    <div class="question-card level-easy bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q11</span>
+                        <p class="text-sm text-slate-700">What is the total number of flights in the dataset?</p>
+                    </div>
+                    <div class="question-card level-easy bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q12</span>
+                        <p class="text-sm text-slate-700">What is the total number of passengers carried across all flights?</p>
+                    </div>
+                    <div class="question-card level-easy bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q13</span>
+                        <p class="text-sm text-slate-700">What is the average ticket price across all flights?</p>
+                    </div>
+                    <div class="question-card level-easy bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q14</span>
+                        <p class="text-sm text-slate-700">Find the minimum and maximum ticket price in the dataset (in a single query).</p>
+                    </div>
+                    <div class="question-card level-medium bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q15</span>
+                        <p class="text-sm text-slate-700">Calculate the total revenue generated across all flights (ticket_price × passenger_count).</p>
+                    </div>
+                    <div class="question-card level-medium bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q16</span>
+                        <p class="text-sm text-slate-700">What is the average delay in minutes across all flights?</p>
+                    </div>
+                    <div class="question-card level-medium bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q17</span>
+                        <p class="text-sm text-slate-700">Find the average load factor across all flights. What percentage of seats are filled on average?</p>
+                    </div>
+                    <div class="question-card level-medium bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q18</span>
+                        <p class="text-sm text-slate-700">How many distinct routes (unique departure-arrival pairs) exist in the dataset?</p>
+                    </div>
+                    <div class="question-card level-medium bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q19</span>
+                        <p class="text-sm text-slate-700">How many flights operated on each distinct date? (Find the date with maximum flights)</p>
+                    </div>
+                    <div class="question-card level-medium bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q20</span>
+                        <p class="text-sm text-slate-700">Calculate the average ticket price for each fare_class (Saver, Flexi, Business) in a single query.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== Section 3: Grouping & Insights ===== -->
+            <div class="mb-16" id="sec3">
+                <div class="flex items-center gap-3 mb-2">
+                    <div class="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center"><span class="text-amber-700 font-bold text-xs">3</span></div>
+                    <h3 class="font-serif text-2xl tracking-tight">Grouping & Insights</h3>
+                </div>
+                <p class="text-sm text-slate-500 mb-6 ml-11"><strong>GROUP BY</strong> is how you slice data by dimensions. Combined with HAVING, you can filter groups — essential for identifying top/bottom performers.</p>
+
+                <div class="space-y-3 ml-11">
+                    <div class="question-card level-medium bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q21</span>
+                        <p class="text-sm text-slate-700">Find the total number of flights from each departure airport. Which airport has the most departures?</p>
+                    </div>
+                    <div class="question-card level-medium bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q22</span>
+                        <p class="text-sm text-slate-700">Find the total number of flights to each arrival airport. Which airport receives the most flights?</p>
+                    </div>
+                    <div class="question-card level-medium bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q23</span>
+                        <p class="text-sm text-slate-700">For each route (departure → arrival), find the total flights, average ticket price, and average delay.</p>
+                    </div>
+                    <div class="question-card level-medium bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q24</span>
+                        <p class="text-sm text-slate-700">Find the total passengers and average load factor for each fare_class.</p>
+                    </div>
+                    <div class="question-card level-medium bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q25</span>
+                        <p class="text-sm text-slate-700">Count flights by booking_channel. Which channel is most popular?</p>
+                    </div>
+                    <div class="question-card level-hard bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-red-600 bg-red-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q26</span>
+                        <p class="text-sm text-slate-700">Find routes that have more than 500 total flights in the dataset (use HAVING).</p>
+                    </div>
+                    <div class="question-card level-hard bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-red-600 bg-red-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q27</span>
+                        <p class="text-sm text-slate-700">Find departure airports where the average delay is more than 30 minutes.</p>
+                    </div>
+                    <div class="question-card level-hard bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-red-600 bg-red-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q28</span>
+                        <p class="text-sm text-slate-700">Find fare_classes where the average ticket price is less than ₹5,000.</p>
+                    </div>
+                    <div class="question-card level-hard bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-red-600 bg-red-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q29</span>
+                        <p class="text-sm text-slate-700">For each weather condition, find the count of flights and average delay. Does bad weather always mean more delay?</p>
+                    </div>
+                    <div class="question-card level-hard bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-red-600 bg-red-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q30</span>
+                        <p class="text-sm text-slate-700">Find the top 5 routes with the highest average ticket price.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== Section 4: Text & Data Cleaning ===== -->
+            <div class="mb-16" id="sec4">
+                <div class="flex items-center gap-3 mb-2">
+                    <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center"><span class="text-blue-700 font-bold text-xs">4</span></div>
+                    <h3 class="font-serif text-2xl tracking-tight">Text & Data Cleaning</h3>
+                </div>
+                <p class="text-sm text-slate-500 mb-6 ml-11">Real-world data is messy. <strong>String functions</strong> help you clean, format, and combine text columns — a must-have skill for any data analyst.</p>
+
+                <div class="space-y-3 ml-11">
+                    <div class="question-card level-medium bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q31</span>
+                        <p class="text-sm text-slate-700">Create a new column called "route" that combines departure_airport and arrival_airport with ' → ' between them (e.g., "DEL → BLR").</p>
+                    </div>
+                    <div class="question-card level-medium bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q32</span>
+                        <p class="text-sm text-slate-700">Convert all booking_channel values to uppercase.</p>
+                    </div>
+                    <div class="question-card level-medium bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q33</span>
+                        <p class="text-sm text-slate-700">Extract only the numeric part from flight_id (e.g., "6E-2341" → "2341").</p>
+                    </div>
+                    <div class="question-card level-medium bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q34</span>
+                        <p class="text-sm text-slate-700">Format the ticket price with a ₹ symbol and comma separators (e.g., ₹15,000). <em class="text-slate-400">Hint: Use TO_VARCHAR with format string.</em></p>
+                    </div>
+                    <div class="question-card level-hard bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-red-600 bg-red-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q35</span>
+                        <p class="text-sm text-slate-700">Create a "flight_description" column: "Flight [flight_id] from [departure] to [arrival] on [date]" (e.g., "Flight 6E-2341 from DEL to BLR on 2024-01-15").</p>
+                    </div>
+                    <div class="question-card level-hard bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-red-600 bg-red-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q36</span>
+                        <p class="text-sm text-slate-700">Calculate revenue per flight as ticket_price_inr × passenger_count. Format it as "₹XX,XXX" in the output.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== Section 5: Date & Time Analysis ===== -->
+            <div class="mb-16" id="sec5">
+                <div class="flex items-center gap-3 mb-2">
+                    <div class="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center"><span class="text-indigo-700 font-bold text-xs">5</span></div>
+                    <h3 class="font-serif text-2xl tracking-tight">Date & Time Analysis</h3>
+                </div>
+                <p class="text-sm text-slate-500 mb-6 ml-11">Time-based analysis reveals <strong>trends, seasonality, and patterns</strong>. Every business report has a "this month vs last month" comparison — you need date functions for that.</p>
+
+                <div class="space-y-3 ml-11">
+                    <div class="question-card level-medium bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q37</span>
+                        <p class="text-sm text-slate-700">Find the date range of the dataset — what is the earliest and latest flight date?</p>
+                    </div>
+                    <div class="question-card level-medium bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q38</span>
+                        <p class="text-sm text-slate-700">Find the total flights, passengers, and revenue for each month (use MONTH or DATE_TRUNC).</p>
+                    </div>
+                    <div class="question-card level-medium bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q39</span>
+                        <p class="text-sm text-slate-700">Which month had the highest average delay?</p>
+                    </div>
+                    <div class="question-card level-hard bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-red-600 bg-red-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q40</span>
+                        <p class="text-sm text-slate-700">Categorize each flight as 'Weekend' or 'Weekday' based on the date. Then find the average ticket price and average delay for each category.</p>
+                    </div>
+                    <div class="question-card level-hard bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-red-600 bg-red-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q41</span>
+                        <p class="text-sm text-slate-700">Find the total flights and average delay for each day of the week (Monday to Sunday). Which day has the worst on-time performance?</p>
+                    </div>
+                    <div class="question-card level-hard bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-red-600 bg-red-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q42</span>
+                        <p class="text-sm text-slate-700">Find the average ticket price and total passengers for flights in the last 30 days of the dataset (relative to the max date).</p>
+                    </div>
+                    <div class="question-card level-expert bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-violet-600 bg-violet-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q43</span>
+                        <p class="text-sm text-slate-700">Calculate month-over-month growth in total revenue. Show month, revenue, previous month revenue, and growth percentage.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== Section 6: CASE WHEN ===== -->
+            <div class="mb-16" id="sec6">
+                <div class="flex items-center gap-3 mb-2">
+                    <div class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center"><span class="text-orange-700 font-bold text-xs">6</span></div>
+                    <h3 class="font-serif text-2xl tracking-tight">Business Logic — CASE WHEN</h3>
+                </div>
+                <p class="text-sm text-slate-500 mb-6 ml-11"><strong>CASE WHEN</strong> is how you translate business rules into SQL. Categorizing, bucketing, flagging — it all starts here. Most interview questions involve CASE WHEN.</p>
+
+                <div class="space-y-3 ml-11">
+                    <div class="question-card level-medium bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q44</span>
+                        <p class="text-sm text-slate-700">Create a column "delay_status" with these rules: 0 minutes → 'On Time', 1–15 → 'Minor Delay', 16–60 → 'Moderate Delay', >60 → 'Severe Delay'. Count flights in each category.</p>
+                    </div>
+                    <div class="question-card level-medium bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q45</span>
+                        <p class="text-sm text-slate-700">Create a "price_segment" column: ≤3000 → 'Budget', 3001–6000 → 'Standard', 6001–10000 → 'Premium', >10000 → 'Luxury'. Count flights per segment.</p>
+                    </div>
+                    <div class="question-card level-medium bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q46</span>
+                        <p class="text-sm text-slate-700">Create a "load_category" based on load_factor: <0.5 → 'Low', 0.5–0.75 → 'Medium', 0.75–0.9 → 'High', >0.9 → 'Full'. Find average delay for each category.</p>
+                    </div>
+                    <div class="question-card level-hard bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-red-600 bg-red-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q47</span>
+                        <p class="text-sm text-slate-700">Flag flights as 'Red Eye' if scheduled_departure is between 22:00 and 05:00, else 'Regular'. How many Red Eye flights exist?</p>
+                    </div>
+                    <div class="question-card level-hard bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-red-600 bg-red-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q48</span>
+                        <p class="text-sm text-slate-700">Create a "revenue_tier" for each route: calculate total route revenue, then label top 3 as 'Platinum', next 5 as 'Gold', rest as 'Silver'.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== Section 7: Intermediate Analysis ===== -->
+            <div class="mb-16" id="sec7">
+                <div class="flex items-center gap-3 mb-2">
+                    <div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center"><span class="text-red-700 font-bold text-xs">7</span></div>
+                    <h3 class="font-serif text-2xl tracking-tight">Intermediate Analysis</h3>
+                </div>
+                <p class="text-sm text-slate-500 mb-6 ml-11">Now combine multiple concepts — <strong>joins logic, subqueries, and multi-condition filters</strong> — to answer real business questions that a stakeholder would actually ask.</p>
+
+                <div class="space-y-3 ml-11">
+                    <div class="question-card level-hard bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-red-600 bg-red-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q49</span>
+                        <p class="text-sm text-slate-700">Find the top 10 routes by total revenue (ticket_price × passenger_count). Show route, total revenue, and average load factor.</p>
+                    </div>
+                    <div class="question-card level-hard bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-red-600 bg-red-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q50</span>
+                        <p class="text-sm text-slate-700">Rank all airports by average departure delay. Show both departure and arrival airport averages side by side. Which airport is worst for departures? For arrivals?</p>
+                    </div>
+                    <div class="question-card level-hard bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-red-600 bg-red-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q51</span>
+                        <p class="text-sm text-slate-700">Compare booking channels: for each channel, find total revenue, average ticket price, average delay, and average load factor. Which channel performs best overall?</p>
+                    </div>
+                    <div class="question-card level-hard bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-red-600 bg-red-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q52</span>
+                        <p class="text-sm text-slate-700">Find all routes where the average Business class ticket price is lower than the average Flexi class price. Is this happening anywhere?</p>
+                    </div>
+                    <div class="question-card level-hard bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-red-600 bg-red-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q53</span>
+                        <p class="text-sm text-slate-700">For each departure airport, find the percentage of flights that were delayed (delay_minutes > 0). Rank airports by this percentage.</p>
+                    </div>
+                    <div class="question-card level-hard bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-red-600 bg-red-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q54</span>
+                        <p class="text-sm text-slate-700">Find the average ticket price for each fare_class on weekends vs weekdays. Is there a significant weekend premium?</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== Section 8: Advanced SQL ===== -->
+            <div class="mb-16" id="sec8">
+                <div class="flex items-center gap-3 mb-2">
+                    <div class="w-8 h-8 bg-violet-100 rounded-lg flex items-center justify-center"><span class="text-violet-700 font-bold text-xs">8</span></div>
+                    <h3 class="font-serif text-2xl tracking-tight">Advanced SQL — Window Functions</h3>
+                </div>
+                <p class="text-sm text-slate-500 mb-6 ml-11"><strong>Window functions</strong> (RANK, ROW_NUMBER, running totals) separate senior analysts from juniors. These questions test if you can think beyond basic GROUP BY. <span class="text-violet-600 font-medium">Optional but highly recommended.</span></p>
+
+                <div class="space-y-3 ml-11">
+                    <div class="question-card level-expert bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-violet-600 bg-violet-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q55</span>
+                        <p class="text-sm text-slate-700">Using ROW_NUMBER(), find the most expensive flight for each route (departure → arrival). Show flight_id, route, ticket_price.</p>
+                    </div>
+                    <div class="question-card level-expert bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-violet-600 bg-violet-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q56</span>
+                        <p class="text-sm text-slate-700">Rank all flights within each route by delay (worst first) using RANK(). Show only the top 3 most delayed flights per route.</p>
+                    </div>
+                    <div class="question-card level-expert bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-violet-600 bg-violet-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q57</span>
+                        <p class="text-sm text-slate-700">Calculate a running total of daily revenue (ticket_price × passenger_count) ordered by date. Show date, daily revenue, and cumulative revenue.</p>
+                    </div>
+                    <div class="question-card level-expert bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-violet-600 bg-violet-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q58</span>
+                        <p class="text-sm text-slate-700">For each flight, find the difference in ticket price from the average price of that route. Use a window function with AVG() OVER(PARTITION BY route).</p>
+                    </div>
+                    <div class="question-card level-expert bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-violet-600 bg-violet-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q59</span>
+                        <p class="text-sm text-slate-700">Use NTILE(4) to divide all routes into 4 quartiles based on total revenue. Show route, total revenue, and quartile number.</p>
+                    </div>
+                    <div class="question-card level-expert bg-white rounded-xl px-6 py-4 border border-slate-200 flex items-start gap-4">
+                        <span class="text-xs font-bold text-violet-600 bg-violet-50 px-2 py-1 rounded flex-shrink-0 mt-0.5">Q60</span>
+                        <p class="text-sm text-slate-700">For each month, find the previous month's total revenue using LAG(). Show month, current revenue, previous month revenue, and month-over-month difference.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== Section 9: Real Business Case Questions ===== -->
+            <div class="mb-8" id="business-cases">
+                <div class="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 rounded-2xl p-8 md:p-10 text-white relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl"></div>
+                    <div class="relative">
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center border border-white/20"><span class="text-white font-bold text-xs">9</span></div>
+                            <h3 class="font-serif text-2xl tracking-tight text-white">Real Business Case Questions</h3>
+                        </div>
+                        <p class="text-sm text-slate-400 mb-8 ml-11">These are the questions a <strong class="text-white">VP of Operations</strong> or <strong class="text-white">Chief Commercial Officer</strong> would actually ask in a meeting. Write production-quality queries for each.</p>
+
+                        <div class="space-y-4 ml-11">
+                            <div class="bg-white/5 backdrop-blur-sm rounded-xl px-6 py-5 border border-white/10 flex items-start gap-4">
+                                <span class="text-xs font-bold text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded flex-shrink-0 mt-0.5">BC1</span>
+                                <div>
+                                    <p class="text-sm text-white font-medium mb-1">What are the most profitable routes?</p>
+                                    <p class="text-xs text-slate-400">Calculate total revenue per route. Show top 10 routes with revenue, average load factor, average delay, and total passengers. The business wants to know which routes to prioritize.</p>
+                                </div>
+                            </div>
+                            <div class="bg-white/5 backdrop-blur-sm rounded-xl px-6 py-5 border border-white/10 flex items-start gap-4">
+                                <span class="text-xs font-bold text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded flex-shrink-0 mt-0.5">BC2</span>
+                                <div>
+                                    <p class="text-sm text-white font-medium mb-1">Which airports face maximum delays?</p>
+                                    <p class="text-xs text-slate-400">Analyze delays from both departure and arrival perspectives. The operations team needs data to decide where to allocate more ground staff and resources.</p>
+                                </div>
+                            </div>
+                            <div class="bg-white/5 backdrop-blur-sm rounded-xl px-6 py-5 border border-white/10 flex items-start gap-4">
+                                <span class="text-xs font-bold text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded flex-shrink-0 mt-0.5">BC3</span>
+                                <div>
+                                    <p class="text-sm text-white font-medium mb-1">Does higher ticket price correlate with fewer delays?</p>
+                                    <p class="text-xs text-slate-400">Compare average delays across price segments (Budget, Standard, Premium, Luxury). The pricing team wants to know if premium pricing is justified by better on-time performance.</p>
+                                </div>
+                            </div>
+                            <div class="bg-white/5 backdrop-blur-sm rounded-xl px-6 py-5 border border-white/10 flex items-start gap-4">
+                                <span class="text-xs font-bold text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded flex-shrink-0 mt-0.5">BC4</span>
+                                <div>
+                                    <p class="text-sm text-white font-medium mb-1">Which booking channel generates the most revenue?</p>
+                                    <p class="text-xs text-slate-400">Analyze total revenue, average ticket price, passenger volume, and average load factor per booking channel. The marketing team wants to know where to invest their budget.</p>
+                                </div>
+                            </div>
+                            <div class="bg-white/5 backdrop-blur-sm rounded-xl px-6 py-5 border border-white/10 flex items-start gap-4">
+                                <span class="text-xs font-bold text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded flex-shrink-0 mt-0.5">BC5</span>
+                                <div>
+                                    <p class="text-sm text-white font-medium mb-1">How does weather impact delays and revenue?</p>
+                                    <p class="text-xs text-slate-400">For each weather condition, calculate average delay, % of flights delayed, total revenue, and average load factor. The operations team needs evidence to justify weather disruption policies.</p>
+                                </div>
+                            </div>
+                            <div class="bg-white/5 backdrop-blur-sm rounded-xl px-6 py-5 border border-white/10 flex items-start gap-4">
+                                <span class="text-xs font-bold text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded flex-shrink-0 mt-0.5">BC6</span>
+                                <div>
+                                    <p class="text-sm text-white font-medium mb-1">Which routes should we consider cancelling or reducing frequency?</p>
+                                    <p class="text-xs text-slate-400">Find routes with low load factor (<60%), high average delay (>30 mins), and low revenue. These are the underperformers the network planning team wants to review.</p>
+                                </div>
+                            </div>
+                            <div class="bg-white/5 backdrop-blur-sm rounded-xl px-6 py-5 border border-white/10 flex items-start gap-4">
+                                <span class="text-xs font-bold text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded flex-shrink-0 mt-0.5">BC7</span>
+                                <div>
+                                    <p class="text-sm text-white font-medium mb-1">Create a monthly executive dashboard summary</p>
+                                    <p class="text-xs text-slate-400">For each month, show: total flights, total passengers, total revenue, average ticket price, average delay, % on-time flights, and average load factor — all in one query.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SUBMISSION SECTION ========== -->
+    <section id="submission" class="py-20 scroll-mt-20 bg-slate-50 border-t border-slate-200">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <div class="w-16 h-16 bg-slate-950 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <i data-lucide="send" class="w-8 h-8 text-white"></i>
+            </div>
+            <h2 class="font-serif text-3xl md:text-4xl tracking-tight mb-4">Submission Guidelines</h2>
+            <p class="text-slate-500 mb-10 max-w-lg mx-auto">Complete all exercises and submit your SQL queries as a single .sql file via WhatsApp.</p>
+
+            <div class="grid sm:grid-cols-3 gap-4 mb-10 text-left">
+                <div class="bg-white rounded-xl p-5 border border-slate-200">
+                    <div class="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center mb-3"><i data-lucide="file-code" class="w-4 h-4 text-emerald-600"></i></div>
+                    <h4 class="font-semibold text-sm mb-1">Save as .sql</h4>
+                    <p class="text-xs text-slate-500">Save all your queries in a single file named <code class="bg-slate-100 px-1 rounded">yourname_indigo.sql</code></p>
+                </div>
+                <div class="bg-white rounded-xl p-5 border border-slate-200">
+                    <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center mb-3"><i data-lucide="message-square" class="w-4 h-4 text-blue-600"></i></div>
+                    <h4 class="font-semibold text-sm mb-1">Send on WhatsApp</h4>
+                    <p class="text-xs text-slate-500">Send the file to <strong>+91 6364671786</strong> with your name and batch</p>
+                </div>
+                <div class="bg-white rounded-xl p-5 border border-slate-200">
+                    <div class="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center mb-3"><i data-lucide="clock" class="w-4 h-4 text-amber-600"></i></div>
+                    <h4 class="font-semibold text-sm mb-1">Deadline</h4>
+                    <p class="text-xs text-slate-500">Submit within <strong>5 days</strong> of the session date</p>
+                </div>
+            </div>
+
+            <a href="https://wa.me/916364671786?text=Hi%20Sir%2C%20I%20have%20completed%20the%20IndiGo%20SQL%20assignment.%20Here%20is%20my%20submission." target="_blank" class="inline-flex items-center gap-3 bg-green-500 hover:bg-green-400 text-white px-8 py-4 rounded-xl font-semibold text-sm transition-colors shadow-lg shadow-green-500/25">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                Submit Assignment on WhatsApp
+            </a>
+        </div>
+    </section>
+
+    <!-- Difficulty Legend -->
+    <section class="py-12 border-t border-slate-200">
+        <div class="max-w-4xl mx-auto px-6">
+            <h3 class="font-semibold text-sm text-center mb-6 text-slate-500 uppercase tracking-widest">Difficulty Legend</h3>
+            <div class="flex flex-wrap justify-center gap-6 text-sm">
+                <div class="flex items-center gap-2">
+                    <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                    <span class="text-slate-600"><strong>Beginner</strong> — Direct SELECT/WHERE</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div class="w-3 h-3 bg-amber-500 rounded-full"></div>
+                    <span class="text-slate-600"><strong>Intermediate</strong> — GROUP BY, aggregates</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                    <span class="text-slate-600"><strong>Advanced</strong> — HAVING, CASE WHEN, dates</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div class="w-3 h-3 bg-violet-500 rounded-full"></div>
+                    <span class="text-slate-600"><strong>Expert</strong> — Window functions</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 text-white py-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-8 mb-10">
+                <div>
+                    <a href="https://vizonis.com" target="_blank" class="flex items-center gap-3 mb-4">
+                        <div class="w-9 h-9 bg-white/10 rounded-lg flex items-center justify-center border border-white/20">
+                            <i data-lucide="graduation-cap" class="w-5 h-5 text-white"></i>
+                        </div>
+                        <span class="font-semibold">Vizonis Academy</span>
+                    </a>
+                    <p class="text-sm text-slate-400 leading-relaxed">Empowering students with industry-relevant data skills — SQL, Snowflake, Gen AI, and more.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-sm mb-4 text-slate-300">Quick Links</h4>
+                    <div class="space-y-2">
+                        <a href="https://vizonis.com" target="_blank" class="block text-sm text-slate-500 hover:text-white transition-colors">vizonis.com</a>
+                        <a href="#dataset" class="block text-sm text-slate-500 hover:text-white transition-colors">Download Dataset</a>
+                        <a href="#exercises" class="block text-sm text-slate-500 hover:text-white transition-colors">View Exercises</a>
+                        <a href="#submission" class="block text-sm text-slate-500 hover:text-white transition-colors">Submission Guidelines</a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-sm mb-4 text-slate-300">Contact</h4>
+                    <div class="space-y-3">
+                        <a href="https://wa.me/916364671786" target="_blank" class="flex items-center gap-3 text-sm text-slate-400 hover:text-white transition-colors">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                            +91 6364671786
+                        </a>
+                        <p class="text-sm text-slate-500 flex items-center gap-2">
+                            <i data-lucide="globe" class="w-4 h-4"></i>
+                            <a href="https://vizonis.com" target="_blank" class="hover:text-white transition-colors">vizonis.com</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-xs text-slate-500">© 2025 Vizonis Academy. All rights reserved.</p>
+                <p class="text-xs text-slate-600">IndiGo Flight Operations SQL Case Study — Assignment Material</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/916364671786?text=Hi%20Sir%2C%20I%20have%20a%20doubt%20in%20the%20IndiGo%20SQL%20assignment" target="_blank" class="whatsapp-float no-print" title="Ping on WhatsApp for doubts">
+        <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+
+    <script>
+        // Initialize Lucide
+        lucide.createIcons();
+
+        // Mobile menu
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            document.getElementById('mobileMenu').classList.toggle('hidden');
+        });
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', () => document.getElementById('mobileMenu').classList.add('hidden'));
+        });
+
+        // Accordion
+        function toggleAccordion(btn) {
+            const content = btn.nextElementSibling;
+            const icon = btn.querySelector('[data-lucide="chevron-down"]');
+            const isOpen = content.classList.contains('open');
+            content.classList.toggle('open');
+            if (icon) icon.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+        }
+
+        // Copy code
+        function copyCode(btn) {
+            const codeBlock = btn.parentElement;
+            const text = codeBlock.innerText.replace('Copy', '').trim();
+            navigator.clipboard.writeText(text).then(() => {
+                const orig = btn.textContent;
+                btn.textContent = 'Copied!';
+                btn.style.color = '#86efac';
+                setTimeout(() => { btn.textContent = orig; btn.style.color = '#94a3b8'; }, 2000);
+            });
+        }
+
+        // Progress bar
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrollTop / docHeight) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        });
+    </script>
+</body>
+</html>
