@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vizonis Academy | Best Power BI Training in Bangalore — Complete 8-Day Practical Course</title>
+<meta name="description" content="Join Vizonis Academy's #1 Power BI training in Bangalore. 8-day hands-on course covering Power Query, DAX, Visuals, Dashboards, Service, Gateway & Deployment. 500+ students placed. Enroll now!">
+<meta name="keywords" content="Power BI training Bangalore, Power BI course Bangalore, Power BI institute Bangalore, Power BI certification Bangalore, Power BI classes Bangalore, best Power BI training, Power BI online training, DAX training Bangalore, Power Query training, Power BI Service training, Power BI dashboard training, Vizonis Academy">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://analytics.vizonis.com/PowerBIDashboardServiceDay8">
+<meta property="og:title" content="Vizonis Academy — Best Power BI Training in Bangalore">
+<meta property="og:description" content="8-day practical Power BI course. Power Query, DAX, Visuals, Service, Gateway, Deployment. 500+ students trained. 95% placement rate.">
+<meta property="og:url" content="https://analytics.vizonis.com/PowerBIDashboardServiceDay8">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Vizonis Academy">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Vizonis Academy — Best Power BI Training in Bangalore">
+<meta name="twitter:description" content="8-day practical Power BI course. Power Query, DAX, Visuals, Service, Gateway, Deployment.">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script>
+tailwind.config={theme:{extend:{colors:{obsidian:'#050505',charcoal:'#0F1115',acid:'#CCFF00',silver:'#E1E1E1',cardDark:'#0A0C10'},fontFamily:{sans:['Space Grotesk','sans-serif'],display:['Syncopate','sans-serif']}}}}
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:'Space Grotesk',sans-serif;background:#050505;color:#E1E1E1;overflow-x:hidden}
+.noise-overlay{position:fixed;inset:0;z-index:9000;pointer-events:none;opacity:.04;background-image:url('https://grainy-gradients.vercel.app/noise.svg')}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#050505}::-webkit-scrollbar-thumb{background:#CCFF00;border-radius:3px}
+.gradient-text{background:linear-gradient(to bottom,#FFF 0%,#9ca3af 50%,#111827 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.acid-gradient-text{background:linear-gradient(135deg,#CCFF00,#88cc00,#CCFF00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.teal-gradient-text{background:linear-gradient(135deg,#2dd4bf,#14b8a6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.purple-gradient-text{background:linear-gradient(135deg,#c084fc,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.orange-gradient-text{background:linear-gradient(135deg,#fb923c,#f97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.glass-card{background:rgba(255,255,255,.03);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.08);transition:all .4s ease}
+.glass-card:hover{background:rgba(255,255,255,.06);border-color:rgba(204,255,0,.3);box-shadow:0 0 30px rgba(204,255,0,.08)}
+.glow-btn{position:relative;overflow:hidden;transition:all .3s ease}
+.glow-btn:hover{box-shadow:0 0 30px rgba(204,255,0,.4);transform:translateY(-2px)}
+.particle{position:absolute;border-radius:50%;background:#CCFF00;opacity:.15;animation:fp linear infinite}
+@keyframes fp{0%{transform:translateY(100vh) scale(0);opacity:0}10%{opacity:.15}90%{opacity:.15}100%{transform:translateY(-100px) scale(1);opacity:0}}
+.grid-bg{background-image:linear-gradient(rgba(204,255,0,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(204,255,0,.03) 1px,transparent 1px);background-size:60px 60px}
+.section-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(204,255,0,.3),transparent)}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:4px 14px;border-radius:9999px;font-size:.75rem;border:1px solid rgba(204,255,0,.3);background:rgba(204,255,0,.08);color:#CCFF00;font-weight:600}
+.badge-teal{border-color:rgba(45,212,191,.3);background:rgba(45,212,191,.08);color:#2dd4bf}
+.reveal{opacity:0;transform:translateY(40px)}
+.icon-box{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+@keyframes of{0%{transform:translate(0,0) scale(1)}100%{transform:30px,-40px scale(1.2)}}
+.whatsapp-float{position:fixed;bottom:30px;right:30px;z-index:8000;width:60px;height:60px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.4);transition:all .3s;cursor:pointer;text-decoration:none}
+.whatsapp-float:hover{transform:scale(1.1);box-shadow:0 6px 30px rgba(37,211,102,.6)}
+.course-card{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:16px;overflow:hidden;transition:all .5s;position:relative}
+.course-card:hover{border-color:rgba(204,255,0,.25);transform:translateY(-4px);box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.course-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,rgba(204,255,0,.4),transparent);opacity:0;transition:opacity .4s}
+.course-card:hover::before{opacity:1}
+.day-number{font-family:'Syncopate',sans-serif;font-size:3rem;font-weight:700;line-height:1;opacity:.08;position:absolute;top:12px;right:16px}
+.step-box{background:rgba(204,255,0,.04);border:1px solid rgba(204,255,0,.15);border-radius:12px;padding:16px 20px}
+.step-box .step-l{font-size:.65rem;text-transform:uppercase;letter-spacing:.15em;color:#CCFF00;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.vis-mock{background:#0A0C10;border:1px solid rgba(255,255,255,.08);border-radius:12px;overflow:hidden}
+.vis-titlebar{background:rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.06);padding:10px 16px;font-size:.7rem;color:#6b7280;display:flex;align-items:center;gap:8px}
+@keyframes pulseGlow{0%,100%{box-shadow:0 0 20px rgba(204,255,0,.1)}50%{box-shadow:0 0 40px rgba(204,255,0,.25)}}
+.pulse-glow{animation:pulseGlow 3s ease-in-out infinite}
+@keyframes countUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body class="grid-bg">
+<div class="noise-overlay"></div>
+<div id="particles" class="fixed inset-0 z-0 pointer-events-none overflow-hidden"></div>
+
+<!-- ===================== NAVIGATION ===================== -->
+<nav class="fixed top-0 left-0 right-0 z-[7000] bg-obsidian/80 border-b border-white/5 backdrop-blur-md" role="navigation" aria-label="Main navigation">
+<div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+<a href="https://analytics.vizonis.com/PowerBIDashboardServiceDay8" class="font-display text-xl font-bold tracking-tight" aria-label="Vizonis Academy Home"><span class="text-acid">V</span>IZONIS</a>
+<div class="hidden lg:flex items-center gap-1 overflow-x-auto">
+<a href="#curriculum" class="text-xs px-3 py-2 rounded-lg text-gray-500 hover:text-acid hover:bg-acid/5 transition-all whitespace-nowrap">Curriculum</a>
+<a href="#why-vizonis" class="text-xs px-3 py-2 rounded-lg text-gray-500 hover:text-acid hover:bg-acid/5 transition-all whitespace-nowrap">Why Us</a>
+<a href="#tools" class="text-xs px-3 py-2 rounded-lg text-gray-500 hover:text-acid hover:bg-acid/5 transition-all whitespace-nowrap">Tools</a>
+<a href="#who" class="text-xs px-3 py-2 rounded-lg text-gray-500 hover:text-acid hover:bg-acid/5 transition-all whitespace-nowrap">Who</a>
+<a href="#placement" class="text-xs px-3 py-2 rounded-lg text-gray-500 hover:text-acid hover:bg-acid/5 transition-all whitespace-nowrap">Placements</a>
+<a href="#faq" class="text-xs px-3 py-2 rounded-lg text-gray-500 hover:text-acid hover:bg-acid/5 transition-all whitespace-nowrap">FAQ</a>
+</div>
+<a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20want%20to%20enroll%20for%20Power%20BI%20training%20in%20Bangalore." target="_blank" class="glow-btn bg-acid text-obsidian px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest whitespace-nowrap">Enroll Now</a>
+</div>
+</nav>
+
+<!-- ===================== HERO ===================== -->
+<header class="relative min-h-screen flex flex-col justify-center items-center pt-20 overflow-hidden">
+<div class="hero-orb w-[500px] h-[500px] bg-acid top-1/4 -left-40" style="position:absolute;border-radius:50%;filter:blur(120px);opacity:.2;animation:of 8s ease-in-out infinite alternate"></div>
+<div class="hero-orb w-[400px] h-[400px] bg-teal-500 bottom-1/4 -right-32" style="position:absolute;border-radius:50%;filter:blur(120px);opacity:.15;animation:of 8s ease-in-out infinite alternate;animation-delay:-5s"></div>
+<div class="relative z-10 text-center px-6 max-w-6xl mx-auto">
+<div class="badge mb-6 mx-auto w-fit"><i class="fas fa-chart-bar"></i> #1 Power BI Training in Bangalore</div>
+<h1 class="font-display text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold leading-[.9] tracking-tighter mb-6">
+<span class="gradient-text block">MICROSOFT</span>
+<span class="acid-gradient-text block mt-2">POWER BI</span>
+<span class="gradient-text block mt-2 text-xl sm:text-2xl md:text-3xl lg:text-4xl">COMPLETE TRAINING COURSE</span>
+</h1>
+<p class="text-gray-400 text-base md:text-lg lg:text-xl max-w-3xl mx-auto leading-relaxed mb-4">8 days of hands-on, project-based training — from your first connection to deploying enterprise dashboards with Dev/UAT/Prod pipelines.</p>
+<p class="text-acid font-semibold text-sm md:text-base mb-10">Start learning now — every lesson is free to read, online, right here.</p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+<a href="https://analytics.vizonis.com/Powerbigettingstartedknoweverything" class="glow-btn bg-acid text-obsidian px-10 py-4 rounded-full text-sm font-bold uppercase tracking-widest">Start Day 0 — Getting Started <i class="fas fa-arrow-right ml-2"></i></a>
+<a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20want%20to%20enroll%20for%20Power%20BI%20training." target="_blank" class="glow-btn border border-white/20 text-white px-10 py-4 rounded-full text-sm font-bold uppercase tracking-widest hover:border-acid hover:text-acid"><i class="fab fa-whatsapp mr-2"></i> Talk to Us</a>
+</div>
+<p class="text-gray-600 text-xs"><i class="fas fa-map-marker-alt mr-1"></i> Bangalore — Marathahalli, Whitefield, Electronic City, BTM, Koramangala & Online</p>
+</div>
+<!-- Scroll Indicator -->
+<div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
+<span class="text-gray-600 text-xs uppercase tracking-widest">Scroll</span>
+<i class="fas fa-chevron-down text-gray-600 text-xs"></i>
+</div>
+</header>
+
+<!-- ===================== TRUST STATS ===================== -->
+<section class="py-16 px-6 border-y border-white/5">
+<div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 reveal">
+<div class="text-center">
+<div class="font-display text-3xl md:text-4xl font-bold text-acid mb-1">500+</div>
+<div class="text-xs text-gray-500 uppercase tracking-widest">Students Trained</div>
+</div>
+<div class="text-center">
+<div class="font-display text-3xl md:text-4xl font-bold text-acid mb-1">95%</div>
+<div class="text-xs text-gray-500 uppercase tracking-widest">Placement Rate</div>
+</div>
+<div class="text-center">
+<div class="font-display text-3xl md:text-4xl font-bold text-acid mb-1">8 Days</div>
+<div class="text-xs text-gray-500 uppercase tracking-widest">Intensive Curriculum</div>
+</div>
+<div class="text-center">
+<div class="font-display text-3xl md:text-4xl font-bold text-acid mb-1">4.9★</div>
+<div class="text-xs text-gray-500 uppercase tracking-widest">Google Rating</div>
+</div>
+</div>
+</section>
+
+<!-- ===================== COMPLETE CURRICULUM ===================== -->
+<section id="curriculum" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge mb-4 mx-auto w-fit"><i class="fas fa-road"></i> Full Course Path</span>
+<h2 class="font-display text-3xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">COMPLETE POWER BI CURRICULUM</h2>
+<p class="text-gray-400 text-base md:text-lg max-w-3xl mx-auto">9 chapters. 8 training days. One linear path from zero to job-ready. Click any day to start learning immediately — free, online, no signup required.</p>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 reveal">
+
+<!-- Day 0: Getting Started -->
+<a href="https://analytics.vizonis.com/Powerbigettingstartedknoweverything" class="course-card p-6 block" aria-label="Day 0: Getting Started — Know Everything">
+<span class="day-number">00</span>
+<div class="flex items-center gap-3 mb-4 relative z-10">
+<div class="icon-box bg-acid/10 text-acid"><i class="fas fa-rocket"></i></div>
+<div>
+<span class="text-xs text-acid font-bold uppercase tracking-widest">Pre-Course</span>
+<h3 class="text-lg font-bold text-white leading-tight">Getting Started — Know Everything</h3>
+</div>
+</div>
+<p class="text-sm text-gray-500 mb-4 relative z-10">What is Power BI, why companies use it, installation, Power BI ecosystem (Desktop, Service, Mobile, Report Server), license types, and your first .pbix file.</p>
+<div class="flex flex-wrap gap-2 relative z-10">
+<span class="text-xs px-2 py-1 rounded bg-acid/10 text-acid">Installation</span>
+<span class="text-xs px-2 py-1 rounded bg-acid/10 text-acid">Ecosystem</span>
+<span class="text-xs px-2 py-1 rounded bg-acid/10 text-acid">Licenses</span>
+<span class="text-xs px-2 py-1 rounded bg-acid/10 text-acid">First Report</span>
+</div>
+<div class="flex items-center gap-2 mt-4 text-xs text-acid font-semibold relative z-10">Start Learning <i class="fas fa-arrow-right"></i></div>
+</a>
+
+<!-- Day 1: Power Query Training Day 1 -->
+<a href="https://analytics.vizonis.com/PowerBIPowerQueryTrainingDay1" class="course-card p-6 block" aria-label="Day 1: Power Query Training">
+<span class="day-number">01</span>
+<div class="flex items-center gap-3 mb-4 relative z-10">
+<div class="icon-box bg-teal-500/10 text-teal-400"><i class="fas fa-database"></i></div>
+<div>
+<span class="text-xs text-teal-400 font-bold uppercase tracking-widest">Day 1</span>
+<h3 class="text-lg font-bold text-white leading-tight">Power Query Training — Day 1</h3>
+</div>
+</div>
+<p class="text-sm text-gray-500 mb-4 relative z-10">Connect to data sources (SQL Server, Excel, Web, SharePoint, CSV), understand Applied Steps, basic transformations: remove columns, filter rows, rename, change types.</p>
+<div class="flex flex-wrap gap-2 relative z-10">
+<span class="text-xs px-2 py-1 rounded bg-teal-500/10 text-teal-400">Data Sources</span>
+<span class="text-xs px-2 py-1 rounded bg-teal-500/10 text-teal-400">Applied Steps</span>
+<span class="text-xs px-2 py-1 rounded bg-teal-500/10 text-teal-400">Transformations</span>
+</div>
+<div class="flex items-center gap-2 mt-4 text-xs text-teal-400 font-semibold relative z-10">Start Learning <i class="fas fa-arrow-right"></i></div>
+</a>
+
+<!-- Day 2: Power Query Training Day 2 -->
+<a href="https://analytics.vizonis.com/PowerBIPowerQueryTrainingDay2" class="course-card p-6 block" aria-label="Day 2: Power Query Training">
+<span class="day-number">02</span>
+<div class="flex items-center gap-3 mb-4 relative z-10">
+<div class="icon-box bg-teal-500/10 text-teal-400"><i class="fas fa-code-merge"></i></div>
+<div>
+<span class="text-xs text-teal-400 font-bold uppercase tracking-widest">Day 2</span>
+<h3 class="text-lg font-bold text-white leading-tight">Power Query Training — Day 2</h3>
+</div>
+</div>
+<p class="text-sm text-gray-500 mb-4 relative z-10">Merge Queries (all join types), Append Queries, Pivot/Unpivot, Split Column, Replace Values, Custom Columns with M language basics, Query Dependencies.</p>
+<div class="flex flex-wrap gap-2 relative z-10">
+<span class="text-xs px-2 py-1 rounded bg-teal-500/10 text-teal-400">Merge</span>
+<span class="text-xs px-2 py-1 rounded bg-teal-500/10 text-teal-400">Append</span>
+<span class="text-xs px-2 py-1 rounded bg-teal-500/10 text-teal-400">Pivot</span>
+<span class="text-xs px-2 py-1 rounded bg-teal-500/10 text-teal-400">Custom M</span>
+</div>
+<div class="flex items-center gap-2 mt-4 text-xs text-teal-400 font-semibold relative z-10">Start Learning <i class="fas fa-arrow-right"></i></div>
+</a>
+
+<!-- Day 3: Power Query Training Day 3 -->
+<a href="https://analytics.vizonis.com/PowerBIPowerQueryTrainingDay3" class="course-card p-6 block" aria-label="Day 3: Power Query Training">
+<span class="day-number">03</span>
+<div class="flex items-center gap-3 mb-4 relative z-10">
+<div class="icon-box bg-teal-500/10 text-teal-400"><i class="fas fa-sitemap"></i></div>
+<div>
+<span class="text-xs text-teal-400 font-bold uppercase tracking-widest">Day 3</span>
+<h3 class="text-lg font-bold text-white leading-tight">Power Query Training — Day 3</h3>
+</div>
+</div>
+<p class="text-sm text-gray-500 mb-4 relative z-10">Star Schema design, Dimension & Fact tables, relationships in Power Query, Data Modeling fundamentals, Group By, Duplicate/Reference queries, query folding concepts.</p>
+<div class="flex flex-wrap gap-2 relative z-10">
+<span class="text-xs px-2 py-1 rounded bg-teal-500/10 text-teal-400">Star Schema</span>
+<span class="text-xs px-2 py-1 rounded bg-teal-500/10 text-teal-400">Dim & Fact</span>
+<span class="text-xs px-2 py-1 rounded bg-teal-500/10 text-teal-400">Group By</span>
+<span class="text-xs px-2 py-1 rounded bg-teal-500/10 text-teal-400">Folding</span>
+</div>
+<div class="flex items-center gap-2 mt-4 text-xs text-teal-400 font-semibold relative z-10">Start Learning <i class="fas fa-arrow-right"></i></div>
+</a>
+
+<!-- Day 4: DAX Day 4 -->
+<a href="https://analytics.vizonis.com/PowerBIDAXDay4" class="course-card p-6 block" aria-label="Day 4: DAX Training">
+<span class="day-number">04</span>
+<div class="flex items-center gap-3 mb-4 relative z-10">
+<div class="icon-box bg-purple-500/10 text-purple-400"><i class="fas fa-calculator"></i></div>
+<div>
+<span class="text-xs text-purple-400 font-bold uppercase tracking-widest">Day 4</span>
+<h3 class="text-lg font-bold text-white leading-tight">DAX Training — Day 4</h3>
+</div>
+</div>
+<p class="text-sm text-gray-500 mb-4 relative z-10">DAX fundamentals: calculated columns vs measures, aggregation functions (SUM, AVERAGE, COUNTX, DIVIDE), EVALUATE context, row context vs filter context, basic CALCULATE.</p>
+<div class="flex flex-wrap gap-2 relative z-10">
+<span class="text-xs px-2 py-1 rounded bg-purple-500/10 text-purple-400">Measures</span>
+<span class="text-xs px-2 py-1 rounded bg-purple-500/10 text-purple-400">CALCULATE</span>
+<span class="text-xs px-2 py-1 rounded bg-purple-500/10 text-purple-400">Context</span>
+<span class="text-xs px-2 py-1 rounded bg-purple-500/10 text-purple-400">Aggregations</span>
+</div>
+<div class="flex items-center gap-2 mt-4 text-xs text-purple-400 font-semibold relative z-10">Start Learning <i class="fas fa-arrow-right"></i></div>
+</a>
+
+<!-- Day 5: DAX Day 5 -->
+<a href="https://analytics.vizonis.com/PowerBIDAXDay5" class="course-card p-6 block" aria-label="Day 5: DAX Advanced">
+<span class="day-number">05</span>
+<div class="flex items-center gap-3 mb-4 relative z-10">
+<div class="icon-box bg-purple-500/10 text-purple-400"><i class="fas fa-brain"></i></div>
+<div>
+<span class="text-xs text-purple-400 font-bold uppercase tracking-widest">Day 5</span>
+<h3 class="text-lg font-bold text-white leading-tight">DAX Training — Day 5</h3>
+</div>
+</div>
+<p class="text-sm text-gray-500 mb-4 relative z-10">Advanced DAX: CALCULATE deep-dive, FILTER, ALL, ALLEXCEPT, time intelligence (YTD, QTD, MTD, Same Period Last Year), RANKX, running totals, dynamic grouping with SWITCH.</p>
+<div class="flex flex-wrap gap-2 relative z-10">
+<span class="text-xs px-2 py-1 rounded bg-purple-500/10 text-purple-400">Time Intel</span>
+<span class="text-xs px-2 py-1 rounded bg-purple-500/10 text-purple-400">RANKX</span>
+<span class="text-xs px-2 py-1 rounded bg-purple-500/10 text-purple-400">Advanced CALC</span>
+<span class="text-xs px-2 py-1 rounded bg-purple-500/10 text-purple-400">SWITCH</span>
+</div>
+<div class="flex items-center gap-2 mt-4 text-xs text-purple-400 font-semibold relative z-10">Start Learning <i class="fas fa-arrow-right"></i></div>
+</a>
+
+<!-- Day 6: Visuals Day 6 -->
+<a href="https://analytics.vizonis.com/PowerBIVisualsDay6" class="course-card p-6 block" aria-label="Day 6: Power BI Visuals">
+<span class="day-number">06</span>
+<div class="flex items-center gap-3 mb-4 relative z-10">
+<div class="icon-box bg-acid/10 text-acid"><i class="fas fa-chart-pie"></i></div>
+<div>
+<span class="text-xs text-acid font-bold uppercase tracking-widest">Day 6</span>
+<h3 class="text-lg font-bold text-white leading-tight">Power BI Visuals — Day 6</h3>
+</div>
+</div>
+<p class="text-sm text-gray-500 mb-4 relative z-10">25+ chart types: Table, Matrix, Bar, Line, Area, Combo, Pie, Donut, Treemap, Scatter, Ribbon, Waterfall, Funnel, KPI cards. Formatting, conditional formatting, data bars, icons, custom tooltips.</p>
+<div class="flex flex-wrap gap-2 relative z-10">
+<span class="text-xs px-2 py-1 rounded bg-acid/10 text-acid">25+ Charts</span>
+<span class="text-xs px-2 py-1 rounded bg-acid/10 text-acid">Formatting</span>
+<span class="text-xs px-2 py-1 rounded bg-acid/10 text-acid">Cond. Format</span>
+<span class="text-xs px-2 py-1 rounded bg-acid/10 text-acid">Tooltips</span>
+</div>
+<div class="flex items-center gap-2 mt-4 text-xs text-acid font-semibold relative z-10">Start Learning <i class="fas fa-arrow-right"></i></div>
+</a>
+
+<!-- Day 7: Dashboard & Service Day 7 -->
+<a href="https://analytics.vizonis.com/PowerBIDashboardServiceDay7" class="course-card p-6 block" aria-label="Day 7: Dashboard & Power BI Service">
+<span class="day-number">07</span>
+<div class="flex items-center gap-3 mb-4 relative z-10">
+<div class="icon-box bg-orange-500/10 text-orange-400"><i class="fas fa-tachometer-alt"></i></div>
+<div>
+<span class="text-xs text-orange-400 font-bold uppercase tracking-widest">Day 7</span>
+<h3 class="text-lg font-bold text-white leading-tight">Dashboard & Power BI Service — Day 7</h3>
+</div>
+</div>
+<p class="text-sm text-gray-500 mb-4 relative z-10">Dashboard design principles, UI/UX, target audience, Bookmarks, Drill-through, Parameters, Power BI Service UI, Workspaces, Publish, View, Properties, Download (PDF/PPT/Excel), Subscriptions.</p>
+<div class="flex flex-wrap gap-2 relative z-10">
+<span class="text-xs px-2 py-1 rounded bg-orange-500/10 text-orange-400">Dashboards</span>
+<span class="text-xs px-2 py-1 rounded bg-orange-500/10 text-orange-400">Bookmarks</span>
+<span class="text-xs px-2 py-1 rounded bg-orange-500/10 text-orange-400">Drill-through</span>
+<span class="text-xs px-2 py-1 rounded bg-orange-500/10 text-orange-400">Service</span>
+</div>
+<div class="flex items-center gap-2 mt-4 text-xs text-orange-400 font-semibold relative z-10">Start Learning <i class="fas fa-arrow-right"></i></div>
+</a>
+
+<!-- Day 8: Dashboard & Service Day 8 -->
+<a href="https://analytics.vizonis.com/PowerBIDashboardServiceDay8" class="course-card p-6 block pulse-glow" style="border-color:rgba(204,255,0,.15)" aria-label="Day 8: Service Deep Dive, Gateway & Deployment">
+<span class="day-number">08</span>
+<div class="flex items-center gap-3 mb-4 relative z-10">
+<div class="icon-box bg-acid/10 text-acid"><i class="fas fa-server"></i></div>
+<div>
+<span class="text-xs text-acid font-bold uppercase tracking-widest">Day 8</span>
+<h3 class="text-lg font-bold text-white leading-tight">Service Deep Dive, Gateway & Deployment</h3>
+</div>
+</div>
+<p class="text-sm text-gray-500 mb-4 relative z-10">Semantic model refresh, Direct Query, Live Connect, Gateway installation & setup, Pro vs Premium (P1/P2/P3), Fabric, Capacities & Admin roles, Dev/UAT/Prod environments, Deployment Pipelines, Apps, Alerts, RLS.</p>
+<div class="flex flex-wrap gap-2 relative z-10">
+<span class="text-xs px-2 py-1 rounded bg-acid/10 text-acid">Gateway</span>
+<span class="text-xs px-2 py-1 rounded bg-acid/10 text-acid">Pipelines</span>
+<span class="text-xs px-2 py-1 rounded bg-acid/10 text-acid">Dev/UAT/Prod</span>
+<span class="text-xs px-2 py-1 rounded bg-acid/10 text-acid">Apps</span>
+<span class="text-xs px-2 py-1 rounded bg-acid/10 text-acid">RLS</span>
+</div>
+<div class="flex items-center gap-2 mt-4 text-xs text-acid font-semibold relative z-10">You are here <i class="fas fa-arrow-right"></i></div>
+</a>
+
+</div>
+
+<!-- Course Flow Arrow -->
+<div class="flex justify-center mt-10 reveal">
+<div class="flex items-center gap-3 px-6 py-3 rounded-full" style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06)">
+<span class="text-xs text-gray-500">Day 0</span>
+<i class="fas fa-arrow-right text-gray-600 text-xs"></i>
+<span class="text-xs text-teal-400">Days 1-3</span>
+<i class="fas fa-arrow-right text-gray-600 text-xs"></i>
+<span class="text-xs text-purple-400">Days 4-5</span>
+<i class="fas fa-arrow-right text-gray-600 text-xs"></i>
+<span class="text-xs text-acid">Days 6-8</span>
+<i class="fas fa-arrow-right text-gray-600 text-xs"></i>
+<span class="text-xs text-white font-bold">Job Ready</span>
+</div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== WHAT YOU MASTER — TOOLS ===================== -->
+<section id="tools" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge badge-teal mb-4 mx-auto w-fit"><i class="fas fa-tools"></i> Tools & Skills</span>
+<h2 class="font-display text-3xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">WHAT YOU WILL MASTER</h2>
+<p class="text-gray-400 text-base md:text-lg max-w-3xl mx-auto">Every tool, every technology a Power BI professional needs — covered in 8 days</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 reveal">
+<div class="glass-card rounded-xl p-5 text-center">
+<div class="text-2xl mb-3">📊</div>
+<p class="text-xs text-white font-semibold">Power BI Desktop</p>
+<p class="text-xs text-gray-600 mt-1">Build & Model</p>
+</div>
+<div class="glass-card rounded-xl p-5 text-center">
+<div class="text-2xl mb-3">🔌</div>
+<p class="text-xs text-white font-semibold">Power Query (M)</p>
+<p class="text-xs text-gray-600 mt-1">ETL & Transform</p>
+</div>
+<div class="glass-card rounded-xl p-5 text-center">
+<div class="text-2xl mb-3">🧮</div>
+<p class="text-xs text-white font-semibold">DAX</p>
+<p class="text-xs text-gray-600 mt-1">Calculations</p>
+</div>
+<div class="glass-card rounded-xl p-5 text-center">
+<div class="text-2xl mb-3">☁️</div>
+<p class="text-xs text-white font-semibold">Power BI Service</p>
+<p class="text-xs text-gray-600 mt-1">Cloud & Share</p>
+</div>
+<div class="glass-card rounded-xl p-5 text-center">
+<div class="text-2xl mb-3">🚪</div>
+<p class="text-xs text-white font-semibold">Data Gateway</p>
+<p class="text-xs text-gray-600 mt-1">On-Prem Bridge</p>
+</div>
+<div class="glass-card rounded-xl p-5 text-center">
+<div class="text-2xl mb-3">🔄</div>
+<p class="text-xs text-white font-semibold">Deploy Pipelines</p>
+<p class="text-xs text-gray-600 mt-1">Dev → Prod</p>
+</div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== WHY VIZONIS ===================== -->
+<section id="why-vizonis" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge mb-4 mx-auto w-fit"><i class="fas fa-crown"></i> Why Vizonis</span>
+<h2 class="font-display text-3xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">WHY VIZONIS ACADEMY?</h2>
+<p class="text-gray-400 text-base md:text-lg max-w-3xl mx-auto">Not another institute that reads slides for 3 months. This is different.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto reveal">
+<div class="glass-card rounded-2xl p-8 border-l-4 border-l-acid">
+<div class="flex items-center gap-3 mb-4">
+<div class="icon-box bg-acid/10 text-acid"><i class="fas fa-laptop-code"></i></div>
+<h3 class="font-bold text-white text-lg">100% Practical — Zero Theory Dumping</h3>
+</div>
+<p class="text-sm text-gray-400">Every single class is live Power BI on your screen. No slides. No reading from PDFs. You build, break, fix, and learn by doing — exactly how you'll work on the job.</p>
+</div>
+<div class="glass-card rounded-2xl p-8 border-l-4 border-l-teal-400">
+<div class="flex items-center gap-3 mb-4">
+<div class="icon-box bg-teal-500/10 text-teal-400"><i class="fas fa-database"></i></div>
+<h3 class="font-bold text-white text-lg">Real Datasets, Not Toy Examples</h3>
+</div>
+<p class="text-sm text-gray-400">We don't use Adventure Works or 100-row sample files. You work with 2M+ row HR datasets, real SQL Server databases, live APIs — the kind of data you'll see in actual enterprise projects.</p>
+</div>
+<div class="glass-card rounded-2xl p-8 border-l-4 border-l-purple-400">
+<div class="flex items-center gap-3 mb-4">
+<div class="icon-box bg-purple-500/10 text-purple-400"><i class="fas fa-briefcase"></i></div>
+<h3 class="font-bold text-white text-lg">Resume + Portfolio + Interview Prep</h3>
+</div>
+<p class="text-sm text-gray-400">Training doesn't end with DAX. We build your resume, create your Power BI portfolio with published dashboards, conduct mock interviews, and prepare you for every question a hiring manager will ask.</p>
+</div>
+<div class="glass-card rounded-2xl p-8 border-l-4 border-l-orange-400">
+<div class="flex items-center gap-3 mb-4">
+<div class="icon-box bg-orange-500/10 text-orange-400"><i class="fas fa-users"></i></div>
+<h3 class="font-bold text-white text-lg">Small Batches — Max 10 Students</h3>
+</div>
+<p class="text-sm text-gray-400">No getting lost in a crowd of 60. Every student gets personal attention, real-time doubt solving, and code reviews. Your instructor knows your name, your level, and your weak areas.</p>
+</div>
+<div class="glass-card rounded-2xl p-8 border-l-4 border-l-red-400">
+<div class="flex items-center gap-3 mb-4">
+<div class="icon-box bg-red-500/10 text-red-400"><i class="fas fa-infinity"></i></div>
+<h3 class="font-bold text-white text-lg">Lifetime Access to All Content</h3>
+</div>
+<p class="text-sm text-gray-400">Every lesson on this website is yours forever. Revisit Power Query after 6 months, brush up on DAX before an interview — your learning never expires because the content is always here.</p>
+</div>
+<div class="glass-card rounded-2xl p-8 border-l-4 border-l-yellow-400">
+<div class="flex items-center gap-3 mb-4">
+<div class="icon-box bg-yellow-500/10 text-yellow-400"><i class="fas fa-calendar-alt"></i></div>
+<h3 class="font-bold text-white text-lg">Weekend Batches for Working Professionals</h3>
+</div>
+<p class="text-sm text-gray-400">Saturday & Sunday slots designed for people who already have a job. Keep earning while you upskill. No weekday conflicts, no career breaks needed.</p>
+</div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== WHO IS THIS FOR ===================== -->
+<section id="who" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge badge-purple mb-4 mx-auto w-fit"><i class="fas fa-user-friends"></i> Who Should Join</span>
+<h2 class="font-display text-3xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">IS THIS COURSE FOR YOU?</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto reveal">
+<div class="glass-card rounded-2xl p-6 text-center">
+<div class="w-16 h-16 rounded-full bg-acid/10 flex items-center justify-center mx-auto mb-4"><i class="fas fa-user-graduate text-acid text-xl"></i></div>
+<h3 class="font-bold text-white mb-2 text-sm">Freshers</h3>
+<p class="text-xs text-gray-500">Zero experience needed. Start from "What is Power BI?" and end with a job-ready portfolio.</p>
+</div>
+<div class="glass-card rounded-2xl p-6 text-center">
+<div class="w-16 h-16 rounded-full bg-purple-500/10 flex items-center justify-center mx-auto mb-4"><i class="fas fa-user-tie text-purple-400 text-xl"></i></div>
+<h3 class="font-bold text-white mb-2 text-sm">Working Professionals</h3>
+<p class="text-xs text-gray-500">Excel users, QA engineers, IT support — transition into a high-paying data/BI role in 8 days.</p>
+</div>
+<div class="glass-card rounded-2xl p-6 text-center">
+<div class="w-16 h-16 rounded-full bg-teal-500/10 flex items-center justify-center mx-auto mb-4"><i class="fas fa-chart-line text-teal-400 text-xl"></i></div>
+<h3 class="font-bold text-white mb-2 text-sm">Data Analysts</h3>
+<p class="text-xs text-gray-500">Already using Excel/Tableau? Add Power BI to your toolkit and double your job opportunities.</p>
+</div>
+<div class="glass-card rounded-2xl p-6 text-center">
+<div class="w-16 h-16 rounded-full bg-orange-500/10 flex items-center justify-center mx-auto mb-4"><i class="fas fa-building text-orange-400 text-xl"></i></div>
+<h3 class="font-bold text-white mb-2 text-sm">Managers & Leads</h3>
+<p class="text-xs text-gray-500">Understand what your BI team builds. Speak their language. Make better data-driven decisions.</p>
+</div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== PLACEMENT TRACK RECORD ===================== -->
+<section id="placement" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge mb-4 mx-auto w-fit"><i class="fas fa-trophy"></i> Placements</span>
+<h2 class="font-display text-3xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">PLACEMENT TRACK RECORD</h2>
+<p class="text-gray-400 text-base md:text-lg max-w-3xl mx-auto">Our students don't just learn — they get hired. Here's what the numbers look like.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-12 reveal">
+<div class="vis-mock text-center p-8" style="border-color:rgba(204,255,0,.15)">
+<div class="font-display text-5xl font-bold text-acid mb-2">95%</div>
+<p class="text-sm text-gray-400">Placement Rate within 60 days</p>
+</div>
+<div class="vis-mock text-center p-8" style="border-color:rgba(45,212,191,.15)">
+<div class="font-display text-5xl font-bold text-teal-400 mb-2">8.5 LPA</div>
+<p class="text-sm text-gray-400">Average Starting Package</p>
+</div>
+<div class="vis-mock text-center p-8" style="border-color:rgba(192,132,252,.15)">
+<div class="font-display text-5xl font-bold text-purple-400 mb-2">15 LPA</div>
+<p class="text-sm text-gray-400">Highest Package (2024)</p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto reveal">
+<div class="step-box"><div class="step-l"><i class="fas fa-building"></i> Companies That Hired Our Students</div>
+<p class="text-sm text-gray-400">Our alumni work at <span class="text-white font-bold">Accenture, Deloitte, TCS, Infosys, Wipro, Cognizant, Amazon, Wells Fargo, Goldman Sachs, HP, Dell, Capgemini</span> and 50+ other companies across Bangalore, Hyderabad, Pune, and remote positions.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-handshake"></i> How Placement Works</div>
+<p class="text-sm text-gray-400"><span class="text-acid font-bold">Week 1-2:</span> Resume building + portfolio creation. <span class="text-acid font-bold">Week 3-4:</span> Mock interviews + DAX challenges. <span class="text-acid font-bold">Week 4+:</span> Direct referrals to our 50+ hiring partner companies. We don't stop until you're placed.</p></div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== FAQ ===================== -->
+<section id="faq" class="py-28 px-6">
+<div class="max-w-5xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge badge-teal mb-4 mx-auto w-fit"><i class="fas fa-question-circle"></i> FAQ</span>
+<h2 class="font-display text-3xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">FREQUENTLY ASKED QUESTIONS</h2>
+</div>
+<div class="space-y-4 reveal">
+<div class="qa-item" style="border:1px solid rgba(255,255,255,.06);border-radius:12px;overflow:hidden">
+<div class="qa-q" style="padding:16px 20px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(255,255,255,.02)" onclick="this.parentElement.classList.toggle('open');this.querySelector('.qa-chevron').style.transform=this.parentElement.classList.contains('open')?'rotate(180deg)':'rotate(0)'">
+<span class="text-sm text-white font-semibold">Do I need any prior experience to join this Power BI course?</span>
+<i class="fas fa-chevron-down qa-chevron" style="transition:transform .3s;flex-shrink:0;color:#6b7280"></i>
+</div>
+<div class="qa-a" style="padding:0 20px 16px;display:none"><p class="text-sm text-gray-400">No. This course starts from absolute zero — "What is Power BI?" on Day 0. You don't need SQL, Python, or any programming background. If you know how to use Excel, that's a bonus but not required. The curriculum is designed for complete beginners and takes you to job-ready level in 8 days.</p></div>
+</div>
+<div class="qa-item" style="border:1px solid rgba(255,255,255,.06);border-radius:12px;overflow:hidden">
+<div class="qa-q" style="padding:16px 20px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(255,255,255,.02)" onclick="this.parentElement.classList.toggle('open');this.querySelector('.qa-chevron').style.transform=this.parentElement.classList.contains('open')?'rotate(180deg)':'rotate(0)'">
+<span class="text-sm text-white font-semibold">Is the training online or classroom?</span>
+<i class="fas fa-chevron-down qa-chevron" style="transition:transform .3s;flex-shrink:0;color:#6b7280"></i>
+</div>
+<div class="qa-a" style="padding:0 20px 16px;display:none"><p class="text-sm text-gray-400">Both. We offer <span class="text-acid font-bold">weekend classroom batches in Bangalore</span> (Marathahalli) and <span class="text-acid font-bold">live online batches</span> via Zoom. Online students get the exact same experience — screen sharing, doubt solving, hands-on labs. All sessions are recorded for lifetime access.</p></div>
+</div>
+<div class="qa-item" style="border:1px solid rgba(255,255,255,.06);border-radius:12px;overflow:hidden">
+<div class="qa-q" style="padding:16px 20px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(255,255,255,.02)" onclick="this.parentElement.classList.toggle('open');this.querySelector('.qa-chevron').style.transform=this.parentElement.classList.contains('open')?'rotate(180deg)':'rotate(0)'">
+<span class="text-sm text-white font-semibold">Will I get a certificate after completing the course?</span>
+<i class="fas fa-chevron-down qa-chevron" style="transition:transform .3s;flex-shrink:0;color:#6b7280"></i>
+</div>
+<div class="qa-a" style="padding:0 20px 16px;display:none"><p class="text-sm text-gray-400">Yes. You receive a <span class="text-acid font-bold">Vizonis Academy completion certificate</span>. But more importantly, you'll have a <span class="text-white font-bold">published Power BI portfolio</span> with 3+ real dashboards that you can show in interviews — which carries 10x more weight than any certificate.</p></div>
+</div>
+<div class="qa-item" style="border:1px solid rgba(255,255,255,.06);border-radius:12px;overflow:hidden">
+<div class="qa-q" style="padding:16px 20px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(255,255,255,.02)" onclick="this.parentElement.classList.toggle('open');this.querySelector('.qa-chevron').style.transform=this.parentElement.classList.contains('open')?'rotate(180deg)':'rotate(0)'">
+<span class="text-sm text-white font-semibold">The course content on this website — is it free?</span>
+<i class="fas fa-chevron-down qa-chevron" style="transition:transform .3s;flex-shrink:0;color:#6b7280"></i>
+</div>
+<div class="qa-a" style="padding:0 20px 16px;display:none"><p class="text-sm text-gray-400">Yes. <span class="text-acid font-bold">Every lesson on this website is 100% free to read</span> — Day 0 through Day 8, all topics, all visual explanations. This is our commitment to open education. What you pay for in the classroom is: <span class="text-white font-bold">live instruction, hands-on labs with real datasets, personal doubt solving, resume building, mock interviews, and placement referrals</span>.</p></div>
+</div>
+<div class="qa-item" style="border:1px solid rgba(255,255,255,.06);border-radius:12px;overflow:hidden">
+<div class="qa-q" style="padding:16px 20px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(255,255,255,.02)" onclick="this.parentElement.classList.toggle('open');this.querySelector('.qa-chevron').style.transform=this.parentElement.classList.contains('open')?'rotate(180deg)':'rotate(0)'">
+<span class="text-sm text-white font-semibold">What is the Power BI course fee in Bangalore?</span>
+<i class="fas fa-chevron-down qa-chevron" style="transition:transform .3s;flex-shrink:0;color:#6b7280"></i>
+</div>
+<div class="qa-a" style="padding:0 20px 16px;display:none"><p class="text-sm text-gray-400">We keep our pricing competitive and transparent. <span class="text-acid font-bold">Chat with us on WhatsApp for the latest fee structure</span> — we offer EMI options, early-bird discounts, and group discounts. Compared to institutes charging ₹25,000-40,000 for 3-month theory-heavy courses, our 8-day practical program delivers more value at a fraction of the cost.</p></div>
+</div>
+<div class="qa-item" style="border:1px solid rgba(255,255,255,.06);border-radius:12px;overflow:hidden">
+<div class="qa-q" style="padding:16px 20px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(255,255,255,.02)" onclick="this.parentElement.classList.toggle('open');this.querySelector('.qa-chevron').style.transform=this.parentElement.classList.contains('open')?'rotate(180deg)':'rotate(0)'">
+<span class="text-sm text-white font-semibold">Should I also get the Microsoft PL-300 certification?</span>
+<i class="fas fa-chevron-down qa-chevron" style="transition:transform .3s;flex-shrink:0;color:#6b7280"></i>
+</div>
+<div class="qa-a" style="padding:0 20px 16px;display:none"><p class="text-sm text-gray-400">Yes, we recommend it. Our course <span class="text-acid font-bold">covers 95% of the PL-300 syllabus</span>. After completing the 8-day training, you'll need 1-2 weeks of focused practice on Microsoft Learn to clear the exam. We guide you on exam strategy, practice questions, and registration. PL-300 adds credibility to your resume — but your <span class="text-white font-bold">portfolio matters more</span>.</p></div>
+</div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== BIG WHATSAPP CTA ===================== -->
+<section class="py-28 px-6" itemscope itemtype="https://schema.org/EducationalOrganization">
+<div class="max-w-5xl mx-auto reveal">
+<div class="vis-mock pulse-glow" style="border-color:rgba(37,211,102,.3);background:linear-gradient(180deg,#0A0C10 0%,rgba(37,211,102,.04) 100%)">
+<div class="p-8 md:p-12 text-center">
+<div class="mb-8">
+<a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20want%20to%20join%20Power%20BI%20training%20in%20Bangalore." target="_blank" style="display:inline-flex;align-items:center;justify-content:center;width:120px;height:120px;border-radius:50%;background:linear-gradient(135deg,#25D366,#128C7E);box-shadow:0 0 60px rgba(37,211,102,.4),0 0 120px rgba(37,211,102,.15);transition:all .4s;text-decoration:none" onmouseover="this.style.transform='scale(1.1)';this.style.boxShadow='0 0 80px rgba(37,211,102,.6),0 0 160px rgba(37,211,102,.2)'" onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 0 60px rgba(37,211,102,.4),0 0 120px rgba(37,211,102,.15)'">
+<i class="fab fa-whatsapp" style="color:#fff;font-size:56px"></i>
+</a>
+</div>
+<h2 class="font-display text-2xl md:text-4xl lg:text-5xl font-bold tracking-tighter mb-4" itemprop="name">
+<span class="gradient-text">VIZONIS ACADEMY</span>
+</h2>
+<p class="text-lg md:text-xl font-semibold mb-6" style="color:#25D366">
+The Only Institute With <span class="text-white">Practical Quality Training</span> in Entire Bangalore
+</p>
+<p class="text-gray-400 text-base md:text-lg max-w-3xl mx-auto leading-relaxed mb-10" itemprop="description">
+Stop wasting time on institutes that teach theory for 3 months and leave you jobless. <strong class="text-white">Vizonis Academy</strong> is Bangalore's most result-oriented Power BI training institute — where every lecture is hands-on, every project is real-world, and every student is interview-ready from Day 1.
+</p>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+<div class="rounded-xl p-4" style="background:rgba(37,211,102,.06);border:1px solid rgba(37,211,102,.15)">
+<div class="font-display text-2xl md:text-3xl font-bold text-acid mb-1">500+</div>
+<div class="text-xs text-gray-400">Students Trained</div>
+</div>
+<div class="rounded-xl p-4" style="background:rgba(37,211,102,.06);border:1px solid rgba(37,211,102,.15)">
+<div class="font-display text-2xl md:text-3xl font-bold text-acid mb-1">95%</div>
+<div class="text-xs text-gray-400">Placement Rate</div>
+</div>
+<div class="rounded-xl p-4" style="background:rgba(37,211,102,.06);border:1px solid rgba(37,211,102,.15)">
+<div class="font-display text-2xl md:text-3xl font-bold text-acid mb-1">8 Days</div>
+<div class="text-xs text-gray-400">Intensive Course</div>
+</div>
+<div class="rounded-xl p-4" style="background:rgba(37,211,102,.06);border:1px solid rgba(37,211,102,.15)">
+<div class="font-display text-2xl md:text-3xl font-bold text-acid mb-1">4.9★</div>
+<div class="text-xs text-gray-400">Google Rating</div>
+</div>
+</div>
+<a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20want%20to%20join%20Power%20BI%20training%20in%20Bangalore." target="_blank" class="glow-btn inline-flex items-center gap-3 px-12 py-5 rounded-full text-base md:text-lg font-bold uppercase tracking-widest" style="background:#25D366;color:#fff;text-decoration:none" onmouseover="this.style.boxShadow='0 0 40px rgba(37,211,102,.5)';this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='none';this.style.transform='translateY(0)'">
+<i class="fab fa-whatsapp text-2xl"></i>
+Chat Now — Enroll for Next Batch
+</a>
+<p class="text-xs text-gray-600 mt-4">No spam. No obligation. Just a quick conversation about your career goals.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ===================== SEO RICH TEXT ===================== -->
+<section class="py-16 px-6">
+<div class="max-w-5xl mx-auto reveal">
+<div class="p-6 rounded-xl" style="background:rgba(204,255,0,.02);border:1px solid rgba(204,255,0,.08)">
+<h2 class="text-acid font-bold text-xs uppercase tracking-widest mb-4">Power BI Training in Bangalore — About Vizonis Academy</h2>
+<div class="text-xs text-gray-500 leading-relaxed space-y-3" itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+<p><strong class="text-white">Vizonis Academy</strong> is <span itemprop="addressLocality">Bangalore</span>'s top-rated <strong class="text-white">Power BI training institute</strong>, offering a comprehensive 8-day hands-on course that covers the complete Microsoft Power BI ecosystem — from Power Query (M language) and DAX to advanced visuals, dashboard design, Power BI Service, On-Premises Data Gateway, Deployment Pipelines (Dev/UAT/Prod), Row-Level Security, and App publishing.</p>
+<p>Unlike other <strong class="text-white">Power BI courses in Bangalore</strong> that stretch for 3-6 months with theory-heavy lectures, Vizonis Academy's curriculum is <strong class="text-white">intensive, practical, and job-focused</strong>. Every class is live Power BI — no slides, no PDFs. You work with real enterprise datasets (2M+ rows), connect to live SQL Server databases, build production-grade dashboards, and deploy them using the same Dev/UAT/Prod pipeline used by Fortune 500 companies.</p>
+<p>We serve students and working professionals across all major <span itemprop="addressRegion">Karnataka</span> locations including <strong class="text-white">Marathahalli, Whitefield, Electronic City, BTM Layout, Koramangala, HSR Layout, Indiranagar, Bellandur, Sarjapur Road, Hebbal, JP Nagar, Rajajinagar, Yelahanka, Mahadevapura, Brookfield, and KR Puram</strong>. Our weekend batches are specifically designed for working professionals who want to upskill without leaving their current jobs.</p>
+<p>Whether you are a <strong class="text-white">fresher looking for a career in data analytics</strong>, an <strong class="text-white">Excel user wanting to transition to Power BI</strong>, or a <strong class="text-white">working professional aiming for a BI developer role</strong> — Vizonis Academy is the only <strong class="text-white">Power BI institute in Bangalore</strong> that guarantees practical, placement-backed training. With 500+ students trained, a 95% placement rate, and a 4.9 Google rating, we are Bangalore's most trusted name in Power BI education.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="border-t border-white/5 py-16 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+<div>
+<a href="https://analytics.vizonis.com/PowerBIDashboardServiceDay8" class="font-display text-xl font-bold tracking-tight block mb-4"><span class="text-acid">V</span>IZONIS <span class="text-gray-600 text-xs font-sans font-normal">Academy</span></a>
+<p class="text-xs text-gray-600 leading-relaxed">Bangalore's #1 Power BI training institute. Practical, project-based, placement-backed. Since 2022.</p>
+</div>
+<div>
+<h4 class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-4">Course Curriculum</h4>
+<ul class="space-y-2">
+<li><a href="https://analytics.vizonis.com/Powerbigettingstartedknoweverything" class="text-xs text-gray-600 hover:text-acid transition-colors">Day 0 — Getting Started</a></li>
+<li><a href="https://analytics.vizonis.com/PowerBIPowerQueryTrainingDay1" class="text-xs text-gray-600 hover:text-acid transition-colors">Day 1 — Power Query</a></li>
+<li><a href="https://analytics.vizonis.com/PowerBIPowerQueryTrainingDay2" class="text-xs text-gray-600 hover:text-acid transition-colors">Day 2 — Power Query</a></li>
+<li><a href="https://analytics.vizonis.com/PowerBIPowerQueryTrainingDay3" class="text-xs text-gray-600 hover:text-acid transition-colors">Day 3 — Power Query</a></li>
+<li><a href="https://analytics.vizonis.com/PowerBIDAXDay4" class="text-xs text-gray-600 hover:text-acid transition-colors">Day 4 — DAX</a></li>
+<li><a href="https://analytics.vizonis.com/PowerBIDAXDay5" class="text-xs text-gray-600 hover:text-acid transition-colors">Day 5 — DAX Advanced</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-4">&nbsp;</h4>
+<ul class="space-y-2">
+<li><a href="https://analytics.vizonis.com/PowerBIVisualsDay6" class="text-xs text-gray-600 hover:text-acid transition-colors">Day 6 — Visuals</a></li>
+<li><a href="https://analytics.vizonis.com/PowerBIDashboardServiceDay7" class="text-xs text-gray-600 hover:text-acid transition-colors">Day 7 — Dashboard & Service</a></li>
+<li><a href="https://analytics.vizonis.com/PowerBIDashboardServiceDay8" class="text-xs text-gray-600 hover:text-acid transition-colors">Day 8 — Gateway & Deploy</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-4">Connect</h4>
+<ul class="space-y-2">
+<li><a href="https://wa.me/916364671786?text=Hi%20Vizonis!" target="_blank" class="text-xs text-gray-600 hover:text-green-400 transition-colors"><i class="fab fa-whatsapp mr-1"></i> WhatsApp</a></li>
+<li><a href="tel:+916364671786" class="text-xs text-gray-600 hover:text-acid transition-colors"><i class="fas fa-phone mr-1"></i> +91 63646 71786</a></li>
+<li><a href="https://analytics.vizonis.com" class="text-xs text-gray-600 hover:text-acid transition-colors"><i class="fas fa-globe mr-1"></i> analytics.vizonis.com</a></li>
+</ul>
+</div>
+</div>
+<div class="border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+<p class="text-xs text-gray-700">© 2024 Vizonis Academy. All rights reserved.</p>
+<p class="text-xs text-gray-700">Power BI is a registered trademark of Microsoft Corporation. Vizonis Academy is not affiliated with Microsoft.</p>
+</div>
+</div>
+</footer>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20want%20to%20learn%20Power%20BI." target="_blank" class="whatsapp-float"><i class="fab fa-whatsapp text-white text-2xl"></i></a>
+
+<!-- SEO Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  "name": "Vizonis Academy",
+  "alternateName": "Vizonis Academy Power BI Training",
+  "url": "https://analytics.vizonis.com/PowerBIDashboardServiceDay8",
+  "logo": "https://analytics.vizonis.com/logo.png",
+  "description": "Vizonis Academy is Bangalore's top-rated Power BI training institute offering an 8-day practical course covering Power Query, DAX, Visuals, Dashboards, Service, Gateway, Deployment Pipelines, RLS, and Interview Preparation.",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Bangalore",
+    "addressRegion": "Karnataka",
+    "addressCountry": "IN"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "12.9698",
+    "longitude": "77.7500"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "bestRating": "5",
+    "reviewCount": "200"
+  },
+  "telephone": "+916364671786",
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Power BI Training Courses",
+    "itemListElement": [
+      {
+        "@type": "Course",
+        "name": "Power BI Complete Training — 8 Day Intensive",
+        "description": "End-to-end Power BI course: Power Query (Days 1-3), DAX (Days 4-5), Visuals (Day 6), Dashboard & Service (Days 7-8). Includes resume building, mock interviews, and placement support.",
+        "provider": {
+          "@type": "EducationalOrganization",
+          "name": "Vizonis Academy"
+        },
+        "coursePrerequisites": "No prior experience required",
+        "educationalLevel": "Beginner to Intermediate",
+        "inLanguage": "English"
+      }
+    ]
+  },
+  "sameAs": [
+    "https://analytics.vizonis.com"
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "Microsoft Power BI Complete Training",
+  "description": "8-day intensive Power BI training course in Bangalore covering Power Query, DAX, Visuals, Dashboards, Power BI Service, Gateway, Deployment Pipelines, RLS, and Job Preparation.",
+  "provider": {
+    "@type": "EducationalOrganization",
+    "name": "Vizonis Academy",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Bangalore",
+      "addressRegion": "Karnataka",
+      "addressCountry": "IN"
+    }
+  },
+  "url": "https://analytics.vizonis.com/PowerBIDashboardServiceDay8",
+  "coursePrerequisites": "No prior experience required",
+  "educationalLevel": "Beginner to Intermediate",
+  "inLanguage": "English",
+  "hasCourseInstance": {
+    "@type": "CourseInstance",
+    "courseMode": "onsite",
+    "location": {
+      "@type": "Place",
+      "name": "Vizonis Academy, Marathahalli, Bangalore",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Bangalore",
+        "addressRegion": "Karnataka",
+        "addressCountry": "IN"
+      }
+    },
+    "courseSchedule": {
+      "@type": "CourseSchedule",
+      "frequency": "Weekly",
+      "byDay": ["Saturday", "Sunday"]
+    }
+  }
+}
+</script>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+gsap.utils.toArray('.reveal').forEach(function(el){gsap.to(el,{opacity:1,y:0,duration:.7,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 88%',toggleActions:'play none play none'}})});
+var c=document.getElementById('particles');for(var i=0;i<25;i++){var p=document.createElement('div');p.className='particle';var s=Math.random()*3+1;p.style.cssText='width:'+s+'px;height:'+s+'px;left:'+Math.random()*100+'%;animation-duration:'+(Math.random()*12+8)+'s;animation-delay:'+(Math.random()*12)+'s;';c.appendChild(p)}
+</script>
+
+<style>
+.qa-item .qa-a{display:none}
+.qa-item.open .qa-a{display:block}
+</style>
+</body>
+</html>
