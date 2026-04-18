@@ -1,0 +1,1783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vizonis Academy | Microsoft Power BI Getting Started</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        obsidian: '#050505',
+                        charcoal: '#0F1115',
+                        acid: '#CCFF00',
+                        silver: '#E1E1E1',
+                        glass: 'rgba(255,255,255,0.05)',
+                        cardDark: '#0A0C10',
+                        cardDark2: '#111318',
+                    },
+                    fontFamily: {
+                        sans: ['Space Grotesk', 'sans-serif'],
+                        display: ['Syncopate', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Space Grotesk', sans-serif; background: #050505; color: #E1E1E1; overflow-x: hidden; }
+
+        /* Noise overlay */
+        .noise-overlay {
+            position: fixed; inset: 0; z-index: 9000; pointer-events: none; opacity: 0.04;
+            background-image: url('https://grainy-gradients.vercel.app/noise.svg');
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #CCFF00; border-radius: 3px; }
+
+        /* Gradient text */
+        .gradient-text {
+            background: linear-gradient(to bottom, #FFFFFF 0%, #9ca3af 50%, #111827 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .acid-gradient-text {
+            background: linear-gradient(135deg, #CCFF00 0%, #88cc00 50%, #CCFF00 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Glass card */
+        .glass-card {
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: all 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+        }
+        .glass-card:hover {
+            background: rgba(255,255,255,0.06);
+            border-color: rgba(204,255,0,0.3);
+            box-shadow: 0 0 30px rgba(204,255,0,0.08);
+        }
+
+        /* Neon hover */
+        .neon-hover { transition: all 0.3s ease; }
+        .neon-hover:hover {
+            box-shadow: 0 0 20px rgba(204,255,0,0.3);
+            border-color: #CCFF00 !important;
+        }
+
+        /* Glow button */
+        .glow-btn {
+            position: relative; overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .glow-btn::before {
+            content: ''; position: absolute; inset: -2px;
+            background: linear-gradient(45deg, #CCFF00, transparent, #CCFF00);
+            z-index: -1; border-radius: inherit;
+            opacity: 0; transition: opacity 0.3s;
+        }
+        .glow-btn:hover::before { opacity: 1; }
+        .glow-btn:hover { box-shadow: 0 0 30px rgba(204,255,0,0.4); transform: translateY(-2px); }
+
+        /* Journey line */
+        .journey-line {
+            position: absolute; left: 50%; top: 0; bottom: 0; width: 2px;
+            background: linear-gradient(to bottom, transparent, #CCFF00, transparent);
+            transform: translateX(-50%);
+        }
+        @media (max-width: 768px) {
+            .journey-line { left: 24px; }
+        }
+
+        /* Journey node */
+        .journey-node {
+            width: 16px; height: 16px; border-radius: 50%;
+            background: #050505; border: 2px solid #CCFF00;
+            position: absolute; left: 50%; top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+        }
+        .journey-node::after {
+            content: ''; position: absolute; inset: -6px;
+            border-radius: 50%; border: 1px solid rgba(204,255,0,0.2);
+            animation: pulse-ring 2s ease-out infinite;
+        }
+        @media (max-width: 768px) {
+            .journey-node { left: 24px; }
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+
+        /* Architecture flow */
+        .arch-flow-line {
+            width: 2px; height: 40px; margin: 0 auto;
+            background: linear-gradient(to bottom, #CCFF00, rgba(204,255,0,0.2));
+        }
+        .arch-connector {
+            width: 2px; height: 30px; margin: 0 auto;
+            background: rgba(204,255,0,0.3);
+        }
+
+        /* Floating particles */
+        .particle {
+            position: absolute; border-radius: 50%;
+            background: #CCFF00; opacity: 0.15;
+            animation: float-particle linear infinite;
+        }
+        @keyframes float-particle {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 0.15; }
+            90% { opacity: 0.15; }
+            100% { transform: translateY(-100px) scale(1); opacity: 0; }
+        }
+
+        /* Grid background */
+        .grid-bg {
+            background-image:
+                linear-gradient(rgba(204,255,0,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(204,255,0,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        /* Section divider */
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(204,255,0,0.3), transparent);
+        }
+
+        /* Comparison table */
+        .comparison-table th {
+            background: rgba(204,255,0,0.1);
+            border-bottom: 2px solid #CCFF00;
+        }
+        .comparison-table td, .comparison-table th {
+            padding: 16px 20px; text-align: left;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .comparison-table tr:hover td {
+            background: rgba(255,255,255,0.02);
+        }
+
+        /* Badge */
+        .badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 4px 14px; border-radius: 9999px; font-size: 0.75rem;
+            border: 1px solid rgba(204,255,0,0.3);
+            background: rgba(204,255,0,0.08);
+            color: #CCFF00; font-weight: 600;
+        }
+
+        /* WhatsApp float */
+        .whatsapp-float {
+            position: fixed; bottom: 30px; right: 30px; z-index: 8000;
+            width: 64px; height: 64px; border-radius: 50%;
+            background: #25D366; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+            transition: all 0.3s ease; cursor: pointer;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 30px rgba(37,211,102,0.6);
+        }
+        .whatsapp-float::after {
+            content: ''; position: absolute; inset: -4px;
+            border-radius: 50%; border: 2px solid rgba(37,211,102,0.3);
+            animation: wa-pulse 2s ease-out infinite;
+        }
+        @keyframes wa-pulse {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+
+        /* Accordion */
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease; }
+        .accordion-content.open { max-height: 2000px; }
+        .accordion-arrow { transition: transform 0.3s ease; }
+        .accordion-arrow.rotated { transform: rotate(180deg); }
+
+        /* Ticker */
+        .ticker-wrap { overflow: hidden; }
+        .ticker {
+            display: flex; gap: 3rem; white-space: nowrap;
+            animation: ticker 25s linear infinite;
+        }
+        @keyframes ticker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Counter */
+        .counter-value { font-variant-numeric: tabular-nums; }
+
+        /* Tab active */
+        .tab-btn.active { color: #CCFF00; border-color: #CCFF00; background: rgba(204,255,0,0.08); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* Animated border gradient */
+        .animated-border {
+            position: relative; border-radius: 16px; overflow: hidden;
+        }
+        .animated-border::before {
+            content: ''; position: absolute; inset: 0;
+            padding: 1px; border-radius: 16px;
+            background: linear-gradient(var(--angle, 0deg), #CCFF00, transparent 40%, transparent 60%, #CCFF00);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor; mask-composite: exclude;
+            animation: border-rotate 4s linear infinite;
+        }
+        @keyframes border-rotate {
+            to { --angle: 360deg; }
+        }
+        @property --angle {
+            syntax: '<angle>';
+            initial-value: 0deg;
+            inherits: false;
+        }
+
+        /* Marquee gradient masks */
+        .marquee-mask {
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+
+        /* Hero glow orb */
+        .hero-orb {
+            position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.2;
+            animation: orb-float 8s ease-in-out infinite alternate;
+        }
+        @keyframes orb-float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30px, -40px) scale(1.2); }
+        }
+    </style>
+</head>
+<body class="grid-bg">
+    <!-- Noise -->
+    <div class="noise-overlay"></div>
+
+    <!-- Particles -->
+    <div id="particles" class="fixed inset-0 z-0 pointer-events-none overflow-hidden"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-[7000] backdrop-blur-md bg-obsidian/70 border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="#" class="font-display text-2xl font-bold tracking-tight">
+                <span class="text-acid">V</span>IZONIS
+            </a>
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#what" class="text-sm text-gray-400 hover:text-acid transition-colors duration-150">What is Power BI</a>
+                <a href="#journey" class="text-sm text-gray-400 hover:text-acid transition-colors duration-150">Data Journey</a>
+                <a href="#why" class="text-sm text-gray-400 hover:text-acid transition-colors duration-150">Why Power BI</a>
+                <a href="#careers" class="text-sm text-gray-400 hover:text-acid transition-colors duration-150">Careers</a>
+                <a href="#components" class="text-sm text-gray-400 hover:text-acid transition-colors duration-150">Components</a>
+                <a href="#architecture" class="text-sm text-gray-400 hover:text-acid transition-colors duration-150">Architecture</a>
+                <a href="#licenses" class="text-sm text-gray-400 hover:text-acid transition-colors duration-150">Licensing</a>
+            </div>
+            <a href="https://wa.me/916364671786?text=Hi%20Vizonis%20Academy!%20I'm%20interested%20in%20Power%20BI%20course." target="_blank"
+               class="glow-btn bg-acid text-obsidian px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest">
+                Enroll Now
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex flex-col justify-center items-center pt-20 overflow-hidden">
+        <!-- Orbs -->
+        <div class="hero-orb w-[500px] h-[500px] bg-acid top-1/4 -left-40" style="animation-delay:-2s;"></div>
+        <div class="hero-orb w-[400px] h-[400px] bg-cyan-500 bottom-1/4 -right-32" style="animation-delay:-5s;opacity:0.1;"></div>
+
+        <div class="relative z-10 text-center px-6 max-w-6xl mx-auto">
+            <div class="badge mb-8 mx-auto w-fit">
+                <i class="fas fa-bolt"></i> Microsoft Power BI — Complete Getting Started Guide
+            </div>
+
+            <h1 class="font-display text-5xl md:text-7xl lg:text-8xl font-bold leading-[0.9] tracking-tighter mb-8">
+                <span class="gradient-text block">MASTER</span>
+                <span class="acid-gradient-text block mt-2">POWER BI</span>
+                <span class="gradient-text block mt-2 text-3xl md:text-5xl lg:text-6xl">FROM ZERO TO HERO</span>
+            </h1>
+
+            <p class="text-gray-400 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-12">
+                The definitive guide to understanding Power BI, data visualization, the complete data analytics journey, career opportunities, licensing, and architecture — all in one place.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#what" class="glow-btn bg-acid text-obsidian px-10 py-4 rounded-full text-sm font-bold uppercase tracking-widest">
+                    Start Learning <i class="fas fa-arrow-down ml-2"></i>
+                </a>
+                <a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20want%20to%20learn%20Power%20BI." target="_blank"
+                   class="glow-btn border border-white/20 text-white px-10 py-4 rounded-full text-sm font-bold uppercase tracking-widest hover:border-acid hover:text-acid">
+                    <i class="fab fa-whatsapp mr-2"></i> Chat With Us
+                </a>
+            </div>
+        </div>
+
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
+            <span class="text-gray-600 text-xs uppercase tracking-[0.3em]">Scroll</span>
+            <div class="w-5 h-8 border border-gray-700 rounded-full flex justify-center pt-1">
+                <div class="w-1 h-2 bg-acid rounded-full animate-bounce"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ticker -->
+    <div class="py-6 border-y border-white/5 marquee-mask overflow-hidden">
+        <div class="ticker">
+            <span class="text-2xl font-display font-bold text-white/10">POWER BI</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">DATA VISUALIZATION</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">POWER QUERY</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">DAX</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">ETL</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">DATA WAREHOUSE</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">SEMANTIC MODELS</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">POWER BI</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">DATA VISUALIZATION</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">POWER QUERY</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">DAX</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">ETL</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">DATA WAREHOUSE</span>
+            <span class="text-acid text-2xl">◆</span>
+            <span class="text-2xl font-display font-bold text-white/10">SEMANTIC MODELS</span>
+            <span class="text-acid text-2xl">◆</span>
+        </div>
+    </div>
+
+    <!-- Section 1: What is Power BI -->
+    <section id="what" class="py-32 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <span class="badge mb-6 mx-auto w-fit"><i class="fas fa-cube"></i> Chapter 01</span>
+                <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">WHAT IS POWER BI</h2>
+                <p class="text-gray-400 text-lg max-w-3xl mx-auto">Understanding the foundation of modern business intelligence</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <!-- Left -->
+                <div>
+                    <div class="glass-card rounded-2xl p-8 mb-8">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-14 h-14 rounded-xl bg-acid/10 flex items-center justify-center">
+                                <i class="fas fa-chart-line text-acid text-2xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold">Microsoft Power BI</h3>
+                        </div>
+                        <p class="text-gray-400 leading-relaxed text-lg">
+                            Power BI is a suite of <span class="text-acid font-semibold">business intelligence tools</span> developed by Microsoft that allows you to connect to hundreds of data sources, transform raw data into meaningful insights, and create stunning interactive visualizations and reports — all without writing complex code.
+                        </p>
+                    </div>
+
+                    <div class="glass-card rounded-2xl p-8">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-14 h-14 rounded-xl bg-cyan-500/10 flex items-center justify-center">
+                                <i class="fas fa-eye text-cyan-400 text-2xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold">What is Data Visualization?</h3>
+                        </div>
+                        <p class="text-gray-400 leading-relaxed text-lg">
+                            Data Visualization is the <span class="text-cyan-400 font-semibold">graphical representation of data and information</span>. Instead of looking at thousands of rows in a spreadsheet, you see charts, graphs, maps, and dashboards that instantly tell a story. The human brain processes visuals 60,000x faster than text — that's why data visualization is the most powerful skill in analytics.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Right - Visual -->
+                <div class="relative">
+                    <div class="animated-border">
+                        <div class="bg-cardDark rounded-2xl p-8">
+                            <div class="flex items-center gap-2 mb-6">
+                                <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                                <span class="text-gray-600 text-xs ml-3">Power BI Dashboard Preview</span>
+                            </div>
+                            <!-- Fake dashboard -->
+                            <div class="space-y-4">
+                                <div class="grid grid-cols-3 gap-3">
+                                    <div class="bg-white/5 rounded-lg p-4 border border-white/5">
+                                        <div class="text-gray-500 text-xs mb-1">Total Revenue</div>
+                                        <div class="text-white text-xl font-bold">$4.2M</div>
+                                        <div class="text-green-400 text-xs mt-1">↑ 12.5%</div>
+                                    </div>
+                                    <div class="bg-white/5 rounded-lg p-4 border border-white/5">
+                                        <div class="text-gray-500 text-xs mb-1">Orders</div>
+                                        <div class="text-white text-xl font-bold">8,342</div>
+                                        <div class="text-green-400 text-xs mt-1">↑ 8.3%</div>
+                                    </div>
+                                    <div class="bg-white/5 rounded-lg p-4 border border-white/5">
+                                        <div class="text-gray-500 text-xs mb-1">Customers</div>
+                                        <div class="text-white text-xl font-bold">2,156</div>
+                                        <div class="text-red-400 text-xs mt-1">↓ 2.1%</div>
+                                    </div>
+                                </div>
+                                <!-- Bar chart mockup -->
+                                <div class="bg-white/5 rounded-lg p-4 border border-white/5">
+                                    <div class="text-gray-500 text-xs mb-4">Monthly Revenue</div>
+                                    <div class="flex items-end gap-2 h-32">
+                                        <div class="flex-1 bg-acid/20 rounded-t" style="height:45%"></div>
+                                        <div class="flex-1 bg-acid/30 rounded-t" style="height:60%"></div>
+                                        <div class="flex-1 bg-acid/40 rounded-t" style="height:40%"></div>
+                                        <div class="flex-1 bg-acid/50 rounded-t" style="height:75%"></div>
+                                        <div class="flex-1 bg-acid/60 rounded-t" style="height:55%"></div>
+                                        <div class="flex-1 bg-acid/70 rounded-t" style="height:85%"></div>
+                                        <div class="flex-1 bg-acid/80 rounded-t" style="height:70%"></div>
+                                        <div class="flex-1 bg-acid rounded-t" style="height:95%"></div>
+                                        <div class="flex-1 bg-acid/60 rounded-t" style="height:65%"></div>
+                                        <div class="flex-1 bg-acid/50 rounded-t" style="height:50%"></div>
+                                        <div class="flex-1 bg-acid/40 rounded-t" style="height:80%"></div>
+                                        <div class="flex-1 bg-acid/70 rounded-t" style="height:90%"></div>
+                                    </div>
+                                    <div class="flex gap-2 mt-2">
+                                        <div class="flex-1 text-center text-gray-600 text-[9px]">Jan</div>
+                                        <div class="flex-1 text-center text-gray-600 text-[9px]">Feb</div>
+                                        <div class="flex-1 text-center text-gray-600 text-[9px]">Mar</div>
+                                        <div class="flex-1 text-center text-gray-600 text-[9px]">Apr</div>
+                                        <div class="flex-1 text-center text-gray-600 text-[9px]">May</div>
+                                        <div class="flex-1 text-center text-gray-600 text-[9px]">Jun</div>
+                                        <div class="flex-1 text-center text-gray-600 text-[9px]">Jul</div>
+                                        <div class="flex-1 text-center text-gray-600 text-[9px]">Aug</div>
+                                        <div class="flex-1 text-center text-gray-600 text-[9px]">Sep</div>
+                                        <div class="flex-1 text-center text-gray-600 text-[9px]">Oct</div>
+                                        <div class="flex-1 text-center text-gray-600 text-[9px]">Nov</div>
+                                        <div class="flex-1 text-center text-gray-600 text-[9px]">Dec</div>
+                                    </div>
+                                </div>
+                                <!-- Donut mockup -->
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div class="bg-white/5 rounded-lg p-4 border border-white/5 flex items-center gap-4">
+                                        <div class="w-16 h-16 rounded-full border-4 border-acid border-t-transparent animate-spin" style="animation-duration:8s;"></div>
+                                        <div>
+                                            <div class="text-xs text-gray-500">Category Split</div>
+                                            <div class="text-white text-sm font-bold">Electronics 42%</div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-white/5 rounded-lg p-4 border border-white/5 flex items-center gap-4">
+                                        <div class="w-16 h-16 rounded-full border-4 border-cyan-400 border-r-transparent animate-spin" style="animation-duration:10s;"></div>
+                                        <div>
+                                            <div class="text-xs text-gray-500">Region Split</div>
+                                            <div class="text-white text-sm font-bold">North 35%</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-4xl mx-auto"></div>
+
+    <!-- Section 2: Data Analytics Journey -->
+    <section id="journey" class="py-32 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <span class="badge mb-6 mx-auto w-fit"><i class="fas fa-route"></i> Chapter 02</span>
+                <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">THE DATA ANALYTICS JOURNEY</h2>
+                <p class="text-gray-400 text-lg max-w-3xl mx-auto">From raw, messy data to beautiful dashboards — here's the complete path every organization follows</p>
+            </div>
+
+            <div class="relative max-w-5xl mx-auto">
+                <div class="journey-line hidden md:block"></div>
+
+                <!-- Step 1 -->
+                <div class="relative flex flex-col md:flex-row items-center gap-8 mb-20 journey-step">
+                    <div class="journey-node hidden md:block"></div>
+                    <div class="md:w-1/2 md:pr-16 md:text-right">
+                        <div class="glass-card rounded-2xl p-8 neon-hover">
+                            <div class="flex items-center gap-3 md:justify-end mb-4">
+                                <span class="text-acid font-display text-sm font-bold">STEP 01</span>
+                                <div class="w-10 h-10 rounded-lg bg-acid/10 flex items-center justify-center">
+                                    <i class="fas fa-magnifying-glass text-acid"></i>
+                                </div>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-3">Data Discovery</h3>
+                            <p class="text-gray-400">Understanding what data exists, where it lives (databases, APIs, files, cloud), and what questions the business wants answered. This is the exploratory phase where you identify data sources, assess data quality, and map out what's available.</p>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2"></div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="relative flex flex-col md:flex-row items-center gap-8 mb-20 journey-step">
+                    <div class="journey-node hidden md:block"></div>
+                    <div class="md:w-1/2"></div>
+                    <div class="md:w-1/2 md:pl-16">
+                        <div class="glass-card rounded-2xl p-8 neon-hover">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center">
+                                    <i class="fas fa-database text-blue-400"></i>
+                                </div>
+                                <span class="text-blue-400 font-display text-sm font-bold">STEP 02</span>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-3">Data Storage</h3>
+                            <p class="text-gray-400">Raw data gets stored in various systems — SQL databases, Azure Data Lake, Excel files, SharePoint, ERP systems like SAP, CRM like Salesforce. The choice of storage depends on data volume, velocity, and the organization's infrastructure.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="relative flex flex-col md:flex-row items-center gap-8 mb-20 journey-step">
+                    <div class="journey-node hidden md:block"></div>
+                    <div class="md:w-1/2 md:pr-16 md:text-right">
+                        <div class="glass-card rounded-2xl p-8 neon-hover">
+                            <div class="flex items-center gap-3 md:justify-end mb-4">
+                                <span class="text-purple-400 font-display text-sm font-bold">STEP 03</span>
+                                <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
+                                    <i class="fas fa-broom text-purple-400"></i>
+                                </div>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-3">Data Cleaning (ETL)</h3>
+                            <p class="text-gray-400"><span class="text-purple-400 font-semibold">E</span>xtract → <span class="text-purple-400 font-semibold">T</span>ransform → <span class="text-purple-400 font-semibold">L</span>oad. Raw data is messy — it has duplicates, nulls, wrong formats, inconsistent naming. ETL cleans, reshapes, and prepares data for analysis. In Power BI, this is done using <span class="text-acid font-semibold">Power Query</span> — no coding required, just drag and drop.</p>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2"></div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="relative flex flex-col md:flex-row items-center gap-8 mb-20 journey-step">
+                    <div class="journey-node hidden md:block"></div>
+                    <div class="md:w-1/2"></div>
+                    <div class="md:w-1/2 md:pl-16">
+                        <div class="glass-card rounded-2xl p-8 neon-hover">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-10 h-10 rounded-lg bg-orange-500/10 flex items-center justify-center">
+                                    <i class="fas fa-warehouse text-orange-400"></i>
+                                </div>
+                                <span class="text-orange-400 font-display text-sm font-bold">STEP 04</span>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-3">Data Warehouse</h3>
+                            <p class="text-gray-400">A centralized repository optimized for analytics. Unlike operational databases built for transactions, a data warehouse is built for queries. Data from multiple sources is consolidated here in a structured format (star schema, snowflake schema) enabling fast, reliable reporting.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 5 -->
+                <div class="relative flex flex-col md:flex-row items-center gap-8 journey-step">
+                    <div class="journey-node hidden md:block"></div>
+                    <div class="md:w-1/2 md:pr-16 md:text-right">
+                        <div class="glass-card rounded-2xl p-8 neon-hover border-acid/30">
+                            <div class="flex items-center gap-3 md:justify-end mb-4">
+                                <span class="text-acid font-display text-sm font-bold">STEP 05 — POWER BI</span>
+                                <div class="w-10 h-10 rounded-lg bg-acid/10 flex items-center justify-center">
+                                    <i class="fas fa-chart-pie text-acid"></i>
+                                </div>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-3 text-acid">Reporting & Visualization</h3>
+                            <p class="text-gray-400">This is where <span class="text-acid font-semibold">Power BI</span> shines. Connect to your clean data, build interactive dashboards with 200+ visual types, add DAX calculations, create drill-through reports, and share insights across your organization. This is the <span class="text-white font-semibold">final mile</span> of the data journey — where data becomes decisions.</p>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-4xl mx-auto"></div>
+
+    <!-- Section 3: Why Power BI -->
+    <section id="why" class="py-32 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <span class="badge mb-6 mx-auto w-fit"><i class="fas fa-question-circle"></i> Chapter 03</span>
+                <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">WHY POWER BI</h2>
+                <p class="text-gray-400 text-lg max-w-3xl mx-auto">Why not just Excel? Why not just SQL? Here's the honest comparison.</p>
+            </div>
+
+            <!-- Tabs -->
+            <div class="flex justify-center gap-4 mb-12 flex-wrap">
+                <button onclick="switchTab('excel')" class="tab-btn active px-6 py-3 rounded-full border border-white/10 text-sm font-bold uppercase tracking-wider transition-all" id="tab-excel">
+                    <i class="fas fa-file-excel mr-2"></i> Power BI vs Excel
+                </button>
+                <button onclick="switchTab('sql')" class="tab-btn px-6 py-3 rounded-full border border-white/10 text-sm font-bold uppercase tracking-wider transition-all" id="tab-sql">
+                    <i class="fas fa-database mr-2"></i> Power BI vs SQL
+                </button>
+            </div>
+
+            <!-- Excel vs Power BI -->
+            <div id="content-excel" class="tab-content active">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="glass-card rounded-2xl p-8 border-green-500/20">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center">
+                                <i class="fas fa-file-excel text-green-400 text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-green-400">Microsoft Excel</h3>
+                                <p class="text-gray-500 text-sm">Good for small data tasks</p>
+                            </div>
+                        </div>
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-3"><i class="fas fa-times text-red-400 mt-1"></i><span class="text-gray-400"><strong class="text-white">Row limit:</strong> Max 1,048,576 rows per sheet. Your 10 million row sales data? Won't fit.</span></li>
+                            <li class="flex items-start gap-3"><i class="fas fa-times text-red-400 mt-1"></i><span class="text-gray-400"><strong class="text-white">Performance crash:</strong> Open a 500K row file with VLOOKUPs — your laptop freezes for minutes.</span></li>
+                            <li class="flex items-start gap-3"><i class="fas fa-times text-red-400 mt-1"></i><span class="text-gray-400"><strong class="text-white">No interactivity:</strong> You see a static pivot table. Can't drill down from country → state → city dynamically.</span></li>
+                            <li class="flex items-start gap-3"><i class="fas fa-times text-red-400 mt-1"></i><span class="text-gray-400"><strong class="text-white">Sharing nightmare:</strong> Email a 50MB file? Recipient needs same version, same formatting, same data refresh.</span></li>
+                            <li class="flex items-start gap-3"><i class="fas fa-times text-red-400 mt-1"></i><span class="text-gray-400"><strong class="text-white">Manual refresh:</strong> Data changes? Manually copy-paste or rebuild connections every time.</span></li>
+                            <li class="flex items-start gap-3"><i class="fas fa-check text-green-400 mt-1"></i><span class="text-gray-400"><strong class="text-white">Best for:</strong> Quick ad-hoc analysis, financial modeling, small datasets under 100K rows.</span></li>
+                        </ul>
+                    </div>
+                    <div class="glass-card rounded-2xl p-8 border-acid/30">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-12 h-12 rounded-xl bg-acid/10 flex items-center justify-center">
+                                <i class="fas fa-chart-bar text-acid text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-acid">Microsoft Power BI</h3>
+                                <p class="text-gray-500 text-sm">Built for enterprise analytics</p>
+                            </div>
+                        </div>
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-3"><i class="fas fa-check text-acid mt-1"></i><span class="text-gray-400"><strong class="text-white">No practical row limit:</strong> Handles 100 million+ rows smoothly with import mode, and billions in DirectQuery.</span></li>
+                            <li class="flex items-start gap-3"><i class="fas fa-check text-acid mt-1"></i><span class="text-gray-400"><strong class="text-white">Blazing fast:</strong> VertiPaq engine compresses data 10x and queries in milliseconds. 10M rows? Loads in seconds.</span></li>
+                            <li class="flex items-start gap-3"><i class="fas fa-check text-acid mt-1"></i><span class="text-gray-400"><strong class="text-white">Full interactivity:</strong> Click a bar chart → all other visuals filter. Drill down, cross-filter, tooltips, bookmarks, buttons.</span></li>
+                            <li class="flex items-start gap-3"><i class="fas fa-check text-acid mt-1"></i><span class="text-gray-400"><strong class="text-white">Cloud sharing:</strong> Publish to Power BI Service. 1000 people view the same report, always fresh, mobile-friendly.</span></li>
+                            <li class="flex items-start gap-3"><i class="fas fa-check text-acid mt-1"></i><span class="text-gray-400"><strong class="text-white">Automatic refresh:</strong> Schedule refresh every 15 min, hourly, daily. Data is always live.</span></li>
+                            <li class="flex items-start gap-3"><i class="fas fa-check text-acid mt-1"></i><span class="text-gray-400"><strong class="text-white">Best for:</strong> Enterprise dashboards, real-time monitoring, sharing insights at scale, any dataset size.</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="glass-card rounded-2xl p-6 mt-8 text-center">
+                    <p class="text-gray-400"><i class="fas fa-lightbulb text-acid mr-2"></i><strong class="text-white">Real Example:</strong> A retail company had 3 years of daily transaction data — <span class="text-green-400">4.2 million rows</span>. In Excel, the file was 380MB, took 5 minutes to open, and crashed on filtering. In Power BI, the same data compressed to <span class="text-acid">45MB</span>, opened in <span class="text-acid">8 seconds</span>, and cross-filtering was instant. That's the difference.</p>
+                </div>
+            </div>
+
+            <!-- SQL vs Power BI -->
+            <div id="content-sql" class="tab-content">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="glass-card rounded-2xl p-8 border-blue-500/20">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center">
+                                <i class="fas fa-database text-blue-400 text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-blue-400">SQL</h3>
+                                <p class="text-gray-500 text-sm">The data language, not a visual tool</p>
+                            </div>
+                        </div>
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-3"><i class="fas fa-times text-red-400 mt-1"></i><span class="text-gray-400"><strong class="text-white">No visuals:</strong> SQL returns tables of numbers. You can't create a pie chart or map with SQL alone.</span></li>
+                            <li class="flex items-start gap-3"><i class="fas fa-times text-red-400 mt-1"></i><span class="text-gray-400"><strong class="text-white">No interactivity:</strong> Want to filter by date range? Write another query. Change region? Another query.</span></li>
+                            <li class="flex items-start gap-3"><i class="fas fa-times text-red-400 mt-1"></i><span class="text-gray-400"><strong class="text-white">Steep learning curve:</strong> Writing complex joins, window functions, CTEs takes months to master.</span></li>
+                            <li class="flex items-start gap-3"><i class="fas fa-times text-red-400 mt-1"></i><span class="text-gray-400"><strong class="text-white">No sharing:</strong> You can email query results as CSV. That's not a dashboard — that's a data dump.</span></li>
+                            <li class="flex items-start gap-3"><i class="fas fa-check text-blue-400 mt-1"></i><span class="text-gray-400"><strong class="text-white">Best for:</strong> Data engineers, backend developers, writing stored procedures, managing databases.</span></li>
+                        </ul>
+                    </div>
+                    <div class="glass-card rounded-2xl p-8 border-acid/30">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-12 h-12 rounded-xl bg-acid/10 flex items-center justify-center">
+                                <i class="fas fa-chart-bar text-acid text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-acid">Microsoft Power BI</h3>
+                                <p class="text-gray-500 text-sm">Visual analytics that speaks SQL underneath</p>
+                            </div>
+                        </div>
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-3"><i class="fas fa-check text-acid mt-1"></i><span class="text-gray-400"><strong class="text-white">200+ visual types:</strong> Bar, line, pie, map, scatter, treemap, waterfall, gauge, KPI cards, custom visuals from marketplace.</span></li>
+                            <li class="flex items-start gap-3"><i class="fas fa-check text-acid mt-1"></i><span class="text-gray-400"><strong class="text-white">Full interactivity:</strong> Click any visual → everything filters. Slicers, drill-through, bookmarks, tooltips with sub-reports.</span></li>
+                            <li class="flex items-start gap-3"><i class="fas fa-check text-acid mt-1"></i><span class="text-gray-400"><strong class="text-white">No SQL needed (mostly):</strong> Drag and drop to build queries. Power Query generates SQL behind the scenes. DAX handles calculations.</span></li>
+                            <li class="flex items-start gap-3"><i class="fas fa-check text-acid mt-1"></i><span class="text-gray-400"><strong class="text-white">Enterprise sharing:</strong> Publish, embed in Teams/SharePoint/websites, row-level security, email subscriptions.</span></li>
+                            <li class="flex items-start gap-3"><i class="fas fa-check text-acid mt-1"></i><span class="text-gray-400"><strong class="text-white">Uses SQL underneath:</strong> Power BI writes optimized SQL queries to your database. You get the best of both worlds.</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="glass-card rounded-2xl p-6 mt-8 text-center">
+                    <p class="text-gray-400"><i class="fas fa-lightbulb text-acid mr-2"></i><strong class="text-white">Real Example:</strong> A business user needed monthly sales by region, product, and customer segment. In SQL, this required <span class="text-blue-400">3 joins, a CTE, and GROUP BY</span> — 25 lines of code. Then they exported to Excel and manually created charts. In Power BI: <span class="text-acid">connect → drag Region to map → drag Sales to size → done in 2 minutes</span>. Same result, zero code.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-4xl mx-auto"></div>
+
+    <!-- Section 4: Popularity, Pay Scale, Career Growth -->
+    <section id="careers" class="py-32 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <span class="badge mb-6 mx-auto w-fit"><i class="fas fa-rocket"></i> Chapter 04</span>
+                <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">POPULARITY & CAREER GROWTH</h2>
+                <p class="text-gray-400 text-lg max-w-3xl mx-auto">Why Power BI dominates the BI market and how it transforms careers</p>
+            </div>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
+                <div class="glass-card rounded-2xl p-6 text-center neon-hover">
+                    <div class="text-4xl md:text-5xl font-bold text-acid counter-value" data-target="97">0</div>
+                    <div class="text-gray-500 text-sm mt-2">% of Fortune 500<br>use Power BI</div>
+                </div>
+                <div class="glass-card rounded-2xl p-6 text-center neon-hover">
+                    <div class="text-4xl md:text-5xl font-bold text-acid counter-value" data-target="14">0</div>
+                    <div class="text-gray-500 text-sm mt-2">Years as<br>#1 BI Tool (Gartner)</div>
+                </div>
+                <div class="glass-card rounded-2xl p-6 text-center neon-hover">
+                    <div class="text-4xl md:text-5xl font-bold text-acid">$<span class="counter-value" data-target="95">0</span>K</div>
+                    <div class="text-gray-500 text-sm mt-2">Avg. Salary<br>(US Market)</div>
+                </div>
+                <div class="glass-card rounded-2xl p-6 text-center neon-hover">
+                    <div class="text-4xl md:text-5xl font-bold text-acid counter-value" data-target="35">0</div>
+                    <div class="text-gray-500 text-sm mt-2">% YoY Job<br>Growth</div>
+                </div>
+            </div>
+
+            <!-- Why popular -->
+            <div class="glass-card rounded-2xl p-8 md:p-12 mb-16">
+                <h3 class="text-3xl font-bold mb-8 text-center"><i class="fas fa-trophy text-acid mr-3"></i>Why Power BI is the #1 BI Tool</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="text-center">
+                        <div class="w-16 h-16 rounded-2xl bg-acid/10 flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-dollar-sign text-acid text-2xl"></i>
+                        </div>
+                        <h4 class="text-lg font-bold mb-2">Unbeatable Pricing</h4>
+                        <p class="text-gray-400 text-sm">Free version for individuals. Pro at $10/user/month vs Tableau at $70/user/month. Premium capacity for enterprise at a fraction of competitors.</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 rounded-2xl bg-acid/10 flex items-center justify-center mx-auto mb-4">
+                            <i class="fab fa-microsoft text-acid text-2xl"></i>
+                        </div>
+                        <h4 class="text-lg font-bold mb-2">Microsoft Ecosystem</h4>
+                        <p class="text-gray-400 text-sm">Seamless integration with Excel, Teams, SharePoint, Azure, SQL Server, Dynamics 365, Fabric. You're not buying a tool — you're joining an ecosystem.</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 rounded-2xl bg-acid/10 flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-graduation-cap text-acid text-2xl"></i>
+                        </div>
+                        <h4 class="text-lg font-bold mb-2">Easy to Learn</h4>
+                        <p class="text-gray-400 text-sm">Drag-and-drop interface. No coding required for 80% of tasks. People from finance, HR, sales, marketing — any background — can learn Power BI in weeks.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Job Roles -->
+            <h3 class="text-3xl font-bold mb-10 text-center">Power BI Job Roles & Salary Ranges</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-bold uppercase tracking-wider text-acid bg-acid/10 px-3 py-1 rounded-full">Entry Level</span>
+                        <span class="text-acid font-bold">$55K - $75K</span>
+                    </div>
+                    <h4 class="text-xl font-bold mb-2">Power BI Developer (Junior)</h4>
+                    <p class="text-gray-400 text-sm">Build reports, connect data sources, create basic DAX measures, publish dashboards. 0-2 years experience.</p>
+                </div>
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-bold uppercase tracking-wider text-cyan-400 bg-cyan-400/10 px-3 py-1 rounded-full">Mid Level</span>
+                        <span class="text-cyan-400 font-bold">$80K - $110K</span>
+                    </div>
+                    <h4 class="text-xl font-bold mb-2">Power BI Analyst</h4>
+                    <p class="text-gray-400 text-sm">Advanced DAX, data modeling, performance tuning, row-level security, mentoring juniors. 2-5 years experience.</p>
+                </div>
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-bold uppercase tracking-wider text-purple-400 bg-purple-400/10 px-3 py-1 rounded-full">Senior Level</span>
+                        <span class="text-purple-400 font-bold">$110K - $150K</span>
+                    </div>
+                    <h4 class="text-xl font-bold mb-2">Senior Power BI Developer</h4>
+                    <p class="text-gray-400 text-sm">Enterprise architecture, complex data models, Fabric integration, lead projects, stakeholder management. 5-8 years experience.</p>
+                </div>
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-bold uppercase tracking-wider text-orange-400 bg-orange-400/10 px-3 py-1 rounded-full">Specialized</span>
+                        <span class="text-orange-400 font-bold">$100K - $140K</span>
+                    </div>
+                    <h4 class="text-xl font-bold mb-2">BI Data Engineer</h4>
+                    <p class="text-gray-400 text-sm">Build data pipelines, ETL with Power Query + Azure Data Factory, data warehouse design, semantic model optimization.</p>
+                </div>
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-bold uppercase tracking-wider text-pink-400 bg-pink-400/10 px-3 py-1 rounded-full">Specialized</span>
+                        <span class="text-pink-400 font-bold">$90K - $130K</span>
+                    </div>
+                    <h4 class="text-xl font-bold mb-2">Power BI Consultant</h4>
+                    <p class="text-gray-400 text-sm">Work across clients, implement end-to-end BI solutions, train teams, design governance frameworks. Travel + remote hybrid.</p>
+                </div>
+                <div class="glass-card rounded-2xl p-6 neon-hover">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-bold uppercase tracking-wider text-acid bg-acid/10 px-3 py-1 rounded-full">Leadership</span>
+                        <span class="text-acid font-bold">$140K - $200K+</span>
+                    </div>
+                    <h4 class="text-xl font-bold mb-2">BI Manager / Lead</h4>
+                    <p class="text-gray-400 text-sm">Lead BI teams, define strategy, manage licenses & governance, align BI roadmap with business goals. 8+ years experience.</p>
+                </div>
+            </div>
+
+            <div class="glass-card rounded-2xl p-6 mt-10 text-center border-acid/20">
+                <p class="text-gray-400"><i class="fas fa-indian-rupee-sign text-acid mr-2"></i><strong class="text-white">India Salary Context:</strong> Power BI Fresher: ₹4-7 LPA → Mid-level: ₹8-15 LPA → Senior: ₹18-30 LPA → Lead/Manager: ₹30-50 LPA. The demand is skyrocketing as every company数字化转型s.</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-4xl mx-auto"></div>
+
+    <!-- Section 5: Installation & System Requirements -->
+    <section id="install" class="py-32 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <span class="badge mb-6 mx-auto w-fit"><i class="fas fa-download"></i> Chapter 05</span>
+                <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">INSTALLATION & REQUIREMENTS</h2>
+                <p class="text-gray-400 text-lg max-w-3xl mx-auto">Get Power BI Desktop running on your machine in minutes</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="text-2xl font-bold mb-6"><i class="fas fa-cogs text-acid mr-3"></i>System Requirements</h3>
+                    <div class="space-y-4">
+                        <div class="glass-card rounded-xl p-5 flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-acid/10 flex items-center justify-center shrink-0">
+                                <i class="fas fa-microchip text-acid text-sm"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold text-sm">Processor</div>
+                                <div class="text-gray-400 text-sm">64-bit (x64) processor — 1 GHz or faster. Recommended: 4+ cores for large models.</div>
+                            </div>
+                        </div>
+                        <div class="glass-card rounded-xl p-5 flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-acid/10 flex items-center justify-center shrink-0">
+                                <i class="fas fa-memory text-acid text-sm"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold text-sm">RAM</div>
+                                <div class="text-gray-400 text-sm">Minimum: 4 GB. Recommended: 8 GB+. For large datasets (100M+ rows): 16-32 GB.</div>
+                            </div>
+                        </div>
+                        <div class="glass-card rounded-xl p-5 flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-acid/10 flex items-center justify-center shrink-0">
+                                <i class="fas fa-hard-drive text-acid text-sm"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold text-sm">Storage</div>
+                                <div class="text-gray-400 text-sm">Minimum: 1 GB available. Recommended: SSD with 10 GB+ free for caching large datasets.</div>
+                            </div>
+                        </div>
+                        <div class="glass-card rounded-xl p-5 flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-acid/10 flex items-center justify-center shrink-0">
+                                <i class="fas fa-display text-acid text-sm"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold text-sm">Display</div>
+                                <div class="text-gray-400 text-sm">Minimum: 1280×720. Recommended: 1920×1080 or higher for comfortable dashboard building.</div>
+                            </div>
+                        </div>
+                        <div class="glass-card rounded-xl p-5 flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-acid/10 flex items-center justify-center shrink-0">
+                                <i class="fab fa-windows text-acid text-sm"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold text-sm">Operating System</div>
+                                <div class="text-gray-400 text-sm">Windows 10/11 (64-bit). Windows Server 2016+. <span class="text-red-400">Not available for macOS</span> — use Parallels/VM or Power BI Service in browser.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-2xl font-bold mb-6"><i class="fas fa-download text-acid mr-3"></i>How to Install</h3>
+                    <div class="glass-card rounded-2xl p-8">
+                        <div class="space-y-6">
+                            <div class="flex items-start gap-4">
+                                <div class="w-8 h-8 rounded-full bg-acid text-obsidian flex items-center justify-center font-bold text-sm shrink-0">1</div>
+                                <div>
+                                    <div class="font-bold">Download from Microsoft</div>
+                                    <div class="text-gray-400 text-sm">Go to <span class="text-acid">powerbi.microsoft.com</span> → Downloads → Power BI Desktop (Free). Or download from Microsoft Store.</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="w-8 h-8 rounded-full bg-acid text-obsidian flex items-center justify-center font-bold text-sm shrink-0">2</div>
+                                <div>
+                                    <div class="font-bold">Run the Installer</div>
+                                    <div class="text-gray-400 text-sm">Execute the <span class="text-acid">PBIDesktopSetup.exe</span> file. Follow the wizard — it's a standard Windows install, no special configuration needed.</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="w-8 h-8 rounded-full bg-acid text-obsidian flex items-center justify-center font-bold text-sm shrink-0">3</div>
+                                <div>
+                                    <div class="font-bold">Launch & Sign In</div>
+                                    <div class="text-gray-400 text-sm">Open Power BI Desktop. Sign in with your Microsoft account (outlook.com, hotmail.com, or corporate account). Free tier works with personal accounts.</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="w-8 h-8 rounded-full bg-acid text-obsidian flex items-center justify-center font-bold text-sm shrink-0">4</div>
+                                <div>
+                                    <div class="font-bold">Start Building!</div>
+                                    <div class="text-gray-400 text-sm">You'll see the start screen. Click "Get Data" or open a sample report. You're ready to go — <span class="text-acid">completely free</span>.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-2xl p-6 mt-6 border-acid/20">
+                        <p class="text-sm text-gray-400"><i class="fas fa-info-circle text-acid mr-2"></i><strong class="text-white">Pro Tip:</strong> Power BI Desktop is 100% free for building reports. You only need a paid license when you want to <span class="text-acid">publish and share</span> reports on Power BI Service. For learning, the free version is all you need.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-4xl mx-auto"></div>
+
+    <!-- Section 6: Components of Power BI -->
+    <section id="components" class="py-32 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <span class="badge mb-6 mx-auto w-fit"><i class="fas fa-puzzle-piece"></i> Chapter 06</span>
+                <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">POWER BI COMPONENTS</h2>
+                <p class="text-gray-400 text-lg max-w-3xl mx-auto">The four pillars of the Power BI ecosystem</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="glass-card rounded-2xl p-8 neon-hover border-acid/20 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-acid/5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+                    <div class="relative">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-14 h-14 rounded-xl bg-acid/10 flex items-center justify-center">
+                                <i class="fas fa-desktop text-acid text-2xl"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs text-acid font-bold uppercase tracking-wider">Primary Tool</span>
+                                <h3 class="text-2xl font-bold">Power BI Desktop</h3>
+                            </div>
+                        </div>
+                        <p class="text-gray-400 mb-4">The free desktop application where you build reports. Connect to data, transform with Power Query, write DAX, create visuals — all locally on your machine.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs bg-white/5 px-3 py-1 rounded-full text-gray-400">Data Connection</span>
+                            <span class="text-xs bg-white/5 px-3 py-1 rounded-full text-gray-400">Power Query</span>
+                            <span class="text-xs bg-white/5 px-3 py-1 rounded-full text-gray-400">DAX</span>
+                            <span class="text-xs bg-white/5 px-3 py-1 rounded-full text-gray-400">Visualizations</span>
+                            <span class="text-xs bg-white/5 px-3 py-1 rounded-full text-gray-400">Data Modeling</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-8 neon-hover">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-14 h-14 rounded-xl bg-blue-500/10 flex items-center justify-center">
+                            <i class="fas fa-cloud text-blue-400 text-2xl"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs text-blue-400 font-bold uppercase tracking-wider">Cloud Platform</span>
+                            <h3 class="text-2xl font-bold">Power BI Service</h3>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-4">The cloud-based SaaS service (app.powerbi.com) where you publish, share, and collaborate on reports. Includes workspaces, dashboards, apps, dataflows, scheduled refresh, and monitoring.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-xs bg-white/5 px-3 py-1 rounded-full text-gray-400">Publishing</span>
+                        <span class="text-xs bg-white/5 px-3 py-1 rounded-full text-gray-400">Sharing</span>
+                        <span class="text-xs bg-white/5 px-3 py-1 rounded-full text-gray-400">Workspaces</span>
+                        <span class="text-xs bg-white/5 px-3 py-1 rounded-full text-gray-400">Scheduled Refresh</span>
+                        <span class="text-xs bg-white/5 px-3 py-1 rounded-full text-gray-400">Row-Level Security</span>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-8 neon-hover">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-14 h-14 rounded-xl bg-purple-500/10 flex items-center justify-center">
+                            <i class="fas fa-network-wired text-purple-400 text-2xl"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs text-purple-400 font-bold uppercase tracking-wider">Bridge</span>
+                            <h3 class="text-2xl font-bold">Power BI Gateway</h3>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-4">A bridge between on-premises data sources and the Power BI Service. When your data lives in a local SQL Server, SharePoint on-prem, or file share — the gateway securely tunnels that data to the cloud for scheduled refresh.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-xs bg-white/5 px-3 py-1 rounded-full text-gray-400">On-Premises Bridge</span>
+                        <span class="text-xs bg-white/5 px-3 py-1 rounded-full text-gray-400">Data Refresh</span>
+                        <span class="text-xs bg-white/5 px-3 py-1 rounded-full text-gray-400">Personal vs Enterprise</span>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-8 neon-hover">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-14 h-14 rounded-xl bg-orange-500/10 flex items-center justify-center">
+                            <i class="fas fa-file-alt text-orange-400 text-2xl"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs text-orange-400 font-bold uppercase tracking-wider">Pixel-Perfect</span>
+                            <h3 class="text-2xl font-bold">Power BI Paginated Reports</h3>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-4">For formatted, multi-page reports like invoices, purchase orders, financial statements — optimized for printing and PDF generation. Built on SQL Server Reporting Services (SSRS) technology, now part of Power BI Premium.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-xs bg-white/5 px-3 py-1 rounded-full text-gray-400">Print-Optimized</span>
+                        <span class="text-xs bg-white/5 px-3 py-1 rounded-full text-gray-400">Pixel-Perfect</span>
+                        <span class="text-xs bg-white/5 px-3 py-1 rounded-full text-gray-400">Premium Only</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-4xl mx-auto"></div>
+
+    <!-- Section 7: Deep Dive - Power BI Desktop -->
+    <section id="desktop" class="py-32 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <span class="badge mb-6 mx-auto w-fit"><i class="fas fa-laptop-code"></i> Chapter 07</span>
+                <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">POWER BI DESKTOP DEEP DIVE</h2>
+                <p class="text-gray-400 text-lg max-w-3xl mx-auto">The heart of Power BI — where all the magic happens</p>
+            </div>
+
+            <!-- What & When -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
+                <div class="glass-card rounded-2xl p-8">
+                    <h3 class="text-2xl font-bold mb-4"><i class="fas fa-question text-acid mr-3"></i>What is Power BI Desktop?</h3>
+                    <p class="text-gray-400 leading-relaxed">Power BI Desktop is a <span class="text-acid font-semibold">free Windows application</span> that is your primary authoring tool. It's where you spend 90% of your time as a Power BI developer. You connect to data sources, clean and transform data (Power Query), build data models with relationships, write DAX calculations, and design interactive report pages — all in one unified interface.</p>
+                </div>
+                <div class="glass-card rounded-2xl p-8">
+                    <h3 class="text-2xl font-bold mb-4"><i class="fas fa-clock text-acid mr-3"></i>When to Use It?</h3>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-start gap-3"><i class="fas fa-check text-acid mt-1"></i>Building new reports and dashboards from scratch</li>
+                        <li class="flex items-start gap-3"><i class="fas fa-check text-acid mt-1"></i>Connecting to and transforming raw data sources</li>
+                        <li class="flex items-start gap-3"><i class="fas fa-check text-acid mt-1"></i>Creating complex DAX measures and calculated columns</li>
+                        <li class="flex items-start gap-3"><i class="fas fa-check text-acid mt-1"></i>Designing data models with relationships (1:1, 1:N, M:N)</li>
+                        <li class="flex items-start gap-3"><i class="fas fa-check text-acid mt-1"></i>Before publishing to Power BI Service</li>
+                        <li class="flex items-start gap-3"><i class="fas fa-check text-acid mt-1"></i>Performance tuning and optimization</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Three Layers -->
+            <h3 class="text-3xl font-bold mb-12 text-center">The Three Layers Inside Power BI Desktop</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+                <!-- Power Query -->
+                <div class="glass-card rounded-2xl p-8 relative overflow-hidden border-purple-500/20">
+                    <div class="absolute top-4 right-4 text-6xl font-bold text-white/[0.02]">01</div>
+                    <div class="w-14 h-14 rounded-xl bg-purple-500/10 flex items-center justify-center mb-6">
+                        <i class="fas fa-broom text-purple-400 text-2xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-2 text-purple-400">Power Query</h4>
+                    <p class="text-xs text-purple-400/60 uppercase tracking-wider font-bold mb-4">Data Transformation Layer</p>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">The ETL engine inside Power BI. Connect to 200+ data sources and transform data without writing code.</p>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><i class="fas fa-plug text-purple-400 mr-2 text-xs"></i>200+ connectors (SQL, Excel, Web, API, Azure, Salesforce, SAP...)</li>
+                        <li><i class="fas fa-hand-pointer text-purple-400 mr-2 text-xs"></i>Drag & drop transformations</li>
+                        <li><i class="fas fa-filter text-purple-400 mr-2 text-xs"></i>Remove duplicates, filter rows, split columns</li>
+                        <li><i class="fas fa-compress text-purple-400 mr-2 text-xs"></i>Unpivot, merge, append, group by</li>
+                        <li><i class="fas fa-code text-purple-400 mr-2 text-xs"></i>M formula behind the scenes (optional)</li>
+                    </ul>
+                </div>
+
+                <!-- DAX -->
+                <div class="glass-card rounded-2xl p-8 relative overflow-hidden border-cyan-500/20">
+                    <div class="absolute top-4 right-4 text-6xl font-bold text-white/[0.02]">02</div>
+                    <div class="w-14 h-14 rounded-xl bg-cyan-500/10 flex items-center justify-center mb-6">
+                        <i class="fas fa-calculator text-cyan-400 text-2xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-2 text-cyan-400">DAX</h4>
+                    <p class="text-xs text-cyan-400/60 uppercase tracking-wider font-bold mb-4">Calculation Layer</p>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">Data Analysis Expressions — the formula language for custom calculations that go beyond simple aggregations.</p>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><i class="fas fa-function text-cyan-400 mr-2 text-xs"></i>Measures (dynamic calculations)</li>
+                        <li><i class="fas fa-columns text-cyan-400 mr-2 text-xs"></i>Calculated columns (row-level)</li>
+                        <li><i class="fas fa-table text-cyan-400 mr-2 text-xs"></i>Calculated tables</li>
+                        <li><i class="fas fa-clock text-cyan-400 mr-2 text-xs"></i>Time intelligence (YTD, MTD, rolling avg)</li>
+                        <li><i class="fas fa-filter text-cyan-400 mr-2 text-xs"></i>CALCULATE — the most powerful DAX function</li>
+                    </ul>
+                </div>
+
+                <!-- Visualization -->
+                <div class="glass-card rounded-2xl p-8 relative overflow-hidden border-acid/20">
+                    <div class="absolute top-4 right-4 text-6xl font-bold text-white/[0.02]">03</div>
+                    <div class="w-14 h-14 rounded-xl bg-acid/10 flex items-center justify-center mb-6">
+                        <i class="fas fa-palette text-acid text-2xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-2 text-acid">Visualization Layer</h4>
+                    <p class="text-xs text-acid/60 uppercase tracking-wider font-bold mb-4">Presentation Layer</p>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">The canvas where you design stunning, interactive reports that tell data stories.</p>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><i class="fas fa-chart-bar text-acid mr-2 text-xs"></i>200+ built-in visual types</li>
+                        <li><i class="fas fa-paint-brush text-acid mr-2 text-xs"></i>Custom themes & formatting</li>
+                        <li><i class="fas fa-mouse-pointer text-acid mr-2 text-xs"></i>Cross-filtering & drill-through</li>
+                        <li><i class="fas fa-bookmark text-acid mr-2 text-xs"></i>Bookmarks, buttons, navigation</li>
+                        <li><i class="fas fa-store text-acid mr-2 text-xs"></i>AppSource custom visuals marketplace</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Power Query Deep Dive -->
+            <div class="glass-card rounded-2xl p-8 md:p-12 mb-16 border-purple-500/20">
+                <h3 class="text-3xl font-bold mb-6 text-center"><i class="fas fa-magic text-purple-400 mr-3"></i>Power Query: The Unsung Hero</h3>
+                <p class="text-gray-400 text-lg max-w-4xl mx-auto text-center mb-8">Most beginners underestimate Power Query. In reality, <span class="text-purple-400 font-semibold">70% of a Power BI developer's work happens in Power Query</span>. It's the most powerful data transformation tool you'll ever use — and it requires zero coding.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text-lg font-bold mb-4 text-purple-400">How It Works — Just Drag & Drop</h4>
+                        <div class="space-y-3 text-sm text-gray-400">
+                            <div class="flex items-start gap-3 p-3 bg-white/[0.02] rounded-lg">
+                                <span class="text-purple-400 font-bold">1.</span>
+                                <span>Click <span class="text-white">"Get Data"</span> → Choose your source (Excel, SQL, Web, API...)</span>
+                            </div>
+                            <div class="flex items-start gap-3 p-3 bg-white/[0.02] rounded-lg">
+                                <span class="text-purple-400 font-bold">2.</span>
+                                <span>Preview loads — see your data in a table view immediately</span>
+                            </div>
+                            <div class="flex items-start gap-3 p-3 bg-white/[0.02] rounded-lg">
+                                <span class="text-purple-400 font-bold">3.</span>
+                                <span>Right-click a column → <span class="text-white">Remove, Rename, Change Type, Split, Replace Values</span></span>
+                            </div>
+                            <div class="flex items-start gap-3 p-3 bg-white/[0.02] rounded-lg">
+                                <span class="text-purple-400 font-bold">4.</span>
+                                <span>Use the ribbon: <span class="text-white">Merge Queries</span> (like SQL JOIN), <span class="text-white">Append Queries</span> (like UNION)</span>
+                            </div>
+                            <div class="flex items-start gap-3 p-3 bg-white/[0.02] rounded-lg">
+                                <span class="text-purple-400 font-bold">5.</span>
+                                <span>Click <span class="text-white">"Close & Apply"</span> — Power Query records every step and replays it on refresh</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-bold mb-4 text-purple-400">Why Power Query is Powerful</h4>
+                        <div class="space-y-3 text-sm text-gray-400">
+                            <div class="flex items-start gap-3 p-3 bg-white/[0.02] rounded-lg">
+                                <i class="fas fa-redo text-purple-400 mt-0.5"></i>
+                                <span><strong class="text-white">Reproducible:</strong> Every transformation is a recorded step. Refresh = replay all steps automatically on new data.</span>
+                            </div>
+                            <div class="flex items-start gap-3 p-3 bg-white/[0.02] rounded-lg">
+                                <i class="fas fa-bolt text-purple-400 mt-0.5"></i>
+                                <span><strong class="text-white">Fast:</strong> Query folding pushes transformations to the source database (SQL WHERE, GROUP BY) — only needed rows are fetched.</span>
+                            </div>
+                            <div class="flex items-start gap-3 p-3 bg-white/[0.02] rounded-lg">
+                                <i class="fas fa-link text-purple-400 mt-0.5"></i>
+                                <span><strong class="text-white">Reusable:</strong> Reference one query from another. Build a template, apply to 50 files.</span>
+                            </div>
+                            <div class="flex items-start gap-3 p-3 bg-white/[0.02] rounded-lg">
+                                <i class="fas fa-code text-purple-400 mt-0.5"></i>
+                                <span><strong class="text-white">M Language:</strong> When you outgrow the UI, you can write M formulas for advanced logic. But 95% of the time, the UI is enough.</span>
+                            </div>
+                            <div class="flex items-start gap-3 p-3 bg-white/[0.02] rounded-lg">
+                                <i class="fas fa-share text-purple-400 mt-0.5"></i>
+                                <span><strong class="text-white">Cross-Tool:</strong> Same Power Query engine in Excel, Power BI, Azure Data Factory, Fabric Data Factory.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Anyone Can Learn -->
+            <div class="animated-border">
+                <div class="bg-cardDark rounded-2xl p-8 md:p-12 text-center">
+                    <h3 class="text-3xl font-bold mb-6"><i class="fas fa-users text-acid mr-3"></i>Power BI is for EVERYONE</h3>
+                    <p class="text-gray-400 text-lg max-w-4xl mx-auto mb-8">Unlike programming languages that require months of training, Power BI's <span class="text-acid font-semibold">drag-and-drop interface</span> means anyone from any background can start building dashboards within their first week.</p>
+                    <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                        <div class="glass-card rounded-xl p-4 text-center">
+                            <i class="fas fa-coins text-yellow-400 text-2xl mb-2"></i>
+                            <div class="text-sm font-bold">Finance</div>
+                        </div>
+                        <div class="glass-card rounded-xl p-4 text-center">
+                            <i class="fas fa-users text-blue-400 text-2xl mb-2"></i>
+                            <div class="text-sm font-bold">HR</div>
+                        </div>
+                        <div class="glass-card rounded-xl p-4 text-center">
+                            <i class="fas fa-shopping-cart text-green-400 text-2xl mb-2"></i>
+                            <div class="text-sm font-bold">Sales</div>
+                        </div>
+                        <div class="glass-card rounded-xl p-4 text-center">
+                            <i class="fas fa-bullhorn text-pink-400 text-2xl mb-2"></i>
+                            <div class="text-sm font-bold">Marketing</div>
+                        </div>
+                        <div class="glass-card rounded-xl p-4 text-center">
+                            <i class="fas fa-stethoscope text-red-400 text-2xl mb-2"></i>
+                            <div class="text-sm font-bold">Healthcare</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-500 text-sm mt-6">No SQL background needed. No Python needed. No statistics degree needed. Just curiosity and willingness to learn.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-4xl mx-auto"></div>
+
+    <!-- Section 8: Licensing -->
+    <section id="licenses" class="py-32 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <span class="badge mb-6 mx-auto w-fit"><i class="fas fa-key"></i> Chapter 08</span>
+                <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">POWER BI LICENSING</h2>
+                <p class="text-gray-400 text-lg max-w-3xl mx-auto">Understanding the licensing model — the most confusing part of Power BI, simplified</p>
+            </div>
+
+            <!-- Free vs Pro vs Premium -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                <!-- Free -->
+                <div class="glass-card rounded-2xl p-8">
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 rounded-full bg-gray-500/10 flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-gift text-gray-400 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-400">Free</h3>
+                        <div class="text-3xl font-bold mt-2">$0</div>
+                        <div class="text-gray-500 text-sm">Forever free</div>
+                    </div>
+                    <ul class="space-y-3 text-sm text-gray-400">
+                        <li><i class="fas fa-check text-green-400 mr-2"></i>Power BI Desktop (full features)</li>
+                        <li><i class="fas fa-check text-green-400 mr-2"></i>Connect to 200+ data sources</li>
+                        <li><i class="fas fa-check text-green-400 mr-2"></i>Build unlimited reports</li>
+                        <li><i class="fas fa-check text-green-400 mr-2"></i>Publish to My Workspace</li>
+                        <li><i class="fas fa-times text-red-400 mr-2"></i>No sharing with others</li>
+                        <li><i class="fas fa-times text-red-400 mr-2"></i>No scheduled refresh</li>
+                        <li><i class="fas fa-times text-red-400 mr-2"></i>No workspace collaboration</li>
+                        <li><i class="fas fa-times text-red-400 mr-2"></i>No API embedding</li>
+                    </ul>
+                    <div class="mt-6 text-center text-xs text-gray-600">Best for: Learning & personal projects</div>
+                </div>
+
+                <!-- Pro -->
+                <div class="glass-card rounded-2xl p-8 border-acid/30 relative">
+                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-acid text-obsidian text-xs font-bold px-4 py-1 rounded-full uppercase tracking-wider">Most Popular</div>
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 rounded-full bg-acid/10 flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-star text-acid text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-acid">Pro</h3>
+                        <div class="text-3xl font-bold mt-2">$10</div>
+                        <div class="text-gray-500 text-sm">per user / month</div>
+                    </div>
+                    <ul class="space-y-3 text-sm text-gray-400">
+                        <li><i class="fas fa-check text-acid mr-2"></i>Everything in Free</li>
+                        <li><i class="fas fa-check text-acid mr-2"></i>Share reports with other Pro users</li>
+                        <li><i class="fas fa-check text-acid mr-2"></i>Scheduled refresh (8/day)</li>
+                        <li><i class="fas fa-check text-acid mr-2"></i>Workspaces for team collaboration</li>
+                        <li><i class="fas fa-check text-acid mr-2"></i>Row-level security</li>
+                        <li><i class="fas fa-check text-acid mr-2"></i>Subscribe to reports (email)</li>
+                        <li><i class="fas fa-check text-acid mr-2"></i>Embed in Teams, SharePoint</li>
+                        <li><i class="fas fa-times text-red-400 mr-2"></i>Limited to 10GB per dataset</li>
+                    </ul>
+                    <div class="mt-6 text-center text-xs text-acid">Best for: Teams & small organizations</div>
+                </div>
+
+                <!-- Premium Per User -->
+                <div class="glass-card rounded-2xl p-8 border-purple-500/30">
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 rounded-full bg-purple-500/10 flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-crown text-purple-400 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-purple-400">Premium Per User</h3>
+                        <div class="text-3xl font-bold mt-2">$20</div>
+                        <div class="text-gray-500 text-sm">per user / month</div>
+                    </div>
+                    <ul class="space-y-3 text-sm text-gray-400">
+                        <li><i class="fas fa-check text-purple-400 mr-2"></i>Everything in Pro</li>
+                        <li><i class="fas fa-check text-purple-400 mr-2"></i>100GB dataset size (vs 10GB)</li>
+                        <li><i class="fas fa-check text-purple-400 mr-2"></i>Paginated reports</li>
+                        <li><i class="fas fa-check text-purple-400 mr-2"></i>AI-powered features (Key Influencers, etc.)</li>
+                        <li><i class="fas fa-check text-purple-400 mr-2"></i>48 refreshes/day</li>
+                        <li><i class="fas fa-check text-purple-400 mr-2"></i>XMLA endpoint for external tools</li>
+                        <li><i class="fas fa-check text-purple-400 mr-2"></i>Deployment pipelines</li>
+                        <li><i class="fas fa-times text-red-400 mr-2"></i>No dedicated compute (shared)</li>
+                    </ul>
+                    <div class="mt-6 text-center text-xs text-purple-400">Best for: Power users who need premium features</div>
+                </div>
+            </div>
+
+            <!-- Premium Capacity -->
+            <h3 class="text-3xl font-bold mb-8 text-center">Premium Capacity (For Enterprise)</h3>
+            <p class="text-gray-400 text-center max-w-3xl mx-auto mb-10">When organizations need dedicated compute resources, larger datasets, and the ability to share reports with anyone (even free users), they buy Premium Capacity — dedicated hardware in Microsoft's cloud.</p>
+
+            <div class="overflow-x-auto">
+                <table class="comparison-table w-full rounded-xl overflow-hidden">
+                    <thead>
+                        <tr>
+                            <th class="text-sm font-bold uppercase tracking-wider">Capacity</th>
+                            <th class="text-sm font-bold uppercase tracking-wider">SKU</th>
+                            <th class="text-sm font-bold uppercase tracking-wider">Monthly Cost</th>
+                            <th class="text-sm font-bold uppercase tracking-wider">v-Cores</th>
+                            <th class="text-sm font-bold uppercase tracking-wider">Memory</th>
+                            <th class="text-sm font-bold uppercase tracking-wider">Max Dataset</th>
+                            <th class="text-sm font-bold uppercase tracking-wider">Best For</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm text-gray-400">
+                        <tr>
+                            <td class="font-bold text-white">EM1</td>
+                            <td class="text-acid">Embedded</td>
+                            <td>$695</td>
+                            <td>1</td>
+                            <td>2.5 GB</td>
+                            <td>10 GB</td>
+                            <td>ISV Embedding</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold text-white">EM3</td>
+                            <td class="text-acid">Embedded</td>
+                            <td>$2,085</td>
+                            <td>3</td>
+                            <td>7.5 GB</td>
+                            <td>10 GB</td>
+                            <td>ISV Embedding</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold text-acid">P1</td>
+                            <td class="text-acid font-bold">Premium</td>
+                            <td class="text-acid font-bold">$4,996</td>
+                            <td>8 v-cores</td>
+                            <td>25 GB</td>
+                            <td>100 GB</td>
+                            <td>Department (50-100 users)</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold text-acid">P2</td>
+                            <td class="text-acid font-bold">Premium</td>
+                            <td class="text-acid font-bold">$8,329</td>
+                            <td>16 v-cores</td>
+                            <td>50 GB</td>
+                            <td>200 GB</td>
+                            <td>Large Department</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold text-acid">P3</td>
+                            <td class="text-acid font-bold">Premium</td>
+                            <td class="text-acid font-bold">$16,658</td>
+                            <td>32 v-cores</td>
+                            <td>100 GB</td>
+                            <td>400 GB</td>
+                            <td>Enterprise (1000+ users)</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold text-purple-400">P5</td>
+                            <td class="text-purple-400 font-bold">Premium</td>
+                            <td class="text-purple-400 font-bold">$49,974</td>
+                            <td>128 v-cores</td>
+                            <td>384 GB</td>
+                            <td>1,000 GB (1 TB)</td>
+                            <td>Mission Critical</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="glass-card rounded-2xl p-6 mt-8 text-center">
+                <p class="text-gray-400"><i class="fas fa-lightbulb text-acid mr-2"></i><strong class="text-white">Key Insight:</strong> Premium Capacity lets you share reports with <span class="text-acid">Free users</span>. Without it, every viewer needs a Pro license ($10/month). If you have 500 viewers, that's $5,000/month in Pro licenses — a P1 capacity at $4,996 might be cheaper AND gives you dedicated compute power. This is the licensing math every BI manager needs to know.</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-4xl mx-auto"></div>
+
+    <!-- Section 9: Architecture -->
+    <section id="architecture" class="py-32 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <span class="badge mb-6 mx-auto w-fit"><i class="fas fa-sitemap"></i> Chapter 09</span>
+                <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">POWER BI ARCHITECTURE</h2>
+                <p class="text-gray-400 text-lg max-w-3xl mx-auto">Understanding how everything connects — from tenant to report</p>
+            </div>
+
+            <!-- Architecture Flow -->
+            <div class="max-w-4xl mx-auto">
+                <!-- Level 1: Tenant -->
+                <div class="text-center">
+                    <div class="inline-block glass-card rounded-2xl p-6 md:p-8 neon-hover border-acid/30 max-w-lg w-full">
+                        <div class="flex items-center justify-center gap-3 mb-3">
+                            <div class="w-12 h-12 rounded-xl bg-acid/10 flex items-center justify-center">
+                                <i class="fas fa-building text-acid text-xl"></i>
+                            </div>
+                            <div class="text-left">
+                                <span class="text-xs text-acid font-bold uppercase tracking-wider">Level 1</span>
+                                <h3 class="text-xl font-bold">Power BI Tenant</h3>
+                            </div>
+                        </div>
+                        <p class="text-gray-400 text-sm">The top-level container tied to your organization's Microsoft Entra ID (Azure AD). One tenant per organization. All users, workspaces, capacities, and data live within this boundary. Example: <span class="text-acid">contoso.powerbi.com</span></p>
+                    </div>
+                </div>
+
+                <div class="arch-flow-line"></div>
+
+                <!-- Level 2: Resource Group -->
+                <div class="text-center">
+                    <div class="inline-block glass-card rounded-2xl p-6 md:p-8 neon-hover border-blue-500/20 max-w-lg w-full">
+                        <div class="flex items-center justify-center gap-3 mb-3">
+                            <div class="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center">
+                                <i class="fas fa-layer-group text-blue-400 text-xl"></i>
+                            </div>
+                            <div class="text-left">
+                                <span class="text-xs text-blue-400 font-bold uppercase tracking-wider">Level 2</span>
+                                <h3 class="text-xl font-bold">Resource Group</h3>
+                            </div>
+                        </div>
+                        <p class="text-gray-400 text-sm">An Azure-level grouping for management and billing. Contains your Power BI capacity resources along with other Azure resources (storage, networking, etc.). Primarily relevant for Premium Capacity management.</p>
+                    </div>
+                </div>
+
+                <div class="arch-flow-line"></div>
+
+                <!-- Level 3: Capacity -->
+                <div class="text-center">
+                    <div class="inline-block glass-card rounded-2xl p-6 md:p-8 neon-hover border-purple-500/20 max-w-lg w-full">
+                        <div class="flex items-center justify-center gap-3 mb-3">
+                            <div class="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center">
+                                <i class="fas fa-server text-purple-400 text-xl"></i>
+                            </div>
+                            <div class="text-left">
+                                <span class="text-xs text-purple-400 font-bold uppercase tracking-wider">Level 3</span>
+                                <h3 class="text-xl font-bold">Capacity</h3>
+                            </div>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-3">The <span class="text-purple-400 font-semibold">dedicated compute resources</span> (v-cores, memory) that power your workspaces. Think of it as buying a server in Microsoft's cloud.</p>
+                        <div class="grid grid-cols-2 gap-3 text-xs">
+                            <div class="bg-white/[0.03] rounded-lg p-3 text-center">
+                                <div class="text-purple-400 font-bold">Shared Capacity</div>
+                                <div class="text-gray-500">Free & Pro users (no dedicated compute)</div>
+                            </div>
+                            <div class="bg-white/[0.03] rounded-lg p-3 text-center">
+                                <div class="text-purple-400 font-bold">Premium Capacity</div>
+                                <div class="text-gray-500">P1-P5 (dedicated v-cores & RAM)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arch-flow-line"></div>
+
+                <!-- Level 4: Domains -->
+                <div class="text-center">
+                    <div class="inline-block glass-card rounded-2xl p-6 md:p-8 neon-hover border-orange-500/20 max-w-lg w-full">
+                        <div class="flex items-center justify-center gap-3 mb-3">
+                            <div class="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center">
+                                <i class="fas fa-sitemap text-orange-400 text-xl"></i>
+                            </div>
+                            <div class="text-left">
+                                <span class="text-xs text-orange-400 font-bold uppercase tracking-wider">Level 4</span>
+                                <h3 class="text-xl font-bold">Domains & Subdomains</h3>
+                            </div>
+                        </div>
+                        <p class="text-gray-400 text-sm">Organizational boundaries within your tenant for <span class="text-orange-400 font-semibold">governance and discovery</span>. A domain = "Sales Analytics", subdomains = "APAC Sales", "EMEA Sales". Helps users find relevant content and IT to manage permissions at scale. (Optional — governance feature)</p>
+                    </div>
+                </div>
+
+                <div class="arch-flow-line"></div>
+
+                <!-- Level 5: Workspace -->
+                <div class="text-center">
+                    <div class="inline-block glass-card rounded-2xl p-6 md:p-8 neon-hover border-cyan-500/20 max-w-lg w-full">
+                        <div class="flex items-center justify-center gap-3 mb-3">
+                            <div class="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center">
+                                <i class="fas fa-folder-open text-cyan-400 text-xl"></i>
+                            </div>
+                            <div class="text-left">
+                                <span class="text-xs text-cyan-400 font-bold uppercase tracking-wider">Level 5</span>
+                                <h3 class="text-xl font-bold">Workspaces</h3>
+                            </div>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-3">The <span class="text-cyan-400 font-semibold">collaboration container</span> where teams work. Each workspace holds semantic models, reports, dashboards, and dataflows. Think of it as a project folder.</p>
+                        <div class="space-y-2 text-xs text-gray-400">
+                            <div class="flex items-center gap-2 bg-white/[0.03] rounded-lg p-2">
+                                <i class="fas fa-user-shield text-cyan-400"></i>
+                                <span><strong class="text-white">Roles:</strong> Admin, Member, Contributor, Viewer — each with specific permissions</span>
+                            </div>
+                            <div class="flex items-center gap-2 bg-white/[0.03] rounded-lg p-2">
+                                <i class="fas fa-building text-cyan-400"></i>
+                                <span><strong class="text-white">Example:</strong> "Finance Workspace", "HR Analytics", "Sales Dashboard"</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arch-flow-line"></div>
+
+                <!-- Level 6: Contents -->
+                <div class="text-center">
+                    <div class="inline-block glass-card rounded-2xl p-6 md:p-8 neon-hover border-acid/30 max-w-xl w-full">
+                        <div class="flex items-center justify-center gap-3 mb-6">
+                            <div class="w-12 h-12 rounded-xl bg-acid/10 flex items-center justify-center">
+                                <i class="fas fa-cubes text-acid text-xl"></i>
+                            </div>
+                            <div class="text-left">
+                                <span class="text-xs text-acid font-bold uppercase tracking-wider">Level 6</span>
+                                <h3 class="text-xl font-bold">What Lives Inside a Workspace</h3>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div class="bg-white/[0.03] rounded-xl p-4 text-center border border-white/5">
+                                <i class="fas fa-database text-acid text-2xl mb-2"></i>
+                                <div class="font-bold text-sm">Semantic Model</div>
+                                <div class="text-gray-500 text-xs mt-1">Your data model with tables, relationships, DAX measures. Formerly called "Dataset".</div>
+                            </div>
+                            <div class="bg-white/[0.03] rounded-xl p-4 text-center border border-white/5">
+                                <i class="fas fa-chart-bar text-acid text-2xl mb-2"></i>
+                                <div class="font-bold text-sm">Reports</div>
+                                <div class="text-gray-500 text-xs mt-1">Interactive multi-page reports with visuals, built on top of semantic models.</div>
+                            </div>
+                            <div class="bg-white/[0.03] rounded-xl p-4 text-center border border-white/5">
+                                <i class="fas fa-tachometer-alt text-acid text-2xl mb-2"></i>
+                                <div class="font-bold text-sm">Dashboards</div>
+                                <div class="text-gray-500 text-xs mt-1">Single-page canvases pinning visuals from multiple reports. Quick overview layer.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- How Teams Use -->
+            <div class="max-w-5xl mx-auto mt-20">
+                <h3 class="text-3xl font-bold mb-8 text-center">How Different Teams Use This Architecture</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="glass-card rounded-xl p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center">
+                                <i class="fas fa-coins text-green-400"></i>
+                            </div>
+                            <h4 class="font-bold">Finance Team</h4>
+                        </div>
+                        <div class="text-sm text-gray-400 space-y-1">
+                            <p>→ Workspace: <span class="text-white">"Finance Analytics"</span></p>
+                            <p>→ Semantic Model: GL, P&L, Cash Flow data</p>
+                            <p>→ Reports: Monthly close, Budget vs Actual</p>
+                            <p>→ Shared with: CFO, Finance dept, Board</p>
+                        </div>
+                    </div>
+                    <div class="glass-card rounded-xl p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center">
+                                <i class="fas fa-shopping-cart text-blue-400"></i>
+                            </div>
+                            <h4 class="font-bold">Sales Team</h4>
+                        </div>
+                        <div class="text-sm text-gray-400 space-y-1">
+                            <p>→ Workspace: <span class="text-white">"Sales Analytics"</span></p>
+                            <p>→ Semantic Model: CRM data, Order data</p>
+                            <p>→ Reports: Pipeline, Win rate, Territory</p>
+                            <p>→ Shared with: VP Sales, Regional Managers</p>
+                        </div>
+                    </div>
+                    <div class="glass-card rounded-xl p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
+                                <i class="fas fa-users text-purple-400"></i>
+                            </div>
+                            <h4 class="font-bold">HR Team</h4>
+                        </div>
+                        <div class="text-sm text-gray-400 space-y-1">
+                            <p>→ Workspace: <span class="text-white">"People Analytics"</span></p>
+                            <p>→ Semantic Model: Employee, Attrition data</p>
+                            <p>→ Reports: Headcount, Diversity, Turnover</p>
+                            <p>→ Shared with: CHRO, HR Business Partners</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6 mt-8 text-center border-acid/20">
+                    <p class="text-gray-400 text-sm"><i class="fas fa-shield-halved text-acid mr-2"></i><strong class="text-white">Row-Level Security (RLS):</strong> Within the same report, Finance sees all regions' data, but North America manager only sees NA data. Sales rep sees only their own deals. This is configured at the <span class="text-acid">Semantic Model level</span> — one report, different views per user. No need to build separate reports for each team.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-4xl mx-auto"></div>
+
+    <!-- CTA Section -->
+    <section class="py-32 px-6 relative overflow-hidden">
+        <div class="hero-orb w-[600px] h-[600px] bg-acid left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2" style="opacity:0.08;"></div>
+        <div class="max-w-4xl mx-auto relative z-10 text-center">
+            <span class="badge mb-6 mx-auto w-fit"><i class="fas fa-graduation-cap"></i> Ready to Start?</span>
+            <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter mb-6">
+                <span class="gradient-text">YOUR POWER BI</span><br>
+                <span class="acid-gradient-text">JOURNEY STARTS HERE</span>
+            </h2>
+            <p class="text-gray-400 text-lg max-w-2xl mx-auto mb-10">
+                Join Vizonis Academy and go from zero to job-ready in Power BI. Learn from industry experts, build real projects, and get placed at top companies.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="https://wa.me/916364671786?text=Hi%20Vizonis%20Academy!%20I'm%20interested%20in%20the%20Power%20BI%20course.%20Please%20share%20details." target="_blank"
+                   class="glow-btn bg-acid text-obsidian px-12 py-5 rounded-full text-sm font-bold uppercase tracking-widest inline-flex items-center justify-center gap-3">
+                    <i class="fab fa-whatsapp text-xl"></i> Enroll via WhatsApp
+                </a>
+                <a href="tel:+916364671786"
+                   class="glow-btn border border-white/20 text-white px-12 py-5 rounded-full text-sm font-bold uppercase tracking-widest inline-flex items-center justify-center gap-3 hover:border-acid hover:text-acid">
+                    <i class="fas fa-phone"></i> Call Us Now
+                </a>
+            </div>
+            <p class="text-gray-600 text-sm mt-6"><i class="fas fa-phone mr-1"></i> +91 6364671786 &nbsp;|&nbsp; <i class="fab fa-whatsapp mr-1"></i> Available 24/7 on WhatsApp</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 py-16 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <div class="font-display text-2xl font-bold mb-4">
+                        <span class="text-acid">V</span>IZONIS
+                    </div>
+                    <p class="text-gray-500 text-sm leading-relaxed">India's leading academy for Data Analytics & Business Intelligence training. Industry-focused curriculum, real projects, guaranteed placement support.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4 text-gray-400">Courses</h4>
+                    <ul class="space-y-2 text-sm text-gray-500">
+                        <li><a href="#" class="hover:text-acid transition-colors">Microsoft Power BI</a></li>
+                        <li><a href="#" class="hover:text-acid transition-colors">SQL for Analytics</a></li>
+                        <li><a href="#" class="hover:text-acid transition-colors">DAX Masterclass</a></li>
+                        <li><a href="#" class="hover:text-acid transition-colors">Data Engineering</a></li>
+                        <li><a href="#" class="hover:text-acid transition-colors">Microsoft Fabric</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4 text-gray-400">Resources</h4>
+                    <ul class="space-y-2 text-sm text-gray-500">
+                        <li><a href="#" class="hover:text-acid transition-colors">Free Tutorials</a></li>
+                        <li><a href="#" class="hover:text-acid transition-colors">Sample Dashboards</a></li>
+                        <li><a href="#" class="hover:text-acid transition-colors">DAX Formula Guide</a></li>
+                        <li><a href="#" class="hover:text-acid transition-colors">Interview Questions</a></li>
+                        <li><a href="#" class="hover:text-acid transition-colors">Blog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-wider mb-4 text-gray-400">Contact</h4>
+                    <ul class="space-y-3 text-sm text-gray-500">
+                        <li class="flex items-center gap-2"><i class="fab fa-whatsapp text-green-400"></i> <a href="https://wa.me/916364671786" target="_blank" class="hover:text-acid transition-colors">+91 6364671786</a></li>
+                        <li class="flex items-center gap-2"><i class="fas fa-phone text-acid"></i> <a href="tel:+916364671786" class="hover:text-acid transition-colors">+91 6364671786</a></li>
+                        <li class="flex items-center gap-2"><i class="fas fa-envelope text-gray-400"></i> info@vizonis.com</li>
+                    </ul>
+                    <div class="flex gap-4 mt-6">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-acid/10 hover:text-acid transition-all text-gray-500"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-acid/10 hover:text-acid transition-all text-gray-500"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-acid/10 hover:text-acid transition-all text-gray-500"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-acid/10 hover:text-acid transition-all text-gray-500"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-gray-600 text-xs">© 2025 Vizonis Academy. All rights reserved.</p>
+                <p class="text-gray-700 text-xs">Built with <i class="fas fa-heart text-acid text-[10px]"></i> for aspiring data professionals</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/916364671786?text=Hi%20Vizonis%20Academy!%20I'm%20interested%20in%20Power%20BI%20training.%20Please%20share%20course%20details." target="_blank" class="whatsapp-float" aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp text-white text-3xl"></i>
+    </a>
+
+    <!-- WhatsApp Popup Toast -->
+    <div id="wa-toast" class="fixed bottom-28 right-6 z-[7999] glass-card rounded-xl p-4 max-w-xs transform translate-x-[120%] transition-transform duration-500">
+        <div class="flex items-start gap-3">
+            <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center shrink-0">
+                <i class="fab fa-whatsapp text-green-400 text-lg"></i>
+            </div>
+            <div>
+                <p class="text-sm font-bold">Have questions about Power BI?</p>
+                <p class="text-xs text-gray-400 mt-1">Chat with us on WhatsApp — we respond instantly!</p>
+                <a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20have%20a%20question%20about%20Power%20BI." target="_blank" class="text-xs text-green-400 font-bold mt-2 inline-block hover:text-green-300">Chat Now →</a>
+            </div>
+            <button onclick="closeToast()" class="text-gray-600 hover:text-white ml-2"><i class="fas fa-times text-xs"></i></button>
+        </div>
+    </div>
+
+    <script>
+        // Lenis smooth scroll
+        const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
+
+        // GSAP + ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Animate sections on scroll
+        gsap.utils.toArray('.glass-card, .animated-border').forEach((el, i) => {
+            gsap.from(el, {
+                y: 40, opacity: 0, duration: 0.8,
+                delay: i * 0.03,
+                ease: 'power3.out',
+                scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
+            });
+        });
+
+        // Journey steps
+        gsap.utils.toArray('.journey-step').forEach((step, i) => {
+            gsap.from(step, {
+                x: i % 2 === 0 ? -60 : 60, opacity: 0, duration: 1,
+                ease: 'power3.out',
+                scrollTrigger: { trigger: step, start: 'top 80%', toggleActions: 'play none none none' }
+            });
+        });
+
+        // Counter animation
+        gsap.utils.toArray('.counter-value').forEach(counter => {
+            const target = parseInt(counter.dataset.target);
+            gsap.to(counter, {
+                textContent: target, duration: 2, ease: 'power1.out',
+                snap: { textContent: 1 },
+                scrollTrigger: { trigger: counter, start: 'top 85%', toggleActions: 'play none none none' }
+            });
+        });
+
+        // Tab switching
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('content-' + tab).classList.add('active');
+            document.getElementById('tab-' + tab).classList.add('active');
+        }
+
+        // Particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 30; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                const size = Math.random() * 4 + 2;
+                p.style.width = size + 'px';
+                p.style.height = size + 'px';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.animationDuration = (Math.random() * 15 + 10) + 's';
+                p.style.animationDelay = (Math.random() * 10) + 's';
+                container.appendChild(p);
+            }
+        }
+        createParticles();
+
+        // WhatsApp toast
+        function closeToast() {
+            document.getElementById('wa-toast').style.transform = 'translateX(120%)';
+        }
+        setTimeout(() => {
+            document.getElementById('wa-toast').style.transform = 'translateX(0)';
+        }, 5000);
+        setTimeout(() => {
+            closeToast();
+        }, 20000);
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    lenis.scrollTo(target, { offset: -80 });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
