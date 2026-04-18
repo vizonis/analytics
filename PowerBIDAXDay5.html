@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vizonis Academy | DAX — Advanced Functions & Assignments</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script>
+tailwind.config={theme:{extend:{colors:{obsidian:'#050505',charcoal:'#0F1115',acid:'#CCFF00',silver:'#E1E1E1',cardDark:'#0A0C10',cardDark2:'#111318'},fontFamily:{sans:['Space Grotesk','sans-serif'],display:['Syncopate','sans-serif']}}}}
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:'Space Grotesk',sans-serif;background:#050505;color:#E1E1E1;overflow-x:hidden}
+.noise-overlay{position:fixed;inset:0;z-index:9000;pointer-events:none;opacity:.04;background-image:url('https://grainy-gradients.vercel.app/noise.svg')}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#050505}::-webkit-scrollbar-thumb{background:#CCFF00;border-radius:3px}
+.gradient-text{background:linear-gradient(to bottom,#FFF 0%,#9ca3af 50%,#111827 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.acid-gradient-text{background:linear-gradient(135deg,#CCFF00,#88cc00,#CCFF00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.purple-gradient-text{background:linear-gradient(135deg,#c084fc,#a855f7,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.teal-gradient-text{background:linear-gradient(135deg,#2dd4bf,#14b8a6,#2dd4bf);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.glass-card{background:rgba(255,255,255,.03);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.08);transition:all .4s cubic-bezier(.25,.46,.45,.94)}
+.glass-card:hover{background:rgba(255,255,255,.06);border-color:rgba(204,255,0,.3);box-shadow:0 0 30px rgba(204,255,0,.08)}
+.neon-hover{transition:all .3s ease}.neon-hover:hover{box-shadow:0 0 20px rgba(204,255,0,.3);border-color:#CCFF00!important}
+.glow-btn{position:relative;overflow:hidden;transition:all .3s ease}
+.glow-btn::before{content:'';position:absolute;inset:-2px;background:linear-gradient(45deg,#CCFF00,transparent,#CCFF00);z-index:-1;border-radius:inherit;opacity:0;transition:opacity .3s}
+.glow-btn:hover::before{opacity:1}.glow-btn:hover{box-shadow:0 0 30px rgba(204,255,0,.4);transform:translateY(-2px)}
+.particle{position:absolute;border-radius:50%;background:#CCFF00;opacity:.15;animation:fp linear infinite}
+@keyframes fp{0%{transform:translateY(100vh) scale(0);opacity:0}10%{opacity:.15}90%{opacity:.15}100%{transform:translateY(-100px) scale(1);opacity:0}}
+.grid-bg{background-image:linear-gradient(rgba(204,255,0,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(204,255,0,.03) 1px,transparent 1px);background-size:60px 60px}
+.section-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(204,255,0,.3),transparent)}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:4px 14px;border-radius:9999px;font-size:.75rem;border:1px solid rgba(204,255,0,.3);background:rgba(204,255,0,.08);color:#CCFF00;font-weight:600}
+.badge-purple{display:inline-flex;align-items:center;gap:6px;padding:4px 14px;border-radius:9999px;font-size:.75rem;border:1px solid rgba(192,132,252,.3);background:rgba(192,132,252,.08);color:#c084fc;font-weight:600}
+.badge-teal{display:inline-flex;align-items:center;gap:6px;padding:4px 14px;border-radius:9999px;font-size:.75rem;border:1px solid rgba(45,212,191,.3);background:rgba(45,212,191,.08);color:#2dd4bf;font-weight:600}
+.whatsapp-float{position:fixed;bottom:30px;right:30px;z-index:8000;width:64px;height:64px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.4);transition:all .3s ease;cursor:pointer}
+.whatsapp-float:hover{transform:scale(1.1)}.whatsapp-float::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:2px solid rgba(37,211,102,.3);animation:wap 2s ease-out infinite}
+@keyframes wap{0%{transform:scale(1);opacity:1}100%{transform:scale(1.5);opacity:0}}
+.ticker{display:flex;gap:3rem;white-space:nowrap;animation:tick 25s linear infinite}
+@keyframes tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.marquee-mask{mask-image:linear-gradient(to right,transparent,black 10%,black 90%,transparent);-webkit-mask-image:linear-gradient(to right,transparent,black 10%,black 90%,transparent)}
+.hero-orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.2;animation:of 8s ease-in-out infinite alternate}
+@keyframes of{0%{transform:translate(0,0) scale(1)}100%{transform:translate(30px,-40px) scale(1.2)}}
+.sub-nav-item{padding:8px 14px;border-radius:8px;font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:#6b7280;transition:all .2s;cursor:pointer;border:1px solid transparent;white-space:nowrap}
+.sub-nav-item:hover,.sub-nav-item.active{color:#CCFF00;background:rgba(204,255,0,.05);border-color:rgba(204,255,0,.15)}
+.code-block{background:#0A0C10;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px 18px;font-family:'Courier New',monospace;font-size:.78rem;line-height:1.8;overflow-x:auto;color:#9ca3af}
+.code-block .kw{color:#CCFF00}.code-block .str{color:#f97316}.code-block .cmt{color:#4b5563}.code-block .num{color:#60a5fa}.code-block .fn{color:#c084fc}.code-block .op{color:#f472b6}.code-block .tbl{color:#f472b6}.code-block .col{color:#38bdf8}
+.ex-box{background:rgba(204,255,0,.04);border:1px solid rgba(204,255,0,.15);border-radius:12px;padding:14px 18px;margin-top:10px}
+.ex-box .ex-l{font-size:.7rem;text-transform:uppercase;letter-spacing:.15em;color:#CCFF00;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.ex-box-purple{background:rgba(192,132,252,.04);border:1px solid rgba(192,132,252,.15);border-radius:12px;padding:14px 18px;margin-top:10px}
+.ex-box-purple .ex-l{font-size:.7rem;text-transform:uppercase;letter-spacing:.15em;color:#c084fc;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.ex-box-teal{background:rgba(45,212,191,.04);border:1px solid rgba(45,212,191,.15);border-radius:12px;padding:14px 18px;margin-top:10px}
+.ex-box-teal .ex-l{font-size:.7rem;text-transform:uppercase;letter-spacing:.15em;color:#2dd4bf;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.cat-label{display:inline-block;padding:3px 12px;border-radius:6px;font-size:.65rem;text-transform:uppercase;letter-spacing:.15em;font-weight:700;margin-bottom:8px}
+.dax-fn{background:linear-gradient(135deg,rgba(204,255,0,.08),rgba(204,255,0,.02));border:1px solid rgba(204,255,0,.15);border-radius:12px;padding:16px 20px;position:relative;overflow:hidden}
+.dax-fn::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#CCFF00,transparent);border-radius:12px 12px 0 0}
+.x-fn{background:linear-gradient(135deg,rgba(192,132,252,.08),rgba(192,132,252,.02));border:1px solid rgba(192,132,252,.15);border-radius:12px;padding:16px 20px;position:relative;overflow:hidden}
+.x-fn::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#c084fc,transparent);border-radius:12px 12px 0 0}
+.teal-fn{background:linear-gradient(135deg,rgba(45,212,191,.08),rgba(45,212,191,.02));border:1px solid rgba(45,212,191,.15);border-radius:12px;padding:16px 20px;position:relative;overflow:hidden}
+.teal-fn::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#2dd4bf,transparent);border-radius:12px 12px 0 0}
+.op-fn{background:linear-gradient(135deg,rgba(96,165,250,.08),rgba(96,165,250,.02));border:1px solid rgba(96,165,250,.15);border-radius:12px;padding:16px 20px;position:relative;overflow:hidden}
+.op-fn::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#60a5fa,transparent);border-radius:12px 12px 0 0}
+.hr-table-mini{width:100%;border-collapse:collapse;font-size:.65rem;margin:8px 0}
+.hr-table-mini th{background:rgba(204,255,0,.1);color:#CCFF00;padding:5px 8px;text-align:left;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid rgba(204,255,0,.2)}
+.hr-table-mini td{padding:4px 8px;border-bottom:1px solid rgba(255,255,255,.05);color:#9ca3af}
+.step-line{position:relative;padding-left:40px}
+.step-line::before{content:'';position:absolute;left:15px;top:36px;bottom:0;width:1px;background:linear-gradient(to bottom,rgba(204,255,0,.3),transparent)}
+.step-num{position:absolute;left:0;top:0;width:32px;height:32px;border-radius:8px;background:rgba(204,255,0,.1);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.75rem;color:#CCFF00;border:1px solid rgba(204,255,0,.2)}
+@keyframes pulseGlow{0%,100%{box-shadow:0 0 20px rgba(204,255,0,.1)}50%{box-shadow:0 0 40px rgba(204,255,0,.25)}}
+.pulse-glow{animation:pulseGlow 3s ease-in-out infinite}
+.reveal{opacity:0;transform:translateY(40px)}
+.assign-box{background:linear-gradient(135deg,rgba(204,255,0,.06),rgba(204,255,0,.02));border:2px solid rgba(204,255,0,.25);border-radius:16px;padding:24px;position:relative}
+.assign-box::after{content:'ASSIGNMENT';position:absolute;top:-10px;right:20px;background:#CCFF00;color:#050505;padding:2px 12px;border-radius:6px;font-size:.6rem;font-weight:800;letter-spacing:.15em}
+</style>
+</head>
+<body class="grid-bg">
+<div class="noise-overlay"></div>
+<div id="particles" class="fixed inset-0 z-0 pointer-events-none overflow-hidden"></div>
+
+<nav class="fixed top-0 left-0 right-0 z-[7000] backdrop-filter-md bg-obsidian/70 border-b border-white/5">
+<div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+<a href="#" class="font-display text-2xl font-bold tracking-tight"><span class="text-acid">V</span>IZONIS</a>
+<div class="hidden lg:flex items-center gap-1 overflow-x-auto">
+<a href="#textfn" class="sub-nav-item">Text</a>
+<a href="#timeint" class="sub-nav-item">Time Intel</a>
+<a href="#datediff" class="sub-nav-item">DATEDIFF</a>
+<a href="#assignment" class="sub-nav-item">Assignment</a>
+<a href="#advtime" class="sub-nav-item">Adv Time</a>
+<a href="#logical" class="sub-nav-item">Logical</a>
+<a href="#allfn" class="sub-nav-item">ALL</a>
+<a href="#relation" class="sub-nav-item">Relations</a>
+<a href="#rls" class="sub-nav-item">RLS</a>
+<a href="#critical" class="sub-nav-item">Critical</a>
+</div>
+<a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20want%20to%20learn%20advanced%20DAX." target="_blank" class="glow-btn bg-acid text-obsidian px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest whitespace-nowrap">Enroll Now</a>
+</div>
+</nav>
+
+<section class="relative min-h-screen flex flex-col justify-center items-center pt-20 overflow-hidden">
+<div class="hero-orb w-[500px] h-[500px] bg-acid top-1/4 -left-40"></div>
+<div class="hero-orb w-[400px] h-[400px] bg-teal-500 bottom-1/4 -right-32" style="animation-delay:-5s;opacity:.1"></div>
+<div class="relative z-10 text-center px-6 max-w-6xl mx-auto">
+<div class="badge mb-8 mx-auto w-fit"><i class="fas fa-code"></i> DAX — Advanced Functions</div>
+<h1 class="font-display text-5xl md:text-7xl lg:text-8xl font-bold leading-[.9] tracking-tighter mb-8">
+<span class="gradient-text block">DAX ADVANCED</span>
+<span class="acid-gradient-text block mt-2">FUNCTIONS GUIDE</span>
+<span class="gradient-text block mt-2 text-3xl md:text-5xl lg:text-6xl">TEXT + TIME + LOGIC + RLS</span>
+</h1>
+<p class="text-gray-400 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-12">Text functions, time intelligence, logical patterns, ALL family, relationships, RLS — everything explained with real HR data.</p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center">
+<a href="#textfn" class="glow-btn bg-acid text-obsidian px-10 py-4 rounded-full text-sm font-bold uppercase tracking-widest">Start Learning <i class="fas fa-arrow-down ml-2"></i></a>
+<a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20want%20to%20learn%20advanced%20DAX." target="_blank" class="glow-btn border border-white/20 text-white px-10 py-4 rounded-full text-sm font-bold uppercase tracking-widest hover:border-acid hover:text-acid"><i class="fab fa-whatsapp mr-2"></i> Chat With Us</a>
+</div>
+</div>
+</section>
+
+<div class="py-6 border-y border-white/5 marquee-mask overflow-hidden"><div class="ticker">
+<span class="text-2xl font-display font-bold text-white/10">CONTAINSSTRING</span><span class="text-acid text-2xl">◆</span>
+<span class="text-2xl font-display font-bold text-white/10">TOTALYTD</span><span class="text-acid text-2xl">◆</span>
+<span class="text-2xl font-display font-bold text-white/10">DATEDIFF</span><span class="text-acid text-2xl">◆</span>
+<span class="text-2xl font-display font-bold text-white/10">SAMEPERIODLASTYEAR</span><span class="text-acid text-2xl">◆</span>
+<span class="text-2xl font-display font-bold text-white/10">SWITCH</span><span class="text-acid text-2xl">◆</span>
+<span class="text-2xl font-display font-bold text-white/10">ALLSELECTED</span><span class="text-acid text-2xl">◆</span>
+<span class="text-2xl font-display font-bold text-white/10">USERELATIONSHIP</span><span class="text-acid text-2xl">◆</span>
+<span class="text-2xl font-display font-bold text-white/10">TREATAS</span><span class="text-acid text-2xl">◆</span>
+<span class="text-2xl font-display font-bold text-white/10">CONTAINSSTRING</span><span class="text-acid text-2xl">◆</span>
+<span class="text-2xl font-display font-bold text-white/10">TOTALYTD</span><span class="text-acid text-2xl">◆</span>
+<span class="text-2xl font-display font-bold text-white/10">DATEDIFF</span><span class="text-acid text-2xl">◆</span>
+</div></div>
+
+<!-- HR DATA REFERENCE -->
+<section class="py-16 px-6">
+<div class="max-w-7xl mx-auto reveal">
+<div class="glass-card rounded-2xl p-6 overflow-x-auto">
+<h3 class="text-lg font-bold mb-4"><i class="fas fa-table text-acid mr-2"></i> HR Data Reference (Sample from 315 rows)</h3>
+<table class="hr-table-mini">
+<thead><tr><th>HEAD</th><th>EEID</th><th>Full Name</th><th>Job Title</th><th>Salary</th><th>Hire Date</th><th>Exit Date</th><th>Status</th><th>City</th><th>Country</th></tr></thead>
+<tbody>
+<tr><td>0</td><td>E02387</td><td>Emily Davis</td><td>Sr. Manger</td><td>$141,604</td><td>2016/4/8</td><td>2021/10/16</td><td class="text-red-400">InActive</td><td>Seattle</td><td>US</td></tr>
+<tr><td>1</td><td>E04105</td><td>Theodore Dinh</td><td>Technical Architect</td><td>$99,975</td><td>1997/11/29</td><td>*</td><td class="text-green-400">Active</td><td>Chongqing</td><td>China</td></tr>
+<tr><td>2</td><td>E02572</td><td>Luna Sanders</td><td>Director</td><td>$163,099</td><td>2006/10/26</td><td>*</td><td class="text-green-400">Active</td><td>Chicago</td><td>US</td></tr>
+<tr><td>3</td><td>E02832</td><td>Penelope Jordan</td><td>Computer Systems Mgr</td><td>$84,913</td><td>2019/9/27</td><td>*</td><td class="text-green-400">Active</td><td>Chicago</td><td>US</td></tr>
+<tr><td>4</td><td>E00013</td><td>Elena Vang</td><td>Analyst</td><td>$95,409</td><td>2019/2/19</td><td>*</td><td class="text-green-400">Active</td><td>Beijing</td><td>China</td></tr>
+<tr><td>14</td><td>E03496</td><td>Robert Yang</td><td>Sr. Analyst</td><td>$256,420</td><td>2017/11/4</td><td>2020/3/9</td><td class="text-red-400">InActive</td><td>Austin</td><td>US</td></tr>
+<tr><td>40</td><td>E01754</td><td>Owen Lam</td><td>Sr. Business Partner</td><td>$74,691</td><td>2017/5/29</td><td>2017/7/16</td><td class="text-red-400">InActive</td><td>Chengdu</td><td>China</td></tr>
+<tr><td>59</td><td>E00716</td><td>John Chow</td><td>Sr. Manger</td><td>$141,899</td><td>2021/3/11</td><td>*</td><td class="text-green-400">Active</td><td>Chengdu</td><td>China</td></tr>
+<tr><td>80</td><td>E00935</td><td>Joseph Martin</td><td>Analyst II</td><td>$247,022</td><td>2016/9/13</td><td>*</td><td class="text-green-400">Active</td><td>Miami</td><td>US</td></tr>
+<tr><td>291</td><td>E02252</td><td>Lillian Park</td><td>Analyst</td><td>$148,485</td><td>2021/2/24</td><td>2021/11/10</td><td class="text-red-400">InActive</td><td>Chengdu</td><td>China</td></tr>
+</tbody>
+</table>
+<p class="text-xs text-gray-500 mt-2">315 total rows. * means no exit date (still Active). Columns: HEAD, EEID, Salary, Full Name, Job Title, Dept_ID, Business Unit ID, Gender, Ethnicity, Age, Hire Date, Employee Group, Bonus %, Country, City, Exit Date, Employee Status.</p>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- CH1: TEXT FUNCTIONS -->
+<section id="textfn" class="py-32 px-6 relative">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-20 reveal">
+<span class="badge-teal mb-6 mx-auto w-fit"><i class="fas fa-font"></i> Chapter 01</span>
+<h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">TEXT FUNCTIONS</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">Search, extract, and manipulate text in DAX columns</p>
+</div>
+<div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 reveal">
+
+<div class="teal-fn">
+<div class="flex items-center gap-3 mb-4 flex-wrap"><span class="cat-label bg-teal-500/15 text-teal-400">Text</span><h4 class="text-lg font-bold text-teal-400">CONTAINSSTRING</h4></div>
+<div class="code-block text-xs"><span class="cmt">// Check if Job Title contains "Manager"</span>
+<span class="kw">Is Manager</span> = 
+    <span class="fn">CONTAINSSTRING</span>(
+        <span class="tbl">HR</span>[<span class="col">Job Title</span>],
+        <span class="str">"Manager"</span>
+    )</div>
+<div class="ex-box-teal mt-3"><div class="ex-l"><i class="fas fa-search"></i> How it works</div>
+<p class="text-xs text-gray-400">Scans each Job Title for the substring "Manager":<br>"Sr. <span class="text-teal-400 font-bold">Manager</span>" → TRUE<br>"Computer Systems <span class="text-teal-400 font-bold">Manager</span>" → TRUE<br>"Technical Architect" → FALSE<br>"Director" → FALSE</p>
+<p class="text-xs text-gray-500 mt-1">Returns TRUE/FALSE. Case-insensitive. Use inside FILTER to find matching rows.</p></div>
+</div>
+
+<div class="teal-fn">
+<div class="flex items-center gap-3 mb-4 flex-wrap"><span class="cat-label bg-teal-500/15 text-teal-400">Text</span><h4 class="text-lg font-bold text-teal-400">CONTAINSSTRING — Practical</h4></div>
+<div class="code-block text-xs"><span class="cmt">// Count all Manager-level employees</span>
+<span class="kw">Manager Count</span> = <span class="fn">CALCULATE</span>(
+    <span class="fn">COUNTROWS</span>( <span class="tbl">HR</span> ),
+    <span class="fn">FILTER</span>(
+        <span class="tbl">HR</span>,
+        <span class="fn">CONTAINSSTRING</span>(
+            <span class="tbl">HR</span>[<span class="col">Job Title</span>],
+            <span class="str">"Manager"</span>
+        )
+    )
+)</div>
+<div class="ex-box-teal mt-3"><div class="ex-l"><i class="fas fa-calculator"></i> Result</div>
+<p class="text-xs text-gray-400">Matches: "Sr. Manger" (note typo in data), "Computer Systems Manager", "Engineering Manager", "IT Coordinator" — no. Only rows where "Manager" appears as substring. From 315 rows, approximately <span class="text-teal-400 font-bold">40-50 rows</span> match.</p></div>
+</div>
+
+<div class="teal-fn">
+<div class="flex items-center gap-3 mb-4 flex-wrap"><span class="cat-label bg-teal-500/15 text-teal-400">Text</span><h4 class="text-lg font-bold text-teal-400">LEFT / STARTSWITH</h4></div>
+<div class="code-block text-xs"><span class="cmt">// Extract first 2 characters of EEID</span>
+<span class="kw">EEID Prefix</span> = <span class="fn">LEFT</span>( <span class="tbl">HR</span>[<span class="col">EEID</span>], <span class="num">2</span> )
+<span class="cmt">// Result: "E0" for all rows</span>
+
+<span class="cmt">// Check if EEID starts with "E02"</span>
+<span class="kw">Starts E02</span> = <span class="fn">STARTSWITH</span>(
+    <span class="tbl">HR</span>[<span class="col">EEID</span>],
+    <span class="str">"E02"</span>
+)</div>
+<div class="ex-box-teal mt-3"><div class="ex-l"><i class="fas fa-scissors"></i> How it works</div>
+<p class="text-xs text-gray-400"><span class="text-teal-400 font-bold">LEFT(text, num_chars)</span> — Extracts characters from the left.<br>E02387 → LEFT(..., 2) → <span class="text-teal-400">"E0"</span><br>E04105 → LEFT(..., 2) → <span class="text-teal-400">"E0"</span><br><br><span class="text-teal-400 font-bold">STARTSWITH(text, prefix)</span> — Returns TRUE/FALSE.<br>E02572 starts with "E02"? → <span class="text-teal-400">TRUE</span><br>E04105 starts with "E02"? → <span class="text-teal-400">FALSE</span></p></div>
+</div>
+
+<div class="teal-fn">
+<div class="flex items-center gap-3 mb-4 flex-wrap"><span class="cat-label bg-teal-500/15 text-teal-400">Text</span><h4 class="text-lg font-bold text-teal-400">RIGHT / ENDSWITH</h4></div>
+<div class="code-block text-xs"><span class="cmt">// Extract last 4 characters of EEID</span>
+<span class="kw">EEID Suffix</span> = <span class="fn">RIGHT</span>( <span class="tbl">HR</span>[<span class="col">EEID</span>], <span class="num">4</span> )
+<span class="cmt">// Result: "2387" for E02387</span>
+
+<span class="cmt">// Check if EEID ends with "05"</span>
+<span class="kw">Ends 05</span> = <span class="fn">ENDSWITH</span>(
+    <span class="tbl">HR</span>[<span class="col">EEID</span>],
+    <span class="str">"05"</span>
+)</div>
+<div class="ex-box-teal mt-3"><div class="ex-l"><i class="fas fa-scissors"></i> How it works</div>
+<p class="text-xs text-gray-400"><span class="text-teal-400 font-bold">RIGHT(text, num_chars)</span> — Extracts from the right.<br>E02387 → RIGHT(..., 4) → <span class="text-teal-400">"2387"</span><br>E04105 → RIGHT(..., 4) → <span class="text-teal-400">"4105"</span><br><br><span class="text-teal-400 font-bold">ENDSWITH</span> — Returns TRUE/FALSE.<br>E04105 ends with "05"? → <span class="text-teal-400">TRUE</span><br>E02387 ends with "05"? → <span class="text-teal-400">FALSE</span></p></div>
+</div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- CH2: TIME INTELLIGENCE -->
+<section id="timeint" class="py-32 px-6 relative">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-20 reveal">
+<span class="badge-purple mb-6 mx-auto w-fit"><i class="fas fa-clock"></i> Chapter 02</span>
+<h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">TIME INTELLIGENCE FUNCTIONS</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">Calculate MTD, QTD, YTD and navigate time periods — the most requested DAX skill in job interviews</p>
+</div>
+
+<div class="max-w-5xl mx-auto reveal">
+<div class="glass-card rounded-2xl p-8 border-purple-500/20 mb-8">
+<h3 class="text-xl font-bold mb-4 text-purple-400"><i class="fas fa-exclamation-triangle mr-2"></i> Prerequisite: You Need a Date Table</h3>
+<p class="text-sm text-gray-400 mb-4">ALL time intelligence functions require a <span class="text-purple-400 font-semibold">separate Date table</span> marked as "Date table" in Power BI. If you don't have one, create it:</p>
+<div class="code-block text-xs"><span class="kw">DateTable</span> = 
+    <span class="fn">CALENDARAUTO</span>()
+<span class="cmt">// Then: Table Tools → Mark as Date Table → Select the Date column</span></div>
+<p class="text-xs text-gray-500 mt-3">The Date table must have a continuous range of dates and a relationship to your HR table's Hire Date column.</p>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+
+<div class="x-fn">
+<div class="flex items-center gap-3 mb-4 flex-wrap"><span class="cat-label bg-purple-500/15 text-purple-400">Time Intel</span><h4 class="text-lg font-bold text-purple-400">TOTALMTD</h4></div>
+<div class="code-block text-xs"><span class="cmt">// Total hires from start of month to current date</span>
+<span class="kw">Hires MTD</span> = <span class="fn">CALCULATE</span>(
+    <span class="fn">COUNTROWS</span>( <span class="tbl">HR</span> ),
+    <span class="fn">TOTALMTD</span>(
+        <span class="tbl">DateTable</span>[<span class="col">Date</span>],
+        <span class="fn">LASTDATE</span>( <span class="tbl">DateTable</span>[<span class="col">Date</span>] )
+    )
+)</div>
+<div class="ex-box-purple mt-3"><div class="ex-l"><i class="fas fa-calendar-day"></i> Example</div>
+<p class="text-xs text-gray-400">If your visual is filtered to March 2021:<br>MTD = hires from March 1 to March 31 = John Chow (Mar 11) + Lillian Park (Feb 24 — no, not in March) = <span class="text-purple-400 font-bold">depends on date range</span>.</p>
+<p class="text-xs text-gray-500 mt-1">TOTALMTD automatically calculates from the 1st of the current month.</p></div>
+</div>
+
+<div class="x-fn">
+<div class="flex items-center gap-3 mb-4 flex-wrap"><span class="cat-label bg-purple-500/15 text-purple-400">Time Intel</span><h4 class="text-lg font-bold text-purple-400">TOTALQTD</h4></div>
+<div class="code-block text-xs"><span class="cmt">// Total hires from start of quarter to current date</span>
+<span class="kw">Hires QTD</span> = <span class="fn">CALCULATE</span>(
+    <span class="fn">COUNTROWS</span>( <span class="tbl">HR</span> ),
+    <span class="fn">TOTALQTD</span>(
+        <span class="tbl">DateTable</span>[<span class="col">Date</span>],
+        <span class="fn">LASTDATE</span>( <span class="tbl">DateTable</span>[<span class="col">Date</span>] )
+    )
+)</div>
+<div class="ex-box-purple mt-3"><div class="ex-l"><i class="fas fa-calendar-week"></i> Example</div>
+<p class="text-xs text-gray-400">If filtered to Q1 2021 (Jan-Mar):<br>QTD = hires from Jan 1 to Mar 31 = all hires in Jan + Feb + Mar 2021.</p>
+<p class="text-xs text-gray-500 mt-1">Quarter boundaries: Q1=Jan-Mar, Q2=Apr-Jun, Q3=Jul-Sep, Q4=Oct-Dec.</p></div>
+</div>
+
+<div class="x-fn">
+<div class="flex items-center gap-3 mb-4 flex-wrap"><span class="cat-label bg-purple-500/15 text-purple-400">Time Intel</span><h4 class="text-lg font-bold text-purple-400">TOTALYTD</h4></div>
+<div class="code-block text-xs"><span class="cmt">// Total hires from Jan 1 to current date in the year</span>
+<span class="kw">Hires YTD</span> = <span class="fn">CALCULATE</span>(
+    <span class="fn">COUNTROWS</span>( <span class="tbl">HR</span> ),
+    <span class="fn">TOTALYTD</span>(
+        <span class="tbl">DateTable</span>[<span class="col">Date</span>],
+        <span class="fn">LASTDATE</span>( <span class="tbl">DateTable</span>[<span class="col">Date</span>] )
+    )
+)</div>
+<div class="ex-box-purple mt-3"><div class="ex-l"><i class="fas fa-calendar"></i> Example</div>
+<p class="text-xs text-gray-400">If filtered to Aug 2021:<br>YTD = hires from Jan 1, 2021 to Aug 31, 2021.<br>Includes: John Chow (Mar 11), Lillian Park (Feb 24), etc.</p>
+<p class="text-xs text-gray-500 mt-1"><span class="text-purple-400 font-semibold">Most commonly used</span> time intelligence function in HR dashboards.</p></div>
+</div>
+
+<div class="x-fn">
+<div class="flex items-center gap-3 mb-4 flex-wrap"><span class="cat-label bg-purple-500/15 text-purple-400">Time Intel</span><h4 class="text-lg font-bold text-purple-400">TOTALYTD — Custom Fiscal Year</h4></div>
+<div class="code-block text-xs"><span class="cmt">// YTD starting from April 1 (Indian FY)</span>
+<span class="kw">Hires YTD Fiscal</span> = <span class="fn">CALCULATE</span>(
+    <span class="fn">COUNTROWS</span>( <span class="tbl">HR</span> ),
+    <span class="fn">TOTALYTD</span>(
+        <span class="tbl">DateTable</span>[<span class="col">Date</span>],
+        <span class="fn">LASTDATE</span>( <span class="tbl">DateTable</span>[<span class="col">Date</span>] ),
+        <span class="num">3</span>, <span class="num">31</span>
+    )
+)</div>
+<div class="ex-box-purple mt-3"><div class="ex-l"><i class="fas fa-calendar-alt"></i> How it works</div>
+<p class="text-xs text-gray-400">The 4th and 5th parameters set <span class="text-purple-400 font-bold">month end number</span> (3 = March) and <span class="text-purple-400 font-bold">day</span> (31). So fiscal year starts April 1.</p>
+<p class="text-xs text-gray-500 mt-1">If current date is June 2021, YTD Fiscal = April 1 to June 30, 2021.</p></div>
+</div>
+</div>
+
+<h3 class="text-2xl font-bold mb-6 flex items-center gap-3 mt-12"><span class="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-400 text-sm font-bold"><i class="fas fa-arrow-left text-xs"></i></span> PREVIOUS Period Functions</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+<div class="x-fn">
+<div class="flex items-center gap-3 mb-4 flex-wrap"><span class="cat-label bg-purple-500/15 text-purple-400">Time Intel</span><h4 class="text-lg font-bold text-purple-400">PREVIOUSMONTH</h4></div>
+<div class="code-block text-xs"><span class="cmt">// Hires in the previous month</span>
+<span class="kw">Hires Prev Month</span> = <span class="fn">CALCULATE</span>(
+    <span class="fn">COUNTROWS</span>( <span class="tbl">HR</span> ),
+    <span class="fn">PREVIOUSMONTH</span>( <span class="tbl">DateTable</span>[<span class="col">Date</span>] )
+)</div>
+<div class="ex-box-purple mt-3"><div class="ex-l"><i class="fas fa-arrow-left"></i> Example</div>
+<p class="text-xs text-gray-400">If current filter is April 2021:<br>PREVIOUSMONTH shifts to March 2021.<br>Returns count of hires in March 2021.</p></div>
+</div>
+
+<div class="x-fn">
+<div class="flex items-center gap-3 mb-4 flex-wrap"><span class="cat-label bg-purple-500/15 text-purple-400">Time Intel</span><h4 class="text-lg font-bold text-purple-400">PREVIOUSQUARTER</h4></div>
+<div class="code-block text-xs"><span class="cmt">// Hires in the previous quarter</span>
+<span class="kw">Hires Prev Quarter</span> = <span class="fn">CALCULATE</span>(
+    <span class="fn">COUNTROWS</span>( <span class="tbl">HR</span> ),
+    <span class="fn">PREVIOUSQUARTER</span>( <span class="tbl">DateTable</span>[<span class="col">Date</span>] )
+)</div>
+<div class="ex-box-purple mt-3"><div class="ex-l"><i class="fas fa-arrow-left"></i> Example</div>
+<p class="text-xs text-gray-400">If current is Q2 2021 (Apr-Jun):<br>PREVIOUSQUARTER = Q1 2021 (Jan-Mar).<br>Returns count of hires in Jan-Mar 2021.</p></div>
+</div>
+
+<div class="x-fn">
+<div class="flex items-center gap-3 mb-4 flex-wrap"><span class="cat-label bg-purple-500/15 text-purple-400">Time Intel</span><h4 class="text-lg font-bold text-purple-400">PREVIOUSYEAR</h4></div>
+<div class="code-block text-xs"><span class="cmt">// Hires in the previous year</span>
+<span class="kw">Hires Prev Year</span> = <span class="fn">CALCULATE</span>(
+    <span class="fn">COUNTROWS</span>( <span class="tbl">HR</span> ),
+    <span class="fn">PREVIOUSYEAR</span>( <span class="tbl">DateTable</span>[<span class="col">Date</span>] )
+)</div>
+<div class="ex-box-purple mt-3"><div class="ex-l"><i class="fas fa-arrow-left"></i> Example</div>
+<p class="text-xs text-gray-400">If current is 2021:<br>PREVIOUSYEAR = entire year 2020.<br>Returns count of all hires in 2020.</p></div>
+</div>
+
+<div class="x-fn">
+<div class="flex items-center gap-3 mb-4 flex-wrap"><span class="cat-label bg-purple-500/15 text-purple-400">Time Intel</span><h4 class="text-lg font-bold text-purple-400">PREVIOUSDAY</h4></div>
+<div class="code-block text-xs"><span class="cmt">// Hires on the previous day</span>
+<span class="kw">Hires Prev Day</span> = <span class="fn">CALCULATE</span>(
+    <span class="fn">COUNTROWS</span>( <span class="tbl">HR</span> ),
+    <span class="fn">PREVIOUSDAY</span>( <span class="tbl">DateTable</span>[<span class="col">Date</span>] )
+)</div>
+<div class="ex-box-purple mt-3"><div class="ex-l"><i class="fas fa-arrow-left"></i> Example</div>
+<p class="text-xs text-gray-400">If current is March 12, 2021:<br>PREVIOUSDAY = March 11, 2021.<br>Returns: 1 (John Chow hired on Mar 11).</p></div>
+</div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- CH3: DATEDIFF -->
+<section id="datediff" class="py-32 px-6 relative">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-20 reveal">
+<span class="badge-teal mb-6 mx-auto w-fit"><i class="fas fa-hourglass-half"></i> Chapter 03</span>
+<h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">DATEDIFF</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">Calculate the difference between two dates in any unit — the foundation of tenure calculations</p>
+</div>
+<div class="max-w-5xl mx-auto reveal">
+
+<div class="glass-card rounded-2xl p-8 border-teal-500/20 mb-8">
+<h3 class="text-xl font-bold mb-4 teal-gradient-text"><i class="fas fa-info-circle mr-2"></i> DATEDIFF Syntax</h3>
+<div class="code-block text-sm"><span class="fn">DATEDIFF</span>( <span class="tbl">StartDate</span>, <span class="tbl">EndDate</span>, <span class="str">"UNIT"</span> )</div>
+<p class="text-sm text-gray-400 mt-4">Units: <span class="text-teal-400 font-semibold">YEAR, QUARTER, MONTH, DAY, HOUR, MINUTE, SECOND</span></p>
+<p class="text-sm text-gray-400 mt-2">Note: In DAX, the order is <span class="text-white font-bold">StartDate, EndDate, Unit</span>. In Power Query it's reversed. Don't mix them up!</p>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+<div class="teal-fn">
+<div class="flex items-center gap-3 mb-4 flex-wrap"><span class="cat-label bg-teal-500/15 text-teal-400">DATEDIFF</span><h4 class="text-lg font-bold text-teal-400">YEAR</h4></div>
+<div class="code-block text-xs"><span class="cmt">// Tenure in complete years</span>
+<span class="kw">Tenure Years</span> = <span class="fn">DATEDIFF</span>(
+    <span class="tbl">HR</span>[<span class="col">Hire Date</span>],
+    <span class="fn">IF</span>(
+        <span class="fn">ISBLANK</span>( <span class="tbl">HR</span>[<span class="col">Exit Date</span>] ),
+        <span class="fn">TODAY</span>(),
+        <span class="tbl">HR</span>[<span class="col">Exit Date</span>]
+    ),
+    <span class="str">"YEAR"</span>
+)</div>
+<div class="ex-box-teal mt-3"><div class="ex-l"><i class="fas fa-calculator"></i> Results</div>
+<p class="text-xs text-gray-400">Emily Davis: 2016/4/8 to 2021/10/16 = <span class="text-teal-400 font-bold">5 years</span><br>Theodore Dinh: 1997/11/29 to Today = <span class="text-teal-400 font-bold">27 years</span><br>Owen Lam: 2017/5/29 to 2017/7/16 = <span class="text-teal-400 font-bold">0 years</span> (only 1.5 months)</p>
+<p class="text-xs text-gray-500 mt-1"><span class="text-teal-400 font-bold">YEAR</span> counts complete years only (truncates, doesn't round).</p></div>
+</div>
+
+<div class="teal-fn">
+<div class="flex items-center gap-3 mb-4 flex-wrap"><span class="cat-label bg-teal-500/15 text-teal-400">DATEDIFF</span><h4 class="text-lg font-bold text-teal-400">MONTH</h4></div>
+<div class="code-block text-xs"><span class="cmt">// Tenure in complete months</span>
+<span class="kw">Tenure Months</span> = <span class="fn">DATEDIFF</span>(
+    <span class="tbl">HR</span>[<span class="col">Hire Date</span>],
+    <span class="fn">IF</span>( <span class="fn">ISBLANK</span>( <span class="tbl">HR</span>[<span class="col">Exit Date</span>] ), <span class="fn">TODAY</span>(), <span class="tbl">HR</span>[<span class="col">Exit Date</span>] ),
+    <span class="str">"MONTH"</span>
+)</div>
+<div class="ex-box-teal mt-3"><div class="ex-l"><i class="fas fa-calculator"></i> Results</div>
+<p class="text-xs text-gray-400">Emily Davis: 2016/4/8 to 2021/10/16 = <span class="text-teal-400 font-bold">66 months</span><br>Owen Lam: 2017/5/29 to 2017/7/16 = <span class="text-teal-400 font-bold">1 month</span><br>Lillian Park: 2021/2/24 to 2021/11/10 = <span class="text-teal-400 font-bold">8 months</span></p>
+<p class="text-xs text-gray-500 mt-1">More precise than YEAR for short-tenured employees.</p></div>
+</div>
+
+<div class="teal-fn">
+<div class="flex items-center gap-3 mb-4 flex-wrap"><span class="cat-label bg-teal-500/15 text-teal-400">DATEDIFF</span><h4 class="text-lg font-bold text-teal-400">DAY</h4></div>
+<div class="code-block text-xs"><span class="cmt">// Tenure in exact days</span>
+<span class="kw">Tenure Days</span> = <span class="fn">DATEDIFF</span>(
+    <span class="tbl">HR</span>[<span class="col">Hire Date</span>],
+    <span class="fn">IF</span>( <span class="fn">ISBLANK</span>( <span class="tbl">HR</span>[<span class="col">Exit Date</span>] ), <span class="fn">TODAY</span>(), <span class="tbl">HR</span>[<span class="col">Exit Date</span>] ),
+    <span class="str">"DAY"</span>
+)</div>
+<div class="ex-box-teal mt-3"><div class="ex-l"><i class="fas fa-calculator"></i> Results</div>
+<p class="text-xs text-gray-400">Emily Davis: = <span class="text-teal-400 font-bold">2018 days</span><br>Owen Lam: 2017/5/29 to 2017/7/16 = <span class="text-teal-400 font-bold">48 days</span></p>
+<p class="text-xs text-gray-500 mt-1">Most granular. Use for precise tenure or for converting to decimal years (days/365.25).</p></div>
+</div>
+
+<div class="teal-fn">
+<div class="flex items-center gap-3 mb-4 flex-wrap"><span class="cat-label bg-teal-500/15 text-teal-400">DATEDIFF</span><h4 class="text-lg font-bold text-teal-400">HOUR / MINUTE</h4></div>
+<div class="code-block text-xs"><span class="cmt">// If you have datetime columns (time of exit etc.)</span>
+<span class="kw">Hours Worked</span> = <span class="fn">DATEDIFF</span>(
+    <span class="tbl">HR</span>[<span class="col">Shift Start</span>],
+    <span class="tbl">HR</span>[<span class="col">Shift End</span>],
+    <span class="str">"HOUR"</span>
+)
+<span class="kw">Minutes Diff</span> = <span class="fn">DATEDIFF</span>(
+    <span class="tbl">HR</span>[<span class="col">Shift Start</span>],
+    <span class="tbl">HR</span>[<span class="col">Shift End</span>],
+    <span class="str">"MINUTE"</span>
+)</div>
+<div class="ex-box-teal mt-3"><div class="ex-l"><i class="fas fa-clock"></i> Use Case</div>
+<p class="text-xs text-gray-400">HOUR/MINUTE are used for <span class="text-teal-400 font-semibold">attendance tracking</span>, shift calculations, SLA compliance. Our HR data only has dates (no times), so these would apply if you had datetime columns.</p></div>
+</div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- CH4: ASSIGNMENT -->
+<section id="assignment" class="py-32 px-6 relative">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-20 reveal">
+<span class="badge mb-6 mx-auto w-fit"><i class="fas fa-pencil-alt"></i> ASSIGNMENT</span>
+<h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">HR DAX ASSIGNMENT</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">4 real-world calculations using the attached HR data</p>
+</div>
+<div class="max-w-5xl mx-auto space-y-8 reveal">
+
+<div class="assign-box">
+<h3 class="text-xl font-bold mb-4 text-acid"><i class="fas fa-star mr-2"></i> Q1: Average Tenure Using Hire Date and Exit Date</h3>
+<div class="code-block text-sm"><span class="cmt">// Step 1: Calculated Column — Tenure in Days</span>
+<span class="kw">Tenure Days</span> = <span class="fn">DATEDIFF</span>(
+    <span class="tbl">HR</span>[<span class="col">Hire Date</span>],
+    <span class="fn">IF</span>(
+        <span class="fn">ISBLANK</span>( <span class="tbl">HR</span>[<span class="col">Exit Date</span>] ),
+        <span class="fn">TODAY</span>(),
+        <span class="tbl">HR</span>[<span class="col">Exit Date</span>]
+    ),
+    <span class="str">"DAY"</span>
+)
+
+<span class="cmt">// Step 2: Measure — Average Tenure in Years</span>
+<span class="kw">Avg Tenure (Years)</span> = 
+    <span class="fn">AVERAGE</span>( <span class="tbl">HR</span>[<span class="col">Tenure Days</span>] ) <span class="op">/</span> <span class="num">365.25</span></div>
+<div class="ex-box mt-3"><div class="ex-l"><i class="fas fa-lightbulb"></i> How it works</div>
+<p class="text-xs text-gray-400"><span class="text-acid font-bold">Step 1</span> creates a calculated column that computes tenure for each row. Active employees use TODAY() as end date. InActive employees use their Exit Date.<br><br><span class="text-acid font-bold">Step 2</span> averages all tenure days and divides by 365.25 to convert to years.<br><br>Emily Davis: 2018 days / 365.25 = 5.52 years<br>Theodore Dinh: ~9930 days / 365.25 = 27.18 years<br>Owen Lam: 48 days / 365.25 = 0.13 years<br><br>With 315 employees spanning 1992-2021, average would be approximately <span class="text-acid font-bold">9-11 years</span>.</p></div>
+</div>
+
+<div class="assign-box">
+<h3 class="text-xl font-bold mb-4 text-acid"><i class="fas fa-star mr-2"></i> Q2: Total Employees Onboarded by Each Month (MTD)</h3>
+<div class="code-block text-sm"><span class="cmt">// Assumes DateTable is linked to HR[Hire Date]</span>
+<span class="kw">Hires MTD</span> = <span class="fn">CALCULATE</span>(
+    <span class="fn">COUNTROWS</span>( <span class="tbl">HR</span> ),
+    <span class="fn">TOTALMTD</span>( <span class="tbl">DateTable</span>[<span class="col">Date</span>] )
+)</div>
+<div class="ex-box mt-3"><div class="ex-l"><i class="fas fa-lightbulb"></i> How it works</div>
+<p class="text-xs text-gray-400"><span class="text-acid font-bold">TOTALMTD</span> returns all dates from the 1st of the current month to the current date context.<br><br>Put this in a matrix visual with months on rows:<br>Jan 2021 → hires from Jan 1-31, 2021<br>Feb 2021 → hires from Feb 1-28, 2021 (includes Lillian Park: Feb 24)<br>Mar 2021 → hires from Mar 1-31, 2021 (includes John Chow: Mar 11)<br><br>Each cell automatically calculates MTD based on its row context.</p></div>
+</div>
+
+<div class="assign-box">
+<h3 class="text-xl font-bold mb-4 text-acid"><i class="fas fa-star mr-2"></i> Q3: Total Employees Onboarded YTD</h3>
+<div class="code-block text-sm"><span class="kw">Hires YTD</span> = <span class="fn">CALCULATE</span>(
+    <span class="fn">COUNTROWS</span>( <span class="tbl">HR</span> ),
+    <span class="fn">TOTALYTD</span>( <span class="tbl">DateTable</span>[<span class="col">Date</span>] )
+)</div>
+<div class="ex-box mt-3"><div class="ex-l"><i class="fas fa-lightbulb"></i> How it works</div>
+<p class="text-xs text-gray-400"><span class="text-acid font-bold">TOTALYTD</span> returns all dates from Jan 1 of the selected year to the current date context.<br><br>If your visual shows 2021:<br>YTD = all hires from Jan 1, 2021 to Dec 31, 2021<br>= Lillian Park (Feb 24) + John Chow (Mar 11) + others hired in 2021<br><br>If filtered to March 2021 specifically:<br>YTD = Jan 1 to Mar 31, 2021</p></div>
+</div>
+
+<div class="assign-box">
+<h3 class="text-xl font-bold mb-4 text-acid"><i class="fas fa-star mr-2"></i> Q4: % Difference from Previous Month</h3>
+<div class="code-block text-sm"><span class="cmt">// Step 1: Current month hires</span>
+<span class="kw">Hires Current Month</span> = <span class="fn">COUNTROWS</span>( <span class="tbl">HR</span> )
+
+<span class="cmt">// Step 2: Previous month hires</span>
+<span class="kw">Hires Prev Month</span> = <span class="fn">CALCULATE</span>(
+    <span class="fn">COUNTROWS</span>( <span class="tbl">HR</span> ),
+    <span class="fn">PREVIOUSMONTH</span>( <span class="tbl">DateTable</span>[<span class="col">Date</span>] )
+)
+
+<span class="cmt">// Step 3: % difference</span>
+<span class="kw">% Change vs Prev Month</span> = 
+    <span class="fn">DIVIDE</span>(
+        [<span class="kw">Hires Current Month</span>] <span class="op">-</span> [<span class="kw">Hires Prev Month</span>],
+        [<span class="kw">Hires Prev Month</span>],
+        <span class="num">0</span>
+    )</div>
+<div class="ex-box mt-3"><div class="ex-l"><i class="fas fa-lightbulb"></i> How it works</div>
+<p class="text-xs text-gray-400"><span class="text-acid font-bold">DIVIDE</span> safely divides (avoids divide-by-zero errors). Third parameter is the alternate result if division fails.<br><br>Example with HR data:<br>If March 2021 = 3 hires, February 2021 = 1 hire:<br>% Change = (3 - 1) / 1 = <span class="text-acid font-bold">200%</span><br><br>If February = 0 hires (no data):<br>DIVIDE returns <span class="text-acid font-bold">0</span> (the alternate result), not an error.</p>
+<p class="text-xs text-gray-500 mt-1">Format this measure as % in Power BI. Put it in a line chart with months on X-axis to see month-over-month hiring trends.</p></div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- CH5: ADVANCED TIME INTELLIGENCE -->
+<section id="advtime" class="py-32 px-6 relative">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-20 reveal">
+<span class="badge-purple mb-6 mx-auto w-fit"><i class="fas fa-calendar-check"></i> Chapter 05</span>
+<h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">ADVANCED TIME INTELLIGENCE</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">SAMEPERIODLASTYEAR, DATESBETWEEN, DATESINPERIOD</p>
+</div>
+<div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 reveal">
+
+<div class="x-fn">
+<div class="flex items-center gap-3 mb-4 flex-wrap"><span class="cat-label bg-purple-500/15 text-purple-400">Time Intel</span><h4 class="text-lg font-bold text-purple-400">SAMEPERIODLASTYEAR</h4></div>
+<div class="code-block text-xs"><span class="cmt">// Compare this year's hires to last year</span>
+<span class="kw">Hires Last Year</span> = <span class="fn">CALCULATE</span>(
+    <span class="fn">COUNTROWS</span>( <span class="tbl">HR</span> ),
+    <span class="fn">SAMEPERIODLASTYEAR</span>( <span class="tbl">DateTable</span>[<span class="col">Date</span>] )
+)
+<span class="cmt">// YoY Growth %</span>
+<span class="kw">YoY Growth %</span> = <span class="fn">DIVIDE</span>(
+    [<span class="kw">Hires YTD</span>] <span class="op">-</span> [<span class="kw">Hires Last Year</span>],
+    [<span class="kw">Hires Last Year</span>],
+    <span class="num">0</span>
+)</div>
+<div class="ex-box-purple mt-3"><div class="ex-l"><i class="fas fa-chart-line"></i> How it works</div>
+<p class="text-xs text-gray-400">SAMEPERIODLASTYEAR shifts the entire date context back by one year. If your visual shows Q1 2021, it automatically returns Q1 2020 dates.</p>
+<p class="text-xs text-gray-500 mt-1">Works with any granularity: day, month, quarter, year. The function figures out the right shift automatically.</p></div>
+</div>
+
+<div class="x-fn">
+<div class="flex items-center gap-3 mb-4 flex-wrap"><span class="cat-label bg-purple-500/15 text-purple-400">Time Intel</span><h4 class="text-lg font-bold text-purple-400">DATESBETWEEN</h4></div>
+<div class="code-block text-xs"><span class="cmt">// Hires between two specific dates</span>
+<span class="kw">Hires 2019 to 2020</span> = <span class="fn">CALCULATE</span>(
+    <span class="fn">COUNTROWS</span>( <span class="tbl">HR</span> ),
+    <span class="fn">DATESBETWEEN</span>(
+        <span class="tbl">DateTable</span>[<span class="col">Date</span>],
+        <span class="fn">DATE</span>( <span class="num">2019</span>, <span class="num">1</span>, <span class="num">1</span> ),
+        <span class="fn">DATE</span>( <span class="num">2020</span>, <span class="num">12</span>, <span class="num">31</span> )
+    )
+)</div>
+<div class="ex-box-purple mt-3"><div class="ex-l"><i class="fas fa-calendar-check"></i> How it works</div>
+<p class="text-xs text-gray-400">DATESBETWEEN returns a table of dates from Jan 1, 2019 to Dec 31, 2020. CALCULATE then uses this to filter the HR table.</p>
+<p class="text-xs text-gray-500 mt-1">Unlike TOTALYTD which auto-detects the period, DATESBETWEEN lets you specify <span class="text-purple-400 font-bold">exact start and end dates</span>.</p></div>
+</div>
+
+<div class="md:col-span-2 x-fn">
+<div class="flex items-center gap-3 mb-4 flex-wrap"><span class="cat-label bg-purple-500/15 text-purple-400">Time Intel</span><h4 class="text-lg font-bold text-purple-400">DATESINPERIOD</h4></div>
+<div class="code-block text-xs"><span class="cmt">// Rolling 3-month hires</span>
+<span class="kw">Rolling 3M Hires</span> = <span class="fn">CALCULATE</span>(
+    <span class="fn">COUNTROWS</span>( <span class="tbl">HR</span> ),
+    <span class="fn">DATESINPERIOD</span>(
+        <span class="tbl">DateTable</span>[<span class="col">Date</span>],
+        <span class="fn">LASTDATE</span>( <span class="tbl">DateTable</span>[<span class="col">Date</span>] ),
+        <span class="op">-</span><span class="num">3</span>,
+        <span class="str">"MONTH"</span>
+    )
+)</div>
+<div class="ex-box-purple mt-3"><div class="ex-l"><i class="fas fa-chart-area"></i> How it works</div>
+<p class="text-xs text-gray-400"><span class="text-purple-400 font-bold">DATESINPERIOD(Table, AnchorDate, Offset, Unit)</span> — starts from the anchor date and goes back/forward by the offset.</p>
+<p class="text-xs text-gray-400 mt-1">Parameters:<br><span class="text-purple-400">AnchorDate:</span> LASTDATE(DateTable[Date]) = last date in current filter<br><span class="text-purple-400">Offset:</span> -3 means go back 3 months<br><span class="text-purple-400">Unit:</span> MONTH (also accepts DAY, QUARTER, YEAR)</p>
+<p class="text-xs text-gray-500 mt-2">If current month is March 2021: returns Jan 1 to Mar 31, 2021. If February 2021: returns Dec 2020 to Feb 2021. Perfect for <span class="text-purple-400 font-bold">rolling average</span> and <span class="text-purple-400 font-bold">moving total</span> charts.</p></div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- CH6: LOGICAL FUNCTIONS -->
+<section id="logical" class="py-32 px-6 relative">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-20 reveal">
+<span class="badge mb-6 mx-auto w-fit"><i class="fas fa-code-branch"></i> Chapter 06</span>
+<h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">DAX LOGICAL FUNCTIONS</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">IF ELSE, Nested IF, and SWITCH — the decision-making engine of DAX</p>
+</div>
+<div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 reveal">
+
+<div class="dax-fn">
+<div class="flex items-center gap-3 mb-4 flex-wrap"><span class="cat-label bg-acid/15 text-acid">Logical</span><h4 class="text-lg font-bold">IF ELSE</h4></div>
+<div class="code-block text-xs"><span class="cmt">// Salary Band — Calculated Column</span>
+<span class="kw">Salary Band</span> = <span class="fn">IF</span>(
+    <span class="tbl">HR</span>[<span class="col">Salary</span>] <span class="op">></span> <span class="num">200000</span>,
+    <span class="str">"Executive"</span>,
+    <span class="str">"Standard"</span>
+)</div>
+<div class="ex-box mt-3"><div class="ex-l"><i class="fas fa-code-branch"></i> Results</div>
+<p class="text-xs text-gray-400">Emily Davis ($141,604) → <span class="text-gray-400">"Standard"</span><br>Robert Yang ($256,420) → <span class="text-acid font-bold">"Executive"</span><br>Joseph Martin ($247,022) → <span class="text-acid font-bold">"Executive"</span><br>Penelope Jordan ($84,913) → <span class="text-gray-400">"Standard"</span></p></div>
+</div>
+
+<div class="dax-fn">
+<div class="flex items-center gap-3 mb-4 flex-wrap"><span class="cat-label bg-acid/15 text-acid">Logical</span><h4 class="text-lg font-bold">Nested IF ELSE</h4></div>
+<div class="code-block text-xs"><span class="cmt">// Multi-level Salary Band</span>
+<span class="kw">Salary Tier</span> = <span class="fn">IF</span>(
+    <span class="tbl">HR</span>[<span class="col">Salary</span>] <span class="op">></span> <span class="num">200000</span>, <span class="str">"Tier 1"</span>,
+    <span class="fn">IF</span>(
+        <span class="tbl">HR</span>[<span class="col">Salary</span>] <span class="op">></span> <span class="num">150000</span>, <span class="str">"Tier 2"</span>,
+        <span class="fn">IF</span>(
+            <span class="tbl">HR</span>[<span class="col">Salary</span>] <span class="op">></span> <span class="num">100000</span>, <span class="str">"Tier 3"</span>,
+            <span class="str">"Tier 4"</span>
+        )
+    )
+)</div>
+<div class="ex-box mt-3"><div class="ex-l"><i class="fas fa-layer-group"></i> Results</div>
+<p class="text-xs text-gray-400">Robert Yang ($256,420) → <span class="text-acid font-bold">"Tier 1"</span><br>Luna Sanders ($163,099) → <span class="text-acid font-bold">"Tier 2"</span><br>Emily Davis ($141,604) → <span class="text-acid font-bold">"Tier 3"</span><br>Penelope Jordan ($84,913) → <span class="text-acid font-bold">"Tier 4"</span></p>
+<p class="text-xs text-gray-500 mt-1">Works, but gets messy with 4+ levels. Use SWITCH instead.</p></div>
+</div>
+
+<div class="md:col-span-2 dax-fn pulse-glow">
+<div class="flex items-center gap-3 mb-4 flex-wrap"><span class="cat-label bg-acid/15 text-acid">Logical</span><h4 class="text-lg font-bold">SWITCH — The Cleaner Alternative</h4></div>
+<div class="code-block text-xs"><span class="cmt">// Employee Group classification (cleaner than nested IF)</span>
+<span class="kw">Emp Group Label</span> = <span class="fn">SWITCH</span>(
+    <span class="fn">TRUE</span>(),
+    <span class="tbl">HR</span>[<span class="col">Salary</span>] <span class="op">></span> <span class="num">200000</span>, <span class="str">"Executive Level"</span>,
+    <span class="tbl">HR</span>[<span class="col">Salary</span>] <span class="op">></span> <span class="num">150000</span>, <span class="str">"Senior Leadership"</span>,
+    <span class="tbl">HR</span>[<span class="col">Salary</span>] <span class="op">></span> <span class="num">100000</span>, <span class="str">"Senior Professional"</span>,
+    <span class="tbl">HR</span>[<span class="col">Salary</span>] <span class="op">></span> <span class="num">75000</span>, <span class="str">"Mid Level"</span>,
+    <span class="str">"Entry Level"</span>
+)
+
+<span class="cmt">// SWITCH on exact match (Employee Status)</span>
+<span class="kw">Status Label</span> = <span class="fn">SWITCH</span>(
+    <span class="tbl">HR</span>[<span class="col">Employee Status</span>],
+    <span class="str">"Active"</span>, <span class="str">"Currently Employed"</span>,
+    <span class="str">"InActive"</span>, <span class="str">"Separated"</span>,
+    <span class="str">"Unknown Status"</span>
+)</div>
+<div class="ex-box mt-3"><div class="ex-l"><i class="fas fa-check-circle"></i> Why SWITCH is better</div>
+<p class="text-xs text-gray-400"><span class="text-acid font-bold">SWITCH(TRUE(), ...)</span> evaluates conditions top-to-bottom and returns the FIRST match. Like a series of IF-ELSE but <span class="text-acid font-bold">much more readable</span>.<br><br><span class="text-acid font-bold">SWITCH(column, match1, result1, match2, result2, ...)</span> does exact matching. Perfect for mapping codes to labels.<br><br>Robert Yang ($256K) → "Executive Level"<br>Emily Davis ($141K) → "Senior Professional"<br>Elena Vang ($95K) → "Mid Level"<br>Joshua Gupta ($50K) → "Entry Level"</p></div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- CH7: ALL, ALLSELECTED, ALLEXCEPT -->
+<section id="allfn" class="py-32 px-6 relative">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-20 reveal">
+<span class="badge-purple mb-6 mx-auto w-fit"><i class="fas fa-eye-slash"></i> Chapter 07</span>
+<h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">ALL / ALLSELECTED / ALLEXCEPT</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">The filter-removal functions — critical for percentages, ratios, and comparisons</p>
+</div>
+<div class="max-w-5xl mx-auto reveal">
+
+<div class="glass-card rounded-2xl p-8 border-purple-500/20 mb-8">
+<h3 class="text-xl font-bold mb-4 text-purple-400"><i class="fas fa-key mr-2"></i> Why Do We Need These?</h3>
+<p class="text-sm text-gray-400 mb-4">Problem: When you put a measure in a visual, it automatically gets filtered by that visual. If you show salary by City, each city bar only shows that city's total. But what if you want to show <span class="text-purple-400 font-semibold">"what % is this city of the total?"</span> You need to <span class="text-purple-400 font-bold">remove the city filter for the denominator</span>.</p>
+<p class="text-sm text-gray-400">That's what ALL does — it removes filters so you can calculate the "big picture" number.</p>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+
+<div class="x-fn">
+<div class="flex items-center gap-3 mb-4 flex-wrap"><span class="cat-label bg-purple-500/15 text-purple-400">Filter Removal</span><h4 class="text-lg font-bold text-purple-400">ALL</h4></div>
+<div class="code-block text-xs"><span class="cmt">// Remove ALL filters from a table</span>
+<span class="kw">Total Salary All</span> = <span class="fn">CALCULATE</span>(
+    <span class="fn">SUM</span>( <span class="tbl">HR</span>[<span class="col">Salary</span>] ),
+    <span class="fn">ALL</span>( <span class="tbl">HR</span> )
+)
+
+<span class="cmt">// % of Total Salary by City</span>
+<span class="kw">% of Total Salary</span> = <span class="fn">DIVIDE</span>(
+    <span class="fn">SUM</span>( <span class="tbl">HR</span>[<span class="col">Salary</span>] ),
+    <span class="fn">CALCULATE</span>( <span class="fn">SUM</span>( <span class="tbl">HR</span>[<span class="col">Salary</span>] ), <span class="fn">ALL</span>( <span class="tbl">HR</span> ) ),
+    <span class="num">0</span>
+)</div>
+<div class="ex-box-purple mt-3"><div class="ex-l"><i class="fas fa-percent"></i> Example</div>
+<p class="text-xs text-gray-400">In a bar chart by City:<br>Seattle bar: $141,604 / ALL total → <span class="text-purple-400 font-bold">~1.3%</span> (just Emily)<br>Chicago bar: $332,915 / ALL total → <span class="text-purple-400 font-bold">~2.9%</span> (Luna + Penelope + others)</p>
+<p class="text-xs text-gray-500 mt-1"><span class="text-purple-400 font-bold">ALL(HR)</span> removes EVERY filter from the HR table — city, department, status, everything. The denominator becomes the grand total.</p></div>
+</div>
+
+<div class="x-fn">
+<div class="flex items-center gap-3 mb-4 flex-wrap"><span class="cat-label bg-purple-500/15 text-purple-400">Filter Removal</span><h4 class="text-lg font-bold text-purple-400">ALLSELECTED</h4></div>
+<div class="code-block text-xs"><span class="cmt">// Remove filters EXCEPT external slicer selections</span>
+<span class="kw">% of Selected Total</span> = <span class="fn">DIVIDE</span>(
+    <span class="fn">SUM</span>( <span class="tbl">HR</span>[<span class="col">Salary</span>] ),
+    <span class="fn">CALCULATE</span>(
+        <span class="fn">SUM</span>( <span class="tbl">HR</span>[<span class="col">Salary</span>] ),
+        <span class="fn">ALLSELECTED</span>( <span class="tbl">HR</span> )
+    ),
+    <span class="num">0</span>
+)</div>
+<div class="ex-box-purple mt-3"><div class="ex-l"><i class="fas fa-percent"></i> ALL vs ALLSELECTED</div>
+<p class="text-xs text-gray-400">If user selects "United States" in a Country slicer:<br><span class="text-purple-400 font-bold">ALL:</span> denominator = entire world total (ignores slicer)<br><span class="text-purple-400 font-bold">ALLSELECTED:</span> denominator = US total only (respects slicer)</p>
+<p class="text-xs text-gray-500 mt-1">Use ALLSELECTED when you want "% of what the user selected" not "% of everything."</p></div>
+</div>
+
+<div class="md:col-span-2 x-fn">
+<div class="flex items-center gap-3 mb-4 flex-wrap"><span class="cat-label bg-purple-500/15 text-purple-400">Filter Removal</span><h4 class="text-lg font-bold text-purple-400">ALLEXCEPT</h4></div>
+<div class="code-block text-xs"><span class="cmt">// Remove all filters EXCEPT City — keep City, remove everything else</span>
+<span class="kw">% of City Total</span> = <span class="fn">DIVIDE</span>(
+    <span class="fn">SUM</span>( <span class="tbl">HR</span>[<span class="col">Salary</span>] ),
+    <span class="fn">CALCULATE</span>(
+        <span class="fn">SUM</span>( <span class="tbl">HR</span>[<span class="col">Salary</span>] ),
+        <span class="fn">ALLEXCEPT</span>( <span class="tbl">HR</span>, <span class="tbl">HR</span>[<span class="col">City</span>] )
+    ),
+    <span class="num">0</span>
+)</div>
+<div class="ex-box-purple mt-3"><div class="ex-l"><i class="fas fa-filter"></i> How ALLEXCEPT works</div>
+<p class="text-xs text-gray-400"><span class="text-purple-400 font-bold">ALLEXCEPT(Table, ColumnToKeep)</span> — removes ALL filters from the table EXCEPT the specified column.<br><br>In a matrix with City on rows and Status on columns:<br><span class="text-purple-400">ALL:</span> denominator = grand total (ignores both City and Status)<br><span class="text-purple-400">ALLSELECTED:</span> denominator = respects all slicers but removes visual filters<br><span class="text-purple-400 font-bold">ALLEXCEPT(HR, HR[City]):</span> denominator = city total (ignores Status column but keeps City). So "Seattle Active" / "Seattle Total" = true % within Seattle.</p>
+<p class="text-xs text-gray-500 mt-2"><span class="text-purple-400 font-bold">Rule of thumb:</span> ALL = ignore everything. ALLSELECTED = respect slicers. ALLEXCEPT = keep specific column(s).</p></div>
+</div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- CH8: USERELATIONSHIP, TREATAS -->
+<section id="relation" class="py-32 px-6 relative">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-20 reveal">
+<span class="badge-teal mb-6 mx-auto w-fit"><i class="fas fa-link"></i> Chapter 08</span>
+<h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">USERELATIONSHIP & TREATAS</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">Advanced relationship manipulation — used in inactive relationships and role-playing dimensions</p>
+</div>
+<div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 reveal">
+
+<div class="teal-fn">
+<div class="flex items-center gap-3 mb-4 flex-wrap"><span class="cat-label bg-teal-500/15 text-teal-400">Relationship</span><h4 class="text-lg font-bold text-teal-400">USERELATIONSHIP</h4></div>
+<div class="code-block text-xs"><span class="cmt">// Scenario: Inactive relationship between DateTable</span>
+<span class="cmt">// and HR[Exit Date]. Activate it for this measure only.</span>
+<span class="kw">Exits by Month</span> = <span class="fn">CALCULATE</span>(
+    <span class="fn">COUNTROWS</span>( <span class="tbl">HR</span> ),
+    <span class="fn">USERELATIONSHIP</span>(
+        <span class="tbl">DateTable</span>[<span class="col">Date</span>],
+        <span class="tbl">HR</span>[<span class="col">Exit Date</span>]
+    )
+)</div>
+<div class="ex-box-teal mt-3"><div class="ex-l"><i class="fas fa-link"></i> Why this matters</div>
+<p class="text-xs text-gray-400">In HR data, you often need <span class="text-teal-400 font-bold">two date relationships</span>: one for Hire Date (active) and one for Exit Date (inactive). Power BI only allows one active relationship between two tables.<br><br>USERELATIONSHIP temporarily activates the inactive relationship <span class="text-teal-400 font-bold">only for that specific measure</span>. Other measures still use the active Hire Date relationship.</p></div>
+</div>
+
+<div class="teal-fn">
+<div class="flex items-center gap-3 mb-4 flex-wrap"><span class="cat-label bg-teal-500/15 text-teal-400">Relationship</span><h4 class="text-lg font-bold text-teal-400">TREATAS</h4></div>
+<div class="code-block text-xs"><span class="cmt">// Apply filters from one table to another</span>
+<span class="cmt">// even when there's NO relationship between them</span>
+<span class="kw">Salary by Selected Cities</span> = <span class="fn">CALCULATE</span>(
+    <span class="fn">SUM</span>( <span class="tbl">HR</span>[<span class="col">Salary</span>] ),
+    <span class="fn">TREATAS</span>(
+        <span class="fn">VALUES</span>( <span class="tbl">CitySlicer</span>[<span class="col">City</span>] ),
+        <span class="tbl">HR</span>[<span class="col">City</span>]
+    )
+)</div>
+<div class="ex-box-teal mt-3"><div class="ex-l"><i class="fas fa-magic"></i> Why this matters</div>
+<p class="text-xs text-gray-400">TREATAS moves filters across <span class="text-teal-400 font-bold">unrelated tables</span>. If you have a disconnected City slicer table, TREATAS applies its selections to the HR table's City column — without needing a model relationship.<br><br>Use cases: dynamic dimension swapping, what-if parameters, disconnected slicer tables.</p></div>
+</div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- CH9: RLS FUNCTIONS -->
+<section id="rls" class="py-32 px-6 relative">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-20 reveal">
+<span class="badge mb-6 mx-auto w-fit"><i class="fas fa-shield-alt"></i> Chapter 09</span>
+<h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">DAX RLS FUNCTIONS</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">Row-Level Security — show different data to different users based on who logged in</p>
+</div>
+<div class="max-w-5xl mx-auto reveal">
+
+<div class="glass-card rounded-2xl p-8 border-acid/20 mb-8 pulse-glow">
+<h3 class="text-xl font-bold mb-4 text-acid"><i class="fas fa-shield-alt mr-2"></i> What is RLS?</h3>
+<p class="text-sm text-gray-400 mb-4">RLS (Row-Level Security) uses DAX to filter data <span class="text-acid font-semibold">per user</span>. When an HR manager logs in, they see only their department. When the CEO logs in, they see everything. The report URL is the same — DAX decides what each user sees.</p>
+<p class="text-sm text-gray-400">Set in: <span class="text-acid font-bold">Modeling tab → Manage Roles → Create Role → Paste DAX</span></p>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+
+<div class="dax-fn">
+<div class="flex items-center gap-3 mb-4 flex-wrap"><span class="cat-label bg-acid/15 text-acid">RLS</span><h4 class="text-lg font-bold">USERNAME()</h4></div>
+<div class="code-block text-xs"><span class="cmt">// Role: City Manager</span>
+<span class="cmt">// Shows only rows where user's city matches HR city</span>
+<span class="cmt">// Assume USERPRINCIPALNAME() returns</span>
+<span class="cmt">// "john@company.com"</span>
+
+<span class="kw">City Manager Role</span> = 
+    <span class="tbl">HR</span>[<span class="col">City</span>] 
+    <span class="op">=</span> 
+    <span class="fn">LOOKUPVALUE</span>(
+        <span class="tbl">UserTable</span>[<span class="col">City</span>],
+        <span class="tbl">UserTable</span>[<span class="col">Email</span>],
+        <span class="fn">USERPRINCIPALNAME</span>()
+    )</div>
+<div class="ex-box mt-3"><div class="ex-l"><i class="fas fa-user-lock"></i> How it works</div>
+<p class="text-xs text-gray-400"><span class="text-acid font-bold">USERPRINCIPALNAME()</span> returns the email of the logged-in user.<br><span class="text-acid font-bold">LOOKUPVALUE</span> finds that user's assigned city in a UserTable.<br>RLS then filters HR to only show that city's rows.</p>
+<p class="text-xs text-gray-500 mt-1">If john@company.com is mapped to Seattle → sees only Seattle employees (Emily Davis).</p></div>
+</div>
+
+<div class="dax-fn">
+<div class="flex items-center gap-3 mb-4 flex-wrap"><span class="cat-label bg-acid/15 text-acid">RLS</span><h4 class="text-lg font-bold">Country-Level RLS</h4></div>
+<div class="code-block text-xs"><span class="cmt">// Role: Country Filter</span>
+<span class="kw">Country Role</span> = 
+    <span class="tbl">HR</span>[<span class="col">Country</span>] 
+    <span class="op">IN</span> 
+    <span class="fn">VALUES</span>( <span class="tbl">UserTable</span>[<span class="col">Country</span>] )
+
+<span class="cmt">// Where UserTable is filtered by:</span>
+<span class="cmt">// UserTable[Email] = USERPRINCIPALNAME()</span></div>
+<div class="ex-box mt-3"><div class="ex-l"><i class="fas fa-globe"></i> How it works</div>
+<p class="text-xs text-gray-400">The UserTable has an RLS filter on Email = current user. So VALUES(UserTable[Country]) returns only that user's country. HR is then filtered to that country.</p>
+<p class="text-xs text-gray-500 mt-1">US user → sees only United States rows. China user → sees only China rows.</p></div>
+</div>
+</div>
+
+<div class="glass-card rounded-2xl p-8 border-purple-500/20">
+<h3 class="text-xl font-bold mb-4 text-purple-400"><i class="fas fa-exclamation-triangle mr-2"></i> RLS Gotchas</h3>
+<div class="space-y-3">
+<div class="flex gap-3 items-start"><span class="w-6 h-6 rounded bg-purple-500/10 flex items-center justify-center flex-shrink-0 mt-0.5"><span class="text-purple-400 text-xs font-bold">1</span></div><p class="text-sm text-gray-400"><span class="text-white font-semibold">Test in Power BI Desktop</span> — use "View as Roles" to verify before publishing. RLS errors are silent in production.</p></div>
+<div class="flex gap-3 items-start"><span class="w-6 h-6 rounded bg-purple-500/10 flex items-center justify-center flex-shrink-0 mt-0.5"><span class="text-purple-400 text-xs font-bold">2</span></div><p class="text-sm text-gray-400"><span class="text-white font-semibold">USERPRINCIPALNAME() returns UPN</span> (email), not display name. Match against email in your mapping table.</p></div>
+<div class="flex gap-3 items-start"><span class="w-6 h-6 rounded bg-purple-500/10 flex items-center justify-center flex-shrink-0 mt-0.5"><span class="text-purple-400 text-xs font-bold">3</span></div><p class="text-sm text-gray-400"><span class="text-white font-semibold">RLS filters are applied BEFORE measures calculate</span> — you don't need CALCULATE inside RLS. The filter is implicit.</p></div>
+<div class="flex gap-3 items-start"><span class="w-6 h-6 rounded bg-purple-500/10 flex items-center justify-center flex-shrink-0 mt-0.5"><span class="text-purple-400 text-xs font-bold">4</span></div><p class="text-sm text-gray-400"><span class="text-white font-semibold">Dynamic RLS</span> = uses USERPRINCIPALNAME (changes per user). <span class="text-white font-semibold">Static RLS</span> = fixed filter, same for all users in that role.</p></div>
+</div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- CH10: CRITICAL MISSING FUNCTIONS -->
+<section id="critical" class="py-32 px-6 relative">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-20 reveal">
+<span class="badge mb-6 mx-auto w-fit"><i class="fas fa-fire"></i> Chapter 10</span>
+<h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">CRITICAL FUNCTIONS YOU MUST KNOW</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">These didn't fit the earlier categories but are absolutely essential for production dashboards</p>
+</div>
+<div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 reveal">
+
+<div class="op-fn">
+<div class="flex items-center gap-3 mb-4 flex-wrap"><span class="cat-label bg-blue-500/15 text-blue-400">Critical</span><h4 class="text-lg font-bold text-blue-400">DIVIDE</h4></div>
+<div class="code-block text-xs"><span class="cmt">// Safe division — no divide-by-zero errors</span>
+<span class="kw">Bonus Amount</span> = <span class="fn">DIVIDE</span>(
+    <span class="tbl">HR</span>[<span class="col">Salary</span>],
+    <span class="num">100</span>,
+    <span class="num">0</span>
+)
+<span class="cmt">// DIVIDE(numerator, denominator, alternate_result)</span></div>
+<p class="text-xs text-gray-500 mt-3"><i class="fas fa-shield-alt text-blue-400 mr-1"></i> <span class="text-blue-400 font-bold">Always use DIVIDE instead of /</span>. If denominator is 0 or BLANK, DIVIDE returns the alternate result (0) instead of an Infinity error that breaks your visual.</p>
+</div>
+
+<div class="op-fn">
+<div class="flex items-center gap-3 mb-4 flex-wrap"><span class="cat-label bg-blue-500/15 text-blue-400">Critical</span><h4 class="text-lg font-bold text-blue-400">RELATED</h4></div>
+<div class="code-block text-xs"><span class="cmt">// Fetch Department Name from Dept table</span>
+<span class="cmt">// using Dept_ID relationship</span>
+<span class="kw">Dept Name</span> = <span class="fn">RELATED</span>( <span class="tbl">Department</span>[<span class="col">Dept Name</span>] )
+<span class="cmt">// Fetch Business Unit from BU table</span>
+<span class="kw">BU Name</span> = <span class="fn">RELATED</span>( <span class="tbl">BusinessUnit</span>[<span class="col">BU Name</span>] )</div>
+<p class="text-xs text-gray-500 mt-3"><i class="fas fa-link text-blue-400 mr-1"></i> <span class="text-blue-400 font-bold">RELATED</span> follows relationships to pull columns from related tables. Use in calculated columns when your fact table only has IDs but you need names.</p>
+</div>
+
+<div class="op-fn">
+<div class="flex items-center gap-3 mb-4 flex-wrap"><span class="cat-label bg-blue-500/15 text-blue-400">Critical</span><h4 class="text-lg font-bold text-blue-400">ISBLANK / COALESCE</h4></div>
+<div class="code-block text-xs"><span class="cmt">// Check if Exit Date is blank (still Active)</span>
+<span class="kw">Is Still Active</span> = <span class="fn">ISBLANK</span>( <span class="tbl">HR</span>[<span class="col">Exit Date</span>] )
+
+<span class="cmt">// COALESCE — return first non-blank value</span>
+<span class="kw">Display Name</span> = <span class="fn">COALESCE</span>(
+    <span class="tbl">HR</span>[<span class="col">Preferred Name</span>],
+    <span class="tbl">HR</span>[<span class="col">Full Name</span>],
+    <span class="str">"Unknown"</span>
+)</div>
+<p class="text-xs text-gray-500 mt-3"><i class="fas fa-check-circle text-blue-400 mr-1"></i> <span class="text-blue-400 font-bold">ISBLANK</span> is essential for handling missing Exit Dates. <span class="text-blue-400 font-bold">COALESCE</span> is like Excel's IFERROR — tries multiple values and returns the first one that isn't blank.</p>
+</div>
+
+<div class="op-fn">
+<div class="flex items-center gap-3 mb-4 flex-wrap"><span class="cat-label bg-blue-500/15 text-blue-400">Critical</span><h4 class="text-lg font-bold text-blue-400">VALUES / HASONEVALUE</h4></div>
+<div class="code-block text-xs"><span class="cmt">// VALUES — returns unique values in current filter context</span>
+<span class="kw">Selected Cities</span> = <span class="fn">VALUES</span>( <span class="tbl">HR</span>[<span class="col">City</span>] )
+
+<span class="cmt">// HASONEVALUE — check if exactly one value is selected</span>
+<span class="kw">City Label</span> = <span class="fn">IF</span>(
+    <span class="fn">HASONEVALUE</span>( <span class="tbl">HR</span>[<span class="col">City</span>] ),
+    <span class="str">"Showing: "</span> <span class="op">&</span> <span class="fn">SELECTEDVALUE</span>( <span class="tbl">HR</span>[<span class="col">City</span>] ),
+    <span class="str">"Multiple cities selected"</span>
+)</div>
+<p class="text-xs text-gray-500 mt-3"><i class="fas fa-filter text-blue-400 mr-1"></i> <span class="text-blue-400 font-bold">VALUES</span> returns a table of unique values in the current filter. <span class="text-blue-400 font-bold">HASONEVALUE</span> + <span class="text-blue-400 font-bold">SELECTEDVALUE</span> are essential for dynamic card titles.</p>
+</div>
+
+<div class="op-fn">
+<div class="flex items-center gap-3 mb-4 flex-wrap"><span class="cat-label bg-blue-500/15 text-blue-400">Critical</span><h4 class="text-lg font-bold text-blue-400">FORMAT</h4></div>
+<div class="code-block text-xs"><span class="cmt">// Format numbers as currency</span>
+<span class="kw">Salary Text</span> = <span class="fn">FORMAT</span>( <span class="tbl">HR</span>[<span class="col">Salary</span>], <span class="str">"$#,##0"</span> )
+<span class="cmt">// Result: "$256,420"</span>
+
+<span class="cmt">// Format dates</span>
+<span class="kw">Hire Date Text</span> = <span class="fn">FORMAT</span>( <span class="tbl">HR</span>[<span class="col">Hire Date</span>], <span class="str">"MMM YYYY"</span> )
+<span class="cmt">// Result: "Apr 2016"</span></div>
+<p class="text-xs text-gray-500 mt-3"><i class="fas fa-paint-brush text-blue-400 mr-1"></i> Use when you need <span class="text-blue-400 font-bold">text output</span> from numbers/dates. Don't use FORMAT in measures that need to stay numeric (it converts to text, breaking SUM/CALCULATE).</p>
+</div>
+
+<div class="op-fn">
+<div class="flex items-center gap-3 mb-4 flex-wrap"><span class="cat-label bg-blue-500/15 text-blue-400">Critical</span><h4 class="text-lg font-bold text-blue-400">RANKX</h4></div>
+<div class="code-block text-xs"><span class="cmt">// Rank employees by salary within each city</span>
+<span class="kw">Salary Rank</span> = <span class="fn">RANKX</span>(
+    <span class="fn">ALL</span>( <span class="tbl">HR</span> ),
+    <span class="fn">SUM</span>( <span class="tbl">HR</span>[<span class="col">Salary</span>] ),
+    <span class="fn">DESC</span>,
+    <span class="fn">SKIP</span>
+)</div>
+<p class="text-xs text-gray-500 mt-3"><i class="fas fa-trophy text-blue-400 mr-1"></i> <span class="text-blue-400 font-bold">RANKX</span> is an iterator that ranks values. DESC = highest first. Put it in a table visual with City to see "Top earner in each city." Essential for HR leaderboards.</p>
+</div>
+</div>
+
+<div class="mt-12 glass-card rounded-2xl p-8 border-acid/20">
+<h3 class="text-xl font-bold mb-4"><i class="fas fa-check-double text-acid mr-2"></i> Complete DAX Priority List for HR Analytics</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="p-4 bg-acid/5 border border-acid/15 rounded-xl"><div class="text-xs font-bold text-acid mb-2">Tier 1 — Learn First</div><p class="text-xs text-gray-400">SUM, COUNT, AVERAGE<br>CALCULATE, FILTER<br>IF, SWITCH, DIVIDE<br>DATEDIFF, ISBLANK</p></div>
+<div class="p-4 bg-acid/5 border border-acid/15 rounded-xl"><div class="text-xs font-bold text-acid mb-2">Tier 2 — Job Ready</div><p class="text-xs text-gray-400">SUMX, AVERAGEX<br>TOTALYTD, TOTALMTD<br>PREVIOUSMONTH<br>ALL, ALLSELECTED<br>RELATED, VALUES</p></div>
+<div class="p-4 bg-white/3 border border-white/8 rounded-xl"><div class="text-xs font-bold text-gray-500 mb-2">Tier 3 — Advanced</div><p class="text-xs text-gray-400">ALLEXCEPT, RANKX<br>SAMEPERIODLASTYEAR<br>DATESINPERIOD<br>USERELATIONSHIP<br>CONTAINSSTRING</p></div>
+<div class="p-4 bg-white/3 border border-white/8 rounded-xl"><div class="text-xs font-bold text-gray-500 mb-2">Tier 4 — Specialist</div><p class="text-xs text-gray-400">TREATAS<br>RLS (USERPRINCIPALNAME)<br>GENERATE, PATHITEM<br>ISINSCOPE, ISSUBTOTAL</p></div>
+</div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- CTA -->
+<section class="py-32 px-6 relative">
+<div class="max-w-4xl mx-auto text-center reveal">
+<span class="badge mb-6 mx-auto w-fit"><i class="fas fa-graduation-cap"></i> You Made It Again</span>
+<h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">READY TO PRACTICE?</h2>
+<p class="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed mb-4">You have now covered Text, Time Intelligence, Logical, ALL family, Relationships, RLS, and every critical function. The next step is building a real dashboard with this HR data.</p>
+<p class="text-gray-500 text-sm mb-12">From aggregates to RLS — you have the complete DAX toolkit for HR analytics.</p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center">
+<a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20completed%20the%20advanced%20DAX%20guide%20and%20want%20to%20practice." target="_blank" class="glow-btn bg-acid text-obsidian px-12 py-5 rounded-full text-sm font-bold uppercase tracking-widest"><i class="fab fa-whatsapp mr-2"></i> Get Assignments</a>
+<a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false" class="glow-btn border border-white/20 text-white px-12 py-5 rounded-full text-sm font-bold uppercase tracking-widest hover:border-acid hover:text-acid"><i class="fas fa-arrow-up mr-2"></i> Back to Top</a>
+</div>
+</div>
+</section>
+
+<footer class="border-t border-white/5 py-16 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+<div>
+<a href="#" class="font-display text-2xl font-bold tracking-tight inline-block mb-4"><span class="text-acid">V</span>IZONIS</a>
+<p class="text-sm text-gray-500 leading-relaxed">Transforming careers through practical, project-based Power BI training. From zero to DAX expert.</p>
+</div>
+<div>
+<h4 class="text-sm font-bold uppercase tracking-wider text-gray-400 mb-4">DAX Guide Pages</h4>
+<div class="space-y-2">
+<a href="#" class="block text-sm text-gray-500 hover:text-acid transition-colors">Part 1: Aggregates + FILTER + Operators</a>
+<a href="#" class="block text-sm text-gray-500 hover:text-acid transition-colors">Part 2: Text + Time + Logical + RLS (This Page)</a>
+</div>
+</div>
+<div>
+<h4 class="text-sm font-bold uppercase tracking-wider text-gray-400 mb-4">Connect</h4>
+<div class="space-y-2">
+<a href="https://wa.me/916364671786" target="_blank" class="block text-sm text-gray-500 hover:text-green-400 transition-colors"><i class="fab fa-whatsapp mr-2"></i>WhatsApp</a>
+<a href="https://analytics.vizonis.com" target="_blank" class="block text-sm text-gray-500 hover:text-acid transition-colors"><i class="fas fa-globe mr-2"></i>analytics.vizonis.com</a>
+</div>
+</div>
+</div>
+<div class="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-xs text-gray-600">2024 Vizonis Academy. All rights reserved.</p>
+<p class="text-xs text-gray-600">Built with <i class="fas fa-heart text-acid text-[.6rem]"></i> for DAX learners worldwide</p>
+</div>
+</div>
+</footer>
+
+<a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20want%20to%20learn%20advanced%20DAX." target="_blank" class="whatsapp-float"><i class="fab fa-whatsapp text-white text-3xl"></i></a>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+gsap.utils.toArray('.reveal').forEach(el=>{
+gsap.to(el,{opacity:1,y:0,duration:0.7,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 88%',toggleActions:'play none play none'}});
+});
+const sections=document.querySelectorAll('section[id]');
+const navLinks=document.querySelectorAll('.sub-nav-item');
+let ticking=false;
+window.addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(()=>{let current='';sections.forEach(s=>{if(scrollY>=s.offsetTop-120)current=s.id});navLinks.forEach(l=>{l.classList.toggle('active',l.getAttribute('href')==='#'+current)});ticking=false});ticking=true}},{passive:true});
+const c=document.getElementById('particles');for(let i=0;i<25;i++){const p=document.createElement('div');p.className='particle';const s=Math.random()*3+1;p.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;animation-duration:${Math.random()*12+8}s;animation-delay:${Math.random()*12}s;`;c.appendChild(p)}
+</script>
+</body>
+</html>
