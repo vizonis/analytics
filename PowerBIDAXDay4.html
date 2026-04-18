@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vizonis Academy | DAX — The Complete Guide</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+<script>
+tailwind.config={theme:{extend:{colors:{obsidian:'#050505',charcoal:'#0F1115',acid:'#CCFF00',silver:'#E1E1E1',cardDark:'#0A0C10',cardDark2:'#111318'},fontFamily:{sans:['Space Grotesk','sans-serif'],display:['Syncopate','sans-serif']}}}}
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:'Space Grotesk',sans-serif;background:#050505;color:#E1E1E1;overflow-x:hidden}
+.noise-overlay{position:fixed;inset:0;z-index:9000;pointer-events:none;opacity:.04;background-image:url('https://grainy-gradients.vercel.app/noise.svg')}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#050505}::-webkit-scrollbar-thumb{background:#CCFF00;border-radius:3px}
+.gradient-text{background:linear-gradient(to bottom,#FFF 0%,#9ca3af 50%,#111827 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.acid-gradient-text{background:linear-gradient(135deg,#CCFF00,#88cc00,#CCFF00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.glass-card{background:rgba(255,255,255,.03);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.08);transition:all .4s cubic-bezier(.25,.46,.45,.94)}
+.glass-card:hover{background:rgba(255,255,255,.06);border-color:rgba(204,255,0,.3);box-shadow:0 0 30px rgba(204,255,0,.08)}
+.neon-hover{transition:all .3s ease}.neon-hover:hover{box-shadow:0 0 20px rgba(204,255,0,.3);border-color:#CCFF00!important}
+.glow-btn{position:relative;overflow:hidden;transition:all .3s ease}
+.glow-btn::before{content:'';position:absolute;inset:-2px;background:linear-gradient(45deg,#CCFF00,transparent,#CCFF00);z-index:-1;border-radius:inherit;opacity:0;transition:opacity .3s}
+.glow-btn:hover::before{opacity:1}.glow-btn:hover{box-shadow:0 0 30px rgba(204,255,0,.4);transform:translateY(-2px)}
+.particle{position:absolute;border-radius:50%;background:#CCFF00;opacity:.15;animation:fp linear infinite}
+@keyframes fp{0%{transform:translateY(100vh) scale(0);opacity:0}10%{opacity:.15}90%{opacity:.15}100%{transform:translateY(-100px) scale(1);opacity:0}}
+.grid-bg{background-image:linear-gradient(rgba(204,255,0,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(204,255,0,.03) 1px,transparent 1px);background-size:60px 60px}
+.section-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(204,255,0,.3),transparent)}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:4px 14px;border-radius:9999px;font-size:.75rem;border:1px solid rgba(204,255,0,.3);background:rgba(204,255,0,.08);color:#CCFF00;font-weight:600}
+.whatsapp-float{position:fixed;bottom:30px;right:30px;z-index:8000;width:64px;height:64px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.4);transition:all .3s ease;cursor:pointer}
+.whatsapp-float:hover{transform:scale(1.1);box-shadow:0 6px 30px rgba(37,211,102,.6)}
+.whatsapp-float::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:2px solid rgba(37,211,102,.3);animation:wap 2s ease-out infinite}
+@keyframes wap{0%{transform:scale(1);opacity:1}100%{transform:scale(1.5);opacity:0}}
+.ticker{display:flex;gap:3rem;white-space:nowrap;animation:tick 25s linear infinite}
+@keyframes tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.marquee-mask{mask-image:linear-gradient(to right,transparent,black 10%,black 90%,transparent);-webkit-mask-image:linear-gradient(to right,transparent,black 10%,black 90%,transparent)}
+.hero-orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.2;animation:of 8s ease-in-out infinite alternate}
+@keyframes of{0%{transform:translate(0,0) scale(1)}100%{transform:translate(30px,-40px) scale(1.2)}}
+.step-num{width:36px;height:36px;border-radius:10px;background:rgba(204,255,0,.1);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;color:#CCFF00;flex-shrink:0;border:1px solid rgba(204,255,0,.2)}
+.code-block{background:#0A0C10;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px 18px;font-family:'Courier New',monospace;font-size:.78rem;line-height:1.8;overflow-x:auto;color:#9ca3af}
+.code-block .kw{color:#CCFF00}.code-block .str{color:#f97316}.code-block .cmt{color:#4b5563}.code-block .num{color:#60a5fa}.code-block .fn{color:#c084fc}.code-block .op{color:#f472b6}
+.ex-box{background:rgba(204,255,0,.04);border:1px solid rgba(204,255,0,.15);border-radius:12px;padding:14px 18px;margin-top:10px}
+.ex-box .ex-l{font-size:.7rem;text-transform:uppercase;letter-spacing:.15em;color:#CCFF00;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.sub-nav-item{padding:8px 14px;border-radius:8px;font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:#6b7280;transition:all .2s;cursor:pointer;border:1px solid transparent;white-space:nowrap}
+.sub-nav-item:hover,.sub-nav-item.active{color:#CCFF00;background:rgba(204,255,0,.05);border-color:rgba(204,255,0,.15)}
+.tg{display:grid;grid-template-columns:1fr;gap:12px}@media(min-width:768px){.tg{grid-template-columns:1fr 1fr}}@media(min-width:1024px){.tg.tri{grid-template-columns:1fr 1fr 1fr}}
+.dax-fn{background:linear-gradient(135deg,rgba(204,255,0,.08),rgba(204,255,0,.02));border:1px solid rgba(204,255,0,.15);border-radius:12px;padding:16px 20px;position:relative;overflow:hidden}
+.dax-fn::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#CCFF00,transparent);border-radius:12px 12px 0 0}
+.x-fn{background:linear-gradient(135deg,rgba(192,132,252,.08),rgba(192,132,252,.02));border:1px solid rgba(192,132,252,.15);border-radius:12px;padding:16px 20px;position:relative;overflow:hidden}
+.x-fn::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#c084fc,transparent);border-radius:12px 12px 0 0}
+.story-card{background:linear-gradient(135deg,rgba(204,255,0,.03),rgba(204,255,0,.01));border:1px solid rgba(204,255,0,.12);border-radius:16px;padding:20px;transition:all .3s}
+.story-card:hover{border-color:rgba(204,255,0,.3);transform:translateY(-4px)}
+.cat-label{display:inline-block;padding:3px 12px;border-radius:6px;font-size:.65rem;text-transform:uppercase;letter-spacing:.15em;font-weight:700;margin-bottom:8px}
+</style>
+</head>
+<body class="grid-bg">
+<div class="noise-overlay"></div>
+<div id="particles" class="fixed inset-0 z-0 pointer-events-none overflow-hidden"></div>
+<nav class="fixed top-0 left-0 right-0 z-[7000] backdrop-filter-md bg-obsidian/70 border-b border-white/5">
+<div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+<a href="#" class="font-display text-2xl font-bold tracking-tight"><span class="text-acid">V</span>IZONIS</a>
+<div class="hidden lg:flex items-center gap-2 overflow-x-auto">
+<a href="#whatdax" class="sub-nav-item">What is DAX</a>
+<a href="#whydax" class="sub-nav-item">Why DAX</a>
+<a href="#learn" class="sub-nav-item">How to Learn</a>
+<a href="#context" class="sub-nav-item">Contexts</a>
+<a href="#aggregate" class="sub-nav-item">Aggregates</a>
+<a href="#filter" class="sub-nav-item">FILTER</a>
+<a href="#operators" class="sub-nav-item">Operators</a>
+</div>
+<a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20want%20to%20learn%20DAX." target="_blank" class="glow-btn bg-acid text-obsidian px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest whitespace-nowrap">Enroll Now</a>
+</div>
+</nav>
+
+<section class="relative min-h-screen flex flex-col justify-center items-center pt-20 overflow-hidden">
+<div class="hero-orb w-[500px] h-[500px] bg-acid top-1/4 -left-40"></div>
+<div class="hero-orb w-[400px] h-[400px] bg-purple-500 bottom-1/4 -right-32" style="animation-delay:-5s;opacity:.1"></div>
+<div class="relative z-10 text-center px-6 max-w-6xl mx-auto">
+<div class="badge mb-8 mx-auto w-fit"><i class="fas fa-calculator"></i> DAX — Data Analysis Expressions</div>
+<h1 class="font-display text-5xl md:text-7xl lg:text-8xl font-bold leading-[.9] tracking-tighter mb-8">
+<span class="gradient-text block">THE COMPLETE</span>
+<span class="acid-gradient-text block mt-2">DAX GUIDE</span>
+<span class="gradient-text block mt-2 text-3xl md:text-5xl lg:text-6xl">WITH HR EXAMPLES</span>
+</h1>
+<p class="text-gray-400 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-12">What DAX is, why it matters, how anyone can learn it, and every function explained with real HR data.</p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center">
+<a href="#whatdax" class="glow-btn bg-acid text-obsidian px-10 py-4 rounded-full text-sm font-bold uppercase tracking-widest">Start Learning <i class="fas fa-arrow-down ml-2"></i></a>
+<a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20want%20to%20learn%20DAX." target="_blank" class="glow-btn border border-white/20 text-white px-10 py-4 rounded-full text-sm font-bold uppercase tracking-widest hover:border-acid hover:text-acid"><i class="fab fa-whatsapp mr-2"></i> Chat With Us</a>
+</div>
+</div>
+</section>
+
+<div class="py-6 border-y border-white/5 marquee-mask overflow-hidden"><div class="ticker">
+<span class="text-2xl font-display font-bold text-white/10">DAX</span><span class="text-acid text-2xl">◆</span>
+<span class="text-2xl font-display font-bold text-white/10">CALCULATE</span><span class="text-acid text-2xl">◆</span>
+<span class="text-2xl font-display font-bold text-white/10">SUMX</span><span class="text-acid text-2xl">◆</span>
+<span class="text-2xl font-display font-bold text-white/10">FILTER</span><span class="text-acid text-2xl">◆</span>
+<span class="text-2xl font-display font-bold text-white/10">ROW CONTEXT</span><span class="text-acid text-2xl">◆</span>
+<span class="text-2xl font-display font-bold text-white/10">FILTER CONTEXT</span><span class="text-acid text-2xl">◆</span>
+<span class="text-2xl font-display font-bold text-white/10">AVERAGEX</span><span class="text-acid text-2xl">◆</span>
+<span class="text-2xl font-display font-bold text-white/10">DISTINCTCOUNT</span><span class="text-acid text-2xl">◆</span>
+<span class="text-2xl font-display font-bold text-white/10">DAX</span><span class="text-acid text-2xl">◆</span>
+<span class="text-2xl font-display font-bold text-white/10">CALCULATE</span><span class="text-acid text-2xl">◆</span>
+<span class="text-2xl font-display font-bold text-white/10">SUMX</span><span class="text-acid text-2xl">◆</span>
+<span class="text-2xl font-display font-bold text-white/10">FILTER</span><span class="text-acid text-2xl">◆</span>
+<span class="text-2xl font-display font-bold text-white/10">ROW CONTEXT</span><span class="text-acid text-2xl">◆</span>
+<span class="text-2xl font-display font-bold text-white/10">FILTER CONTEXT</span><span class="text-acid text-2xl">◆</span>
+</div></div>
+
+<!-- ===== CH1: WHAT IS DAX ===== -->
+<section id="whatdax" class="py-32 px-6 relative">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-20">
+<span class="badge mb-6 mx-auto w-fit"><i class="fas fa-question-circle"></i> Chapter 01</span>
+<h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">WHAT IS DAX?</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">The formula language that makes Power BI infinitely powerful</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+<div>
+<div class="glass-card rounded-2xl p-8 neon-hover border-acid/20">
+<div class="flex items-center gap-4 mb-6"><div class="w-14 h-14 rounded-xl bg-acid/10 flex items-center justify-center"><i class="fas fa-code text-acid text-2xl"></i></div><div><h3 class="text-2xl font-bold text-acid">DAX = Data Analysis Expressions</h3><p class="text-gray-500 text-sm">Microsoft's formula language for Power BI</p></div></div>
+<p class="text-gray-400 leading-relaxed mb-4">DAX is a <span class="text-acid font-semibold">library of 250+ functions</span> used to create custom calculations in Power BI. While Power Query transforms data <span class="text-acid">before</span> it loads, DAX calculates <span class="text-acid">after</span> it loads — at query time.</p>
+<p class="text-gray-400 leading-relaxed">DAX is <span class="text-white font-semibold">NOT SQL</span>. SQL operates on tables row-by-row. DAX operates on entire columns at once using the VertiPaq engine. This is why DAX can calculate millions of rows in milliseconds — something that would take SQL minutes.</p>
+<div class="ex-box"><div class="ex-l"><i class="fas fa-lightbulb"></i> The Simplest DAX Measure</div>
+<div class="code-block text-sm mt-2"><span class="kw">Total Salary</span> = <span class="fn">SUM</span>( HR[Salary] )</div>
+<p class="text-xs text-gray-500 mt-2">This single line creates a measure that dynamically sums the Salary column. Put it in a card visual → it shows total salary. Put it in a bar chart by City → it shows total by city. One formula, infinite flexibility.</p></div>
+</div>
+<div>
+<div class="glass-card rounded-2xl p-8">
+<div class="flex items-center gap-4 mb-6"><div class="w-14 h-14 rounded-xl bg-purple-500/10 flex items-center justify-center"><i class="fas fa-puzzle-piece text-purple-400 text-2xl"></i></div><div><h3 class="text-xl font-bold text-purple-400">DAX = Two Things Combined</h3></div></div>
+<div class="space-y-4">
+<div class="p-4 bg-acid/5 border border-acid/20 rounded-xl"><div class="text-sm font-bold text-acid mb-2"><i class="fas fa-calculator mr-2"></i>1. Calculations (Measures)</div><p class="text-sm text-gray-400">Revenue, profit margins, YTD, MTD, rankings, moving averages — things you CANNOT do with drag-and-drop alone.</p></div>
+<div class="p-4 bg-purple-500/5 border border-purple-500/20 rounded-xl"><div class="text-sm font-bold text-purple-400 mb-2"><i class="fas fa-filter mr-2"></i>2. Advanced Filtering (Filter Context)</div><p class="text-sm text-gray-400">Apply filters inside formulas — "Calculate revenue for only Active employees in Seattle" — something drag-and-drop can't do either.</p></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===== CH2: WHY DAX ===== -->
+<section id="whydax" class="py-32 px-6 relative">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-20">
+<span class="badge mb-6 mx-auto w-fit"><i class="fas fa-rocket"></i> Chapter 02</span>
+<h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">WHY DAX IS NON-NEGOTIABLE</h2>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+<div class="glass-card rounded-2xl p-6 text-center neon-hover"><div class="text-4xl font-bold text-acid mb-2">97%</div><div class="text-xs text-gray-500">of Power BI jobs require DAX</div></div>
+<div class="glass-card rounded-2xl p-6 text-center neon-hover"><div class="text-4xl font-bold text-purple-400 mb-2">$95K</div><div class="text-xs text-gray-500">avg salary with DAX skills</div></div>
+<div class="glass-card rounded-2xl p-6 text-center neon-hover"><div class="text-4xl font-bold text-blue-400 mb-2">3x</div><div class="text-xs text-gray-500">higher interview pass rate with DAX</div></div>
+<div class="glass-card rounded-2xl p-6 text-center neon-hover"><div class="text-4xl font-bold text-orange-400 mb-2">#1</div><div class="text-xs text-gray-500">most in-demand BI skill in 2025</div></div>
+</div>
+
+<div class="glass-card rounded-2xl p-8 border-acid/20">
+<h3 class="text-xl font-bold mb-4"><i class="fas fa-exclamation-circle text-acid mr-2"></i>Without DAX, You're Just Creating Charts</h3>
+<p class="text-gray-400 leading-relaxed">Without DAX, you can build basic charts. <span class="text-red-400">But you can't do:</span></p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4 text-sm text-gray-400">
+<div class="p-3 bg-red-500/5 border border-red-500/20 rounded-lg"><i class="fas fa-times text-red-400 mr-2"></i>Year-to-Date (YTD) calculations</div>
+<div class="p-3 bg-red-500/5 border border-red-500/20 rounded-lg"><i class="fas fa-times text-red-400 mr-2"></i>Month-to-Date (MTD) calculations</div>
+<div class="p-3 bg-red-500/5 border border-red-500/20 rounded-lg"><i class="fas fa-times text-red-400 mr-2"></i>Dynamic rankings (1st, 2nd, 3rd by revenue)</div>
+<div class="p-3 bg-red-500/5 border border-red-500/20 rounded-lg"><i class="fas fa-times text-red-400 mr-2"></i>Same measure, different filters, different answers</div>
+<div class="p-3 bg-red-500/5 border border-red-500/20 rounded-lg"><i class="fas fa-times text-red-400 mr-2"></i>Calculate over previous period (vs last month, vs last year)</div>
+<div class="p-3 bg-red-500/5 border border-red-500/20 rounded-lg"><i class="fas fa-times text-red-400 mr-2"></i>Conditional logic inside a visual (IF a category has < 5 records → "Other")</div>
+<div class="p-3 bg-red-500/5 border border-red-500/20 rounded-lg"><i class="fas fa-times text-red-400 mr-2"></i>Running totals, moving averages, parent-child hierarchies</div>
+<div class="p-3 bg-red-500/5 border border-red-500/20 rounded-lg"><i class="fas fa-times text-red-400 mr-2"></i>Calculate bonus amount (Salary × Bonus%) — not possible with raw columns alone</div>
+</div>
+<div class="p-3 bg-acid/5 border border-acid/20 rounded-lg mt-4">
+<p class="text-sm text-gray-400"><i class="fas fa-check text-acid mr-2"></i><strong class="text-acid">With DAX:</strong> All of the above are possible with a single formula each. That's the difference between a Power BI user and a Power BI <span class="text-acid">professional</span>.</p>
+</div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===== CH3: HOW TO LEARN ===== -->
+<section id="learn" class="py-32 px-6 relative">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-20">
+<span class="badge mb-6 mx-auto w-fit"><i class="fas fa-graduation-cap"></i> Chapter 03</span>
+<h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">THE EASY WAY TO LEARN DAX</h2>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+<!-- Non-IT -->
+<div class="glass-card rounded-2xl p-8 neon-hover border-green-500/20">
+<div class="flex items-center gap-3 mb-4"><div class="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center"><i class="fas fa-user-graduate text-green-400 text-xl"></i></div><h3 class="text-lg font-bold text-green-400">For Non-IT People</h3></div>
+<p class="text-sm text-gray-400 mb-4">You don't need a CS degree. DAX is closer to Excel formulas than programming. If you've ever written =SUM(), =IF(), =VLOOKUP() — you already know 30% of DAX.</p>
+<ul class="space-y-2 text-sm text-gray-400">
+<li><i class="fas fa-check text-green-400 mr-2 text-xs"></i>DAX uses the same concept as Excel formulas — column references, functions, operators</li>
+<li><i class="fas fa-check text-green-400 mr-2 text-xs"></i>Start with Aggregate functions (SUM, COUNT, AVERAGE) — they're identical to Excel</li>
+<li><i class="fa-check text-green-400 mr-2 text-xs"></i>Learn incrementally — don't jump to CALCULATE or FILTER on day 1</li>
+<li><i class="fa-check text-green-400 mr-2 text-xs"></i>Power BI's autocomplete helps — start typing =SUM( and it suggests everything</li>
+</ul>
+</div>
+
+<!-- Excel People -->
+<div class="glass-card rounded-2xl p-8 neon-hover border-blue-500/20">
+<div class="flex items-center gap-3 mb-4"><div class="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center"><i class="fas fa-file-excel text-blue-400 text-xl"></i></div><h3 class="text-lg font-bold text-blue-400">For Excel Users</h3></div>
+<p class="text-sm text-gray-400 mb-4">You have the biggest advantage. DAX literally evolved FROM Excel's formula engine. Your X vs DAX transition is the shortest.</p>
+<ul class="space-y-2 text-sm text-gray-400">
+<li><i class="fas fa-check text-blue-400 mr-2 text-xs"></i><span class="text-white">=SUM(A1:A100)</span> → <span class="text-acid">SUM(Table[Column])</span> — same concept</li>
+<li><span class="text-white">=IF(A1>"Yes","No")</span> → <span class="text-acid">IF(condition, true, false)</span> — same logic</li>
+<li><span class="text-white">=COUNTIF(A:A,">Active")</span> → <span class="text-acid">CALCULATE(COUNTROWS(FILTER(HR, HR[Status]="Active")))</span></li>
+<li><span class="text-white">=SUMIFS(B:B,A:A,"Active")</span> → <span class="text-acid">CALCULATE(SUM(HR[Salary]), FILTER(HR, HR[Status]="Active"))</span></li>
+<li><i class="fas fa-arrow-right text-blue-400 mr-2 text-xs"></i>The leap is: Learn CALCULATE and FILTER — then you're 80% there</li>
+</ul>
+</div>
+
+<!-- Easy Way -->
+<div class="glass-card rounded-2xl p-8 neon-hover border-purple-500/20">
+<div class="flex items-center gap-3 mb-4"><div class="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center"><i class="fas fa-route text-purple-400 text-xl"></i></div><h3 class="text-lg font-bold text-purple-400">The Easy Way</h3></div>
+<p class="text-sm text-gray-400 mb-4">Don't try to memorize all 250+ functions. <span class="text-purple-400 font-semibold">Learn by category.</span></p>
+<div class="space-y-3 text-sm text-gray-400">
+<div class="p-3 bg-purple-500/5 border border-purple-500/20 rounded-lg"><span class="text-purple-400 font-bold">Phase 1 — Aggregates (1 week):</span><br>SUM, COUNT, MIN, MAX, AVERAGE, DISTINCTCOUNT — these are your foundation. 6 functions. Master them before anything else.</div>
+<div class="p-3 bg-purple-500/5 border border-purple-500/20 rounded-lg"><span class="text-purple-400 font-bold">Phase 2 — X Functions (1-2 weeks):</span><br>SUMX, COUNTX, MINX, MAXX, AVERAGEX — these add row-by-row iteration. Learn only AFTER Phase 1 is solid.</div>
+<div class="p-3 bg-purple-500/5 border border-purple-500/20 rounded-lg"><span class="text-purple-400 font-bold">Phase 3 — FILTER (1-2 weeks):</span><br>The magic function that enables conditional calculations. Combined with X functions, it gives you 90% of real-world capabilities.</div>
+<div class="p-3 bg-purple-500/5 border border-purple-500/20 rounded-lg"><span class="text-purple-400 font-bold">Phase 4 — Time Intelligence (2 weeks):</span><br>TIMEINTELLIGENCE functions (TOTALYTD, SAMEPERIODLASTYEAR, DATEADD, DATESINPERIOD) — learn last after Phases 1-3 are rock solid.</div>
+<div class="p-3 bg-acid/5 border border-acid/20 rounded-lg"><span class="text-acid font-bold">You DON'T need all 250 functions.</span> 20 functions cover 90% of real-world scenarios. The rest are for edge cases.</div>
+</div>
+</div>
+</div>
+
+<!-- Success Stories -->
+<div class="glass-card rounded-2xl p-8 md:p-10 border-acid/30">
+<h3 class="text-2xl font-bold mb-8 text-center"><i class="fas fa-trophy text-acid mr-3"></i>DAX Success Stories</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="story-card rounded-xl p-5">
+        <div class="text-3xl font-bold text-acid mb-1">Rahul S.</div>
+        <div class="text-xs text-gray-500 mb-2">Non-IT Background → Data Analyst at EY</div>
+        <p class="text-sm text-gray-400">"I was a mechanical engineer. Learned DAX in 3 months at Vizonis. Got placed at EY with a 180% salary hike. My DAX skills were the reason I got selected over 500+ applicants."</p>
+    </div>
+    <div class="story-card rounded-xl p-5">
+        <div class="text-3xl font-bold text-purple-400 mb-1">Priya M.</div>
+        <div class="text-xs text-gray-500 mb-2">HR Professional → BI Developer at Amazon</div>
+        <p class="text-sm text-gray-400">"I knew Excel really well. The DAX journey was surprisingly smooth. CALCULATE and FILTER felt like supercharged Excel. Now I build dashboards used by 500+ Amazon managers."</p>
+    </div>
+    <div class="story-card rounded-xl p-5">
+        <div class="text-3xl font-bold text-blue-400 mb-1">David C.</div>
+        <div class="text-xs text-gray-500 mb-2">SQL Developer → Sr. BI Engineer at Microsoft</div>
+        <p class="text-sm text-gray-400">"I knew SQL deeply but my reports looked basic. Adding DAX made them enterprise-grade. Got promoted to Sr. BI Engineer at Microsoft itself. DAX was the differentiator."</p>
+    </div>
+    <div class="story-card rounded-xl p-5">
+        <div class="text-3xl font-bold text-orange-400 mb-1">Aisha K.</div>
+        <div class="text-xs text-gray-500 mb-2">Commerce Graduate → Freelance BI Consultant</div>
+        <p class="text-sm text-gray-400">"No one would hire me with just Excel skills. After learning DAX, I charge $50/hour as a freelance BI consultant. 40+ clients across 3 countries."</p>
+    </div>
+    <div class="story-card rounded-xl p-5">
+        <div class="text-3xl font-bold text-green-400 mb-1">Raj P.</div>
+        <div class="text-xs text-gray-500 mb-2">Accountant → Lead Analyst at Deloitte</div>
+        <p class="text-sm text-gray-400">"I'm a chartered accountant. DAX felt natural. SUMX for bonus calculations, FILTER for department analysis — I could relate everything to accounting workflows."</p>
+    </div>
+    <div class="story-card rounded-xl p-5">
+        <div class="text-3xl font-bold text-red-400 mb-1">Sarah T.</div>
+        <div class="text-xs text-gray-500 mb-2">Homemaker → BI Developer at Flipkart</div>
+        <p class="text-sm text-gray-400">"Took a career break after marriage. Learned DAX through Vizonis. Got hired at Flipkart as a BI Developer. Proved that career breaks don't define your future."</p>
+    </div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===== CH4: GETTING STARTED & CONTEXTS ===== -->
+<section id="context" class="py-32 px-6 relative">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-20">
+<span class="badge mb-6 mx-auto w-fit"><i class="fas fa-brain"></i> Chapter 04</span>
+<h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">DAX GETTING STARTED</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">The two concepts that make DAX powerful — and the #1 concept that confuses everyone</p>
+</div>
+
+<!-- DAX Getting Started -->
+<div class="glass-card rounded-2xl p-8 md:p-10 neon-hover border-acid/30 mb-16">
+<div class="flex items-center gap-4 mb-6"><div class="w-14 h-14 rounded-xl bg-acid/10 flex items-center justify-center"><i class="fas fa-play text-acid text-2xl"></i></div><div><h3 class="text-2xl font-bold text-acid">How a Measure Works</h3><p class="text-gray-500 text-sm">The building block of every calculation</p></div></div>
+<p class="text-gray-400 leading-relaxed mb-6">A measure is a formula that answers a <span class="text-acid font-semibold">business question</span>. Unlike calculated columns (which add a value to every row), a measure is evaluated <span class="text-acid">dynamically based on context</span> — what the user has selected, filtered, or sliced.</p>
+<div class="code-block text-sm mb-4">
+<span class="cmt">// Create: Modeling tab → New Measure</span><br>
+<span class="kw">Total Salary</span> = <span class="fn">SUM</span>( HR[Salary] )
+</div>
+<div class="ex-box"><div class="ex-l"><i class="fas fa-lightbulb"></i>How It Responds</div>
+<div class="space-y-2 text-sm text-gray-400 mt-2">
+<p>→ Put in a card visual: <span class="text-acid">Total Salary = $26,098,354</span> (sum of ALL employees)</p>
+<p>→ Add City slicer → Select "Seattle": <span class="text-acid">Total Salary = $4,284,670</span> (sum of Seattle employees only)</p>
+<p>→ Add Gender slicer → Select "Female": <span class="text-acid">Total Salary = $11,585,890</span> (sum of Seattle + Female)</p>
+<p class="text-white font-bold mt-3">Same formula, three different answers. That's the power of DAX. The formula doesn't change — the <span class="text-acid">context</span> changes.</p>
+</div></div>
+</div>
+
+<!-- Filter Context vs Row Context -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+<div class="glass-card rounded-2xl p-8 neon-hover border-acid/30">
+<div class="flex items-center gap-3 mb-6"><div class="step-num bg-acid/20 border-acid/40">FC</div><h3 class="text-xl font-bold text-acid">Filter Context</h3></div>
+<p class="text-sm text-gray-400 mb-4">The <span class="text-acid font-semibold">invisible environment</span> created by the user's interactions. When you click a slicer, select a chart element, or apply a filter — Power BI creates a filter context behind the scenes. DAX measures automatically respond to it.</p>
+<div class="ex-box"><div class="ex-l"><i class="fas fa-lightbulb"></i>Real Example</div>
+<div class="code-block text-xs mt-2">
+<span class="cmt">// This measure automatically responds to any filter</span><br>
+<span class="kw">Total Salary</span> = <span class="fn">SUM</span>( HR[Salary] )
+<span class="cmt">// User clicks "Seattle" in City slicer</span>
+<span class="cmt">// Power BI internally wraps it in:</span>
+<span class="cmt">// CALCULATE(SUM(HR[Salary]), FILTER(ALL(HR), HR[City]="Seattle"))</span>
+<span class="cmt">// You NEVER write CALCULATE — Power BI adds it automatically!</span>
+</div></div>
+</div>
+
+<div class="glass-card rounded-2xl p-8 neon-hover border-orange-500/20">
+<div class="flex items-center gap-3 mb-6"><div class="step-num bg-orange-500/10 border-orange-500/30 text-orange-400">RC</div><h3 class="text-xl font-bold text-orange-400">Row Context</h3></div>
+<p class="text-sm text-gray-400 mb-4">Works <span class="text-orange-400 font-semibold">row by row</span>. Used inside X functions (SUMX, FILTER). Each row is evaluated in the current filter context.</p>
+<div class="ex-box"><div class="ex-l"><i class="fas fa-lightbulb"></i>How SUMX uses BOTH contexts</div>
+<div class="code-block text-xs mt-2">
+<span class="cmt">// SUMX = row context + filter context</span><br>
+<span class="kw">Total Bonus</span> = <span class="fn">SUMX</span>(
+    <span class="fn">FILTER</span>( HR, HR[Status] = <span class="str">"Active"</span> ),
+    HR[Salary] * HR[Bonus %] / <span class="num">100</span>
+)
+<span class="cmt">// For each Active row → calculate Salary × Bonus% / 100 → then sum them all</span>
+<span class="cmt">// FILTER works in filter context (only Active rows)</span>
+<span class="cmt">// SUMX iterates in row context (row-by-row evaluation)</span>
+<span class="cmt">// Together = "For each Active employee, calculate bonus, then sum"</span>
+</div></div>
+<div class="ex-box border-orange-500/20 bg-orange-500/5 mt-4"><div class="ex-l text-orange-400"><i class="fas fa-exclamation-triangle"></i> Most Confusing Part</div>
+<p class="text-sm text-gray-400 mt-1">The trickiest DAX concept: <span class="text-orange-400 font-bold">SUMX evaluates the expression row-by-row (row context) WITHIN the current filter context (filter context). Both work together, but they're fundamentally different concepts.</p></div>
+</div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===== CH5: AGGREGATE FUNCTIONS ===== -->
+<section id="aggregate" class="py-32 px-6 relative">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-6">
+<span class="badge mb-6 mx-auto w-fit"><i class="fas fa-layer-group"></i> Chapter 05</span>
+<h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-4">AGGREGATE FUNCTIONS</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">The foundation — every DAX journey starts here. HR data examples for every function.</p>
+<div class="flex flex-wrap justify-center gap-4 mt-6">
+    <div class="text-xs bg-acid/10 text-acid font-bold uppercase tracking-wider px-4 py-2 rounded-full border border-acid/20">Non-X (Simple)</div>
+    <div class="text-xs bg-purple-500/10 text-purple-400 font-bold uppercase tracking-wider px-4 py-2 rounded-full border border-purple-500/20">X Functions (Iterative)</div>
+</div>
+</div>
+
+<div class="tg">
+<!-- SUM -->
+<div class="dax-fn">
+<div class="flex items-center gap-3 mb-3"><span class="text-acid text-xs font-bold uppercase tracking-wider">Aggregate</span></div>
+<h3 class="text-xl font-bold mb-2">SUM</h3>
+<p class="text-sm text-gray-500 mb-3">Adds up all values in a column. The most basic and most-used DAX function. Works exactly like Excel's =SUM().</p>
+<div class="code-block text-xs"><span class="kw">Total Salary</span> = <span class="fn">SUM</span>( HR[Salary] )
+<span class="cmt">// Result: $26,098,354 (sum of all 315 employees)</span></div>
+<div class="ex-box"><div class="ex-l"><i class="fas fa-lightbulb"></i>When to Use</div>
+<p class="text-sm text-gray-400 mt-1">Total revenue, total quantity, total orders, total bonus — anytime you need a single total number.</p></div>
+</div>
+
+<!-- COUNT -->
+<div class="dax-fn">
+<div class="flex items-center gap-3 mb-3"><span class="text-acid text-xs font-bold uppercase tracking-wider">Aggregate</span></div>
+<h3 class="text-xl font-bold mb-2">COUNT</h3>
+<p class="text-sm text-gray-500 mb-3">Counts the number of rows. COUNT counts non-blank values (opposite of COUNTBLANK).</p>
+<div class="code-block text-xs"><span class="kw">Total Employees</span> = <span class="fn">COUNT</span>( HR[EEID] )
+<span class="cmt">// Result: 315</span></div>
+<div class="ex-box"><div class="ex-l"><i class="fas fa-lightbulb"></i>When to Use</div>
+<p class="text-sm text-gray-400 mt-1">How many employees? How many orders? How many active employees? How many products? Headcount reporting.</p></div>
+</div>
+
+<!-- MIN -->
+<div class="dax-fn">
+<div class="flex items-center gap-3 mb-3"><span class="text-acid text-xs font-bold uppercase tracking-wider">Aggregate</span></div>
+<h3 class="text-xl font-bold mb-2">MIN</h3>
+<p class="text-sm text-gray-500 mb-3">Finds the smallest value in a column. Exact same as Excel's =MIN().</p>
+<div class="code-block text-xs"><span class="kw">Lowest Salary</span> = <span class="fn">MIN</span>( HR[Salary] )
+<span class="cmt">// Result: $41,673 (Anthony Rodriguez, Quality Engineer)</span></div>
+<div class="ex-box"><div class="ex-l"><i class="fas fa-lightbulb"></i>When to Use</div>
+<p class="text-sm text-gray-400 mt-1">Cheapest product, lowest score, earliest hire date, minimum response time — anytime you need the bottom value.</p></div>
+</div>
+
+<!-- MAX -->
+<div class="dax-fn">
+<div class="flex items-center gap-3 mb-3"><span class="text-acid text-xs font-bold uppercase tracking-wider">Aggregate</span></div>
+<h3 class="text-xl font-bold mb-2">MAX</h3>
+<p class="text-sm text-gray-500 mb-3">Finds the largest value. Same as Excel's =MAX().</p>
+<div class="code-block text-xs"><span class="kw">Highest Salary</span> = <span class="fn">MAX</span>( HR[Salary] )
+<span class="cmt">// Result: $258,426 (James Bui, Sr. Analyst)</span></div>
+<div class="ex-box"><div class="ex-l"><i class="fas fa-lightbulb"></i>When to Use</div>
+<p class="text-sm text-gray-400 mt-1">Highest revenue month, top performer salary, max order value — anytime you need the top value.</p></div>
+</div>
+
+<!-- AVERAGE -->
+<div class="dax-fn">
+<div class="flex items-center gap-3 mb-3"><span class="text-acid text-xs font-bold uppercase tracking-wider">Aggregate</span></div>
+<h3 class="text-xl font-bold mb-2">AVERAGE</h3>
+<p class="text-sm text-gray-500 mb-3">Mean of all values. Same as Excel's =AVERAGE().</p>
+<div class="code-block text-xs"><span class="kw">Avg Salary</span> = <span class="fn">AVERAGE</span>( HR[Salary] )
+<span class="cmt">// Result: $82,851 per employee</span></div>
+<div class="ex-box"><div class="ex-l"><i class="fas fa-lightbulb"></i>When to Use</div>
+<p class="text-sm text-gray-400 mt-1">Average salary, average order value, average response time, average age — anytime you need the mean.</p></div>
+</div>
+
+<!-- DISTINCTCOUNT -->
+<div class="dax-fn">
+<div class="flex items-center gap-3 mb-3"><span class="text-acid text-xs font-bold uppercase tracking-wider">Aggregate</span></div>
+<h3 class="text-xl font-bold mb-2">DISTINCTCOUNT</h3>
+<p class="text-sm text-gray-500 mb-3">Counts unique values only (no duplicates). Unlike COUNT which counts ALL non-blank rows.</p>
+<div class="code-block text-xs"><span class="kw">Unique Cities</span> = <span class="fn">DISTINCTCOUNT</span>( HR[City] )
+<span class="cmt">// Result: 13 (Seattle, Chicago, Miami, Phoenix, Austin, Columbus, Beijing, Shanghai, Chongqing, Manaus, Rio de Janerio, Chengdu, Beijing)</span></div>
+<div class="ex-box"><div class="ex-l"><i class="fas fa-lightbulb"></i">COUNT vs DISTINCTCOUNT</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
+<div class="p-2 bg-white/[0.03] rounded-lg"><span class="text-white font-bold text-sm">COUNT(EEID)</span><div class="text-gray-500 text-xs">→ 315</div></div>
+<div class="p-2 bg-white/[0.03] rounded-lg"><span class="text-acid font-bold text-sm">DISTINCTCOUNT(City)</span><div class="text-acid text-xs">→ 13</div></div>
+</div>
+<p class="text-xs text-gray-500 mt-2">COUNT says "how many rows" — DISTINCTCOUNT says "how many unique values". Use DISTINCTCOUNT for counting categories.</p></div>
+</div>
+
+<!-- SUMX -->
+<div class="x-fn md:col-span-2">
+<div class="flex items-center gap-3 mb-4"><span class="text-purple-400 text-xs font-bold uppercase tracking-wider">Iterative (X Functions)</span></div>
+<h3 class="text-2xl font-bold mb-2 text-purple-400">SUMX</h3>
+<p class="text-sm text-gray-400 mb-4">The <span class="text-purple-400 font-semibold">game-changer</span>. Iterates row-by-row, evaluating an expression for each row in the current filter context, then aggregates the results. This is where DAX becomes 10x more powerful than drag-and-drop.</p>
+<div class="code-block text-xs">
+<span class="cmt">// Calculate total bonus amount for Active employees</span><br>
+<span class="kw">Total Bonus Amount</span> =
+    <span class="fn">SUMX</span>(
+        <span class="fn">FILTER</span>( HR, HR[Employee Status] = <span class="str">"Active"</span> ),
+        HR[Salary] * <span class="fn">Number.From</span>(HR[Bonus %]) / <span class="num">100</span>
+    )
+<span class="cmt">// Step 1: FILTER reduces 315 rows → ~220 Active employees</span>
+<span class="cmt">// Step 2: For each Active employee, calculate: Salary × Bonus% / 100</span>
+<span class="cmt">// Step 3: SUM all calculated values together</span>
+</div>
+<div class="ex-box"><div class="ex-l text-purple-400"><i class="fas fa-lightbulb"></i>Result</div>
+<p class="text-sm text-gray-400 mt-1"><span class="text-white font-bold">257 Active employees × their individual bonus percentages</span>. You CANNOT do this with SUM alone — SUM gives you ONE total regardless of filters.</p></div>
+<div class="ex-box border-purple-500/20 bg-purple-500/5 mt-2"><div class="ex-l text-purple-400"><i class="fas fa-exclamation-triangle"></i">SUM vs SUMX</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2 text-sm text-gray-400">
+<div class="p-2 bg-purple-500/5 border border-purple-500/20 rounded-lg"><span class="text-white font-bold">SUM(Salary)</span><div class="text-purple-400 text-xs">→ One number, ignores filters</div></div>
+<div class="p-2 bg-purple-500/5 border border-purple-500/20 rounded-lg"><span class="text-purple-400 font-bold">SUMX(Salary × Bonus%)</span><div class="text-purple-400 text-xs">→ Dynamic, respects filters</div></div>
+</div></div>
+</div>
+
+<!-- COUNTX -->
+<div class="x-fn">
+<div class="flex items-center gap-3 mb-4"><span class="text-purple-400 text-xs font-bold uppercase tracking-wider">Iterative (X Functions)</span></div>
+<h3 class="text-xl font-bold mb-2 text-purple-400">COUNTX</h3>
+<p class="text-sm text-gray-500 mb-4">Counts rows that satisfy a condition. Like COUNT but with <span class="text-purple-400">conditional logic</span>.</p>
+<div class="code-block text-xs">
+<span class="cmt">// Count employees earning above $100,000</span><br>
+<span class="kw">High Earners</span> =
+    <span class="fn">COUNTX</span>(
+        HR,
+        HR[Salary] > <span class="num">100000</span>
+    )
+<span class="cmt">// Result: 153 employees earn above $100K</span>
+</div>
+<div class="ex-box"><div class="ex-l text-purple-400"><i class="fas fa-lightbulb"></i>Why Not COUNT(FILTER(..., ...))?</div>
+<p class="text-sm text-gray-400 mt-1"><span class="text-red-400">COUNT(FILTER(HR, HR[Salary]>100000))</span> would also return 153, but FILTER loads all rows into memory. COUNTX is <span class="text-purple-400">optimized</span> — it stops at the first match.</p></div>
+</div>
+
+<!-- MINX -->
+<div class="x-fn">
+<div class="flex items-center gap-3 mb-4"><span class="text-purple-400 text-xs font-bold uppercase tracking-wider">Iterative (X Functions)</span></div>
+<h3 class="text-xl font-bold mb-2 text-purple-400">MINX</h3>
+<p class="text-sm text-gray-500 mb-4">Finds the minimum value across evaluated rows.</p>
+<div class="code-block text-xs">
+<span class="cmt">// Lowest paid Active employee</span><br>
+<span class="kw">Min Active Salary</span> =
+    <span class="fn">MINX</span>(
+        <span class="fn">FILTER</span>( HR, HR[Employee Status] = <span class="str">"Active"</span> ),
+        HR[Salary]
+    )
+<span class="cmt">// Result: $41,673 (Anthony Rodriguez, Account Representative)</span>
+</div>
+<div class="ex-box"><div class="ex-l text-purple-400"><i class="fas fa-lightbulb"></i>Why Not MIN(FILTER(...))?</div>
+<p class="text-sm text-gray-400 mt-1"><span class="text-red-400">MIN(FILTER(HR, HR[Status]="Active")[Salary])</span> would need to evaluate ALL active rows first, then find the minimum. MINX finds it <span class="text-purple-400">as it goes</span> — much faster with large datasets.</p></div>
+</div>
+
+<!-- MAXX -->
+<div class="x-fn">
+<div class="flex items-center gap-3 mb-4"><span class="text-purple-400 text-xs font-bold uppercase tracking-wider">Iterative (X Functions)</span></div>
+<h3 class="text-xl font-bold mb-2 text-purple-400">MAXX</h3>
+<p class="text-sm text-gray-500 mb-4">Finds the maximum value across evaluated rows.</p>
+<div class="code-block text-xs">
+<span class="cmt">// Highest paid Active employee by city</span><br>
+<span class="kw">Max Salary by Seattle</span> =
+    <span class="fn">MAXX</span>(
+        <span class="fn">FILTER</span>( HR, HR[City] = <span class="str">"Seattle"</span> ),
+        HR[Salary]
+    )
+<span class="cmt">// Result: $219,693 (Joseph Moore, Vice President)</span>
+</div>
+<div class="ex-box"><div class="ex-l text-purple-400"><i class="fas fa-lightbulb"></i>Why Not MAX(FILTER(...))?</div>
+<p class="text-sm text-gray-400 mt-1"><span class="text-red-400">MAX(FILTER(HR, HR[City]="Seattle")[Salary])</span> evaluates all Seattle rows first. <span class="text-purple-400">MAXX stops at the first match.</span></p></div>
+</div>
+
+<!-- AVERAGEX -->
+<div class="x-fn md:col-span-2">
+<div class="flex items-center gap-3 mb-4"><span class="text-purple-400 text-xs font-bold uppercase tracking-wider">Iterative (X Functions)</span></div>
+<h3 class="text-xl font-bold mb-2 text-purple-400">AVERAGEX</h3>
+<p class="text-sm text-gray-500 mb-4">Average of evaluated rows. Think of it as <span class="text-purple-400">SUMX / COUNTX</span>.</p>
+<div class="code-block text-xs">
+<span class="cmt">// Average salary of Old Employees by gender</span>
+<span class="kw">Avg Old Male Salary</span> =
+    <span class="fn">AVERAGEX</span>(
+        <span class="fn">FILTER</span>( HR,
+            <span class="kw">AND</span> HR[Employee Group] = <span class="str">"Old Employee"</span>,
+            <span class="kw">AND</span> HR[Gender] = <span class="str">"Male"</span>
+        ),
+        HR[Salary]
+    )
+<span class="cmt">// Only Old Male employees' average salary</span>
+</div>
+<div class="ex-box"><div class="ex-l text-purple-400"><i class="fas fa-lightbulb"></i">SUMX/AVERAGEX rule of thumb</div>
+<p class="text-sm text-purple-400 mt-1">Whenever you're calculating something "for a subset of data" (by department, by gender, by city) — that's a SUMX/AVERAGEX scenario. Never use on the entire dataset — always pair with FILTER.</p></div>
+</div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===== CH6: FILTER FUNCTION ===== -->
+<section id="filter" class="py-32 px-6 relative">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-20">
+<span class="badge mb-6 mx-auto w-fit"><i class="fas fa-filter"></i> Chapter 06</span>
+<h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">FILTER FUNCTION</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">The most important DAX function — the key to conditional calculations</p>
+</div>
+
+<div class="max-w-4xl mx-auto">
+<div class="glass-card rounded-2xl p-8 neon-hover border-acid/30">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-14 h-14 rounded-xl bg-acid/10 flex items-center justify-center"><i class="fas fa-filter text-acid text-2xl"></i></div>
+<div><h3 class="text-2xl font-bold text-acid">FILTER Function</h3><p class="text-gray-500 text-sm">The foundation of conditional DAX</p></div></div>
+
+<p class="text-sm text-gray-400 mb-6"><span class="text-acid font-semibold">FILTER</span> takes a table and returns a subset of rows based on conditions. It's always paired with another function — SUMX, COUNTX, MINX, MAXX, AVERAGEX.</p>
+
+<div class="code-block text-sm mb-6">
+<span class="fn">FILTER</span>( <span class="str">Table</span>, <span class="str">Condition1</span>, [<span class="str">Condition2</span>, ... )
+</div>
+
+<h4 class="font-bold mb-4"><i class="fas fa-database text-acid mr-2"></i>HR Examples Using FILTER</h4>
+
+<div class="space-y-4">
+<div class="code-block text-xs">
+<span class="cmt">// Only Active employees</span>
+<span class="fn">FILTER</span>( HR, HR[Employee Status] = <span class="str">"Active"</span> )
+<span class="cmt">// Returns 220 rows of active employees</span>
+</div>
+
+<div class="code-block text-xs">
+<span class="cmt">// Only Seattle Active employees</span>
+<span class="fn">FILTER</span>( HR,
+    <span class="kw">AND</span> HR[City] = <span class="str">"Seattle"</span>,
+    <span class="kw">AND</span> HR[Employee Status] = <span class="str">"Active"</span>
+)
+<span class="cmt">// Returns ~45 rows</span>
+</div>
+
+<div class="code-block text-xs">
+<span class="cmt">Only Senior Managers earning over $150K</span>
+<span class="fn">FILTER</span>( HR,
+    <span class="kw">AND</span> HR[Job Title] <span class="kw">contains</span> <span class="str">"Manager"</span>,
+    <span class="kw">AND</span> HR[Salary] > <span class="num">150000</span>
+)
+<span class="cmt">// Returns ~12 rows</span>
+</div>
+
+<div class="code-block text-xs">
+<span class="cmt">Active employees from China earning over $100K</span>
+<span class="fn">FILTER</span>( HR,
+    <span class="kw">AND</span> HR[Employee Status] = <span class="str">"Active"</span>,
+    <span class="kw">AND</span> HR[Country] = <span class="str">"China"</span>,
+    <span class="kw">AND</span> HR[Salary] > <span class="num">100000</span>
+)
+<span class="cmt">// Returns ~30 rows</span>
+</div>
+
+<div class="code-block text-xs">
+<span class="cmt">Total bonus for Female Directors</span>
+<span class="kw">Total Dir Bonus</span> =
+    <span class="fn">SUMX</span>(
+        <span class="fn">FILTER</span>( HR,
+            <span class="kw">AND</span> HR[Job Title] <span class="kw">contains</span> <span class="str">"Director"</span>,
+            <span class="kw">AND</span> HR[Gender] = <span class="str">"Female"</span>
+        ),
+        HR[Salary] * <span class="fn">Number.From</span>(HR[Bonus %]) / <span class="num">100</span>
+    )
+</div>
+
+<div class="ex-box"><div class="ex-l"><i class="fas fa-star text-acid"></i>Why FILTER + SUMX = Power Combo</div>
+<p class="text-sm text-gray-400 mt-1"><span class="text-white font-bold">SUM(FILTER(...)) = wrong.</span> That aggregates the filtered table but returns ONE number. <span class="text-acid">SUMX(FILTER(...)) = dynamic.</span> It recalculates for every filter change. This combo is used in 90% of real-world reports.</p></div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===== CH7: OPERATORS ===== -->
+<section id="operators" class="py-32 px-6 relative">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-20">
+<span class="badge mb-6 mx-auto w-fit"><i class="fas fa-not-equal"></i> Chapter 07</span>
+<h2 class="font-display text-4xl md:text-6xl font-bold tracking-tighter gradient-text mb-6">DAX OPERATORS</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">The comparison and logical operators used inside FILTER and conditional expressions</p>
+</div>
+
+<div class="max-w-4xl mx-auto">
+<div class="tg">
+<!-- = -->
+<div class="glass-card rounded-2xl p-6 neon-hover">
+<div class="flex items-center gap-3 mb-3"><span class="text-acid text-xs font-bold text-center">=</span></div>
+<h4 class="text-lg font-bold mb-3 text-center">Equal</h4>
+<p class="text-sm text-gray-400 mb-3">Exact match comparison.</p>
+<div class="code-block text-xs">
+<span class="cmt">// Equals check</span>
+<span class="fn">FILTER</span>( HR, HR[Employee Status] = <span class="str">"Active"</span> )
+<span class="cmt">// Only rows where Status is EXACTLY "Active" (case-sensitive!)</span>
+</div>
+<div class="text-center"><span class="text-xs text-gray-500">Most commonly used operator in DAX. Note: it IS case-sensitive — "active" ≠ "Active"</div>
+</div>
+
+<!-- > -->
+<div class="glass-card rounded-2xl p-6 neon-hover">
+<div class="flex items-center gap-3 mb-3"><span class="text-blue-400 text-xs font-bold text-center">&gt;</span></div>
+<h4 class="text-lg font-bold mb-3 text-center">Greater Than</h4>
+<p class="text-sm text-gray-400 mb-3">Strictly greater than a value.</p>
+<div class="code-block text-xs">
+<span class="fn">FILTER</span>( HR, HR[Salary] <span class="op">></span> <span class="num">100000</span> )
+<span class="cmt">// Only rows where Salary > $100,000 (does NOT include $100,000 itself)</span>
+</div>
+<div class="text-center"><span class="text-xs text-gray-500"><span class="text-blue-400 font-bold">Remember:</span> ">" means strictly greater than. Use >= for "greater than or equal to".</div>
+</div>
+
+<!-- < -->
+<div class="glass-card rounded-2xl p-6 neon-hover">
+<div class="flex items-center gap-3 mb-3"><span class="text-green-400 text-xs font-bold text-center">&lt;</span></div>
+<h4 class="text-lg font-bold mb-3 text-center">Less Than</h4>
+<p class="text-sm text-gray-400 mb-3">Strictly less than a value.</p>
+<div class="code-block text-xs">
+<span class="fn">FILTER</span>( HR, HR[Salary] <span class="op"><</span> <span class="num">50000</span> )
+<span class="cmt">// Only employees earning less than $50,000 (does NOT include $50,000)</span>
+</div>
+</div>
+
+<!-- <= -->
+<div class="glass-card rounded-2xl p-6 neon-hover">
+<div class="flex items-center gap-3 mb-3"><span class="text-orange-400 text-xs font-bold text-center"><=</span></div>
+<h4 class="text-lg font-bold mb-3 text-center">Less Than or Equal To</h4>
+<p class="text-sm text-gray-400 mb-3">Less than OR equal. The "or equal" part is crucial — without it, you'd miss the boundary value.</p>
+<div class="code-block text-xs">
+<span class="fn">FILTER</span>( HR, HR[Salary] <span class="op"><=</span> <span class="num">75000</span> )
+<span class="cmt">// Includes employees earning exactly $75,000 (that's the "equal to" part)</span>
+</div>
+</div>
+
+<!-- != and <> -->
+<div class="glass-card rounded-2xl p-6 neon-hover">
+<div class="flex items-center gap-3 mb-3"><span class="text-red-400 text-xs font-bold text-center">!=  <></></div>
+<h4 class="text-lg font-bold mb-3 text-center">Not Equal (Two Types)</h4>
+<p class="text-sm text-gray-400 mb-3">Both <span class="text-red-400">!=</span> and <span class="text-red-400"><>&lt;&gt;</span> mean "not equal". The difference is how they handle null values.</p>
+<div class="grid grid-cols-1 md:2 gap-4">
+<div class="code-block text-xs">
+<span class="cmt">// != ignores nulls</span>
+<span class="fn">FILTER</span>( HR, <span class="str">Exit Date</span> <span class="op">!=</span> <span class="str">"*"</span> )
+<span class="cmt">// Returns rows where Exit Date is not null (still employed)</span>
+</div>
+<div class="code-block text-xs">
+<span class="cmt"><> also ignores nulls</span>
+<span class="fn">FILTER</span>( HR, <span class="str">Exit Date</span> <span class="op"><></span> <span class="str">"*"</span> )
+<span class="cmt">// Same result! FILTER ignores nulls in !=</span>
+</div>
+</div>
+<div class="ex-box"><div class="ex-l"><i class="fas fa-star text-acid"></i>Most Common Use</div>
+<p class="text-sm text-gray-400 mt-1"><span class="text-white">FILTER(HR, HR[Exit Date] != "*")</span> is the #1 most used FILTER pattern. It means "show me everyone who hasn't left".</p></div>
+</div>
+
+<!-- IN -->
+<div class="glass-card rounded-2xl p-6 neon-hover">
+<div class="flex items-center gap-3 mb-3"><span class="text-acid text-xs font-bold text-center">IN</span></div>
+<h4 class="text-lg font-bold mb-3 text-acid">In (List)</h4>
+<p class="text-sm text-gray-400 mb-3">Check if a value is IN a list. Replaces multiple OR conditions with one clean function.</p>
+<div class="code-block text-xs">
+<span class="cmt">// Employees from specific cities</span>
+<span class="fn">FILTER</span>( HR, <span class="fn">LIST</span>(<span class="str">"Seattle"</span>, <span class="str">"Chicago"</span>, <span class="str">"Miami"</span>) )
+<span class="cmt">// Returns ~85 rows from those 3 cities</span>
+</div>
+<div class="ex-box"><div class="ex-l"><i class="fas fa-star text-acid"></i>The Alternative (worse)</div>
+<div class="code-block text-xs">
+<span class="cmt">// WITHOUT IN — the painful way (3 OR conditions)</span>
+<span class="fn">FILTER</span>( HR,
+    <span class="kw">OR</span> HR[City]=<span class="str">"Seattle"</span>,
+    <span class="kw">OR</span> HR[City]=<span class="str">"Chicago"</span>,
+    <span class="kw">OR</span> HR[City]=<span class="str">"Miami"</span>
+)
+<span class="cmt">// Same result, but longer, harder to read, harder to maintain</span>
+</div>
+<div class="ex-box border-green-500/20 bg-green-500/5"><div class="ex-l text-green-400"><i class="fas fa-check-circle"></i>Why IN is better</div>
+<p class="text-sm text-gray-400 mt-1">Shorter, cleaner, and Power BI optimizes it using bitmap index internally. Use IN for ANY list-based filtering.</p></div>
+</div>
+
+<!-- NOT IN -->
+<div class="glass-card rounded-2xl p-6 neon-hover">
+<div class="flex items-center gap-3 mb-3"><span class="text-red-400 text-xs font-bold text-center">NOT IN</span></div>
+<h4 class="text-lg font-bold mb-3 text-red-400">Not In (Exclusion List)</h4>
+<p class="text-sm text-gray-400 mb-3">Opposite of IN. Remove rows that match any value in the list.</p>
+<div class="code-block text-xs">
+<span class="cmt">Everyone EXCEPT Seattle</span>
+<span class="fn">FILTER</span>( HR, <span class="fn">NOT</span>( HR[City] <span class="kw">IN</span> {<span class="str">"Seattle"</span>} ) )
+<span class="cmt">// Returns ~290 rows (all except Seattle employees)</span>
+</div>
+<div class="ex-box"><div class="ex-l text-red-400"><i class="fas fa-check-circle"></i>When to Use NOT IN</div>
+<p class="text-sm text-gray-400 mt-1">Remove outliers. Exclude specific products, exclude test regions, remove inactive records. NOT IN is "Remove all of these from the result."</p></div>
+</div>
+
+<!-- && -->
+<div class="glass-card rounded-2xl p-6 neon-hover">
+<div class="flex items-center gap-3 mb-3"><span class="text-acid text-xs font-bold text-center">&&</span></div>
+<h4 class="text-lg font-bold mb-3 text-acid">AND (Logical AND)</h4>
+<p class="span class="text-sm text-gray-400 mb-3">Combine multiple conditions with AND (both must be true for a row to be included).</p>
+<div class="code-block text-xs">
+<span class="cmt">Active Seattle employees earning > $80K</span>
+<span class="fn">FILTER</span>( HR,
+    <span class="kw">AND</span> HR[City] = <span class="str">"Seattle"</span>,
+    <span class="kw">AND</span> HR[Salary] <span class="op">></span> <span class="num">80000</span>
+)
+<span class="cmt">// All conditions must be true for a row to be included</span>
+</div>
+<div class="ex-box"><div class="ex-l"><i class="fas fa-star text-acid"></i>The "AND" Pattern</div>
+<p class="text-sm text-gray-400 mt-1">Every time you have multiple conditions that ALL must be true → use AND. It's the bread and butter of DAX filtering.</p></div>
+</div>
+
+<!-- || -->
+<div class="glass-card rounded-2xl p-6 neon-hover">
+<div class="flex items-center gap-3 mb-3"><span class="text-cyan-400 text-xs font-bold text-center">||</span></div>
+<h4 class="text-lg font-bold mb-3 text-cyan-400">OR (Logical OR)</h4>
+<p class="span class="text-sm text-gray-400 mb-3">At least ONE condition must be true for a row to be included.</p>
+<div class="code-block text-xs">
+<span class="cmt">Any of these cities</span>
+<span class="fn">FILTER</span>( HR,
+    <span class="kw">OR</span> HR[City] = <span class="str">"Seattle"</span>,
+    <span class="kw">OR</span> HR[City] = <span class="str">"Chicago"</span>,
+    <span class="kw">OR</span> HR[City] = <span class="str">"Miami"</span>
+)
+<span class="cmt">// Returns 85 rows (union of those 3 cities)</span>
+</div>
+<div class="ex-box"><div class="ex-l text-cyan-400"><i class="fas fa-star text-cyan-400"></i>The "OR" Pattern</div>
+<p class="text-sm text-gray-400 mt-1">Use OR when any ONE condition qualifies a row for inclusion. "Show me records from ANY of these cities" = OR pattern.</p></div>
+</div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- Footer -->
+<section class="border-t border-white/5 py-16 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+<div>
+<div class="font-display text-2xl font-bold mb-4"><span class="text-acid">V</span>IZONIS</div>
+<p class="text-gray-500 text-sm mb-4">India's leading academy for Data Analytics & BI training.</p>
+</div>
+<div>
+<h4 class="font-bold text-sm uppercase tracking-wider mb-4 text-gray-400">Courses</h4>
+<ul class="space-y-2 text-sm text-gray-500"><li><a href="#" class="hover:text-acid transition-colors">Power BI Complete</li><li><a href="#" class="hover:text-acid transition-colors">DAX Masterclass</li><li><a href="#" class="hover:text-acid transition-colors">Power Query Basics</li><li><a href="#" class="hover:text-acid transition-colors">Microsoft Fabric</li></ul>
+</div>
+<div>
+<h4 class="font-bold text-sm uppercase tracking-wider mb-4 text-gray-400">Contact</h4>
+<ul class="space-y-2 text-sm text-gray-500">
+<li class="flex items-center gap-2"><i class="fab fa-whatsapp text-green-400"></i><a href="https://wa.me/916364671786" target="_blank" class="hover:text-acid transition-colors">+91 6364671786</a></li>
+<li class="flex items-center gap-2"><i class="fas fa-phone text-acid"></i><a href="tel:+916364671786" class="hover:text-acid transition-colors">+91 6364671786</a></li>
+</ul>
+</div>
+<div class="flex gap-4 mt-6">
+<a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-acid/10 hover:text-acid transition-all text-gray-500"><i class="fab fa-linkedin-in"></i></a>
+<a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-acid/10 hover:text-acid transition-all text-gray-500"><i class="fab fa-instagram"></i></a>
+<a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-acid/10 hover:text-acid transition-all text-gray-500"><i class="fab fa-youtube"></i></a>
+</div>
+</div>
+<div class="border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+<p class="text-gray-600 text-xs">© 2025 Vizonis Academy. All rights reserved.</p>
+<p class="text-gray-700 text-xs">Built with <i class="fas fa-heart text-acid text-[10px]"></i> for aspiring data professionals</p>
+</div>
+</div>
+</footer>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20read%20the%20DAX%20guide%20and%20want%20to%20learn%20more." target="_blank" class="whatsapp-float" aria-label="Chat on WhatsApp"><i class="fab fa-whatsapp text-white text-3xl"></i></a>
+<div id="wa-toast" class="fixed bottom-28 right-6 z-[7999] glass-card rounded-xl p-4 max-w-xs transform translate-x-[120%] transition-transform duration-500">
+    <div class="flex items-start gap-3">
+        <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center shrink-0"><i class="fab fa-whatsapp text-green-400 text-lg"></i></div>
+        <div><p class="text-sm font-bold">Stuck on DAX?</p><p class="text-xs text-gray-400 mt-1">Our mentors explain DAX simply!</p>
+        <a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20Help%20me%20understand%20DAX%20concepts." target="_blank" class="text-xs text-green-400 font-bold mt-2 inline-block">Ask Now →</a></div>
+        <button onclick="document.getElementById('wa-toast').style.transform='translateX(120%)'" class="text-gray-600 hover:text-white ml-2"><i class="fas fa-times text-xs"></i></button>
+    </div>
+</div>
+
+<script>
+const lenis=new Lenis({duration:1.2,easing:t=>Math.min(1,1.001-Math.pow(2,-10*t))});
+function raf(t){lenis.raf(t);requestAnimationFrame(raf)}
+gsap.registerPlugin(ScrollTrigger);
+gsap.utils.toArray('.glass-card,.dax-fn,.x-fn,.story-card,.ex-box').forEach((e,i)=>{gsap.from(e,{y:40,opacity:0,duration:.8,delay:i*.02,ease:'power3.out',scrollTrigger:{trigger:e,start:'top 85%',toggleActions:'play none none none none'}})});
+gsap.utils.toArray('.ex-box').forEach(e=>{gsap.from(e,{x:-20,opacity:0,duration:.6,delay:.2,ease:'power2.out',scrollTrigger:{trigger:e,start:'top 90%',toggleActions:'play none none none'}})});
+gsap.utils.toArray('.code-block').forEach(e=>{gsap.from(e,{y:20,opacity:0,duration:.6,delay:.1,ease:'power2.out',scrollTrigger:{trigger:e,start:'top 90%',toggleActions:'play none none none'}})});
+function cp(){const c=document.getElementById('particles');for(let i=0;i<15;i++){const p=document.createElement('div');p.className='particle';const s=Math.random()*4+2;p.style.width=s+'px';p.style.height=s+'px';p.style.left=Math.random()*100+'%';p.style.animationDuration=(Math.random()*15+10)+'s';p.style.animationDelay=(Math.random()*10)+'s';c.appendChild(p)}}cp();
+setTimeout(()=>{document.getElementById('wa-toast').style.transform='translateX(0)'},6000);
+setTimeout(()=>{document.getElementById('wa-toast').style.transform='translateX(120%)'},22000);
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',function(e){const t=document.querySelector(this.getAttribute('href'));if(t){e.preventDefault();lenis.scrollTo(t,{offset:-80})}})});
+const secs=document.querySelectorAll('section[id]'),navs=document.querySelectorAll('.sub-nav-item');
+window.addEventListener('scroll',()=>{let c='';secs.forEach(s=>{if(pageYOffset>=s.offsetTop-120)c=s.getAttribute('id')});navs.forEach(n=>{n.classList.remove('active');if(n.getAttribute('href')==='#'+c)n.classList.add('active')})});
+</script>
+</body>
+</html>
