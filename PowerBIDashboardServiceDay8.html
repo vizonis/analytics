@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vizonis Academy | Power BI — Refresh, Gateway, Deployment & Career</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script>
+tailwind.config={theme:{extend:{colors:{obsidian:'#050505',charcoal:'#0F1115',acid:'#CCFF00',silver:'#E1E1E1',cardDark:'#0A0C10'},fontFamily:{sans:['Space Grotesk','sans-serif'],display:['Syncopate','sans-serif']}}}}
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:'Space Grotesk',sans-serif;background:#050505;color:#E1E1E1;overflow-x:hidden}
+.noise-overlay{position:fixed;inset:0;z-index:9000;pointer-events:none;opacity:.04;background-image:url('https://grainy-gradients.vercel.app/noise.svg')}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#050505}::-webkit-scrollbar-thumb{background:#CCFF00;border-radius:3px}
+.gradient-text{background:linear-gradient(to bottom,#FFF 0%,#9ca3af 50%,#111827 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.acid-gradient-text{background:linear-gradient(135deg,#CCFF00,#88cc00,#CCFF00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.teal-gradient-text{background:linear-gradient(135deg,#2dd4bf,#14b8a6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.purple-gradient-text{background:linear-gradient(135deg,#c084fc,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.orange-gradient-text{background:linear-gradient(135deg,#fb923c,#f97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.glass-card{background:rgba(255,255,255,.03);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.08);transition:all .4s ease}
+.glass-card:hover{background:rgba(255,255,255,.06);border-color:rgba(204,255,0,.3);box-shadow:0 0 30px rgba(204,255,0,.08)}
+.glow-btn{position:relative;overflow:hidden;transition:all .3s ease}
+.glow-btn:hover{box-shadow:0 0 30px rgba(204,255,0,.4);transform:translateY(-2px)}
+.particle{position:absolute;border-radius:50%;background:#CCFF00;opacity:.15;animation:fp linear infinite}
+@keyframes fp{0%{transform:translateY(100vh) scale(0);opacity:0}10%{opacity:.15}90%{opacity:.15}100%{transform:translateY(-100px) scale(1);opacity:0}}
+.grid-bg{background-image:linear-gradient(rgba(204,255,0,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(204,255,0,.03) 1px,transparent 1px);background-size:60px 60px}
+.section-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(204,255,0,.3),transparent)}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:4px 14px;border-radius:9999px;font-size:.75rem;border:1px solid rgba(204,255,0,.3);background:rgba(204,255,0,.08);color:#CCFF00;font-weight:600}
+.badge-teal{border-color:rgba(45,212,191,.3);background:rgba(45,212,191,.08);color:#2dd4bf}
+.badge-purple{border-color:rgba(192,132,252,.3);background:rgba(192,132,252,.08);color:#c084fc}
+.badge-orange{border-color:rgba(251,146,60,.3);background:rgba(251,146,60,.08);color:#fb923c}
+.sub-nav-item{padding:8px 12px;border-radius:8px;font-size:.65rem;text-transform:uppercase;letter-spacing:.08em;color:#6b7280;transition:all .2s;cursor:pointer;border:1px solid transparent;white-space:nowrap}
+.sub-nav-item:hover,.sub-nav-item.active{color:#CCFF00;background:rgba(204,255,0,.05);border-color:rgba(204,255,0,.15)}
+.step-box{background:rgba(204,255,0,.04);border:1px solid rgba(204,255,0,.15);border-radius:12px;padding:16px 20px;position:relative}
+.step-box .step-l{font-size:.65rem;text-transform:uppercase;letter-spacing:.15em;color:#CCFF00;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.vis-mock{background:#0A0C10;border:1px solid rgba(255,255,255,.08);border-radius:12px;overflow:hidden}
+.vis-titlebar{background:rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.06);padding:10px 16px;font-size:.7rem;color:#6b7280;display:flex;align-items:center;gap:8px}
+.vis-titlebar i{color:#9ca3af}
+@keyframes pulseGlow{0%,100%{box-shadow:0 0 20px rgba(204,255,0,.1)}50%{box-shadow:0 0 40px rgba(204,255,0,.25)}}
+.pulse-glow{animation:pulseGlow 3s ease-in-out infinite}
+.reveal{opacity:0;transform:translateY(40px)}
+.icon-box{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.number-highlight{font-family:'Syncopate',sans-serif;font-size:3rem;font-weight:700;line-height:1}
+.qa-item{border:1px solid rgba(255,255,255,.06);border-radius:12px;overflow:hidden;transition:all .3s}
+.qa-item:hover{border-color:rgba(204,255,0,.2)}
+.qa-q{padding:16px 20px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(255,255,255,.02)}
+.qa-a{padding:0 20px 16px 20px;display:none}
+.qa-item.open .qa-a{display:block}
+.qa-item.open .qa-chevron{transform:rotate(180deg)}
+.qa-chevron{transition:transform .3s;flex-shrink:0;color:#6b7280}
+.compare-row{display:grid;grid-template-columns:160px 1fr 1fr;font-size:.7rem}
+.compare-hdr{padding:10px 14px;font-weight:700;font-size:.6rem}
+.compare-cell{padding:8px 14px;border-top:1px solid rgba(255,255,255,.04)}
+.resume-section{border-left:3px solid rgba(204,255,0,.3);padding-left:16px;margin-bottom:16px}
+.whatsapp-float{position:fixed;bottom:30px;right:30px;z-index:8000;width:60px;height:60px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.4);transition:all .3s;cursor:pointer;text-decoration:none}
+.whatsapp-float:hover{transform:scale(1.1);box-shadow:0 6px 30px rgba(37,211,102,.6)}
+</style>
+</head>
+<body class="grid-bg">
+<div class="noise-overlay"></div>
+<div id="particles" class="fixed inset-0 z-0 pointer-events-none overflow-hidden"></div>
+
+<!-- ===================== NAVIGATION ===================== -->
+<nav class="fixed top-0 left-0 right-0 z-[7000] bg-obsidian/80 border-b border-white/5 backdrop-blur-md">
+<div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+<a href="#" class="font-display text-xl font-bold tracking-tight"><span class="text-acid">V</span>IZONIS</a>
+<div class="hidden lg:flex items-center gap-1 overflow-x-auto">
+<a href="#refresh" class="sub-nav-item">Refresh</a>
+<a href="#directquery" class="sub-nav-item">DirectQ</a>
+<a href="#gateway" class="sub-nav-item">Gateway</a>
+<a href="#workspaces" class="sub-nav-item">Workspaces</a>
+<a href="#fabric" class="sub-nav-item">Fabric</a>
+<a href="#capacities" class="sub-nav-item">Capacities</a>
+<a href="#environments" class="sub-nav-item">Dev/UAT/Prod</a>
+<a href="#pipelines" class="sub-nav-item">Pipelines</a>
+<a href="#apps" class="sub-nav-item">Apps</a>
+<a href="#interview" class="sub-nav-item">Interview</a>
+<a href="#resume" class="sub-nav-item">Resume</a>
+</div>
+<a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20completed%20the%20Power%20BI%20training." target="_blank" class="glow-btn bg-acid text-obsidian px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest whitespace-nowrap">Enroll Now</a>
+</div>
+</nav>
+
+<!-- ===================== HERO ===================== -->
+<section class="relative min-h-screen flex flex-col justify-center items-center pt-20 overflow-hidden">
+<div class="hero-orb w-[500px] h-[500px] bg-acid top-1/4 -left-40" style="position:absolute;border-radius:50%;filter:blur(120px);opacity:.2;animation:of 8s ease-in-out infinite alternate"></div>
+<div class="hero-orb w-[400px] h-[400px] bg-orange-500 bottom-1/4 -right-32" style="position:absolute;border-radius:50%;filter:blur(120px);opacity:.15;animation:of 8s ease-in-out infinite alternate;animation-delay:-5s"></div>
+<style>@keyframes of{0%{transform:translate(0,0) scale(1)}100%{transform:translate(30px,-40px) scale(1.2)}}</style>
+<div class="relative z-10 text-center px-6 max-w-6xl mx-auto">
+<div class="badge badge-orange mb-8 mx-auto w-fit"><i class="fas fa-server"></i> Module 03 — Service Deep Dive</div>
+<h1 class="font-display text-5xl md:text-7xl lg:text-8xl font-bold leading-[.9] tracking-tighter mb-8">
+<span class="gradient-text block">REFRESH, GATEWAY</span>
+<span class="orange-gradient-text block mt-2">& DEPLOYMENT</span>
+<span class="gradient-text block mt-2 text-2xl md:text-4xl lg:text-5xl">FROM LOCAL TO LIVE</span>
+</h1>
+<p class="text-gray-400 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-12">Semantic models, gateways, workspaces, capacities, deployment pipelines — everything between "it works on my machine" and "it works for 500 users."</p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center">
+<a href="#refresh" class="glow-btn bg-acid text-obsidian px-10 py-4 rounded-full text-sm font-bold uppercase tracking-widest">Start Chapter <i class="fas fa-arrow-down ml-2"></i></a>
+<a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20want%20to%20learn%20Power%20BI%20deployment." target="_blank" class="glow-btn border border-white/20 text-white px-10 py-4 rounded-full text-sm font-bold uppercase tracking-widest hover:border-acid hover:text-acid"><i class="fab fa-whatsapp mr-2"></i> Chat With Us</a>
+</div>
+</div>
+</section>
+
+<!-- ===================== SEMANTIC MODEL & REFRESH ===================== -->
+<section id="refresh" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge mb-4 mx-auto w-fit"><i class="fas fa-sync-alt"></i> Chapter 01</span>
+<h2 class="font-display text-4xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">SEMANTIC MODEL & REFRESH</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">The dataset is now called a "Semantic Model" — and keeping it fresh is the backbone of every dashboard</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 reveal">
+
+<!-- Mockup: Refresh Settings -->
+<div class="vis-mock" style="border-color:rgba(204,255,0,.15)">
+<div class="vis-titlebar"><i class="fas fa-sync-alt" style="color:#CCFF00;font-size:.6rem"></i><span style="font-size:.58rem">Semantic Model — Scheduled Refresh Settings</span></div>
+<div class="p-4"><svg viewBox="0 0 360 280" style="width:100%">
+<text x="14" y="22" fill="#e1e1e1" font-size="7" font-weight="700">Semantic Model: HR_EmployeeData</text>
+<text x="14" y="38" fill="#6b7280" font-size="5.5">Last refresh: Today, 8:32 AM • Storage: 24 MB</text>
+
+<!-- Refresh Now Button -->
+<rect x="14" y="50" width="100" height="24" rx="6" fill="rgba(204,255,0,.15)" stroke="#CCFF00" stroke-width="1"/>
+<text x="64" y="66" fill="#CCFF00" font-size="6.5" text-anchor="middle" font-weight="700">⟳ Refresh Now</text>
+
+<!-- Schedule Toggle -->
+<text x="14" y="96" fill="#e1e1e1" font-size="6.5" font-weight="600">Scheduled Refresh</text>
+<rect x="260" y="84" width="44" height="16" rx="8" fill="rgba(204,255,0,.2)"/>
+<circle cx="290" cy="92" r="6" fill="#CCFF00"/>
+
+<!-- Daily -->
+<rect x="14" y="110" width="332" height="52" rx="6" fill="rgba(204,255,0,.04)" stroke="rgba(204,255,0,.12)" stroke-width="1"/>
+<circle cx="30" cy="126" r="6" fill="rgba(204,255,0,.3)" stroke="#CCFF00" stroke-width="1"/>
+<text x="30" y="129" fill="#CCFF00" font-size="5" text-anchor="middle">●</text>
+<text x="44" y="130" fill="#e1e1e1" font-size="6.5" font-weight="600">Daily</text>
+<text x="44" y="146" fill="#6b7280" font-size="5.5">Refresh once per day at specific time</text>
+<text x="260" y="130" fill="#CCFF00" font-size="6">8:00 AM</text>
+<text x="260" y="146" fill="#6b7280" font-size="5.5">GMT+5:30</text>
+
+<!-- Weekly -->
+<rect x="14" y="170" width="332" height="68" rx="6" fill="rgba(255,255,255,.02)" stroke="rgba(255,255,255,.08)" stroke-width="1"/>
+<circle cx="30" cy="186" r="6" fill="rgba(255,255,255,.1)" stroke="rgba(255,255,255,.2)" stroke-width="1"/>
+<text x="44" y="190" fill="#9ca3af" font-size="6.5" font-weight="600">Weekly</text>
+<text x="44" y="206" fill="#6b7280" font-size="5.5">Pick specific days of the week</text>
+<rect x="200" y="178" width="36" height="18" rx="4" fill="rgba(204,255,0,.1)" stroke="rgba(204,255,0,.15)" stroke-width=".8"/>
+<text x="218" y="191" fill="#CCFF00" font-size="5.5" text-anchor="middle">Mon</text>
+<rect x="240" y="178" width="36" height="18" rx="4" fill="rgba(204,255,0,.1)" stroke="rgba(204,255,0,.15)" stroke-width=".8"/>
+<text x="258" y="191" fill="#CCFF00" font-size="5.5" text-anchor="middle">Wed</text>
+<rect x="280" y="178" width="36" height="18" rx="4" fill="rgba(204,255,0,.1)" stroke="rgba(204,255,0,.15)" stroke-width=".8"/>
+<text x="298" y="191" fill="#CCFF00" font-size="5.5" text-anchor="middle">Fri</text>
+<text x="200" y="216" fill="#9ca3af" font-size="5.5">9:00 AM • GMT+5:30</text>
+
+<!-- Refresh History -->
+<text x="14" y="260" fill="#6b7280" font-size="6" font-weight="600">Recent Refresh History</text>
+<text x="14" y="274" fill="#22c55e" font-size="5.5">✓ Today 8:32 AM — 12s</text>
+<text x="160" y="274" fill="#22c55e" font-size="5.5">✓ Yesterday 8:00 AM — 14s</text>
+<text x="310" y="274" fill="#22c55e" font-size="5.5">✓ Mon 8:01 AM — 11s</text>
+</svg></div>
+</div>
+
+<!-- Right -->
+<div class="space-y-6">
+<div class="step-box"><div class="step-l"><i class="fas fa-database"></i> What Is a Semantic Model?</div>
+<p class="text-sm text-gray-400">Formerly called a <span class="text-acid font-bold">"Dataset"</span>. It's the <span class="text-white font-bold">data model + relationships + DAX measures + M queries</span> — everything that defines how data is structured and calculated. Visuals consume the semantic model, not raw tables.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-redo"></i> Refresh Now</div>
+<p class="text-sm text-gray-400">Manual, one-time refresh. Go to workspace → <span class="text-acid font-bold">"⋯" on semantic model</span> → <span class="text-acid font-bold">"Refresh Now"</span>. Power BI reconnects to the data source, runs all M transformations, recalculates DAX, and updates the model. Takes seconds to minutes depending on data size.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-calendar-day"></i> Scheduled Refresh — Daily</div>
+<p class="text-sm text-gray-400">Set one time per day (e.g., <span class="text-acid font-bold">8:00 AM</span>). Pick timezone. The refresh runs <span class="text-white font-bold">after</span> the dataset's last refresh completes. If data source is on-prem, the <span class="text-orange-400 font-bold">gateway must be online</span> at that time.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-calendar-week"></i> Scheduled Refresh — Weekly</div>
+<p class="text-sm text-gray-400">Pick specific days (<span class="text-acid font-bold">Mon, Wed, Fri</span>) + time + timezone. Maximum <span class="text-white font-bold">48 scheduled refreshes per day</span> for Pro. Premium allows up to 48/hour. Configure under Settings → Scheduled Refresh → Add another time.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-exclamation-triangle"></i> Common Failures</div>
+<p class="text-sm text-gray-400"><span class="text-red-400 font-bold">Gateway offline</span> = on-prem refresh fails. <span class="text-red-400 font-bold">Credential expired</span> = data source auth failed. <span class="text-red-400 font-bold">Timeout</span> = query took too long (>2hrs for Pro). Check <span class="text-acid font-bold">Refresh History</span> for error codes and timestamps.</p></div>
+</div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== DIRECT QUERY & LIVE CONNECT ===================== -->
+<section id="directquery" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge badge-teal mb-4 mx-auto w-fit"><i class="fas fa-bolt"></i> Chapter 02</span>
+<h2 class="font-display text-4xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">DIRECT QUERY & LIVE CONNECT</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">Skip the import — query the source in real-time, every time a user interacts</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12 reveal">
+
+<!-- Import (Baseline) -->
+<div class="vis-mock" style="border-color:rgba(255,255,255,.08)">
+<div class="vis-titlebar"><i class="fas fa-download" style="font-size:.6rem"></i><span style="font-size:.58rem">Import Mode (Baseline)</span></div>
+<div class="p-4 text-center">
+<svg viewBox="0 0 200 100" style="width:100%">
+<rect x="10" y="30" width="60" height="40" rx="6" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.12)" stroke-width="1"/>
+<text x="40" y="55" fill="#9ca3af" font-size="6" text-anchor="middle">SQL DB</text>
+<line x1="70" y1="50" x2="100" y2="50" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arr)"/>
+<text x="85" y="44" fill="#6b7280" font-size="5" text-anchor="middle">COPY</text>
+<rect x="100" y="30" width="90" height="40" rx="6" fill="rgba(204,255,0,.08)" stroke="rgba(204,255,0,.2)" stroke-width="1"/>
+<text x="145" y="48" fill="#CCFF00" font-size="6" text-anchor="middle">Semantic</text>
+<text x="145" y="60" fill="#CCFF00" font-size="6" text-anchor="middle">Model</text>
+<text x="100" y="90" fill="#6b7280" font-size="5">Data copied at refresh time</text>
+</svg>
+</div>
+<div class="px-4 pb-4"><p class="text-xs text-gray-500">Data is <span class="text-white font-bold">copied</span> into Power BI. Fast visuals. Stale until next refresh. Default mode.</p></div>
+</div>
+
+<!-- Direct Query -->
+<div class="vis-mock pulse-glow" style="border-color:rgba(45,212,191,.2)">
+<div class="vis-titlebar"><i class="fas fa-bolt" style="color:#2dd4bf;font-size:.6rem"></i><span style="font-size:.58rem">Direct Query Mode</span></div>
+<div class="p-4 text-center">
+<svg viewBox="0 0 200 100" style="width:100%">
+<rect x="10" y="30" width="60" height="40" rx="6" fill="rgba(45,212,191,.1)" stroke="rgba(45,212,191,.3)" stroke-width="1"/>
+<text x="40" y="55" fill="#2dd4bf" font-size="6" text-anchor="middle">SQL DB</text>
+<line x1="70" y1="50" x2="100" y2="50" stroke="#2dd4bf" stroke-width="1.5" stroke-dasharray="4,3"/>
+<text x="85" y="44" fill="#2dd4bf" font-size="5" text-anchor="middle">QUERY</text>
+<rect x="100" y="30" width="90" height="40" rx="6" fill="rgba(45,212,191,.06)" stroke="rgba(45,212,191,.2)" stroke-width="1"/>
+<text x="145" y="48" fill="#2dd4bf" font-size="6" text-anchor="middle">Visual</text>
+<text x="145" y="60" fill="#2dd4bf" font-size="6" text-anchor="middle">Query</text>
+<text x="100" y="90" fill="#2dd4bf" font-size="5">SQL generated per interaction</text>
+</svg>
+</div>
+<div class="px-4 pb-4"><p class="text-xs text-gray-500"><span class="text-teal-400 font-bold">No data copied.</span> Every click = SQL query to source. Always live. Slower if source is slow.</p></div>
+</div>
+
+<!-- Live Connect -->
+<div class="vis-mock" style="border-color:rgba(192,132,252,.15)">
+<div class="vis-titlebar"><i class="fas fa-satellite-dish" style="color:#c084fc;font-size:.6rem"></i><span style="font-size:.58rem">Live Connect (Analysis Services)</span></div>
+<div class="p-4 text-center">
+<svg viewBox="0 0 200 100" style="width:100%">
+<rect x="10" y="30" width="60" height="40" rx="6" fill="rgba(192,132,252,.1)" stroke="rgba(192,132,252,.3)" stroke-width="1"/>
+<text x="40" y="48" fill="#c084fc" font-size="5.5" text-anchor="middle">SSAS</text>
+<text x="40" y="60" fill="#c084fc" font-size="5.5" text-anchor="middle">Tabular</text>
+<line x1="70" y1="50" x2="100" y2="50" stroke="#c084fc" stroke-width="1.5" stroke-dasharray="2,2"/>
+<text x="85" y="44" fill="#c084fc" font-size="5" text-anchor="middle">LIVE</text>
+<rect x="100" y="30" width="90" height="40" rx="6" fill="rgba(192,132,252,.06)" stroke="rgba(192,132,252,.2)" stroke-width="1"/>
+<text x="145" y="48" fill="#c084fc" font-size="6" text-anchor="middle">Connects</text>
+<text x="145" y="60" fill="#c084fc" font-size="6" text-anchor="middle">Directly</text>
+<text x="100" y="90" fill="#c084fc" font-size="5">Uses existing SSAS model</text>
+</svg>
+</div>
+<div class="px-4 pb-4"><p class="text-xs text-gray-500"><span class="text-purple-400 font-bold">No import, no DAX editing.</span> Connects to existing SSAS/Azure AS model. Model lives outside Power BI.</p></div>
+</div>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 reveal">
+<div class="step-box"><div class="step-l"><i class="fas fa-bolt"></i> Direct Query — When to Use</div>
+<p class="text-sm text-gray-400">Use when: data changes <span class="text-acid font-bold">frequently</span> (real-time needs), dataset is <span class="text-acid font-bold">too large to import</span> (50GB+), or compliance requires <span class="text-acid font-bold">no data copies</span>. Limitations: no M transformations in Service, limited DAX (no time-intel in some contexts), slower visuals if source DB is slow.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-satellite-dish"></i> Live Connect — When to Use</div>
+<p class="text-sm text-gray-400">Use when your org already has an <span class="text-purple-400 font-bold">SSAS Tabular or Azure Analysis Services</span> model maintained by a separate team. Power BI becomes a <span class="text-white font-bold">viewer only</span> — no model editing, no M, no DAX changes. All modeling happens in SSAS.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-clock"></i> Real-Time vs Near-Real-Time</div>
+<p class="text-sm text-gray-400"><span class="text-acid font-bold">Direct Query</span> = near-real-time (queries on each interaction, few seconds delay). <span class="text-teal-400 font-bold">Push datasets + Streaming</span> = true real-time (milliseconds, via REST API or Event Hubs). For stock prices, IoT sensors → use Push datasets, not Direct Query.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-exclamation-circle"></i> Live Update of Records</div>
+<p class="text-sm text-gray-400">With Direct Query, when a record is <span class="text-white font-bold">INSERTED/UPDATED/DELETED</span> in the source DB, the next user interaction sends a fresh SQL query → they see the new data. No refresh needed. But <span class="text-red-400 font-bold">there's no push notification</span> — users must interact to trigger the query.</p></div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== LOCAL DATA REFRESH & GATEWAY ===================== -->
+<section id="gateway" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge badge-orange mb-4 mx-auto w-fit"><i class="fas fa-network-wired"></i> Chapter 03</span>
+<h2 class="font-display text-4xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">LOCAL DATA & GATEWAY</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">Your Excel file is on your laptop, but your dashboard is in the cloud — the gateway bridges them</p>
+</div>
+
+<!-- Problem Statement -->
+<div class="max-w-5xl mx-auto reveal">
+<div class="vis-mock mb-8" style="border-color:rgba(239,68,68,.15)">
+<div class="vis-titlebar"><i class="fas fa-exclamation-triangle" style="color:#ef4444;font-size:.6rem"></i><span style="font-size:.58rem">The Problem — Without Gateway</span></div>
+<div class="p-4"><svg viewBox="0 0 480 100" style="width:100%">
+<rect x="10" y="20" width="130" height="60" rx="8" fill="rgba(239,68,68,.06)" stroke="rgba(239,68,68,.2)" stroke-width="1"/>
+<text x="75" y="45" fill="#ef4444" font-size="7" text-anchor="middle" font-weight="700">Your Laptop</text>
+<text x="75" y="60" fill="#6b7280" font-size="5.5" text-anchor="middle">C:\Data\HR.xlsx</text>
+<text x="75" y="72" fill="#6b7280" font-size="5.5" text-anchor="middle">SQL Server (local)</text>
+
+<line x1="140" y1="50" x2="200" y2="50" stroke="#ef4444" stroke-width="2" stroke-dasharray="6,4"/>
+<text x="170" y="42" fill="#ef4444" font-size="6" text-anchor="middle">❌ NO PATH</text>
+
+<rect x="200" y="15" width="120" height="25" rx="6" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
+<text x="260" y="32" fill="#6b7280" font-size="6" text-anchor="middle">Internet</text>
+<rect x="200" y="50" width="120" height="30" rx="6" fill="rgba(192,132,252,.06)" stroke="rgba(192,132,252,.15)" stroke-width="1"/>
+<text x="260" y="69" fill="#c084fc" font-size="7" text-anchor="middle">Power BI Service</text>
+
+<line x1="320" y1="65" x2="350" y2="65" stroke="#ef4444" stroke-width="2"/>
+<text x="335" y="58" fill="#ef4444" font-size="5" text-anchor="middle">❌</text>
+
+<rect x="350" y="35" width="120" height="60" rx="8" fill="rgba(255,255,255,.02)" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
+<text x="410" y="58" fill="#6b7280" font-size="6" text-anchor="middle">Stakeholder sees</text>
+<text x="410" y="72" fill="#ef4444" font-size="7" text-anchor="middle" font-weight="700">STALE DATA</text>
+<text x="410" y="88" fill="#ef4444" font-size="5" text-anchor="middle">Refresh Failed</text>
+</svg></div>
+</div>
+</div>
+
+<!-- Solution: Gateway -->
+<div class="max-w-5xl mx-auto reveal">
+<div class="vis-mock mb-10 pulse-glow" style="border-color:rgba(204,255,0,.2)">
+<div class="vis-titlebar"><i class="fas fa-network-wired" style="color:#CCFF00;font-size:.6rem"></i><span style="font-size:.58rem">The Solution — With On-Premises Data Gateway</span></div>
+<div class="p-4"><svg viewBox="0 0 480 120" style="width:100%">
+<rect x="10" y="25" width="110" height="65" rx="8" fill="rgba(204,255,0,.04)" stroke="rgba(204,255,0,.15)" stroke-width="1"/>
+<text x="65" y="48" fill="#CCFF00" font-size="7" text-anchor="middle" font-weight="700">Your Laptop</text>
+<text x="65" y="62" fill="#6b7280" font-size="5.5" text-anchor="middle">C:\Data\HR.xlsx</text>
+<text x="65" y="76" fill="#6b7280" font-size="5.5" text-anchor="middle">SQL Server (local)</text>
+
+<line x1="120" y1="58" x2="155" y2="58" stroke="#CCFF00" stroke-width="2"/>
+<text x="137" y="50" fill="#CCFF00" font-size="5" text-anchor="middle">✓</text>
+
+<rect x="155" y="20" width="100" height="75" rx="8" fill="rgba(204,255,0,.08)" stroke="rgba(204,255,0,.3)" stroke-width="1.5"/>
+<text x="205" y="40" fill="#CCFF00" font-size="7" text-anchor="middle" font-weight="700">🟢 Gateway</text>
+<text x="205" y="54" fill="#6b7280" font-size="5" text-anchor="middle">Installed on</text>
+<text x="205" y="66" fill="#6b7280" font-size="5" text-anchor="middle">your machine or</text>
+<text x="205" y="78" fill="#6b7280" font-size="5" text-anchor="middle">a server</text>
+<text x="205" y="92" fill="#CCFF00" font-size="5" text-anchor="middle">Port 8050</text>
+
+<line x1="255" y1="58" x2="295" y2="58" stroke="#CCFF00" stroke-width="2"/>
+<text x="275" y="50" fill="#CCFF00" font-size="5" text-anchor="middle">Encrypted</text>
+
+<rect x="295" y="15" width="90" height="25" rx="6" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
+<text x="340" y="32" fill="#6b7280" font-size="6" text-anchor="middle">Internet (TLS)</text>
+<rect x="295" y="48" width="90" height="42" rx="6" fill="rgba(192,132,252,.06)" stroke="rgba(192,132,252,.15)" stroke-width="1"/>
+<text x="340" y="68" fill="#c084fc" font-size="7" text-anchor="middle">PBI Service</text>
+<text x="340" y="82" fill="#c084fc" font-size="5" text-anchor="middle">Cloud Service</text>
+
+<line x1="385" y1="69" x2="405" y2="69" stroke="#CCFF00" stroke-width="2"/>
+<text x="395" y="62" fill="#CCFF00" font-size="5" text-anchor="middle">✓</text>
+
+<rect x="405" y="35" width="65" height="65" rx="8" fill="rgba(34,197,94,.06)" stroke="rgba(34,197,94,.2)" stroke-width="1"/>
+<text x="437" y="56" fill="#22c55e" font-size="6" text-anchor="middle">User sees</text>
+<text x="437" y="70" fill="#22c55e" font-size="7" text-anchor="middle" font-weight="700">FRESH</text>
+<text x="437" y="84" fill="#22c55e" font-size="6" text-anchor="middle">DATA ✓</text>
+</svg></div>
+</div>
+</div>
+
+<!-- Steps Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 reveal">
+<div class="step-box"><div class="step-l" style="color:#fb923c"><i class="fas fa-download"></i> Gateway Installation</div>
+<p class="text-sm text-gray-400">Download from: Power BI Service → <span class="text-acid font-bold">"⋯" → Gateways → New gateway</span> → Download installer. Run <span class="text-orange-400 font-bold">On-premises data gateway (standard)</span>. Install on a machine that: is <span class="text-white font-bold">always on</span>, has network access to data sources, and has .NET 4.7.2+.</p></div>
+<div class="step-box"><div class="step-l" style="color:#fb923c"><i class="fas fa-key"></i> Gateway Setup — Sign In</div>
+<p class="text-sm text-gray-400">After install, the Gateway Configuration window opens. <span class="text-acid font-bold">Sign in</span> with the same account that has Pro/Premium license. Choose <span class="text-acid font-bold">"Register a new gateway"</span> → Name it (e.g., "HR-Gateway") → Recovery key (SAVE THIS — you can't recover without it).</p></div>
+<div class="step-box"><div class="step-l" style="color:#fb923c"><i class="fas fa-plug"></i> Gateway Setup — Add Data Source</div>
+<p class="text-sm text-gray-400">In the gateway config: <span class="text-acid font-bold">"Add data source"</span> → Type: <span class="text-white font-bold">File / Folder</span> (for Excel) or <span class="text-white font-bold">SQL Server</span> → Enter path or server name → Authentication: <span class="text-white font-bold">Windows</span> or <span class="text-white font-bold">Basic</span> → Enter credentials → Test connection → <span class="text-acid font-bold">Apply</span>.</p></div>
+<div class="step-box"><div class="step-l" style="color:#fb923c"><i class="fas fa-cloud-upload-alt"></i> Configure in Power BI Service</div>
+<p class="text-sm text-gray-400">In Service → Workspace → Semantic model → <span class="text-acid font-bold">Settings → Scheduled Refresh</span> → Expand "Data source credentials" → Select your gateway from dropdown → Map each data source to the gateway's data source → <span class="text-acid font-bold">Apply</span>. Scheduled refresh will now use the gateway.</p></div>
+<div class="step-box"><div class="step-l" style="color:#fb923c"><i class="fas fa-file-excel"></i> Local Excel Refresh Automation</div>
+<p class="text-sm text-gray-400">For local Excel files: the gateway reads the file at <span class="text-acid font-bold">the exact path</span> you configured. Keep the file in a <span class="text-white font-bold">shared network folder</span> (not your personal Desktop). When someone updates the Excel file, the next scheduled refresh picks up the new data via the gateway.</p></div>
+<div class="step-box"><div class="step-l" style="color:#fb923c"><i class="fas fa-shield-alt"></i> Gateway Best Practices</div>
+<p class="text-sm text-gray-400"><span class="text-acid font-bold">Don't install on personal laptop</span> — use a server. Keep gateway <span class="text-acid font-bold">updated</span> (check monthly). Use a <span class="text-white font-bold">service account</span> for sign-in. Monitor via <span class="text-acid font-bold">Gateway Health</span> in Service. For clusters, use <span class="text-purple-400 font-bold">On-premises data gateway (personal mode)</span> for Power Query Online.</p></div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== WORKSPACE TYPES ===================== -->
+<section id="workspaces" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge badge-purple mb-4 mx-auto w-fit"><i class="fas fa-building"></i> Chapter 04</span>
+<h2 class="font-display text-4xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">WORKSPACE TYPES & CAPACITIES</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">Pro, Premium P1/P2/P3, Fabric — understanding the licensing matrix</p>
+</div>
+<div class="max-w-5xl mx-auto reveal">
+
+<!-- Comparison Table -->
+<div class="vis-mock mb-8" style="border-color:rgba(192,132,252,.15)">
+<div class="vis-titlebar"><i class="fas fa-building" style="color:#c084fc;font-size:.6rem"></i><span style="font-size:.58rem">Workspace Types Comparison</span></div>
+<div class="overflow-x-auto">
+<div class="compare-row" style="min-width:600px">
+<div class="compare-hdr" style="background:rgba(255,255,255,.03);color:#6b7280">FEATURE</div>
+<div class="compare-hdr" style="background:rgba(204,255,0,.05);color:#CCFF00;text-align:center">PRO</div>
+<div class="compare-hdr" style="background:rgba(192,132,252,.05);color:#c084fc;text-align:center">PREMIUM (P)</div>
+</div>
+<div class="compare-row" style="min-width:600px">
+<div class="compare-cell" style="color:#e1e1e1">Max Dataset Size</div>
+<div class="compare-cell" style="text-align:center;color:#CCFF00">1 GB</div>
+<div class="compare-cell" style="text-align:center;color:#c084fc">400 GB</div>
+</div>
+<div class="compare-row" style="min-width:600px">
+<div class="compare-cell" style="color:#e1e1e1">Scheduled Refresh</div>
+<div class="compare-cell" style="text-align:center">8/day max</div>
+<div class="compare-cell" style="text-align:center">48/day max</div>
+</div>
+<div class="compare-row" style="min-width:600px">
+<div class="compare-cell" style="color:#e1e1e1">Paginated Reports</div>
+<div class="compare-cell" style="text-align:center"><i class="fas fa-times text-red-500/50"></i></div>
+<div class="compare-cell" style="text-align:center"><i class="fas fa-check-circle text-purple-400"></i></div>
+</div>
+<div class="compare-row" style="min-width:600px">
+<div class="compare-cell" style="color:#e1e1e1">AI Features (Q&A, etc)</div>
+<div class="compare-cell" style="text-align:center">Limited</div>
+<div class="compare-cell" style="text-align:center"><i class="fas fa-check-circle text-purple-400"></i> Full</div>
+</div>
+<div class="compare-row" style="min-width:600px">
+<div class="compare-cell" style="color:#e1e1e1">Free Users Can View</div>
+<div class="compare-cell" style="text-align:center"><i class="fas fa-times text-red-500/50"></i></div>
+<div class="compare-cell" style="text-align:center"><i class="fas fa-check-circle text-purple-400"></i></div>
+</div>
+<div class="compare-row" style="min-width:600px">
+<div class="compare-cell" style="color:#e1e1e1">Deployment Pipelines</div>
+<div class="compare-cell" style="text-align:center"><i class="fas fa-times text-red-500/50"></i></div>
+<div class="compare-cell" style="text-align:center"><i class="fas fa-check-circle text-purple-400"></i></div>
+</div>
+<div class="compare-row" style="min-width:600px">
+<div class="compare-cell" style="color:#e1e1e1">Cost</div>
+<div class="compare-cell" style="text-align:center;color:#CCFF00">$10/user/mo</div>
+<div class="compare-cell" style="text-align:center;color:#c084fc">P1:$500 P2:$1000 P3:$5000/mo</div>
+</div>
+</div>
+</div>
+
+<!-- Premium Tiers -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+<div class="glass-card rounded-2xl p-6 border-t-2 border-t-purple-400/50">
+<h3 class="font-bold text-purple-400 mb-2">P1 — Per User/Small Team</h3>
+<p class="text-sm text-gray-400">25 users, 100 concurrent. Dev/test workloads. <span class="text-purple-400 font-semibold">$500/month</span>. Good for teams transitioning from Pro.</p>
+</div>
+<div class="glass-card rounded-2xl p-6 border-t-2 border-t-purple-400">
+<h3 class="font-bold text-purple-400 mb-2">P2 — Department Scale</h3>
+<p class="text-sm text-gray-400">100 users, 400 concurrent. Department-level BI. <span class="text-purple-400 font-semibold">$1,000/month</span>. Most common for enterprise departments.</p>
+</div>
+<div class="glass-card rounded-2xl p-6 border-t-2 border-t-acid">
+<h3 class="font-bold text-acid mb-2">P3 — Enterprise</h3>
+<p class="text-sm text-gray-400">Unlimited users, 1000 concurrent. Org-wide BI. <span class="text-acid font-semibold">$5,000/month</span>. Mission-critical, SLA-backed.</p>
+</div>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="step-box"><div class="step-l"><i class="fas fa-key"></i> Workspace Access Roles</div>
+<p class="text-sm text-gray-400"><span class="text-acid font-bold">Admin</span> = full control, add/remove members, delete workspace. <span class="text-acid font-bold">Member</span> = publish, edit content, share. <span class="text-acid font-bold">Contributor</span> = edit but can't publish. <span class="text-acid font-bold">Viewer</span> = read-only. Set via workspace → <span class="text-white font-bold">Access</span> tab → Add people or security groups.</p></div>
+<div class="step-box"><div class="step-l" style="color:#c084fc"><i class="fas fa-infinity"></i> Fabric vs Premium License</div>
+<p class="text-sm text-gray-400"><span class="text-purple-400 font-bold">Fabric (F64/F256 etc)</span> replaces Premium SKU naming. Same underlying capacity, but includes <span class="text-purple-400 font-bold">OneLake, Data Factory, Synapse</span> etc. F64 ≈ P1 pricing. Migration is seamless — existing Premium capacities get Fabric features automatically. <span class="text-acid font-bold">Fabric capacity IS Premium capacity</span> with extra tools.</p></div>
+</div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== CAPACITIES & ROLES ===================== -->
+<section id="capacities" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge badge-teal mb-4 mx-auto w-fit"><i class="fas fa-server"></i> Chapter 05</span>
+<h2 class="font-display text-4xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">CAPACITIES & ADMIN ROLES</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">The infrastructure behind workspaces — and who controls it</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 reveal">
+
+<!-- Capacity Diagram -->
+<div class="vis-mock" style="border-color:rgba(45,212,191,.15)">
+<div class="vis-titlebar"><i class="fas fa-server" style="color:#2dd4bf;font-size:.6rem"></i><span style="font-size:.58rem">Capacity Architecture</span></div>
+<div class="p-4"><svg viewBox="0 0 360 240" style="width:100%">
+<!-- Tenant -->
+<rect x="10" y="10" width="340" height="220" rx="8" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="1" stroke-dasharray="4,4"/>
+<text x="20" y="28" fill="#6b7280" font-size="6">TENANT (yourorg.com)</text>
+
+<!-- Capacity -->
+<rect x="20" y="38" width="320" height="180" rx="6" fill="rgba(45,212,191,.04)" stroke="rgba(45,212,191,.15)" stroke-width="1"/>
+<text x="30" y="56" fill="#2dd4bf" font-size="7" font-weight="700">P2 Capacity (EM2 backend)</text>
+<text x="30" y="68" fill="#6b7280" font-size="5.5">v-cores: 20 • Memory: 25GB • Storage: 100GB</text>
+
+<!-- Workspaces inside -->
+<rect x="30" y="80" width="145" height="55" rx="6" fill="rgba(204,255,0,.05)" stroke="rgba(204,255,0,.12)" stroke-width="1"/>
+<text x="40" y="96" fill="#CCFF00" font-size="6" font-weight="700">WS: HR Analytics</text>
+<text x="40" y="110" fill="#6b7280" font-size="5">2 reports • 1 dataset • 1 dashboard</text>
+<text x="40" y="124" fill="#6b7280" font-size="5">Storage: 24 MB</text>
+
+<rect x="185" y="80" width="145" height="55" rx="6" fill="rgba(192,132,252,.05)" stroke="rgba(192,132,252,.12)" stroke-width="1"/>
+<text x="195" y="96" fill="#c084fc" font-size="6" font-weight="700">WS: Finance</text>
+<text x="195" y="110" fill="#6b7280" font-size="5">4 reports • 2 datasets • 2 dashboards</text>
+<text x="195" y="124" fill="#6b7280" font-size="5">Storage: 156 MB</text>
+
+<rect x="30" y="143" width="145" height="55" rx="6" fill="rgba(45,212,191,.05)" stroke="rgba(45,212,191,.12)" stroke-width="1"/>
+<text x="40" y="159" fill="#2dd4bf" font-size="6" font-weight="700">WS: Sales</text>
+<text x="40" y="173" fill="#6b7280" font-size="5">6 reports • 3 datasets • 3 dashboards</text>
+<text x="40" y="187" fill="#6b7280" font-size="5">Storage: 312 MB</text>
+
+<rect x="185" y="143" width="145" height="55" rx="6" fill="rgba(255,255,255,.02)" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
+<text x="195" y="159" fill="#9ca3af" font-size="6" font-weight="700">WS: Dev Sandbox</text>
+<text x="195" y="173" fill="#6b7280" font-size="5">1 report • 1 dataset</text>
+<text x="195" y="187" fill="#6b7280" font-size="5">Storage: 8 MB</text>
+
+<!-- Arrow -->
+<text x="180" y="210" fill="#2dd4bf" font-size="5" text-anchor="middle">All share the same v-core pool</text>
+</svg></div>
+</div>
+
+<!-- Roles -->
+<div class="space-y-6">
+<div class="step-box"><div class="step-l"><i class="fas fa-cube"></i> Capacity Definition</div>
+<p class="text-sm text-gray-400">A capacity is a <span class="text-teal-400 font-bold">dedicated pool of compute resources</span> (v-cores, memory, storage) that backs one or more workspaces. Pro workspaces use <span class="text-white font-bold">shared capacity</span> (no guarantees). Premium workspaces use <span class="text-teal-400 font-bold">dedicated capacity</span> (guaranteed resources, no throttling).</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-user-shield"></i> Capacity Admin</div>
+<p class="text-sm text-gray-400">Manages the capacity itself: <span class="text-acid font-bold">scale up/down</span>, pause/resume, set auto-scale rules, view metrics (CPU, memory, queries/sec). Assigned via Admin Portal → Capacity Settings. Typically a <span class="text-white font-bold">platform/infra team role</span>.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-users-cog"></i> Workspace Admin</div>
+<p class="text-sm text-gray-400">Manages content within a workspace: <span class="text-acid font-bold">publish, share, set permissions, configure refresh</span>. Can assign Viewer/Contributor/Member/Admin within their workspace. Does NOT manage capacity settings. This is a <span class="text-white font-bold">BI developer/lead role</span>.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-crown"></i> Tenant Admin</div>
+<p class="text-sm text-gray-400">Organization-wide control: <span class="text-acid font-bold">Admin Portal</span> → Tenant settings (block sharing, enforce RLS, set default storage), <span class="text-acid font-bold">audit logs</span>, <span class="text-acid font-bold">usage metrics</span>, license management, create/delete capacities. Highest privilege — usually IT admin + BI lead.</p></div>
+</div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== DEV/UAT/PROD ENVIRONMENTS ===================== -->
+<section id="environments" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge mb-4 mx-auto w-fit"><i class="fas fa-code-branch"></i> Chapter 06</span>
+<h2 class="font-display text-4xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">DEV / UAT / PROD ENVIRONMENTS</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">Never develop directly on production — use three workspaces with deployment pipelines</p>
+</div>
+<div class="max-w-5xl mx-auto reveal">
+
+<!-- Environment Flow Diagram -->
+<div class="vis-mock mb-10" style="border-color:rgba(204,255,0,.15)">
+<div class="vis-titlebar"><i class="fas fa-code-branch" style="color:#CCFF00;font-size:.6rem"></i><span style="font-size:.58rem">Three-Workspace Architecture</span></div>
+<div class="p-4"><svg viewBox="0 0 480 160" style="width:100%">
+<!-- DEV -->
+<rect x="10" y="20" width="130" height="120" rx="8" fill="rgba(204,255,0,.04)" stroke="rgba(204,255,0,.2)" stroke-width="1.5"/>
+<text x="75" y="42" fill="#CCFF00" font-size="8" text-anchor="middle" font-weight="700">DEV</text>
+<text x="75" y="56" fill="#6b7280" font-size="5.5" text-anchor="middle">HR_Dev workspace</text>
+<text x="75" y="72" fill="#6b7280" font-size="5" text-anchor="middle">DB: Dev_SQL</text>
+<text x="75" y="86" fill="#6b7280" font-size="5" text-anchor="middle">File: Dev_HR.xlsx</text>
+<text x="75" y="104" fill="#CCFF00" font-size="5.5" text-anchor="middle">Developer builds</text>
+<text x="75" y="116" fill="#CCFF00" font-size="5.5" text-anchor="middle">& tests visuals</text>
+<text x="75" y="132" fill="#CCFF00" font-size="5" text-anchor="middle">Rapid iterations</text>
+
+<!-- Arrow 1 -->
+<line x1="140" y1="80" x2="170" y2="80" stroke="#CCFF00" stroke-width="2"/>
+<polygon points="168,75 178,80 168,85" fill="#CCFF00"/>
+<text x="155" y="72" fill="#CCFF00" font-size="5" text-anchor="middle">Deploy</text>
+
+<!-- UAT -->
+<rect x="180" y="20" width="130" height="120" rx="8" fill="rgba(192,132,252,.04)" stroke="rgba(192,132,252,.2)" stroke-width="1.5"/>
+<text x="245" y="42" fill="#c084fc" font-size="8" text-anchor="middle" font-weight="700">UAT</text>
+<text x="245" y="56" fill="#6b7280" font-size="5.5" text-anchor="middle">HR_UAT workspace</text>
+<text x="245" y="72" fill="#6b7280" font-size="5" text-anchor="middle">DB: UAT_SQL</text>
+<text x="245" y="86" fill="#6b7280" font-size="5" text-anchor="middle">File: UAT_HR.xlsx</text>
+<text x="245" y="104" fill="#c084fc" font-size="5.5" text-anchor="middle">Business users</text>
+<text x="245" y="116" fill="#c084fc" font-size="5.5" text-anchor="middle">validate & approve</text>
+<text x="245" y="132" fill="#c084fc" font-size="5" text-anchor="middle">Sign-off required</text>
+
+<!-- Arrow 2 -->
+<line x1="310" y1="80" x2="340" y2="80" stroke="#c084fc" stroke-width="2"/>
+<polygon points="338,75 348,80 338,85" fill="#c084fc"/>
+<text x="325" y="72" fill="#c084fc" font-size="5" text-anchor="middle">Deploy</text>
+
+<!-- PROD -->
+<rect x="350" y="20" width="120" height="120" rx="8" fill="rgba(34,197,94,.04)" stroke="rgba(34,197,94,.2)" stroke-width="1.5"/>
+<text x="410" y="42" fill="#22c55e" font-size="8" text-anchor="middle" font-weight="700">PROD</text>
+<text x="410" y="56" fill="#6b7280" font-size="5.5" text-anchor="middle">HR_Prod workspace</text>
+<text x="410" y="72" fill="#6b7280" font-size="5" text-anchor="middle">DB: Prod_SQL</text>
+<text x="410" y="86" fill="#6b7280" font-size="5" text-anchor="middle">File: Prod_HR.xlsx</text>
+<text x="410" y="104" fill="#22c55e" font-size="5.5" text-anchor="middle">End users view</text>
+<text x="410" y="116" fill="#22c55e" font-size="5.5" text-anchor="middle">dashboards here</text>
+<text x="410" y="132" fill="#22c55e" font-size="5" text-anchor="middle">Locked down</text>
+</svg></div>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="step-box"><div class="step-l"><i class="fas fa-database"></i> Parameters for Data Source</div>
+<p class="text-sm text-gray-400">Instead of hardcoding "Server=Dev_SQL" in Power Query, create a <span class="text-acid font-bold">parameter</span> (e.g., <span class="text-white font-bold">ServerName</span>) with values: Dev_SQL, UAT_SQL, Prod_SQL. Use <span class="text-acid font-bold">ServerName</span> in your M query. During pipeline deployment, swap the parameter value — same report, different data source.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-cog"></i> How Parameters Work in Pipelines</div>
+<p class="text-sm text-gray-400">Dev workspace: ServerName = <span class="text-acid font-bold">"Dev_SQL"</span>. When deploying to UAT, the pipeline asks: <span class="text-purple-400 font-bold">"Replace Dev_SQL with?"</span> → You enter <span class="text-purple-400 font-bold">"UAT_SQL"</span>. Pipeline swaps the parameter, updates dataset credentials, and rebinds the report — zero manual changes.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-user-lock"></i> Workspace Permissions by Environment</div>
+<p class="text-sm text-gray-400"><span class="text-acid font-bold">DEV:</span> Developers = Admin. <span class="text-purple-400 font-bold">UAT:</span> Business users = Viewer, Dev lead = Admin. <span class="text-teal-400 font-bold">PROD:</span> BI lead = Admin, End users = Viewer ONLY. <span class="text-red-400 font-bold">Never</span> give end users edit access to Prod.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-shield-alt"></i> Why Not Just One Workspace?</div>
+<p class="text-sm text-gray-400">One workspace = <span class="text-red-400 font-bold">broken dashboards during development</span>. You change a column name in Dev → Prod report breaks. Three workspaces + pipelines = <span class="text-acid font-bold">safe deployments</span>, <span class="text-acid font-bold">rollback capability</span>, and <span class="text-acid font-bold">audit trail</span> of what changed between environments.</p></div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== DEPLOYMENT PIPELINES ===================== -->
+<section id="pipelines" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge badge-orange mb-4 mx-auto w-fit"><i class="fas fa-code-branch"></i> Chapter 07</span>
+<h2 class="font-display text-4xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">DEPLOYMENT PIPELINES</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">The professional way to move content from Dev → UAT → Prod with zero errors</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 reveal">
+
+<!-- Pipeline Mockup -->
+<div class="vis-mock" style="border-color:rgba(251,146,60,.15)">
+<div class="vis-titlebar"><i class="fas fa-code-branch" style="color:#fb923c;font-size:.6rem"></i><span style="font-size:.58rem">Deployment Pipeline — Interface</span></div>
+<div class="p-4"><svg viewBox="0 0 360 260" style="width:100%">
+<text x="14" y="22" fill="#e1e1e1" font-size="7" font-weight="700">Pipeline: HR Analytics Pipeline</text>
+
+<!-- Stage Boxes -->
+<rect x="14" y="34" width="100" height="60" rx="6" fill="rgba(204,255,0,.08)" stroke="rgba(204,255,0,.3)" stroke-width="1.5"/>
+<text x="64" y="52" fill="#CCFF00" font-size="7" text-anchor="middle" font-weight="700">DEV</text>
+<text x="64" y="66" fill="#6b7280" font-size="5" text-anchor="middle">HR_Dev</text>
+<text x="64" y="80" fill="#6b7280" font-size="5" text-anchor="middle">3 items • ✅ Valid</text>
+
+<line x1="114" y1="64" x2="132" y2="64" stroke="#6b7280" stroke-width="1.5"/>
+<polygon points="130,60 138,64 130,68" fill="#6b7280"/>
+
+<rect x="140" y="34" width="100" height="60" rx="6" fill="rgba(192,132,252,.06)" stroke="rgba(192,132,252,.2)" stroke-width="1"/>
+<text x="190" y="52" fill="#c084fc" font-size="7" text-anchor="middle" font-weight="700">TEST</text>
+<text x="190" y="66" fill="#6b7280" font-size="5" text-anchor="middle">HR_UAT</text>
+<text x="190" y="80" fill="#6b7280" font-size="5" text-anchor="middle">3 items • 🔄 Pending</text>
+
+<line x1="240" y1="64" x2="258" y2="64" stroke="#6b7280" stroke-width="1.5"/>
+<polygon points="256,60 264,64 256,68" fill="#6b7280"/>
+
+<rect x="266" y="34" width="80" height="60" rx="6" fill="rgba(34,197,94,.06)" stroke="rgba(34,197,94,.2)" stroke-width="1"/>
+<text x="306" y="52" fill="#22c55e" font-size="7" text-anchor="middle" font-weight="700">PROD</text>
+<text x="306" y="66" fill="#6b7280" font-size="5" text-anchor="middle">HR_Prod</text>
+<text x="306" y="80" fill="#6b7280" font-size="5" text-anchor="middle">3 items • ✅ Valid</text>
+
+<!-- Deploy Button -->
+<rect x="14" y="104" width="130" height="28" rx="6" fill="rgba(204,255,0,.15)" stroke="#CCFF00" stroke-width="1"/>
+<text x="79" y="122" fill="#CCFF00" font-size="6.5" text-anchor="middle" font-weight="700">▶ Deploy DEV → TEST</text>
+
+<!-- Parameter Rules -->
+<text x="14" y="152" fill="#e1e1e1" font-size="6.5" font-weight="600">Parameter Rules (DEV → TEST)</text>
+<rect x="14" y="160" width="332" height="20" rx="4" fill="rgba(255,255,255,.02)" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
+<text x="22" y="174" fill="#9ca3af" font-size="5.5">ServerName:</text>
+<text x="100" y="174" fill="#CCFF00" font-size="5.5">"Dev_SQL"</text>
+<text x="155" y="174" fill="#6b7280" font-size="5.5">→</text>
+<text x="170" y="174" fill="#c084fc" font-size="5.5">"UAT_SQL"</text>
+<text x="230" y="174" fill="#9ca3af" font-size="5.5">FilePath:</text>
+<text x="285" y="174" fill="#CCFF00" font-size="5.5">"Dev_..."</text>
+<text x="325" y="174" fill="#6b7280" font-size="5.5">→</text>
+<text x="335" y="174" fill="#c084fc" font-size="5.5">"UAT_..."</text>
+
+<!-- Select Items -->
+<text x="14" y="200" fill="#e1e1e1" font-size="6.5" font-weight="600">Items to Deploy</text>
+<rect x="14" y="208" width="12" height="12" rx="3" fill="rgba(204,255,0,.2)" stroke="#CCFF00" stroke-width="1"/>
+<text x="22" y="218" fill="#CCFF00" font-size="5" font-weight="700">✓</text>
+<text x="32" y="218" fill="#e1e1e1" font-size="5.5">HR Report.pbix</text>
+<rect x="14" y="226" width="12" height="12" rx="3" fill="rgba(204,255,0,.2)" stroke="#CCFF00" stroke-width="1"/>
+<text x="22" y="236" fill="#CCFF00" font-size="5" font-weight="700">✓</text>
+<text x="32" y="236" fill="#e1e1e1" font-size="5.5">HR_EmployeeData (dataset)</text>
+<rect x="14" y="244" width="12" height="12" rx="3" fill="rgba(204,255,0,.2)" stroke="#CCFF00" stroke-width="1"/>
+<text x="22" y="254" fill="#CCFF00" font-size="5" font-weight="700">✓</text>
+<text x="32" y="254" fill="#e1e1e1" font-size="5.5">HR Dashboard</text>
+</svg></div>
+</div>
+
+<!-- Steps -->
+<div class="space-y-6">
+<div class="step-box"><div class="step-l" style="color:#fb923c"><i class="fas fa-cog"></i> Configuration</div>
+<p class="text-sm text-gray-400">Power BI Service → <span class="text-acid font-bold">"Deploy pipelines"</span> (left nav) → <span class="text-acid font-bold">"New pipeline"</span> → Name it → Assign workspaces to each stage (Dev, Test, Prod). All three workspaces must <span class="text-white font-bold">already exist</span>. Premium required (Pro workspaces don't support pipelines).</p></div>
+<div class="step-box"><div class="step-l" style="color:#fb923c"><i class="fas fa-sliders-h"></i> Parameters Setup</div>
+<p class="text-sm text-gray-400">In your Desktop .pbix: <span class="text-acid font-bold">Home → Manage Parameters → New Parameter</span>. Create parameters for server name, file path, database name. Reference them in Power Query: <span class="text-white font-bold">= Sql.Database(ServerName, DatabaseName)</span>. Publish to Dev workspace.</p></div>
+<div class="step-box"><div class="step-l" style="color:#fb923c"><i class="fas fa-exchange-alt"></i> Deployment Step</div>
+<p class="text-sm text-gray-400">In pipeline → click <span class="text-acid font-bold">"Deploy"</span> on the arrow → Select items → Set <span class="text-orange-400 font-bold">parameter rules</span> (replace Dev values with UAT values) → <span class="text-acid font-bold">Deploy</span>. Pipeline: (1) copies report to target workspace, (2) updates dataset parameter values, (3) updates credentials, (4) rebinds report to new dataset.</p></div>
+<div class="step-box"><div class="step-l" style="color:#fb923c"><i class="fas fa-undo"></i> Rollback</div>
+<p class="text-sm text-gray-400">If something breaks in Prod, click <span class="text-acid font-bold">"Swap"</span> in the pipeline. Swap reverses the deployment — Prod gets the previous version. No need to re-deploy from UAT. This is why pipelines are <span class="text-acid font-bold">non-negotiable</span> in enterprise BI.</p></div>
+</div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== APPS & END USER ACCESS ===================== -->
+<section id="apps" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge badge-purple mb-4 mx-auto w-fit"><i class="fas fa-mobile-alt"></i> Chapter 08</span>
+<h2 class="font-display text-4xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">APPS & END USER ACCESS</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">Workspaces are for builders — Apps are for consumers. This is how 500 people see your work.</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 reveal">
+
+<!-- App Creation Mockup -->
+<div class="vis-mock" style="border-color:rgba(192,132,252,.15)">
+<div class="vis-titlebar"><i class="fas fa-mobile-alt" style="color:#c084fc;font-size:.6rem"></i><span style="font-size:.58rem">Create App — Publish to End Users</span></div>
+<div class="p-4"><svg viewBox="0 0 360 220" style="width:100%">
+<text x="14" y="22" fill="#e1e1e1" font-size="7" font-weight="700">Create new app in "HR_Prod" workspace</text>
+
+<!-- Name -->
+<text x="14" y="46" fill="#9ca3af" font-size="6">App name</text>
+<rect x="14" y="52" width="332" height="22" rx="4" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
+<text x="22" y="67" fill="#e1e1e1" font-size="6">HR Analytics Dashboard</text>
+
+<!-- Description -->
+<text x="14" y="92" fill="#9ca3af" font-size="6">Description</text>
+<rect x="14" y="98" width="332" height="30" rx="4" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
+<text x="22" y="112" fill="#6b7280" font-size="5.5">Complete HR dashboard with headcount, attrition,</text>
+<text x="22" y="124" fill="#6b7280" font-size="5.5">salary analytics, and department breakdowns.</text>
+
+<!-- Navigation -->
+<text x="14" y="148" fill="#9ca3af" font-size="6">Navigation</text>
+<rect x="14" y="154" width="160" height="22" rx="4" fill="rgba(192,132,252,.06)" stroke="rgba(192,132,252,.15)" stroke-width="1"/>
+<text x="22" y="169" fill="#c084fc" font-size="5.5">✓ Auto-generated (recommended)</text>
+<rect x="180" y="154" width="166" height="22" rx="4" fill="rgba(255,255,255,.02)" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
+<text x="188" y="169" fill="#6b7280" font-size="5.5">○ Custom navigation</text>
+
+<!-- Content -->
+<text x="14" y="194" fill="#9ca3af" font-size="6">Content (selected)</text>
+<rect x="14" y="200" width="12" height="12" rx="3" fill="rgba(192,132,252,.2)" stroke="#c084fc" stroke-width="1"/>
+<text x="22" y="210" fill="#c084fc" font-size="5" font-weight="700">✓</text>
+<text x="32" y="210" fill="#e1e1e1" font-size="5.5">HR Dashboard</text>
+<rect x="140" y="200" width="12" height="12" rx="3" fill="rgba(192,132,252,.2)" stroke="#c084fc" stroke-width="1"/>
+<text x="148" y="210" fill="#c084fc" font-size="5" font-weight="700">✓</text>
+<text x="158" y="210" fill="#e1e1e1" font-size="5.5">HR Report (3 pages)</text>
+</svg></div>
+</div>
+
+<!-- Steps -->
+<div class="space-y-6">
+<div class="step-box"><div class="step-l" style="color:#c084fc"><i class="fas fa-plus-circle"></i> How to Create an App</div>
+<p class="text-sm text-gray-400">Workspace → <span class="text-acid font-bold">"Create app"</span> (top right) → Enter name, description, theme color → Choose <span class="text-purple-400 font-bold">navigation style</span> (auto or custom) → Select content (dashboards + reports) → Set <span class="text-purple-400 font-bold">audience</span> (Entire org, Specific people/groups, or security groups) → <span class="text-acid font-bold">Publish app</span>.</p></div>
+<div class="step-box"><div class="step-l" style="color:#c084fc"><i class="fas fa-user"></i> How End Users Access</div>
+<p class="text-sm text-gray-400">Users receive an <span class="text-acid font-bold">email notification</span>. Or: Power BI Service → <span class="text-acid font-bold">"Apps"</span> in left nav → find the app → click to open. On mobile: install <span class="text-purple-400 font-bold">Power BI mobile app</span> → app appears in the Apps tab. Users need <span class="text-white font-bold">Pro license</span> (or workspace must be Premium) to view.</p></div>
+<div class="step-box"><div class="step-l" style="color:#c084fc"><i class="fas fa-sync"></i> Update App</div>
+<p class="text-sm text-gray-400">After updating the report in Prod workspace → go to the app → <span class="text-acid font-bold">"Update app"</span> → review changes → publish. End users see the updated version next time they open the app. You can set <span class="text-purple-400 font-bold">"Require approval"</span> if governance demands it.</p></div>
+<div class="step-box"><div class="step-l" style="color:#c084fc"><i class="fas fa-layer-group"></i> Workspace vs App</div>
+<p class="text-sm text-gray-400"><span class="text-acid font-bold">Workspace</span> = the kitchen (messy, tools everywhere, builders only). <span class="text-purple-400 font-bold">App</span> = the restaurant menu (curated, clean, consumers see only what you select). One workspace can have <span class="text-white font-bold">multiple apps</span> (e.g., "HR Exec View" and "HR Analyst View" from the same workspace).</p></div>
+</div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== COURSE COMPLETION ===================== -->
+<section class="py-28 px-6">
+<div class="max-w-4xl mx-auto text-center reveal">
+<div class="w-24 h-24 rounded-full bg-acid/10 flex items-center justify-center mx-auto mb-8"><i class="fas fa-trophy text-acid text-4xl"></i></div>
+<span class="badge badge-purple mb-6 mx-auto w-fit"><i class="fas fa-graduation-cap"></i> Training Complete</span>
+<h2 class="font-display text-3xl md:text-5xl font-bold tracking-tighter gradient-text mb-6">CONGRATULATIONS, GRADUATE</h2>
+<p class="text-gray-400 text-lg max-w-2xl mx-auto mb-4">You have completed the <span class="text-acid font-bold">entire Power BI training</span> — from your first bar chart to deploying enterprise dashboards with Dev/UAT/Prod pipelines.</p>
+<p class="text-gray-500 text-base max-w-2xl mx-auto mb-10">You now know: Table to Treemap visuals, DAX fundamentals, Bookmarks, Drill-through, RLS, Power BI Service, Gateways, Deployment Pipelines, Apps, and every setting in between. The only thing left is to <span class="text-white font-bold">build your portfolio and get hired</span>.</p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center">
+<a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20completed%20the%20Power%20BI%20training.%20What%20next?" target="_blank" class="glow-btn bg-acid text-obsidian px-10 py-4 rounded-full text-sm font-bold uppercase tracking-widest">Get Your Certificate <i class="fas fa-award ml-2"></i></a>
+<a href="#interview" class="glow-btn border border-white/20 text-white px-10 py-4 rounded-full text-sm font-bold uppercase tracking-widest hover:border-purple-400 hover:text-purple-400"><i class="fas fa-microphone mr-2"></i> Prep for Interviews</a>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== INTERVIEW Q&A ===================== -->
+<section id="interview" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge badge-teal mb-4 mx-auto w-fit"><i class="fas fa-microphone"></i> Interview Prep</span>
+<h2 class="font-display text-4xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">POWER BI INTERVIEW Q&A</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">The most asked questions — organized by topic with model answers</p>
+</div>
+
+<!-- Topic Tabs -->
+<div class="flex flex-wrap gap-2 justify-center mb-10 reveal">
+<button onclick="filterQA('all')" class="sub-nav-item active" data-filter="all">All</button>
+<button onclick="filterQA('pq')" class="sub-nav-item" data-filter="pq">Power Query</button>
+<button onclick="filterQA('dax')" class="sub-nav-item" data-filter="dax">DAX</button>
+<button onclick="filterQA('visual')" class="sub-nav-item" data-filter="visual">Visuals</button>
+<button onclick="filterQA('dash')" class="sub-nav-item" data-filter="dash">Dashboard</button>
+<button onclick="filterQA('service')" class="sub-nav-item" data-filter="service">Service & Deploy</button>
+</div>
+
+<div class="max-w-4xl mx-auto space-y-4 reveal" id="qa-container">
+
+<!-- Power Query -->
+<div class="qa-item" data-topic="pq">
+<div class="qa-q" onclick="toggleQA(this)">
+<span class="text-sm text-white font-semibold">What is Power Query and why is it used in Power BI?</span>
+<i class="fas fa-chevron-down qa-chevron"></i>
+</div>
+<div class="qa-a"><p class="text-sm text-gray-400">Power Query (M language) is the <span class="text-acid font-bold">data extraction and transformation engine</span> inside Power BI. It connects to 100+ data sources, applies transformations (filter, merge, append, pivot, split columns), and loads clean data into the semantic model. It's the <span class="text-acid font-bold">ETL layer</span>: Extract from source → Transform in PQ → Load into model. Without it, you'd load raw, dirty data directly into your visuals.</p></div>
+</div>
+
+<div class="qa-item" data-topic="pq">
+<div class="qa-q" onclick="toggleQA(this)">
+<span class="text-sm text-white font-semibold">How do you connect different data sources in Power Query?</span>
+<i class="fas fa-chevron-down qa-chevron"></i>
+</div>
+<div class="qa-a"><p class="text-sm text-gray-400"><span class="text-acid font-bold">Get Data</span> (Home ribbon) → Choose source type: SQL Server (enter server + database), Excel (browse file path), Web (URL), SharePoint, Azure Data Lake, OData, REST API, etc. Each source has its own connector with specific authentication (Windows, Basic, OAuth, Organizational account). You can connect <span class="text-white font-bold">multiple sources</span> in one .pbix file.</p></div>
+</div>
+
+<div class="qa-item" data-topic="pq">
+<div class="qa-q" onclick="toggleQA(this)">
+<span class="text-sm text-white font-semibold">What is the difference between Merge and Append in Power Query?</span>
+<i class="fas fa-chevron-down qa-chevron"></i>
+</div>
+<div class="qa-a"><p class="text-sm text-gray-400"><span class="text-acid font-bold">Merge</span> = JOIN (SQL). Combines columns from two tables based on a common key. Types: Left Outer, Right Outer, Full Outer, Inner, Left Anti, Right Anti. Example: Employee table + Department table → merge on DeptID to get Dept Name column.<br><br><span class="text-purple-400 font-bold">Append</span> = UNION (SQL). Stacks rows from two tables with the same schema. Example: 2023 Sales table + 2024 Sales table → append to get one combined Sales table with all rows.</p></div>
+</div>
+
+<div class="qa-item" data-topic="pq">
+<div class="qa-q" onclick="toggleQA(this)">
+<span class="text-sm text-white font-semibold">Name 5 common Power Query transformations.</span>
+<i class="fas fa-chevron-down qa-chevron"></i>
+</div>
+<div class="qa-a"><p class="text-sm text-gray-400"><span class="text-acid font-bold">1. Filter Rows:</span> Remove nulls, top N, or by condition.<br><span class="text-acid font-bold">2. Remove Columns:</span> Drop columns you don't need (reduces model size).<br><span class="text-acid font-bold">3. Split Column:</span> Split "John Doe" into First Name + Last Name by delimiter.<br><span class="text-acid font-bold">4. Pivot Column:</span> Convert row values to columns (e.g., month rows → month columns).<br><span class="text-acid font-bold">5. Replace Values:</span> Fix data quality — replace "N/A" with null, "USA" with "United States".<br><span class="text-acid font-bold">Bonus:</span> Group By (aggregate), Custom Column (M formula), Duplicate/Reference query.</p></div>
+</div>
+
+<!-- DAX -->
+<div class="qa-item" data-topic="dax">
+<div class="qa-q" onclick="toggleQA(this)">
+<span class="text-sm text-white font-semibold">What is DAX and how is it different from Power Query (M)?</span>
+<i class="fas fa-chevron-down qa-chevron"></i>
+</div>
+<div class="qa-a"><p class="text-sm text-gray-400"><span class="text-acid font-bold">DAX</span> (Data Analysis Expressions) operates on the <span class="text-white font-bold">loaded data model</span> — after Power Query has loaded it. DAX creates <span class="text-white font-bold">measures</span> (aggregations like SUM, AVERAGE, CALCULATE with filters) and <span class="text-white font-bold">calculated columns</span> (row-level). M (Power Query) operates during <span class="text-white font-bold">data load</span> — connecting, cleaning, shaping. Rule of thumb: <span class="text-acid font-bold">M for shaping data, DAX for calculating results</span>.</p></div>
+</div>
+
+<div class="qa-item" data-topic="dax">
+<div class="qa-q" onclick="toggleQA(this)">
+<span class="text-sm text-white font-semibold">Explain CALCULATE — why is it the most important DAX function?</span>
+<i class="fas fa-chevron-down qa-chevron"></i>
+</div>
+<div class="qa-a"><p class="text-sm text-gray-400"><span class="text-acid font-bold">CALCULATE</span> modifies the filter context of a measure. Syntax: <span class="text-white font-bold">CALCULATE(expression, filter1, filter2, ...)</span>. Example: <span class="text-acid font-bold">CALCULATE(SUM(Sales[Amount]), Sales[Year]=2024)</span> = total sales only for 2024, regardless of what the user has filtered. It's the foundation for: YoY comparisons, ranking, dynamic grouping, and virtually every complex calculation. <span class="text-white font-bold">If you only learn one DAX function, make it CALCULATE.</span></p></div>
+</div>
+
+<div class="qa-item" data-topic="dax">
+<div class="qa-q" onclick="toggleQA(this)">
+<span class="text-sm text-white font-semibold">What is the difference between calculated column and measure?</span>
+<i class="fas fa-chevron-down qa-chevron"></i>
+</div>
+<div class="qa-a"><p class="text-sm text-gray-400"><span class="text-acid font-bold">Calculated Column:</span> Evaluated row-by-row during data load. Stored in the model (increases file size). Uses ROW CONTEXT. Example: <span class="text-white font-bold">Full Name = [FirstName] & " " & [LastName]</span>.<br><br><span class="text-purple-400 font-bold">Measure:</span> Evaluated at query time (when visual renders). Not stored (no size increase). Uses FILTER CONTEXT. Example: <span class="text-white font-bold">Total Sales = SUM(Sales[Amount])</span>.<br><br><span class="text-acid font-bold">Best practice:</span> Use measures whenever possible. Only use calculated columns when you need to use the result as a filter/slicer/relationship key.</p></div>
+</div>
+
+<!-- Visuals -->
+<div class="qa-item" data-topic="visual">
+<div class="qa-q" onclick="toggleQA(this)">
+<span class="text-sm text-white font-semibold">How do Drill-through and Bookmarks differ?</span>
+<i class="fas fa-chevron-down qa-chevron"></i>
+</div>
+<div class="qa-a"><p class="text-sm text-gray-400"><span class="text-acid font-bold">Drill-through:</span> Right-click a data point → navigate to a <span class="text-white font-bold">detail page</span> filtered to that context. Example: Click "Engineering" in a donut chart → drill through to Employee Detail page showing only Engineering employees. Always one-way (detail → back to summary).<br><br><span class="text-purple-400 font-bold">Bookmarks:</span> Capture the <span class="text-white font-bold">entire visual state</span> (filters, selections, visibility, page) as a named snapshot. Replay on button click. Example: "Profit View" bookmark hides cost column and filters to Profit > 0. Bidirectional — can bookmark any page state.</p></div>
+</div>
+
+<div class="qa-item" data-topic="visual">
+<div class="qa-q" onclick="toggleQA(this)">
+<span class="text-sm text-white font-semibold">What are Parameters in Power BI and how are they used?</span>
+<i class="fas fa-chevron-down qa-chevron"></i>
+</div>
+<div class="qa-a"><p class="text-sm text-gray-400">Parameters are <span class="text-acid font-bold">user-controllable variables</span>. Types: (1) <span class="text-white font-bold">Numeric</span> — slider for threshold values (e.g., "Show top N customers"). (2) <span class="text-white font-bold">Text</span> — dropdown for switching measures or dimensions. (3) <span class="text-white font-bold">Field Parameter</span> — lets users <span class="text-acid font-bold">dynamically swap fields</span> in a visual (e.g., switch X-axis from Month to Region). Created via Modeling → New Parameter. Used in measures with SWITCH or SELECTEDVALUE.</p></div>
+</div>
+
+<!-- Dashboard -->
+<div class="qa-item" data-topic="dash">
+<div class="qa-q" onclick="toggleQA(this)">
+<span class="text-sm text-white font-semibold">What is Row-Level Security (RLS) and how do you implement it?</span>
+<i class="fas fa-chevron-down qa-chevron"></i>
+</div>
+<div class="qa-a"><p class="text-sm text-gray-400">RLS restricts <span class="text-acid font-bold">which rows a user can see</span> based on their identity. Implementation: (1) Create a <span class="text-white font-bold">security table</span> (UserEmail, Region). (2) <span class="text-white font-bold">Modeling → Manage Roles</span> → New Role "Regional Manager" → DAX filter: <span class="text-acid font-bold">[Region] IN VALUES('Security'[Region])</span>. (3) In Service → dataset → Security → add users to roles. Users in "Regional Manager" role only see rows matching their region. Test in Desktop via <span class="text-white font-bold">"View as Role"</span>.</p></div>
+</div>
+
+<div class="qa-item" data-topic="dash">
+<div class="qa-q" onclick="toggleQA(this)">
+<span class="text-sm text-white font-semibold">What are the best practices for designing a Power BI dashboard?</span>
+<i class="fas fa-chevron-down qa-chevron"></i>
+</div>
+<div class="qa-a"><p class="text-sm text-gray-400"><span class="text-acid font-bold">1.</span> Fit on one screen (no scroll). <span class="text-acid font-bold">2.</span> 5-8 visuals max — each answers a unique question. <span class="text-acid font-bold">3.</span> Top-left hierarchy (KPIs top, detail bottom-right). <span class="text-acid font-bold">4.</span> Consistent color language (green = good, always). <span class="text-acid font-bold">5.</span> Remove chart junk (no 3D, no redundant legends). <span class="text-acid font-bold">6.</span> Use slicers instead of duplicate filtered charts. <span class="text-acid font-bold">7.</span> Dark theme for data density. <span class="text-acid font-bold">8.</span> Mobile layout for phone users. <span class="text-acid font-bold">9.</span> Performance: avoid too many visuals on one page. <span class="text-acid font-bold">10.</span> Document with tooltips and bookmarks for navigation.</p></div>
+</div>
+
+<!-- Service & Deploy -->
+<div class="qa-item" data-topic="service">
+<div class="qa-q" onclick="toggleQA(this)">
+<span class="text-sm text-white font-semibold">What is the difference between Publish and Deploy in Power BI?</span>
+<i class="fas fa-chevron-down qa-chevron"></i>
+</div>
+<div class="qa-a"><p class="text-sm text-gray-400"><span class="text-acid font-bold">Publish</span> = one-way push from Desktop to a <span class="text-white font-bold">single workspace</span>. Home → Publish → select workspace. Overwrites the existing report. Simple, no parameter swapping.<br><br><span class="text-purple-400 font-bold">Deploy</span> = via Deployment Pipeline, moves content <span class="text-white font-bold">across stages</span> (Dev → UAT → Prod) with parameter value swapping. Supports selective item deployment, rollback (Swap), and rule-based parameter replacement. Professional-grade workflow.</p></div>
+</div>
+
+<div class="qa-item" data-topic="service">
+<div class="qa-q" onclick="toggleQA(this)">
+<span class="text-sm text-white font-semibold">Why do we need an On-Premises Data Gateway?</span>
+<i class="fas fa-chevron-down qa-chevron"></i>
+</div>
+<div class="qa-a"><p class="text-sm text-gray-400">Power BI Service lives in <span class="text-white font-bold">Microsoft's cloud</span>. If your data source is on-premises (local SQL Server, shared Excel file, local ERP), the Service <span class="text-red-400 font-bold">cannot reach it directly</span>. The gateway is a <span class="text-acid font-bold">bridge software installed on your network</span> that receives encrypted requests from the Service, forwards them to your local data source, and sends results back. Without it, scheduled refresh fails for on-prem data.</p></div>
+</div>
+
+<div class="qa-item" data-topic="service">
+<div class="qa-q" onclick="toggleQA(this)">
+<span class="text-sm text-white font-semibold">Explain the difference between Import, Direct Query, and Live Connect.</span>
+<i class="fas fa-chevron-down qa-chevron"></i>
+</div>
+<div class="qa-a"><p class="text-sm text-gray-400"><span class="text-acid font-bold">Import:</span> Data is copied into Power BI at refresh time. Fast visuals. Data can be stale. Default mode. 1GB limit (Pro).<br><span class="text-teal-400 font-bold">Direct Query:</span> No data copied. Every user interaction generates a SQL query to the source. Always live but slower if source is slow. Limited M/DAX.<br><span class="text-purple-400 font-bold">Live Connect:</span> Connects to an existing SSAS/Azure AS model. No import, no model editing in Power BI. The SSAS model handles all queries. Used when a separate team manages the model.</p></div>
+</div>
+
+<div class="qa-item" data-topic="service">
+<div class="qa-q" onclick="toggleQA(this)">
+<span class="text-sm text-white font-semibold">What is the difference between a Workspace and an App?</span>
+<i class="fas fa-chevron-down qa-chevron"></i>
+</div>
+<div class="qa-a"><p class="text-sm text-gray-400"><span class="text-acid font-bold">Workspace</span> = the development container. Has datasets, reports, dashboards, dataflows. Builders (Admins, Members) work here. Can be messy with test reports.<br><span class="text-purple-400 font-bold">App</span> = the curated, published interface for end users. You select specific dashboards/reports from a workspace, arrange navigation, and publish as an app. End users see a clean, focused experience. One workspace → multiple apps possible (e.g., "Exec View" vs "Analyst View").</p></div>
+</div>
+
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-4xl mx-auto"></div>
+
+<!-- ===================== RESUME GUIDE ===================== -->
+<section id="resume" class="py-28 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16 reveal">
+<span class="badge mb-4 mx-auto w-fit"><i class="fas fa-file-alt"></i> Career Guide</span>
+<h2 class="font-display text-4xl md:text-5xl font-bold tracking-tighter gradient-text mb-4">POWER BI RESUME GUIDE</h2>
+<p class="text-gray-400 text-lg max-w-3xl mx-auto">How to write a resume that gets you interviews — with a proven template</p>
+</div>
+
+<!-- Best Practices -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16 reveal">
+<div class="step-box"><div class="step-l"><i class="fas fa-bullseye"></i> Lead With Impact</div>
+<p class="text-sm text-gray-400">Don't write "Created dashboards in Power BI." Write: <span class="text-acid font-bold">"Built 12 interactive dashboards serving 200+ users, reducing ad-hoc reporting time by 60%."</span> Numbers + impact = interview magnet.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-tools"></i> List Specific Tools</div>
+<p class="text-sm text-gray-400">Don't just say "Power BI." Break it down: <span class="text-acid font-bold">Power BI Desktop, Power Query (M), DAX, Power BI Service, Gateway, Deployment Pipelines, RLS, Incremental Refresh</span>. Recruiters search by keyword.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-project-diagram"></i> Showcase Projects</div>
+<p class="text-sm text-gray-400">Have a <span class="text-acid font-bold">dedicated "Projects" section</span> with 2-3 Power BI projects. For each: business problem → data sources → techniques used → business impact. Include links to <span class="text-acid font-bold">published dashboards</span> or screenshots.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-chart-bar"></i> Quantify Everything</div>
+<p class="text-sm text-gray-400">Replace "Improved performance" with <span class="text-acid font-bold">"Optimized DAX measures reducing refresh time from 45 min to 8 min."</span> Replace "Cleaned data" with <span class="text-acid font-bold">"Transformed 2M+ rows across 15 tables using Power Query."</span></p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-database"></i> Mention Data Sources</div>
+<p class="text-sm text-gray-400">List the actual sources you've connected: <span class="text-acid font-bold">SQL Server, Azure Data Lake, SharePoint, Salesforce API, SAP BW, Excel, CSV, Web scraping</span>. This shows versatility recruiters look for.</p></div>
+<div class="step-box"><div class="step-l"><i class="fas fa-ban"></i> Avoid Common Mistakes</div>
+<p class="text-sm text-gray-400"><span class="text-red-400 font-bold">Don't:</span> list "MS Office" as a skill (assumed). Don't put a photo (in most markets). Don't use paragraphs — use bullets. Don't exceed 2 pages. Don't use generic objectives. <span class="text-acid font-bold">Do:</span> use a clean layout, consistent fonts, ATS-friendly format (no tables/columns).</p></div>
+</div>
+
+<!-- Resume Template -->
+<div class="max-w-4xl mx-auto reveal">
+<div class="vis-mock" style="border-color:rgba(204,255,0,.2)">
+<div class="vis-titlebar"><i class="fas fa-file-alt" style="color:#CCFF00;font-size:.6rem"></i><span style="font-size:.58rem">Sample Resume Template — Power BI Developer</span></div>
+<div class="p-6 md:p-8" style="background:linear-gradient(180deg,#0A0C10 0%,#0d0f14 100%)">
+
+<!-- Header -->
+<div class="text-center mb-6 pb-6" style="border-bottom:1px solid rgba(204,255,0,.2)">
+<h3 class="font-display text-xl md:text-2xl font-bold text-white tracking-tight mb-1">JOHN DOE</h3>
+<p class="text-acid font-semibold text-sm mb-2">Power BI Developer | Data Analyst</p>
+<p class="text-gray-500 text-xs">john.doe@email.com • +91-9876543210 • linkedin.com/in/johndoe • github.com/johndoe-pbi</p>
+</div>
+
+<!-- Summary -->
+<div class="resume-section mb-6">
+<h4 class="text-acid font-bold text-xs uppercase tracking-widest mb-2">Summary</h4>
+<p class="text-sm text-gray-400">Power BI Developer with <span class="text-white font-bold">3+ years</span> of experience designing enterprise dashboards, writing complex DAX, building ETL pipelines in Power Query, and managing Power BI Service deployments. Delivered <span class="text-white font-bold">15+ dashboards</span> serving <span class="text-white font-bold">500+ users</span> across HR, Finance, and Sales domains. Skilled in Dev/UAT/Prod pipelines, RLS implementation, and gateway configuration.</p>
+</div>
+
+<!-- Skills -->
+<div class="resume-section mb-6">
+<h4 class="text-acid font-bold text-xs uppercase tracking-widest mb-3">Technical Skills</h4>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-gray-400">
+<div><span class="text-white font-semibold">Power BI:</span> Desktop, Service, Mobile, Paginated Reports</div>
+<div><span class="text-white font-semibold">Languages:</span> DAX (advanced), Power Query (M), SQL</div>
+<div><span class="text-white font-semibold">Data Sources:</span> SQL Server, Azure Data Lake, SharePoint, Salesforce API, SAP, Excel/CSV</div>
+<div><span class="text-white font-semibold">Service Features:</span> Gateway, Deployment Pipelines, RLS, Incremental Refresh, Subscriptions, Alerts</div>
+<div><span class="text-white font-semibold">Visualization:</span> 25+ chart types, Bookmarks, Drill-through, Field Parameters, Custom Tooltips</div>
+<div><span class="text-white font-semibold">Other:</span> Git, Azure DevOps, Fabric, Data Modeling (Star Schema)</div>
+</div>
+</div>
+
+<!-- Experience -->
+<div class="resume-section mb-6">
+<h4 class="text-acid font-bold text-xs uppercase tracking-widest mb-3">Experience</h4>
+<div class="mb-4">
+<p class="text-white font-semibold text-sm">Power BI Developer — Acme Corp</p>
+<p class="text-gray-500 text-xs mb-2">Jan 2022 – Present • Bangalore, India</p>
+<ul class="space-y-1 text-xs text-gray-400">
+<li>• Built <span class="text-white font-bold">12 production dashboards</span> (HR Analytics, Sales Pipeline, Finance P&L) serving 500+ users across the organization</li>
+<li>• Designed <span class="text-white font-bold">Dev/UAT/Prod workspace architecture</span> with deployment pipelines, parameter-based data source swapping, and automated publishing</li>
+<li>• Wrote <span class="text-white font-bold">50+ DAX measures</span> including CALCULATE-based YoY comparisons, dynamic ranking, and KPI indicators</li>
+<li>• Implemented <span class="text-white font-bold">Row-Level Security</span> for 8 regional teams, ensuring data isolation per geography</li>
+<li>• Configured <span class="text-white font-bold">On-Premises Data Gateway</span> for SQL Server and SharePoint data sources, reducing refresh failures by 90%</li>
+<li>• Optimized semantic model: reduced refresh time from <span class="text-white font-bold">45 min to 8 min</span> via Power Query folding and incremental refresh</li>
+<li>• Published <span class="text-white font-bold">Power BI Apps</span> with curated navigation for C-suite, department heads, and analyst tiers</li>
+</ul>
+</div>
+<div class="mb-4">
+<p class="text-white font-semibold text-sm">Data Analyst — StartupXYZ</p>
+<p class="text-gray-500 text-xs mb-2">Jun 2020 – Dec 2021 • Remote</p>
+<ul class="space-y-1 text-xs text-gray-400">
+<li>• Created <span class="text-white font-bold">5 interactive reports</span> from raw CSV/Excel data using Power Query transformations (merge, append, pivot, custom columns)</li>
+<li>• Connected to <span class="text-white font-bold">Salesforce API</span> and built a real-time pipeline dashboard with Direct Query mode</li>
+<li>• Reduced manual reporting effort by <span class="text-white font-bold">60%</span> by automating weekly Excel reports via Power BI subscriptions</li>
+</ul>
+</div>
+</div>
+
+<!-- Projects -->
+<div class="resume-section mb-6">
+<h4 class="text-acid font-bold text-xs uppercase tracking-widest mb-3">Key Projects</h4>
+<div class="mb-3">
+<p class="text-white font-semibold text-xs">HR Attrition Dashboard (Published App)</p>
+<p class="text-xs text-gray-400 mb-1">Built end-to-end: connected SQL Server (2M+ rows, 15 tables), designed star schema, wrote 30+ DAX measures, created 8-page report with bookmarks + drill-through, deployed via pipeline, configured RLS for 5 departments.</p>
+<p class="text-xs text-gray-500"><span class="text-acid font-semibold">Tech:</span> SQL Server, Power Query, DAX, RLS, Deployment Pipeline, Gateway, App</p>
+</div>
+<div>
+<p class="text-white font-semibold text-xs">Sales Pipeline Tracker (Direct Query)</p>
+<p class="text-xs text-gray-400 mb-1">Connected to Salesforce via API using Direct Query. Built pipeline dashboard with opportunity stages, win rates, forecast measures, and team leaderboards. Real-time data — no refresh needed.</p>
+<p class="text-xs text-gray-500"><span class="text-acid font-semibold">Tech:</span> Salesforce API, Direct Query, DAX, Field Parameters, Custom Tooltips</p>
+</div>
+</div>
+
+<!-- Education -->
+<div class="resume-section">
+<h4 class="text-acid font-bold text-xs uppercase tracking-widest mb-2">Education</h4>
+<p class="text-white font-semibold text-xs">B.Tech in Computer Science — ABC University (2016-2020)</p>
+<p class="text-xs text-gray-500">Certification: Microsoft PL-300 (Power BI Data Analyst Associate)</p>
+</div>
+
+</div>
+</div>
+</div>
+
+<!-- Resume Tips Summary -->
+<div class="max-w-4xl mx-auto mt-10 reveal">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="glass-card rounded-2xl p-6 text-center">
+<div class="text-3xl mb-3">📄</div>
+<h4 class="font-bold text-white text-sm mb-2">Keep It 1-2 Pages</h4>
+<p class="text-xs text-gray-500">Recruiters spend 6 seconds on first scan. Don't bury your Power BI skills on page 3.</p>
+</div>
+<div class="glass-card rounded-2xl p-6 text-center">
+<div class="text-3xl mb-3">🔢</div>
+<h4 class="font-bold text-white text-sm mb-2">Numbers Over Words</h4>
+<p class="text-xs text-gray-500">"500+ users" beats "many users." "45 min → 8 min" beats "improved performance."</p>
+</div>
+<div class="glass-card rounded-2xl p-6 text-center">
+<div class="text-3xl mb-3">🔗</div>
+<h4 class="font-bold text-white text-sm mb-2">Add Live Links</h4>
+<p class="text-xs text-gray-500">Publish 2 dashboards to Power BI Service (free Public sharing) and add the URL. Proof > claims.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="vizonis-academy-bangalore" class="py-28 px-6" itemscope itemtype="https://schema.org/EducationalOrganization">
+<div class="max-w-5xl mx-auto reveal">
+<div class="vis-mock pulse-glow" style="border-color:rgba(37,211,102,.3);background:linear-gradient(180deg,#0A0C10 0%,rgba(37,211,102,.04) 100%)">
+<div class="p-8 md:p-12 text-center">
+
+<!-- Big WhatsApp Icon -->
+<div class="mb-8">
+<a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20want%20to%20join%20Power%20BI%20training%20in%20Bangalore." target="_blank" style="display:inline-flex;align-items:center;justify-content:center;width:120px;height:120px;border-radius:50%;background:linear-gradient(135deg,#25D366,#128C7E);box-shadow:0 0 60px rgba(37,211,102,.4),0 0 120px rgba(37,211,102,.15);transition:all .4s;text-decoration:none" onmouseover="this.style.transform='scale(1.1)';this.style.boxShadow='0 0 80px rgba(37,211,102,.6),0 0 160px rgba(37,211,102,.2)'" onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 0 60px rgba(37,211,102,.4),0 0 120px rgba(37,211,102,.15)'">
+<i class="fab fa-whatsapp" style="color:#fff;font-size:56px"></i>
+</a>
+</div>
+
+<!-- Main CTA Heading -->
+<h2 class="font-display text-2xl md:text-4xl lg:text-5xl font-bold tracking-tighter mb-4" itemprop="name">
+<span class="gradient-text">VIZONIS ACADEMY</span>
+</h2>
+<p class="text-lg md:text-xl font-semibold mb-6" style="color:#25D366">
+The Only Institute With <span class="text-white">Practical Quality Training</span> in Entire Bangalore
+</p>
+
+<!-- Subheading -->
+<p class="text-gray-400 text-base md:text-lg max-w-3xl mx-auto leading-relaxed mb-10" itemprop="description">
+Stop wasting time on institutes that teach theory for 3 months and leave you jobless. <strong class="text-white">Vizonis Academy</strong> is Bangalore's most result-oriented Power BI training institute — where every lecture is hands-on, every project is real-world, and every student is interview-ready from Day 1.
+</p>
+
+<!-- Stats Row -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+<div class="rounded-xl p-4" style="background:rgba(37,211,102,.06);border:1px solid rgba(37,211,102,.15)">
+<div class="font-display text-2xl md:text-3xl font-bold text-acid mb-1">500+</div>
+<div class="text-xs text-gray-400">Students Trained</div>
+</div>
+<div class="rounded-xl p-4" style="background:rgba(37,211,102,.06);border:1px solid rgba(37,211,102,.15)">
+<div class="font-display text-2xl md:text-3xl font-bold text-acid mb-1">95%</div>
+<div class="text-xs text-gray-400">Placement Rate</div>
+</div>
+<div class="rounded-xl p-4" style="background:rgba(37,211,102,.06);border:1px solid rgba(37,211,102,.15)">
+<div class="font-display text-2xl md:text-3xl font-bold text-acid mb-1">15+</div>
+<div class="text-xs text-gray-400">Real-World Projects</div>
+</div>
+<div class="rounded-xl p-4" style="background:rgba(37,211,102,.06);border:1px solid rgba(37,211,102,.15)">
+<div class="font-display text-2xl md:text-3xl font-bold text-acid mb-1">4.9★</div>
+<div class="text-xs text-gray-400">Google Rating</div>
+</div>
+</div>
+
+<!-- Why Vizonis Points -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10 text-left max-w-3xl mx-auto">
+<div class="flex items-start gap-3 p-4 rounded-xl" style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06)">
+<i class="fas fa-check-circle text-acid mt-0.5"></i>
+<div><p class="text-sm text-white font-semibold">100% Practical — Zero Theory Dumping</p><p class="text-xs text-gray-500">Every class = live Power BI. No slides, no reading from PDFs.</p></div>
+</div>
+<div class="flex items-start gap-3 p-4 rounded-xl" style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06)">
+<i class="fas fa-check-circle text-acid mt-0.5"></i>
+<div><p class="text-sm text-white font-semibold">Industry Projects, Not Toy Datasets</p><p class="text-xs text-gray-500">Work with 2M+ row datasets, real SQL servers, live APIs — not Adventure Works.</p></div>
+</div>
+<div class="flex items-start gap-3 p-4 rounded-xl" style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06)">
+<i class="fas fa-check-circle text-acid mt-0.5"></i>
+<div><p class="text-sm text-white font-semibold">Resume Building + Interview Prep Included</p><p class="text-xs text-gray-500">We don't just teach Power BI — we get you placed. Resume, portfolio, mock interviews.</p></div>
+</div>
+<div class="flex items-start gap-3 p-4 rounded-xl" style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06)">
+<i class="fas fa-check-circle text-acid mt-0.5"></i>
+<div><p class="text-sm text-white font-semibold">Lifetime Access to Recorded Content</p><p class="text-xs text-gray-500">Missed a class? Revisit any topic anytime. Your learning doesn't expire when the course does.</p></div>
+</div>
+<div class="flex items-start gap-3 p-4 rounded-xl" style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06)">
+<i class="fas fa-check-circle text-acid mt-0.5"></i>
+<div><p class="text-sm text-white font-semibold">Small Batches — Max 10 Students</p><p class="text-xs text-gray-500">Personal attention. Doubt-solving in real-time. No getting lost in a crowd of 60.</p></div>
+</div>
+<div class="flex items-start gap-3 p-4 rounded-xl" style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06)">
+<i class="fas fa-check-circle text-acid mt-0.5"></i>
+<div><p class="text-sm text-white font-semibold">Weekend Batches for Working Professionals</p><p class="text-xs text-gray-500">Saturday & Sunday slots. Keep your job, upgrade your career. No weekday conflicts.</p></div>
+</div>
+</div>
+
+<!-- SEO Rich Location Text -->
+<div class="mb-10 p-5 rounded-xl text-left max-w-3xl mx-auto" style="background:rgba(204,255,0,.03);border:1px solid rgba(204,255,0,.1)">
+<p class="text-xs text-gray-500 leading-relaxed" itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+<strong class="text-acid">Vizonis Academy</strong> — <span itemprop="addressLocality">Bangalore</span>'s top-rated <strong class="text-white">Power BI training institute</strong>. Located in the heart of <span itemprop="addressRegion">Karnataka</span>, we serve students from <strong class="text-white">Marathahalli, Whitefield, Electronic City, BTM Layout, Koramangala, HSR Layout, Indiranagar, Bellandur, Sarjapur Road, Hebbal, JP Nagar, Rajajinagar, Yelahanka</strong> and all across Bangalore. Whether you are a fresher looking to break into data analytics, or a working professional wanting to upskill — <strong class="text-white">Vizonis Academy</strong> is the only <strong class="text-white">Power BI course in Bangalore</strong> that guarantees practical, job-ready training. Join the best <strong class="text-white">Power BI institute in Bangalore</strong> and start your data career with confidence.
+</p>
+</div>
+
+<!-- Primary CTA Button -->
+<a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20want%20to%20join%20Power%20BI%20training%20in%20Bangalore." target="_blank" class="glow-btn inline-flex items-center gap-3 px-12 py-5 rounded-full text-base md:text-lg font-bold uppercase tracking-widest" style="background:#25D366;color:#fff;text-decoration:none" onmouseover="this.style.boxShadow='0 0 40px rgba(37,211,102,.5)';this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='none';this.style.transform='translateY(0)'">
+<i class="fab fa-whatsapp text-2xl"></i>
+Chat Now — Enroll for Next Batch
+</a>
+
+<p class="text-xs text-gray-600 mt-4">No spam. No obligation. Just a quick conversation about your career goals.</p>
+
+</div>
+</div>
+</div>
+
+<!-- Hidden SEO Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  "name": "Vizonis Academy",
+  "description": "Vizonis Academy is Bangalore's top-rated Power BI training institute offering practical, job-ready training with real-world projects, resume building, and interview preparation.",
+  "url": "https://vizonis.com",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Bangalore",
+    "addressRegion": "Karnataka",
+    "addressCountry": "IN"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "200"
+  },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Power BI Training Courses",
+    "itemListElement": [
+      {
+        "@type": "Course",
+        "name": "Power BI Complete Training",
+        "description": "End-to-end Power BI course covering Power Query, DAX, Visuals, Dashboards, Service, Gateway, Deployment Pipelines, RLS, and Interview Prep.",
+        "provider": {
+          "@type": "EducationalOrganization",
+          "name": "Vizonis Academy"
+        }
+      }
+    ]
+  }
+}
+</script>
+</section>
+
+<!-- Footer -->
+<footer class="border-t border-white/5 py-12 px-6">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+<p class="text-gray-600 text-sm"><span class="font-display text-gray-400"><span class="text-acid">V</span>IZONIS</span> Academy — Power BI Complete Training</p>
+<p class="text-gray-700 text-xs">From your first bar chart to your first day at work. You're ready.</p>
+</div>
+</footer>
+
+<!-- WhatsApp Float -->
+<!-- WhatsApp Float -->
+<a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20want%20to%20learn%20Power%20BI." target="_blank" class="whatsapp-float"><i class="fab fa-whatsapp text-white text-2xl"></i></a>
+
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+gsap.utils.toArray('.reveal').forEach(el=>{gsap.to(el,{opacity:1,y:0,duration:.7,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 88%',toggleActions:'play none play none'}})});
+const sections=document.querySelectorAll('section[id]');
+const navLinks=document.querySelectorAll('.sub-nav-item');
+let ticking=false;
+window.addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(()=>{let c='';sections.forEach(s=>{if(scrollY>=s.offsetTop-120)c=s.id});navLinks.forEach(l=>{l.classList.toggle('active',l.getAttribute('href')==='#'+c)});ticking=false});ticking=true}},{passive:true});
+const c=document.getElementById('particles');for(let i=0;i<25;i++){const p=document.createElement('div');p.className='particle';const s=Math.random()*3+1;p.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;animation-duration:${Math.random()*12+8}s;animation-delay:${Math.random()*12}s;`;c.appendChild(p)}
+function toggleQA(el){const item=el.closest('.qa-item');item.classList.toggle('open')}
+function filterQA(topic){document.querySelectorAll('.qa-item').forEach(item=>{if(topic==='all'||item.dataset.topic===topic){item.style.display='block'}else{item.style.display='none'}});document.querySelectorAll('[data-filter]').forEach(btn=>{btn.classList.toggle('active',btn.dataset.filter===topic)})}
+</script>
+</body>
+</html>
