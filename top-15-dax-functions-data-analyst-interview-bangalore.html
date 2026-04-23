@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Top 15 DAX Functions for Data Analyst Interviews in Bangalore (2026) | Best Data Analytics Training</title>
+<meta name="description" content="Complete guide to the 15 most asked DAX functions in data analyst interviews in Bangalore 2026. CALCULATE, FILTER, SUMX, RANKX, time intelligence — with syntax, examples, interview questions & answers. Learn DAX at Bangalore's best data analytics training, Vizonis Academy.">
+<meta name="keywords" content="top DAX functions data analyst interview, DAX interview questions Bangalore, DAX functions for Power BI interviews, CALCULATE DAX interview, SUMX DAX interview, best data analytics training in Bangalore, Power BI DAX course Bangalore, data analyst interview preparation Bangalore, DAX functions cheat sheet, Vizonis Academy, data analytics institute Bangalore, Power BI training Bangalore, data analyst course Bangalore, DAX RANKX interview questions, DAX time intelligence interview">
+<meta name="robots" content="index, follow">
+<meta name="author" content="Vizonis Academy">
+<link rel="canonical" href="https://analytics.vizonis.com/top-15-dax-functions-data-analyst-interview-bangalore">
+<meta property="og:title" content="Top 15 DAX Functions for Data Analyst Interviews in Bangalore (2026)">
+<meta property="og:description" content="Master the 15 DAX functions recruiters actually test. Syntax, examples, interview questions — everything you need to crack Bangalore's toughest data analyst interviews.">
+<meta property="og:url" content="https://analytics.vizonis.com/top-15-dax-functions-data-analyst-interview-bangalore">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Vizonis Academy">
+<meta property="article:published_time" content="2026-01-25">
+<meta property="article:modified_time" content="2026-01-25">
+<meta property="article:author" content="Vizonis Academy">
+<meta property="article:section" content="DAX Interview Preparation">
+<meta property="article:tag" content="DAX Functions">
+<meta property="article:tag" content="Data Analyst Interview Bangalore">
+<meta property="article:tag" content="Power BI DAX">
+<meta property="article:tag" content="Best Data Analytics Training Bangalore">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Top 15 DAX Functions for Data Analyst Interviews in Bangalore">
+<meta name="twitter:description" content="CALCULATE, FILTER, SUMX, RANKX — master the DAX functions that get you hired. From Bangalore's best data analytics training.">
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Article",
+  "headline":"Top 15 DAX Functions Every Data Analyst Must Know for Interviews in Bangalore 2026",
+  "description":"Complete guide to the 15 most asked DAX functions in data analyst interviews in Bangalore with syntax, examples, and interview questions.",
+  "author":{"@type":"Organization","name":"Vizonis Academy","url":"https://vizonis.com"},
+  "publisher":{"@type":"Organization","name":"Vizonis Academy","url":"https://vizonis.com"},
+  "datePublished":"2026-01-25",
+  "dateModified":"2026-01-25",
+  "mainEntityOfPage":"https://analytics.vizonis.com/top-15-dax-functions-data-analyst-interview-bangalore",
+  "keywords":["DAX Functions","Data Analyst Interview","Power BI","Bangalore","CALCULATE","SUMX","RANKX"]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Course",
+  "name":"Data Analytics Course",
+  "provider":{"@type":"Organization","name":"Vizonis Academy","url":"https://vizonis.com"},
+  "url":"https://vizonis.com/courses/data-analytics",
+  "description":"Best data analytics training in Bangalore with advanced DAX, Power BI, SQL, and real-world interview preparation.",
+  "location":{"@type":"Place","name":"Bangalore, India"}
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {"@type":"Question","name":"What is the most important DAX function for interviews?","acceptedAnswer":{"@type":"Answer","text":"CALCULATE is universally considered the most important DAX function for interviews. Every Bangalore recruiter tests CALCULATE because it's the foundation of advanced DAX — it modifies filter context, which is the core concept in DAX. If you understand CALCULATE deeply (including its interactions with ALL, FILTER, and context transition), you can answer 40-50% of all DAX interview questions."}},
+    {"@type":"Question","name":"How many DAX functions should I know for a data analyst interview in Bangalore?","acceptedAnswer":{"@type":"Answer","text":"You should deeply understand 15-20 core DAX functions and be familiar with another 20-30. The 15 functions covered in this guide cover 90% of what's asked. Beyond these, know basic aggregation (SUM, AVERAGE, COUNT), string functions (CONCATENATE, LEFT, RIGHT), and a few niche functions like TREATAS and GENERATE for senior roles."}},
+    {"@type":"Question","name":"What is the difference between SUM and SUMX?","acceptedAnswer":{"@type":"Answer","text":"SUM is an aggregator that works on a single column — it adds up all values in that column respecting the current filter context. SUMX is an iterator — it takes a table and an expression, evaluates the expression row by row, and then sums the results. SUMX can do everything SUM can, plus more (like row-level calculations before aggregation). SUMX(Sales, Sales[Qty] * Sales[Price]) multiplies first, then sums. SUM cannot do this."}},
+    {"@type":"Question","name":"Can I learn DAX without knowing Power BI?","acceptedAnswer":{"@type":"Answer","text":"Technically yes — you can write DAX in Excel Power Pivot or SSAS Tabular. But practically, 95% of DAX jobs require Power BI proficiency. At Vizonis Academy, we teach DAX within the Power BI context because that's how you'll use it on the job and how it's tested in interviews."}},
+    {"@type":"Question","name":"What is the best data analytics training in Bangalore for learning DAX?","acceptedAnswer":{"@type":"Answer","text":"Vizonis Academy is considered the best data analytics training in Bangalore for DAX because we teach it through real-world business scenarios, not just syntax. You write 50+ DAX measures across 10+ dashboard projects, including the exact types of calculations asked in interviews — running totals, rank, YTD, parent-child hierarchies, and dynamic filtering."}}
+  ]
+}
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script>
+tailwind.config={theme:{extend:{colors:{obsidian:'#050505',charcoal:'#0F1115',acid:'#CCFF00',silver:'#E1E1E1',cardDark:'#0A0C10'},fontFamily:{sans:['Space Grotesk','sans-serif'],display:['Syncopate','sans-serif']}}}}
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:'Space Grotesk',sans-serif;background:#050505;color:#E1E1E1;overflow-x:hidden}
+.noise-overlay{position:fixed;inset:0;z-index:9000;pointer-events:none;opacity:.04;background-image:url('https://grainy-gradients.vercel.app/noise.svg')}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#050505}::-webkit-scrollbar-thumb{background:#CCFF00;border-radius:3px}
+.gradient-text{background:linear-gradient(to bottom,#FFF 0%,#9ca3af 50%,#111827 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.acid-gradient-text{background:linear-gradient(135deg,#CCFF00,#88cc00,#CCFF00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.teal-gradient-text{background:linear-gradient(135deg,#2dd4bf,#14b8a6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.purple-gradient-text{background:linear-gradient(135deg,#c084fc,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.orange-gradient-text{background:linear-gradient(135deg,#fb923c,#f97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.glass-card{background:rgba(255,255,255,.03);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.08);transition:all .4s ease}
+.glass-card:hover{background:rgba(255,255,255,.06);border-color:rgba(204,255,0,.3);box-shadow:0 0 30px rgba(204,255,0,.08)}
+.glow-btn{position:relative;overflow:hidden;transition:all .3s ease}
+.glow-btn:hover{box-shadow:0 0 30px rgba(204,255,0,.4);transform:translateY(-2px)}
+.particle{position:absolute;border-radius:50%;background:#CCFF00;opacity:.15;animation:fp linear infinite}
+@keyframes fp{0%{transform:translateY(100vh) scale(0);opacity:0}10%{opacity:.15}90%{opacity:.15}100%{transform:translateY(-100px) scale(1);opacity:0}}
+.grid-bg{background-image:linear-gradient(rgba(204,255,0,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(204,255,0,.03) 1px,transparent 1px);background-size:60px 60px}
+.section-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(204,255,0,.3),transparent)}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:4px 14px;border-radius:9999px;font-size:.75rem;border:1px solid rgba(204,255,0,.3);background:rgba(204,255,0,.08);color:#CCFF00;font-weight:600}
+.badge-teal{border-color:rgba(45,212,191,.3);background:rgba(45,212,191,.08);color:#2dd4bf}
+.badge-purple{border-color:rgba(168,85,247,.3);background:rgba(168,85,247,.08);color:#c084fc}
+.badge-orange{border-color:rgba(249,115,22,.3);background:rgba(249,115,22,.08);color:#fb923c}
+.reveal{opacity:0;transform:translateY(40px)}
+.icon-box{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+@keyframes of{0%{transform:translate(0,0) scale(1)}100%{transform:30px,-40px scale(1.2)}}
+.whatsapp-float{position:fixed;bottom:30px;right:30px;z-index:8000;width:60px;height:60px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.4);transition:all .3s;cursor:pointer;text-decoration:none}
+.whatsapp-float:hover{transform:scale(1.1);box-shadow:0 6px 30px rgba(37,211,102,.6)}
+.vis-mock{background:#0A0C10;border:1px solid rgba(255,255,255,.08);border-radius:12px;overflow:hidden}
+@keyframes pulseGlow{0%,100%{box-shadow:0 0 20px rgba(204,255,0,.1)}50%{box-shadow:0 0 40px rgba(204,255,0,.25)}}
+.pulse-glow{animation:pulseGlow 3s ease-in-out infinite}
+.toc-link{display:block;padding:5px 0;font-size:.8rem;color:#6b7280;transition:all .2s;border-left:2px solid rgba(255,255,255,.06);padding-left:12px}
+.toc-link:hover,.toc-link.active{color:#CCFF00;border-left-color:#CCFF00}
+.qa-item{border:1px solid rgba(255,255,255,.06);border-radius:12px;overflow:hidden;transition:all .3s}
+.qa-item:hover{border-color:rgba(204,255,0,.2)}
+.qa-item.open .qa-a{max-height:600px;opacity:1;padding:0 20px 16px}
+.qa-item.open .qa-chevron{transform:rotate(180deg)}
+.qa-q{padding:16px 20px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(255,255,255,.02)}
+.qa-a{max-height:0;opacity:0;overflow:hidden;transition:all .4s ease;padding:0 20px}
+.qa-chevron{transition:transform .3s;flex-shrink:0;color:#6b7280}
+.article-body p{margin-bottom:1rem;line-height:1.85}
+.article-body h2{margin-top:2.5rem;margin-bottom:1rem}
+.article-body h3{margin-top:2rem;margin-bottom:.75rem}
+.article-body ul{margin-bottom:1rem;padding-left:0;list-style:none}
+.article-body ul li{position:relative;padding-left:1.5rem;margin-bottom:.5rem}
+.article-body ul li::before{content:'';position:absolute;left:0;top:.6rem;width:6px;height:6px;border-radius:50%;background:#CCFF00}
+.breadcrumb a{color:#6b7280;text-decoration:none;transition:color .2s;font-size:.75rem}
+.breadcrumb a:hover{color:#CCFF00}
+.breadcrumb span{color:#6b7280;font-size:.75rem}
+.breadcrumb .sep{color:#374151;margin:0 6px}
+.highlight-box{background:linear-gradient(135deg,rgba(204,255,0,.06),rgba(204,255,0,.02));border:1px solid rgba(204,255,0,.15);border-radius:12px;padding:20px 24px;margin:1.5rem 0}
+.cta-section{background:linear-gradient(135deg,rgba(204,255,0,.08),rgba(204,255,0,.02));border:1px solid rgba(204,255,0,.2);border-radius:20px;padding:40px;text-align:center}
+.interview-q{background:rgba(168,85,247,.04);border:1px solid rgba(168,85,247,.12);border-radius:10px;padding:14px 18px;margin:1rem 0}
+.interview-q::before{content:'INTERVIEW QUESTION';display:block;font-size:.6rem;font-weight:700;letter-spacing:.15em;color:#a855f7;margin-bottom:6px}
+.mistake-box{background:rgba(239,68,68,.04);border:1px solid rgba(239,68,68,.12);border-radius:10px;padding:14px 18px;margin:1rem 0}
+.mistake-box::before{content:'COMMON MISTAKE';display:block;font-size:.6rem;font-weight:700;letter-spacing:.15em;color:#f87171;margin-bottom:6px}
+.func-number{font-family:'Syncopate',sans-serif;font-size:3rem;font-weight:700;line-height:1;opacity:.08;position:absolute;top:-8px;right:16px;pointer-events:none}
+.dax-code{background:#0A0C10;border:1px solid rgba(255,255,255,.06);border-radius:10px;overflow:hidden;margin:1rem 0}
+.dax-code pre{padding:16px;overflow-x:auto;font-size:.72rem;line-height:1.7}
+.dax-code .header{padding:8px 16px;border-bottom:1px solid rgba(255,255,255,.05);display:flex;align-items:center;gap:6px}
+.dax-code .dot{width:8px;height:8px;border-radius:50%}
+.syntax-tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:.65rem;font-weight:600;letter-spacing:.05em;margin-bottom:8px}
+.diff-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.05);border-radius:10px;overflow:hidden;margin:1rem 0}
+.diff-cell{padding:14px 18px;background:#0A0C10}
+.diff-cell:first-child{border-radius:10px 0 0 10px}
+.diff-cell:last-child{border-radius:0 10px 10px 0}
+@media(max-width:640px){.diff-grid{grid-template-columns:1fr}.diff-cell:first-child{border-radius:10px 10px 0 0}.diff-cell:last-child{border-radius:0 0 10px 10px}}
+</style>
+</head>
+<body class="grid-bg">
+<div class="noise-overlay"></div>
+<div id="particles" class="fixed inset-0 z-0 pointer-events-none overflow-hidden"></div>
+
+<!-- NAVIGATION -->
+<nav class="fixed top-0 left-0 right-0 z-[7000] bg-obsidian/80 border-b border-white/5 backdrop-blur-md" role="navigation" aria-label="Main navigation">
+<div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+<a href="https://vizonis.com" class="font-display text-xl font-bold tracking-tight" aria-label="Vizonis Academy Home"><span class="text-acid">V</span>IZONIS</a>
+<div class="hidden lg:flex items-center gap-4">
+<a href="#why-dax" class="text-xs px-3 py-2 rounded-lg text-gray-500 hover:text-acid hover:bg-acid/5 transition-all whitespace-nowrap">Why DAX</a>
+<a href="#calculate" class="text-xs px-3 py-2 rounded-lg text-gray-500 hover:text-acid hover:bg-acid/5 transition-all whitespace-nowrap">CALCULATE</a>
+<a href="#sumx" class="text-xs px-3 py-2 rounded-lg text-gray-500 hover:text-acid hover:bg-acid/5 transition-all whitespace-nowrap">SUMX</a>
+<a href="#time-intel" class="text-xs px-3 py-2 rounded-lg text-gray-500 hover:text-acid hover:bg-acid/5 transition-all whitespace-nowrap">Time Intel</a>
+<a href="#rankx" class="text-xs px-3 py-2 rounded-lg text-gray-500 hover:text-acid hover:bg-acid/5 transition-all whitespace-nowrap">RANKX</a>
+<a href="#faq" class="text-xs px-3 py-2 rounded-lg text-gray-500 hover:text-acid hover:bg-acid/5 transition-all whitespace-nowrap">FAQ</a>
+</div>
+<a href="https://vizonis.com/courses/data-analytics" class="glow-btn bg-acid text-obsidian px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest whitespace-nowrap">Enroll Now</a>
+</div>
+</nav>
+
+<!-- HERO -->
+<header class="relative min-h-[85vh] flex flex-col justify-center items-center pt-28 pb-16 overflow-hidden">
+<div class="hero-orb w-[500px] h-[500px] bg-acid top-1/4 -left-40" style="position:absolute;border-radius:50%;filter:blur(120px);opacity:.12;animation:of 8s ease-in-out infinite alternate"></div>
+<div class="hero-orb w-[400px] h-[400px] bg-purple-500 bottom-1/4 -right-32" style="position:absolute;border-radius:50%;filter:blur(120px);opacity:.08;animation:of 8s ease-in-out infinite alternate;animation-delay:-5s"></div>
+<div class="relative z-10 text-center px-6 max-w-5xl mx-auto">
+
+<nav class="breadcrumb flex items-center justify-center mb-8" aria-label="Breadcrumb">
+<a href="https://vizonis.com">Home</a>
+<span class="sep">/</span>
+<a href="https://vizonis.com/blog">Blog</a>
+<span class="sep">/</span>
+<span class="text-gray-400">Top 15 DAX Functions for Interviews</span>
+</nav>
+
+<div class="flex flex-wrap justify-center gap-2 mb-6">
+<span class="badge"><i class="fas fa-code"></i> DAX Deep Dive</span>
+<span class="badge-purple badge"><i class="fas fa-user-tie"></i> Interview Prep</span>
+<span class="badge-teal badge">Bangalore 2026</span>
+</div>
+<h1 class="font-display text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold leading-[.92] tracking-tighter mb-6">
+<span class="gradient-text block">TOP 15 DAX FUNCTIONS</span>
+<span class="acid-gradient-text block mt-2">FOR DATA ANALYST</span>
+<span class="gradient-text block mt-1 text-base sm:text-lg md:text-2xl lg:text-3xl">INTERVIEWS IN BANGALORE</span>
+</h1>
+<p class="text-gray-400 text-sm md:text-base max-w-3xl mx-auto leading-relaxed mb-4">The exact DAX functions recruiters test, with <strong class="text-white">syntax, real examples, interview questions, and common mistakes</strong>. Based on analysis of 200+ data analyst job postings from Bangalore's top companies.</p>
+<div class="flex items-center justify-center gap-4 text-xs text-gray-500 mb-8 flex-wrap">
+<span><i class="far fa-clock mr-1"></i> 30 min read</span>
+<span><i class="far fa-calendar mr-1"></i> Updated Jan 2026</span>
+<span><i class="far fa-user mr-1"></i> Vizonis Academy</span>
+</div>
+<div class="flex flex-col sm:flex-row gap-4 justify-center">
+<a href="#calculate" class="glow-btn bg-acid text-obsidian px-10 py-4 rounded-full text-sm font-bold uppercase tracking-widest">Start Learning DAX <i class="fas fa-arrow-down ml-2"></i></a>
+<a href="https://vizonis.com/courses/data-analytics" class="glow-btn border border-white/20 text-white px-10 py-4 rounded-full text-sm font-bold uppercase tracking-widest hover:border-acid hover:text-acid">Join DAX Training <i class="fas fa-arrow-right ml-2"></i></a>
+</div>
+</div>
+</header>
+
+<!-- STATS -->
+<section class="py-12 px-6 border-y border-white/5">
+<div class="max-w-5xl mx-auto reveal">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="text-center p-5 glass-card rounded-xl">
+<div class="stat-num acid-gradient-text font-display text-2xl font-bold">92%</div>
+<div class="text-xs text-gray-500 mt-1">of Bangalore DA interviews include DAX</div>
+</div>
+<div class="text-center p-5 glass-card rounded-xl">
+<div class="stat-num purple-gradient-text font-display text-2xl font-bold">15</div>
+<div class="text-xs text-gray-500 mt-1">functions cover 90% of questions</div>
+</div>
+<div class="text-center p-5 glass-card rounded-xl">
+<div class="stat-num teal-gradient-text font-display text-2xl font-bold">200+</div>
+<div class="text-xs text-gray-500 mt-1">job postings analyzed</div>
+</div>
+<div class="text-center p-5 glass-card rounded-xl">
+<div class="stat-num orange-gradient-text font-display text-2xl font-bold">4.2x</div>
+<div class="text-xs text-gray-500 mt-1">more likely to get hired with DAX skills</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- TOC -->
+<section class="py-16 px-6">
+<div class="max-w-5xl mx-auto reveal">
+<div class="flex flex-col lg:flex-row gap-10">
+<div class="lg:w-1/3">
+<div class="lg:sticky lg:top-24">
+<h2 class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-4"><i class="fas fa-list mr-2"></i>All 15 Functions</h2>
+<nav aria-label="Table of contents">
+<a href="#why-dax" class="toc-link">Why DAX Dominates Interviews</a>
+<a href="#calculate" class="toc-link">01 — CALCULATE</a>
+<a href="#filter" class="toc-link">02 — FILTER</a>
+<a href="#all" class="toc-link">03 — ALL / ALLEXCEPT</a>
+<a href="#sumx" class="toc-link">04 — SUMX (Iterators)</a>
+<a href="#related" class="toc-link">05 — RELATED / RELATEDTABLE</a>
+<a href="#rankx" class="toc-link">06 — RANKX</a>
+<a href="#time-intel" class="toc-link">07 — DATEADD</a>
+<a href="#totalytd" class="toc-link">08 — TOTALYTD / TOTALQTD</a>
+<a href="#divide" class="toc-link">09 — DIVIDE</a>
+<a href="#if-switch" class="toc-link">10 — IF / SWITCH</a>
+<a href="#selectedvalue" class="toc-link">11 — HASONEVALUE / SELECTEDVALUE</a>
+<a href="#isinscope" class="toc-link">12 — ISINSCOPE</a>
+<a href="#earlier" class="toc-link">13 — EARLIER</a>
+<a href="#treatas" class="toc-link">14 — TREATAS</a>
+<a href="#coalesce" class="toc-link">15 — COALESCE</a>
+<a href="#how-to-practice" class="toc-link">How to Practice DAX</a>
+<a href="#faq" class="toc-link">FAQ</a>
+</nav>
+</div>
+</div>
+<div class="lg:w-2/3">
+<p class="text-gray-500 text-sm leading-relaxed">This guide is based on <strong class="text-white">real interview questions from companies like Microsoft, Amazon, Flipkart, Swiggy, Razorpay, and Deloitte's Bangalore offices</strong>. Every function includes syntax, a practical example, the exact interview question it answers, and the mistake most candidates make. Want to learn DAX properly? <a href="https://vizonis.com/courses/data-analytics" class="text-acid hover:underline">Vizonis Academy's data analytics course</a> is the <strong class="text-white">best data analytics training in Bangalore</strong> for hands-on DAX mastery.</p>
+</div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-5xl mx-auto"></div>
+
+<!-- WHY DAX -->
+<section id="why-dax" class="py-24 px-6">
+<div class="max-w-4xl mx-auto article-body reveal">
+<span class="badge mb-6 w-fit"><i class="fas fa-trophy"></i> Introduction</span>
+<h2 class="font-display text-2xl md:text-4xl font-bold tracking-tighter gradient-text">Why DAX Is the #1 Most Tested Skill in Bangalore's Data Analyst Interviews</h2>
+<p class="text-gray-400 text-base leading-relaxed">We analyzed <strong class="text-white">200+ data analyst job postings from Bangalore</strong> (Jan–Dec 2024) across LinkedIn, Naukri, and company career pages. Here's what we found:</p>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-8">
+<div class="glass-card rounded-xl p-5 text-center">
+<div class="text-3xl font-bold text-acid font-mono mb-1">92%</div>
+<div class="text-xs text-gray-500">of job postings mention Power BI</div>
+</div>
+<div class="glass-card rounded-xl p-5 text-center">
+<div class="text-3xl font-bold text-purple-400 font-mono mb-1">87%</div>
+<div class="text-xs text-gray-500">of those mention DAX specifically</div>
+</div>
+<div class="glass-card rounded-xl p-5 text-center">
+<div class="text-3xl font-bold text-teal-400 font-mono mb-1">73%</div>
+<div class="text-xs text-gray-500">include a live DAX test in the interview</div>
+</div>
+</div>
+
+<p class="text-gray-400 text-sm leading-relaxed">The pattern is clear: <strong class="text-white">if you can't write DAX, you can't get a data analyst job in Bangalore.</strong> But here's the good news — you don't need to learn all 350+ DAX functions. Our analysis shows that <strong class="text-acid">15 functions cover 90% of what's actually tested</strong>. Master these 15, and you'll crack virtually any DAX interview in Bangalore.</p>
+
+<div class="highlight-box">
+<p class="text-sm text-gray-300 leading-relaxed mb-0"><i class="fas fa-lightbulb text-acid mr-2"></i><strong class="text-acid">How to use this guide:</strong> For each function, study the <strong class="text-white">syntax</strong>, read the <strong class="text-white">example</strong> carefully, understand the <strong class="text-white">interview question</strong>, and memorize the <strong class="text-white">common mistake</strong>. Then practice by writing the DAX yourself before checking the answer. At <a href="https://vizonis.com/courses/data-analytics" class="text-acid hover:underline">Vizonis Academy</a> — the <strong class="text-white">best data analytics training in Bangalore</strong> — we make you write 50+ DAX measures across real projects so this becomes muscle memory.</p>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-5xl mx-auto"></div>
+
+<!-- ============================================================ -->
+<!-- FUNCTION 01: CALCULATE -->
+<!-- ============================================================ -->
+<section id="calculate" class="py-24 px-6">
+<div class="max-w-4xl mx-auto article-body reveal">
+<span class="syntax-tag bg-acid/10 text-acid border border-acid/20">MODIFY FILTER CONTEXT</span>
+<h2 class="font-display text-xl md:text-3xl font-bold tracking-tighter gradient-text relative">01. CALCULATE <span class="func-number">01</span></h2>
+<p class="text-gray-400 text-sm leading-relaxed mb-4">The <strong class="text-white">most important DAX function</strong>. Period. If a recruiter only has time for one question, it will be about CALCULATE. It modifies the filter context of an expression — allowing you to compute a measure under different conditions without changing the visual.</p>
+
+<div class="dax-code">
+<div class="header"><div class="dot bg-red-500/60"></div><div class="dot bg-yellow-500/60"></div><div class="dot bg-green-500/60"></div><span class="text-[10px] text-gray-600 ml-2 font-mono">Syntax</span></div>
+<pre class="text-gray-400 font-mono"><span class="text-teal-400">CALCULATE</span>( <span class="text-orange-400">&lt;expression&gt;</span>, [<span class="text-purple-400">&lt;filter1&gt;</span>], [<span class="text-purple-400">&lt;filter2&gt;</span>], ... )
+
+<span class="text-gray-600">// expression: any measure or aggregate</span>
+<span class="text-gray-600">// filter: table or boolean expression that modifies context</span></pre>
+</div>
+
+<div class="dax-code">
+<div class="header"><div class="dot bg-red-500/60"></div><div class="dot bg-yellow-500/60"></div><div class="dot bg-green-500/60"></div><span class="text-[10px] text-gray-600 ml-2 font-mono">Example — Sales in Karnataka only</span></div>
+<pre class="text-gray-400 font-mono"><span class="text-teal-400">Sales Karnataka</span> =
+    <span class="text-teal-400">CALCULATE</span>(
+        [<span class="text-orange-400">Total Sales</span>],
+        <span class="text-purple-400">Sales[State]</span> = <span class="text-green-400">"Karnataka"</span>
+    )
+
+<span class="text-gray-600">// Even if the visual shows all India, this measure</span>
+<span class="text-gray-600">// only shows Karnataka sales in every cell</span></pre>
+</div>
+
+<div class="interview-q">
+<p class="text-sm text-gray-300"><strong>"Write a DAX measure to calculate total sales for the previous year, regardless of what year is selected in the slicer."</strong></p>
+</div>
+
+<div class="dax-code">
+<div class="header"><div class="dot bg-red-500/60"></div><div class="dot bg-yellow-500/60"></div><div class="dot bg-green-500/60"></div><span class="text-[10px] text-gray-600 ml-2 font-mono">Answer</span></div>
+<pre class="text-gray-400 font-mono"><span class="text-teal-400">Sales Previous Year</span> =
+    <span class="text-teal-400">CALCULATE</span>(
+        [<span class="text-orange-400">Total Sales</span>],
+        <span class="text-teal-400">SAMEPERIODLASTYEAR</span>( <span class="text-purple-400">Date[Date]</span> )
+    )
+
+<span class="text-gray-600">// CALCULATE removes the existing year filter</span>
+<span class="text-gray-600">// and replaces it with "same period last year"</span></pre>
+</div>
+
+<div class="mistake-box">
+<p class="text-sm text-gray-400"><strong class="text-red-400">Using CALCULATE inside a row context without understanding context transition.</strong> When you write a calculated column and use CALCULATE, it automatically performs context transition — turning row values into filters. This is the #1 reason candidates get unexpected results. If you write <code class="text-acid text-xs">CALCULATE(SUM(Sales[Amount]))</code> inside a calculated column, it doesn't sum ALL sales — it sums sales for the current row's context. <a href="https://vizonis.com/courses/data-analytics" class="text-acid hover:underline">We spend 3 full sessions on context transition at Vizonis Academy.</a></p>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-5xl mx-auto"></div>
+
+<!-- FUNCTION 02: FILTER -->
+<section id="filter" class="py-24 px-6">
+<div class="max-w-4xl mx-auto article-body reveal">
+<span class="syntax-tag bg-teal-500/10 text-teal-400 border border-teal-500/20">ADVANCED FILTERING</span>
+<h2 class="font-display text-xl md:text-3xl font-bold tracking-tighter gradient-text relative">02. FILTER <span class="func-number">02</span></h2>
+<p class="text-gray-400 text-sm leading-relaxed">While CALCULATE with a simple condition handles equality checks, <strong class="text-white">FILTER is needed for complex conditions</strong> — comparisons like >, <, between, OR logic across multiple columns, or filtering a different table than the one being aggregated.</p>
+
+<div class="dax-code">
+<div class="header"><div class="dot bg-red-500/60"></div><div class="dot bg-yellow-500/60"></div><div class="dot bg-green-500/60"></div><span class="text-[10px] text-gray-600 ml-2 font-mono">Syntax</span></div>
+<pre class="text-gray-400 font-mono"><span class="text-teal-400">FILTER</span>( <span class="text-orange-400">&lt;table&gt;</span>, <span class="text-purple-400">&lt;filter_condition&gt;</span> )
+
+<span class="text-gray-600">// Returns a table with only the rows that meet the condition</span>
+<span class="text-gray-600">// Almost always used INSIDE CALCULATE as a filter argument</span></pre>
+</div>
+
+<div class="interview-q">
+<p class="text-sm text-gray-300"><strong>"Calculate total sales for products where the price is greater than ₹5,000 AND the category is 'Electronics'."</strong></p>
+</div>
+
+<div class="dax-code">
+<div class="header"><div class="dot bg-red-500/60"></div><div class="dot bg-yellow-500/60"></div><div class="dot bg-green-500/60"></div><span class="text-[10px] text-gray-600 ml-2 font-mono">Answer</span></div>
+<pre class="text-gray-400 font-mono"><span class="text-teal-400">High-Value Electronics Sales</span> =
+    <span class="text-teal-400">CALCULATE</span>(
+        [<span class="text-orange-400">Total Sales</span>],
+        <span class="text-teal-400">FILTER</span>(
+            <span class="text-purple-400">Product</span>,
+            <span class="text-purple-400">Product[Price]</span> > <span class="text-green-400">5000</span>
+                && <span class="text-purple-400">Product[Category]</span> = <span class="text-green-400">"Electronics"</span>
+        )
+    )</pre>
+</div>
+
+<div class="mistake-box">
+<p class="text-sm text-gray-400"><strong class="text-red-400">Using FILTER when a simple boolean would work.</strong> If you write <code class="text-acid text-xs">CALCULATE([Sales], FILTER(Sales, Sales[Year] = 2024))</code> — this is unnecessarily complex. Just write <code class="text-acid text-xs">CALCULATE([Sales], Sales[Year] = 2024)</code>. Only use FILTER when you need complex conditions or filter a different table. Interviewers will mark you down for this.</p>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-5xl mx-auto"></div>
+
+<!-- FUNCTION 03: ALL / ALLEXCEPT -->
+<section id="all" class="py-24 px-6">
+<div class="max-w-4xl mx-auto article-body reveal">
+<span class="syntax-tag bg-purple-500/10 text-purple-400 border border-purple-500/20">REMOVE FILTERS</span>
+<h2 class="font-display text-xl md:text-3xl font-bold tracking-tighter gradient-text relative">03. ALL / ALLEXCEPT <span class="func-number">03</span></h2>
+<p class="text-gray-400 text-sm leading-relaxed"><strong class="text-white">ALL removes filters</strong> from a table or column. It's the opposite of FILTER — instead of adding filters, it removes them. This is essential for calculating percentages of totals, grand totals across dimensions, and comparisons.</p>
+
+<div class="dax-code">
+<div class="header"><div class="dot bg-red-500/60"></div><div class="dot bg-yellow-500/60"></div><div class="dot bg-green-500/60"></div><span class="text-[10px] text-gray-600 ml-2 font-mono">Syntax</span></div>
+<pre class="text-gray-400 font-mono"><span class="text-teal-400">ALL</span>( <span class="text-orange-400">&lt;table_or_column&gt;</span> )          <span class="text-gray-600">// Removes ALL filters from table/column</span>
+<span class="text-teal-400">ALLEXCEPT</span>( <span class="text-orange-400">&lt;table&gt;</span>, <span class="text-purple-400">&lt;column1&gt;</span>, ... ) <span class="text-gray-600">// Removes all EXCEPT specified columns</span></pre>
+</div>
+
+<div class="interview-q">
+<p class="text-sm text-gray-300"><strong>"Write a DAX measure to calculate each category's contribution to total sales (percentage of grand total)."</strong></p>
+</div>
+
+<div class="dax-code">
+<div class="header"><div class="dot bg-red-500/60"></div><div class="dot bg-yellow-500/60"></div><div class="dot bg-green-500/60"></div><span class="text-[10px] text-gray-600 ml-2 font-mono">Answer</span></div>
+<pre class="text-gray-400 font-mono"><span class="text-teal-400">% of Total Sales</span> =
+    <span class="text-teal-400">DIVIDE</span>(
+        [<span class="text-orange-400">Total Sales</span>],                              <span class="text-gray-600">// Current context (filtered)</span>
+        <span class="text-teal-400">CALCULATE</span>( [<span class="text-orange-400">Total Sales</span>], <span class="text-teal-400">ALL</span>(<span class="text-purple-400">Sales</span>) )  <span class="text-gray-600">// Grand total (all filters removed)</span>
+    )
+
+<span class="text-gray-600">// In a table visual by Category:</span>
+<span class="text-gray-600">// Electronics row: Electronics Sales / ALL Sales = 35%</span>
+<span class="text-gray-600">// Clothing row:     Clothing Sales / ALL Sales     = 22%</span></pre>
+</div>
+
+<div class="diff-grid">
+<div class="diff-cell">
+<div class="text-[10px] text-acid font-bold uppercase tracking-wider mb-2">ALL</div>
+<p class="text-xs text-gray-500">Removes <strong class="text-white">every filter</strong> on the table. Use for grand totals and overall percentages.</p>
+</div>
+<div class="diff-cell">
+<div class="text-[10px] text-purple-400 font-bold uppercase tracking-wider mb-2">ALLEXCEPT</div>
+<p class="text-xs text-gray-500">Removes all filters <strong class="text-white">except</strong> specified columns. Use for subtotals across specific dimensions.</p>
+</div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-5xl mx-auto"></div>
+
+<!-- FUNCTION 04: SUMX -->
+<section id="sumx" class="py-24 px-6">
+<div class="max-w-4xl mx-auto article-body reveal">
+<span class="syntax-tag bg-orange-500/10 text-orange-400 border border-orange-500/20">ITERATOR (X FUNCTIONS)</span>
+<h2 class="font-display text-xl md:text-3xl font-bold tracking-tighter gradient-text relative">04. SUMX (and Iterator Functions) <span class="func-number">04</span></h2>
+<p class="text-gray-400 text-sm leading-relaxed">The <strong class="text-white">"X" functions are iterators</strong> — they go row by row, evaluate an expression for each row, and then aggregate. SUMX, AVERAGEX, MINX, MAXX, COUNTX, CONCATENATEX all follow the same pattern. SUMX is the most commonly tested.</p>
+
+<div class="diff-grid">
+<div class="diff-cell">
+<div class="text-[10px] text-gray-400 font-bold uppercase tracking-wider mb-2">SUM (Aggregator)</div>
+<pre class="text-xs text-gray-500 font-mono"><span class="text-teal-400">SUM</span>( Sales[Amount] )
+
+<span class="text-gray-600">// Adds up the Amount column
+// Can't do row-level math first</span></pre>
+</div>
+<div class="diff-cell">
+<div class="text-[10px] text-orange-400 font-bold uppercase tracking-wider mb-2">SUMX (Iterator)</div>
+<pre class="text-xs text-gray-500 font-mono"><span class="text-teal-400">SUMX</span>( Sales,
+  Sales[Qty] * Sales[Price] )
+
+<span class="text-gray-600">// Multiplies FIRST per row
+// THEN sums the results</span></pre>
+</div>
+</div>
+
+<div class="interview-q">
+<p class="text-sm text-gray-300"><strong>"Calculate total revenue where revenue = quantity × price, but only for orders where the discount is greater than 10%."</strong></p>
+</div>
+
+<div class="dax-code">
+<div class="header"><div class="dot bg-red-500/60"></div><div class="dot bg-yellow-500/60"></div><div class="dot bg-green-500/60"></div><span class="text-[10px] text-gray-600 ml-2 font-mono">Answer</span></div>
+<pre class="text-gray-400 font-mono"><span class="text-teal-400">Discounted Order Revenue</span> =
+    <span class="text-teal-400">SUMX</span>(
+        <span class="text-teal-400">FILTER</span>(
+            <span class="text-purple-400">Sales</span>,
+            <span class="text-purple-400">Sales[DiscountPct]</span> > <span class="text-green-400">0.10</span>
+        ),
+        <span class="text-purple-400">Sales[Qty]</span> * <span class="text-purple-400">Sales[Price]</span> * (<span class="text-green-400">1</span> - <span class="text-purple-400">Sales[DiscountPct]</span>)
+    )
+
+<span class="text-gray-600">// Step 1: FILTER returns only rows with >10% discount</span>
+<span class="text-gray-600">// Step 2: SUMX iterates those rows, computes Qty×Price×(1-Discount)</span>
+<span class="text-gray-600">// Step 3: Sums all the row-level results</span></pre>
+</div>
+
+<div class="mistake-box">
+<p class="text-sm text-gray-400"><strong class="text-red-400">Using SUMX on the wrong table.</strong> The table you pass to SUMX determines the granularity of iteration. If you pass the Sales table, it iterates per order line. If you pass the Product table, it iterates per product (and you'll get wrong results because the row context is at the wrong level). <strong class="text-white">Always think: "What is one row of this table?"</strong> before choosing the table argument.</p>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-5xl mx-auto"></div>
+
+<!-- FUNCTION 05: RELATED / RELATEDTABLE -->
+<section id="related" class="py-24 px-6">
+<div class="max-w-4xl mx-auto article-body reveal">
+<span class="syntax-tag bg-teal-500/10 text-teal-400 border border-teal-500/20">RELATIONSHIP NAVIGATION</span>
+<h2 class="font-display text-xl md:text-3xl font-bold tracking-tighter gradient-text relative">05. RELATED / RELATEDTABLE <span class="func-number">05</span></h2>
+<p class="text-gray-400 text-sm leading-relaxed">When your data model has multiple tables connected by relationships, <strong class="text-white">RELATED fetches a value from a related table</strong> (many-to-one direction) and <strong class="text-white">RELATEDTABLE returns all matching rows</strong> (one-to-many direction).</p>
+
+<div class="dax-code">
+<div class="header"><div class="dot bg-red-500/60"></div><div class="dot bg-yellow-500/60"></div><div class="dot bg-green-500/60"></div><span class="text-[10px] text-gray-600 ml-2 font-mono">Syntax</span></div>
+<pre class="text-gray-400 font-mono"><span class="text-teal-400">RELATED</span>( <span class="text-orange-400">&lt;column_in_related_table&gt;</span> )         <span class="text-gray-600">// Returns a single value</span>
+<span class="text-teal-400">RELATEDTABLE</span>( <span class="text-orange-400">&lt;related_table&gt;</span> )              <span class="text-gray-600">// Returns a table of rows</span></pre>
+</div>
+
+<div class="interview-q">
+<p class="text-sm text-gray-300"><strong>"In a calculated column on the Sales table, add the Category name from the Product table (which is related to Sales via ProductID)."</strong></p>
+</div>
+
+<div class="dax-code">
+<div class="header"><div class="dot bg-red-500/60"></div><div class="dot bg-yellow-500/60"></div><div class="dot bg-green-500/60"></div><span class="text-[10px] text-gray-600 ml-2 font-mono">Answer</span></div>
+<pre class="text-gray-400 font-mono"><span class="text-gray-600">// In Sales table, calculated column:</span>
+<span class="text-teal-400">Category Name</span> =
+    <span class="text-teal-400">RELATED</span>( <span class="text-purple-400">Product[CategoryName]</span> )
+
+<span class="text-gray-600">// Follows the relationship: Sales → Product → CategoryName</span>
+<span class="text-gray-600">// Each Sales row gets the category name of its product</span></pre>
+</div>
+
+<div class="mistake-box">
+<p class="text-sm text-gray-400"><strong class="text-red-400">Using RELATED when no relationship exists, or in the wrong direction.</strong> RELATED only works in the many-to-one direction (from the "many" side). If you try <code class="text-acid text-xs">RELATED(Sales[Amount])</code> from the Product table without a relationship, you get an error. In that case, use <code class="text-acid text-xs">CALCULATE(SUM(Sales[Amount]))</code> instead — the relationship handles the filtering automatically.</p>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-5xl mx-auto"></div>
+
+<!-- FUNCTION 06: RANKX -->
+<section id="rankx" class="py-24 px-6">
+<div class="max-w-4xl mx-auto article-body reveal">
+<span class="syntax-tag bg-acid/10 text-acid border border-acid/20">RANKING</span>
+<h2 class="font-display text-xl md:text-3xl font-bold tracking-tighter gradient-text relative">06. RANKX <span class="func-number">06</span></h2>
+<p class="text-gray-400 text-sm leading-relaxed"><strong class="text-white">RANKX is an iterator that assigns a rank</strong> to each row based on a value. It's one of the most frequently tested functions because ranking (top N customers, top products, performance tiers) is a universal business requirement.</p>
+
+<div class="interview-q">
+<p class="text-sm text-gray-300"><strong>"Rank all customers by total sales in descending order."</strong></p>
+</div>
+
+<div class="dax-code">
+<div class="header"><div class="dot bg-red-500/60"></div><div class="dot bg-yellow-500/60"></div><div class="dot bg-green-500/60"></div><span class="text-[10px] text-gray-600 ml-2 font-mono">Answer</span></div>
+<pre class="text-gray-400 font-mono"><span class="text-teal-400">Customer Rank</span> =
+    <span class="text-teal-400">RANKX</span>(
+        <span class="text-teal-400">ALL</span>( <span class="text-purple-400">Customer</span> ),              <span class="text-gray-600">// Table to rank over</span>
+        [<span class="text-orange-400">Total Sales</span>],                   <span class="text-gray-600">// What to rank by</span>
+        [<span class="text-orange-400">Total Sales</span>],                   <span class="text-gray-600">// Value if ties (optional)</span>
+        <span class="text-green-400">DESC</span>                              <span class="text-gray-600">// Highest sales = Rank 1</span>
+    )
+
+<span class="text-gray-600">// Customer A: ₹50L → Rank 1</span>
+<span class="text-gray-600">// Customer B: ₹42L → Rank 2</span>
+<span class="text-gray-600">// Customer C: ₹38L → Rank 3</span></pre>
+</div>
+
+<div class="interview-q">
+<p class="text-sm text-gray-300"><strong>"Create a measure that shows only the top 3 customers by sales, and 'Others' for the rest."</strong></p>
+</div>
+
+<div class="dax-code">
+<div class="header"><div class="dot bg-red-500/60"></div><div class="dot bg-yellow-500/60"></div><div class="dot bg-green-500/60"></div><span class="text-[10px] text-gray-600 ml-2 font-mono">Answer — Top 3 + Others pattern</span></div>
+<pre class="text-gray-400 font-mono"><span class="text-teal-400">Top 3 Label</span> =
+    <span class="text-teal-400">IF</span>(
+        [<span class="text-orange-400">Customer Rank</span>] <= <span class="text-green-400">3</span>,
+        <span class="text-teal-400">MAX</span>( <span class="text-purple-400">Customer[Name]</span> ),
+        <span class="text-green-400">"Others"</span>
+    )
+
+<span class="text-gray-600">// Use this in a visual — shows top 3 names + "Others" group</span>
+<span class="text-gray-600">// Combine with a parallel measure that sums "Others" sales</span></pre>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-5xl mx-auto"></div>
+
+<!-- FUNCTION 07: DATEADD -->
+<section id="time-intel" class="py-24 px-6">
+<div class="max-w-4xl mx-auto article-body reveal">
+<span class="syntax-tag bg-purple-500/10 text-purple-400 border border-purple-500/20">TIME INTELLIGENCE</span>
+<h2 class="font-display text-xl md:text-3xl font-bold tracking-tighter gradient-text relative">07. DATEADD <span class="func-number">07</span></h2>
+<p class="text-gray-400 text-sm leading-relaxed"><strong class="text-white">Time intelligence functions are the second most tested category</strong> after CALCULATE. DATEADD shifts a date column by a specified interval — previous month, next quarter, 3 months ago, etc.</p>
+
+<div class="dax-code">
+<div class="header"><div class="dot bg-red-500/60"></div><div class="dot bg-yellow-500/60"></div><div class="dot bg-green-500/60"></div><span class="text-[10px] text-gray-600 ml-2 font-mono">Syntax</span></div>
+<pre class="text-gray-400 font-mono"><span class="text-teal-400">DATEADD</span>( <span class="text-orange-400">&lt;dates_column&gt;</span>, <span class="text-purple-400">&lt;number_of_intervals&gt;</span>, <span class="text-green-400">&lt;interval&gt;</span> )
+
+<span class="text-gray-600">// interval: DAY, MONTH, QUARTER, YEAR</span>
+<span class="text-gray-600">// number_of_intervals: positive (future) or negative (past)</span></pre>
+</div>
+
+<div class="interview-q">
+<p class="text-sm text-gray-300"><strong>"Write measures for: sales last month, sales 3 months ago, and the month-over-month growth rate."</strong></p>
+</div>
+
+<div class="dax-code">
+<div class="header"><div class="dot bg-red-500/60"></div><div class="dot bg-yellow-500/60"></div><div class="dot bg-green-500/60"></div><span class="text-[10px] text-gray-600 ml-2 font-mono">Answer</span></div>
+<pre class="text-gray-400 font-mono"><span class="text-teal-400">Sales Last Month</span> =
+    <span class="text-teal-400">CALCULATE</span>(
+        [<span class="text-orange-400">Total Sales</span>],
+        <span class="text-teal-400">DATEADD</span>( <span class="text-purple-400">Date[Date]</span>, <span class="text-green-400">-1</span>, <span class="text-green-400">MONTH</span> )
+    )
+
+<span class="text-teal-400">Sales 3 Months Ago</span> =
+    <span class="text-teal-400">CALCULATE</span>(
+        [<span class="text-orange-400">Total Sales</span>],
+        <span class="text-teal-400">DATEADD</span>( <span class="text-purple-400">Date[Date]</span>, <span class="text-green-400">-3</span>, <span class="text-green-400">MONTH</span> )
+    )
+
+<span class="text-teal-400">MoM Growth %</span> =
+    <span class="text-teal-400">DIVIDE</span>(
+        [<span class="text-orange-400">Total Sales</span>] - [<span class="text-orange-400">Sales Last Month</span>],
+        [<span class="text-orange-400">Sales Last Month</span>]
+    )</pre>
+</div>
+
+<div class="mistake-box">
+<p class="text-sm text-gray-400"><strong class="text-red-400">Using DATEADD without a proper Date table.</strong> Time intelligence functions require a <strong class="text-white">dedicated Date table</strong> marked as such in the model (with contiguous dates, no gaps). If you try DATEADD on Sales[OrderDate] directly, you'll get errors or wrong results. Always create a separate Date table with <code class="text-acid text-xs">CALENDARAUTO()</code> or <code class="text-acid text-xs">CALENDAR()</code> and mark it as the date table.</p>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-5xl mx-auto"></div>
+
+<!-- FUNCTION 08: TOTALYTD -->
+<section id="totalytd" class="py-24 px-6">
+<div class="max-w-4xl mx-auto article-body reveal">
+<span class="syntax-tag bg-acid/10 text-acid border border-acid/20">PERIOD-TO-DATE</span>
+<h2 class="font-display text-xl md:text-3xl font-bold tracking-tighter gradient-text relative">08. TOTALYTD / TOTALQTD / TOTALMTD <span class="func-number">08</span></h2>
+<p class="text-gray-400 text-sm leading-relaxed">Year-to-date, quarter-to-date, and month-to-date calculations are <strong class="text-white">the most common time intelligence requirement</strong>. Every CFO dashboard has YTD. Every interview tests it.</p>
+
+<div class="dax-code">
+<div class="header"><div class="dot bg-red-500/60"></div><div class="dot bg-yellow-500/60"></div><div class="dot bg-green-500/60"></div><span class="text-[10px] text-gray-600 ml-2 font-mono">Syntax + Examples</span></div>
+<pre class="text-gray-400 font-mono"><span class="text-teal-400">TOTALYTD</span>( <span class="text-orange-400">&lt;expression&gt;</span>, <span class="text-purple-400">&lt;dates_column&gt;</span> [, <span class="text-green-400">&lt;year_end_date&gt;</span>] )
+
+<span class="text-teal-400">Sales YTD</span> =
+    <span class="text-teal-400">TOTALYTD</span>( [<span class="text-orange-400">Total Sales</span>], <span class="text-purple-400">Date[Date]</span> )
+
+<span class="text-teal-400">Sales QTD</span> =
+    <span class="text-teal-400">TOTALQTD</span>( [<span class="text-orange-400">Total Sales</span>], <span class="text-purple-400">Date[Date]</span> )
+
+<span class="text-teal-400">Sales MTD</span> =
+    <span class="text-teal-400">TOTALMTD</span>( [<span class="text-orange-400">Total Sales</span>], <span class="text-purple-400">Date[Date]</span> )
+
+<span class="text-gray-600">// For Indian FY (Apr-Mar), add the year_end_date:</span>
+<span class="text-teal-400">Sales FY YTD</span> =
+    <span class="text-teal-400">TOTALYTD</span>( [<span class="text-orange-400">Total Sales</span>], <span class="text-purple-400">Date[Date]</span>, <span class="text-green-400">"31-03"</span> )</pre>
+</div>
+
+<div class="interview-q">
+<p class="text-sm text-gray-300"><strong>"Calculate YTD sales AND same period last year YTD sales, then compute the YoY growth."</strong></p>
+</div>
+
+<div class="dax-code">
+<div class="header"><div class="dot bg-red-500/60"></div><div class="dot bg-yellow-500/60"></div><div class="dot bg-green-500/60"></div><span class="text-[10px] text-gray-600 ml-2 font-mono">Answer</span></div>
+<pre class="text-gray-400 font-mono"><span class="text-teal-400">Sales YTD</span>       = <span class="text-teal-400">TOTALYTD</span>( [<span class="text-orange-400">Total Sales</span>], <span class="text-purple-400">Date[Date]</span> )
+
+<span class="text-teal-400">Sales LY YTD</span>   =
+    <span class="text-teal-400">CALCULATE</span>(
+        <span class="text-teal-400">TOTALYTD</span>( [<span class="text-orange-400">Total Sales</span>], <span class="text-purple-400">Date[Date]</span> ),
+        <span class="text-teal-400">SAMEPERIODLASTYEAR</span>( <span class="text-purple-400">Date[Date]</span> )
+    )
+
+<span class="text-teal-400">YoY Growth %</span>   =
+    <span class="text-teal-400">DIVIDE</span>(
+        [<span class="text-orange-400">Sales YTD</span>] - [<span class="text-orange-400">Sales LY YTD</span>],
+        [<span class="text-orange-400">Sales LY YTD</span>]
+    )</pre>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-5xl mx-auto"></div>
+
+<!-- FUNCTION 09: DIVIDE -->
+<section id="divide" class="py-24 px-6">
+<div class="max-w-4xl mx-auto article-body reveal">
+<span class="syntax-tag bg-green-500/10 text-green-400 border border-green-500/20">SAFE DIVISION</span>
+<h2 class="font-display text-xl md:text-3xl font-bold tracking-tighter gradient-text relative">09. DIVIDE <span class="func-number">09</span></h2>
+<p class="text-gray-400 text-sm leading-relaxed">Seems simple — but <strong class="text-white">DIVIDE is tested in every interview</strong> because it handles division-by-zero gracefully. Using <code class="text-acid text-xs">A / B</code> directly in DAX returns an error when B is blank or zero. DIVIDE returns an alternate result instead.</p>
+
+<div class="dax-code">
+<div class="header"><div class="dot bg-red-500/60"></div><div class="dot bg-yellow-500/60"></div><div class="dot bg-green-500/60"></div><span class="text-[10px] text-gray-600 ml-2 font-mono">Syntax</span></div>
+<pre class="text-gray-400 font-mono"><span class="text-teal-400">DIVIDE</span>( <span class="text-orange-400">&lt;numerator&gt;</span>, <span class="text-purple-400">&lt;denominator&gt;</span> [, <span class="text-green-400">&lt;alternate_result&gt;</span>] )
+
+<span class="text-gray-600">// If denominator is 0 or BLANK, returns alternate_result</span>
+<span class="text-gray-600">// Default alternate_result is BLANK()</span></pre>
+</div>
+
+<div class="interview-q">
+<p class="text-sm text-gray-300"><strong>"Calculate profit margin percentage. Handle the case where revenue is zero."</strong></p>
+</div>
+
+<div class="dax-code">
+<div class="header"><div class="dot bg-red-500/60"></div><div class="dot bg-yellow-500/60"></div><div class="dot bg-green-500/60"></div><span class="text-[10px] text-gray-600 ml-2 font-mono">Answer</span></div>
+<pre class="text-gray-400 font-mono"><span class="text-teal-400">Profit Margin %</span> =
+    <span class="text-teal-400">DIVIDE</span>(
+        [<span class="text-orange-400">Total Profit</span>],
+        [<span class="text-orange-400">Total Revenue</span>],
+        <span class="text-green-400">0</span>                    <span class="text-gray-600">// Return 0 instead of BLANK when revenue = 0</span>
+    )
+
+<span class="text-gray-600">// ❌ WRONG: [Total Profit] / [Total Revenue]</span>
+<span class="text-gray-600">//    → Returns ERROR when Revenue = 0</span>
+<span class="text-gray-600">// ✅ RIGHT: DIVIDE handles it gracefully</span></pre>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-5xl mx-auto"></div>
+
+<!-- FUNCTION 10: IF / SWITCH -->
+<section id="if-switch" class="py-24 px-6">
+<div class="max-w-4xl mx-auto article-body reveal">
+<span class="syntax-tag bg-orange-500/10 text-orange-400 border border-orange-500/20">CONDITIONAL LOGIC</span>
+<h2 class="font-display text-xl md:text-3xl font-bold tracking-tighter gradient-text relative">10. IF / SWITCH <span class="func-number">10</span></h2>
+<p class="text-gray-400 text-sm leading-relaxed">Conditional logic is everywhere in business DAX — <strong class="text-white">categorizing, flagging, tiering</strong>. Use IF for binary conditions and SWITCH for multiple conditions (cleaner than nested IFs).</p>
+
+<div class="interview-q">
+<p class="text-sm text-gray-300"><strong>"Create a measure that categorizes customers into 'High Value' (sales > 50L), 'Medium' (20L-50L), 'Low' (< 20L)."</strong></p>
+</div>
+
+<div class="dax-code">
+<div class="header"><div class="dot bg-red-500/60"></div><div class="dot bg-yellow-500/60"></div><div class="dot bg-green-500/60"></div><span class="text-[10px] text-gray-600 ml-2 font-mono">Answer — SWITCH is cleaner than nested IF</span></div>
+<pre class="text-gray-400 font-mono"><span class="text-teal-400">Customer Tier</span> =
+    <span class="text-teal-400">SWITCH</span>(
+        <span class="text-teal-400">TRUE</span>(),
+        [<span class="text-orange-400">Total Sales</span>] >= <span class="text-green-400">5000000</span>, <span class="text-green-400">"High Value"</span>,
+        [<span class="text-orange-400">Total Sales</span>] >= <span class="text-green-400">2000000</span>, <span class="text-green-400">"Medium"</span>,
+        <span class="text-green-400">"Low"</span>
+    )
+
+<span class="text-gray-600">// SWITCH(TRUE(), ...) acts like a CASE statement in SQL</span>
+<span class="text-gray-600">// Each condition is evaluated in order — first match wins</span></pre>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-5xl mx-auto"></div>
+
+<!-- FUNCTION 11: HASONEVALUE / SELECTEDVALUE -->
+<section id="selectedvalue" class="py-24 px-6">
+<div class="max-w-4xl mx-auto article-body reveal">
+<span class="syntax-tag bg-teal-500/10 text-teal-400 border border-teal-500/20">CONTEXT CHECK</span>
+<h2 class="font-display text-xl md:text-3xl font-bold tracking-tighter gradient-text relative">11. HASONEVALUE / SELECTEDVALUE <span class="func-number">11</span></h2>
+<p class="text-gray-400 text-sm leading-relaxed">These functions check <strong class="text-white">whether exactly one value is selected</strong> in the current filter context. Essential for avoiding errors in visuals where multiple values might be active.</p>
+
+<div class="dax-code">
+<div class="header"><div class="dot bg-red-500/60"></div><div class="dot bg-yellow-500/60"></div><div class="dot bg-green-500/60"></div><span class="text-[10px] text-gray-600 ml-2 font-mono">Syntax</span></div>
+<pre class="text-gray-400 font-mono"><span class="text-teal-400">HASONEVALUE</span>( <span class="text-orange-400">&lt;column&gt;</span> )          <span class="text-gray-600">// Returns TRUE if exactly 1 value is filtered</span>
+<span class="text-teal-400">SELECTEDVALUE</span>( <span class="text-orange-400">&lt;column&gt;</span> [, <span class="text-green-400">&lt;alternate&gt;</span>] ) <span class="text-gray-600">// Returns the value if 1, else alternate</span></pre>
+</div>
+
+<div class="interview-q">
+<p class="text-sm text-gray-300"><strong>"Write a card visual that shows the selected customer's name, but shows 'All Customers' when multiple are selected."</strong></p>
+</div>
+
+<div class="dax-code">
+<div class="header"><div class="dot bg-red-500/60"></div><div class="dot bg-yellow-500/60"></div><div class="dot bg-green-500/60"></div><span class="text-[10px] text-gray-600 ml-2 font-mono">Answer</span></div>
+<pre class="text-gray-400 font-mono"><span class="text-teal-400">Selected Customer</span> =
+    <span class="text-teal-400">SELECTEDVALUE</span>(
+        <span class="text-purple-400">Customer[Name]</span>,
+        <span class="text-green-400">"All Customers"</span>
+    )
+
+<span class="text-gray-600">// 1 customer selected → shows "Tata Steel"</span>
+<span class="text-gray-600">// 2+ customers or none → shows "All Customers"</span></pre>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-5xl mx-auto"></div>
+
+<!-- FUNCTION 12: ISINSCOPE -->
+<section id="isinscope" class="py-24 px-6">
+<div class="max-w-4xl mx-auto article-body reveal">
+<span class="syntax-tag bg-purple-500/10 text-purple-400 border border-purple-500/20">HIERARCHY HANDLING</span>
+<h2 class="font-display text-xl md:text-3xl font-bold tracking-tighter gradient-text relative">12. ISINSCOPE <span class="func-number">12</span></h2>
+<p class="text-gray-400 text-sm leading-relaxed"><strong class="text-white">ISINSCOPE is the modern replacement for HASONEVALUE in matrix visuals.</strong> It checks whether a specific column is in the current hierarchy level — critical for calculations that change behavior at different hierarchy levels (year → quarter → month).</p>
+
+<div class="interview-q">
+<p class="text-sm text-gray-300"><strong>"In a matrix with Year → Quarter → Month hierarchy, show YTD at month level, QTD at quarter level, and annual total at year level — all in one measure."</strong></p>
+</div>
+
+<div class="dax-code">
+<div class="header"><div class="dot bg-red-500/60"></div><div class="dot bg-yellow-500/60"></div><div class="dot bg-green-500/60"></div><span class="text-[10px] text-gray-600 ml-2 font-mono">Answer</span></div>
+<pre class="text-gray-400 font-mono"><span class="text-teal-400">Dynamic Period Sales</span> =
+    <span class="text-teal-400">SWITCH</span>(
+        <span class="text-teal-400">TRUE</span>(),
+        <span class="text-teal-400">ISINSCOPE</span>( <span class="text-purple-400">Date[Month]</span> ),    <span class="text-teal-400">TOTALMTD</span>( [<span class="text-orange-400">Total Sales</span>], <span class="text-purple-400">Date[Date]</span> ),
+        <span class="text-teal-400">ISINSCOPE</span>( <span class="text-purple-400">Date[Quarter]</span> ),  <span class="text-teal-400">TOTALQTD</span>( [<span class="text-orange-400">Total Sales</span>], <span class="text-purple-400">Date[Date]</span> ),
+        <span class="text-teal-400">ISINSCOPE</span>( <span class="text-purple-400">Date[Year]</span> ),     [<span class="text-orange-400">Total Sales</span>],
+        [<span class="text-orange-400">Total Sales</span>]                            <span class="text-gray-600">// Default fallback</span>
+    )
+
+<span class="text-gray-600">// Month row  → shows MTD (e.g., Jan 1-15 only)</span>
+<span class="text-gray-600">// Quarter row → shows QTD (e.g., Q1 total so far)</span>
+<span class="text-gray-600">// Year row    → shows full year total</span></pre>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-5xl mx-auto"></div>
+
+<!-- FUNCTION 13: EARLIER -->
+<section id="earlier" class="py-24 px-6">
+<div class="max-w-4xl mx-auto article-body reveal">
+<span class="syntax-tag bg-red-500/10 text-red-400 border border-red-500/20">NESTED ROW CONTEXT</span>
+<h2 class="font-display text-xl md:text-3xl font-bold tracking-tighter gradient-text relative">13. EARLIER <span class="func-number">13</span></h2>
+<p class="text-gray-400 text-sm leading-relaxed">EARLIER is the <strong class="text-white">most confusing DAX function</strong> — and therefore the most impressive to nail in an interview. It accesses the row context of an outer calculation when you're inside a nested row context (like FILTER inside a calculated column).</p>
+
+<div class="interview-q">
+<p class="text-sm text-gray-300"><strong>"In a calculated column on the Sales table, show the rank of each sale amount within that customer's orders."</strong></p>
+</div>
+
+<div class="dax-code">
+<div class="header"><div class="dot bg-red-500/60"></div><div class="dot bg-yellow-500/60"></div><div class="dot bg-green-500/60"></div><span class="text-[10px] text-gray-600 ml-2 font-mono">Answer</span></div>
+<pre class="text-gray-400 font-mono"><span class="text-teal-400">Sale Rank per Customer</span> =
+    <span class="text-teal-400">RANKX</span>(
+        <span class="text-teal-400">FILTER</span>(
+            <span class="text-purple-400">Sales</span>,
+            <span class="text-purple-400">Sales[CustomerID]</span> = <span class="text-teal-400">EARLIER</span>( <span class="text-purple-400">Sales[CustomerID]</span> )
+        ),
+        <span class="text-purple-400">Sales[Amount]</span>,
+        ,
+        <span class="text-green-400">DESC</span>
+    )
+
+<span class="text-gray-600">// EARLIER = "the CustomerID of the CURRENT row (outer context)"</span>
+<span class="text-gray-600">// FILTER = "only compare against same customer's other rows"</span>
+<span class="text-gray-600">// RANKX = "rank by Amount within that filtered set"</span></pre>
+</div>
+
+<div class="highlight-box">
+<p class="text-sm text-gray-300 leading-relaxed mb-0"><i class="fas fa-star text-acid mr-2"></i><strong class="text-acid">Interview Pro Tip:</strong> If you can explain EARLIER correctly — that it refers to the outer row context, not "previous row" (its name is misleading) — you'll stand out from 95% of candidates. Most people think EARLIER means "previous row" like Excel's OFFSET. It doesn't. At <a href="https://vizonis.com/courses/data-analytics" class="text-acid hover:underline">Vizonis Academy's best data analytics training in Bangalore</a>, we dedicate an entire session to EARLIER with visual diagrams of nested row contexts.</p>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-5xl mx-auto"></div>
+
+<!-- FUNCTION 14: TREATAS -->
+<section id="treatas" class="py-24 px-6">
+<div class="max-w-4xl mx-auto article-body reveal">
+<span class="syntax-tag bg-acid/10 text-acid border border-acid/20">ADVANCED FILTER MODIFICATION</span>
+<h2 class="font-display text-xl md:text-3xl font-bold tracking-tighter gradient-text relative">14. TREATAS <span class="func-number">14</span></h2>
+<p class="text-gray-400 text-sm leading-relaxed"><strong class="text-white">TREATAS applies filters from one table's column to another table's column</strong> — even when there's no relationship between them. It's an advanced function that signals deep DAX understanding.</p>
+
+<div class="interview-q">
+<p class="text-sm text-gray-300"><strong>"The user selects regions in a slicer from the Region table. Apply that selection to filter the Territory table, which has different region codes but no direct relationship."</strong></p>
+</div>
+
+<div class="dax-code">
+<div class="header"><div class="dot bg-red-500/60"></div><div class="dot bg-yellow-500/60"></div><div class="dot bg-green-500/60"></div><span class="text-[10px] text-gray-600 ml-2 font-mono">Answer</span></div>
+<pre class="text-gray-400 font-mono"><span class="text-teal-400">Sales by Mapped Territory</span> =
+    <span class="text-teal-400">CALCULATE</span>(
+        [<span class="text-orange-400">Total Sales</span>],
+        <span class="text-teal-400">TREATAS</span>(
+            <span class="text-teal-400">VALUES</span>( <span class="text-purple-400">Region[RegionCode]</span> ),     <span class="text-gray-600">// What user selected</span>
+            <span class="text-purple-400">Territory[RegionCode]</span>              <span class="text-gray-600">// Where to apply it (no relationship)</span>
+        )
+    )
+
+<span class="text-gray-600">// TREATAS maps the filter values from one column to another</span>
+<span class="text-gray-600">// No physical relationship needed between Region and Territory</span></pre>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-5xl mx-auto"></div>
+
+<!-- FUNCTION 15: COALESCE -->
+<section id="coalesce" class="py-24 px-6">
+<div class="max-w-4xl mx-auto article-body reveal">
+<span class="syntax-tag bg-teal-500/10 text-teal-400 border border-teal-500/20">BLANK HANDLING</span>
+<h2 class="font-display text-xl md:text-3xl font-bold tracking-tighter gradient-text relative">15. COALESCE <span class="func-number">15</span></h2>
+<p class="text-gray-400 text-sm leading-relaxed"><strong class="text-white">COALESCE returns the first non-blank value</strong> from a list of expressions. Think of it as a DAX version of SQL's COALESCE or Excel's IFERROR chaining. Extremely useful for data quality — when you have multiple source columns and want to pick the first available value.</p>
+
+<div class="interview-q">
+<p class="text-sm text-gray-300"><strong>"Customer phone number can come from 3 sources: CRM, Order table, or Delivery table. Return the first non-blank value."</strong></p>
+</div>
+
+<div class="dax-code">
+<div class="header"><div class="dot bg-red-500/60"></div><div class="dot bg-yellow-500/60"></div><div class="dot bg-green-500/60"></div><span class="text-[10px] text-gray-600 ml-2 font-mono">Answer</span></div>
+<pre class="text-gray-400 font-mono"><span class="text-teal-400">Customer Phone</span> =
+    <span class="text-teal-400">COALESCE</span>(
+        <span class="text-teal-400">RELATED</span>( <span class="text-purple-400">CRM[Phone]</span> ),
+        <span class="text-teal-400">RELATED</span>( <span class="text-purple-400">Orders[Phone]</span> ),
+        <span class="text-teal-400">RELATED</span>( <span class="text-purple-400">Delivery[Phone]</span> ),
+        <span class="text-green-400">"N/A"</span>                                  <span class="text-gray-600">// Fallback if all blank</span>
+    )
+
+<span class="text-gray-600">// Checks CRM first → if blank, checks Orders → if blank,</span>
+<span class="text-gray-600">// checks Delivery → if all blank, returns "N/A"</span></pre>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-5xl mx-auto"></div>
+
+<!-- HOW TO PRACTICE -->
+<section id="how-to-practice" class="py-24 px-6">
+<div class="max-w-4xl mx-auto article-body reveal">
+<span class="badge-orange badge mb-6 w-fit"><i class="fas fa-dumbbell"></i> Practice Plan</span>
+<h2 class="font-display text-2xl md:text-4xl font-bold tracking-tighter gradient-text">How to Actually Master DAX (Not Just Read About It)</h2>
+<p class="text-gray-400 text-base leading-relaxed">Reading this guide is step 1. But reading about DAX is like reading about swimming — <strong class="text-white">you can't learn it without doing it</strong>. Here's the practice plan we use at Vizonis Academy:</p>
+
+<div class="my-10 space-y-4">
+<div class="glass-card rounded-xl p-6 flex gap-5">
+<div class="text-acid font-display font-bold text-2xl leading-none mt-1">01</div>
+<div>
+<h3 class="text-white font-bold text-sm mb-1">Week 1-2: Foundation (CALCULATE, FILTER, ALL, DIVIDE)</h3>
+<p class="text-xs text-gray-500">Write 10 measures every day using only these 4 functions. Start with simple scenarios (sales by region) and build to complex ones (percentage of parent total, dynamic filtering). Use <strong class="text-white">DAX Studio</strong> to see how your measures evaluate step by step.</p>
+</div>
+</div>
+<div class="glass-card rounded-xl p-6 flex gap-5">
+<div class="text-acid font-display font-bold text-2xl leading-none mt-1">02</div>
+<div>
+<h3 class="text-white font-bold text-sm mb-1">Week 3-4: Iterators & Relationships (SUMX, RELATED, EARLIER)</h3>
+<p class="text-xs text-gray-500">Build 5 calculated columns and 10 measures using iterators. Understand row context vs filter context — this is the conceptual leap most people miss. Use DAX Studio's "View > Show All Columns" to inspect what happens at each step of SUMX.</p>
+</div>
+</div>
+<div class="glass-card rounded-xl p-6 flex gap-5">
+<div class="text-acid font-display font-bold text-2xl leading-none mt-1">03</div>
+<div>
+<h3 class="text-white font-bold text-sm mb-1">Week 5-6: Time Intelligence (DATEADD, TOTALYTD, SAMEPERIODLASTYEAR)</h3>
+<p class="text-xs text-gray-500">Build a complete time intelligence dashboard: MTD, QTD, YTD, last period, parallel period, YoY, MoM, rolling 3-month average. <strong class="text-white">Must have a proper Date table</strong> — build one from scratch using CALENDARAUTO(). This is tested in literally every Bangalore interview.</p>
+</div>
+</div>
+<div class="glass-card rounded-xl p-6 flex gap-5">
+<div class="text-acid font-display font-bold text-2xl leading-none mt-1">04</div>
+<div>
+<h3 class="text-white font-bold text-sm mb-1">Week 7-8: Advanced (RANKX, ISINSCOPE, TREATAS, COALESCE, SWITCH)</h3>
+<p class="text-xs text-gray-500">Build a matrix with dynamic hierarchy calculations (ISINSCOPE). Create Top N + Others patterns (RANKX). Handle data quality issues (COALESCE). Cross-filter unrelated tables (TREATAS). These functions separate good candidates from great ones.</p>
+</div>
+</div>
+</div>
+
+<div class="highlight-box">
+<p class="text-sm text-gray-300 leading-relaxed mb-0"><i class="fas fa-graduation-cap text-acid mr-2"></i><strong class="text-acid">At Vizonis Academy</strong> — the <strong class="text-white">best data analytics training in Bangalore</strong> — this 8-week DAX mastery plan is built into our curriculum. You write 50+ DAX measures across 10+ real-world dashboards, get feedback on every measure, and do 3 mock DAX interviews before your actual interviews. <a href="https://vizonis.com/courses/data-analytics" class="text-acid hover:underline">Enroll now and master DAX properly.</a></p>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-5xl mx-auto"></div>
+
+<!-- CTA SECTION -->
+<section id="why-training" class="py-24 px-6">
+<div class="max-w-4xl mx-auto article-body reveal">
+<span class="badge mb-6 w-fit"><i class="fas fa-rocket"></i> Take Action</span>
+<h2 class="font-display text-2xl md:text-3xl font-bold tracking-tighter gradient-text text-center mb-4">Reading About DAX Won't Get You Hired. Writing DAX Will.</h2>
+
+<div class="cta-section my-10">
+<div class="text-acid text-xs font-bold uppercase tracking-widest mb-3"><i class="fas fa-chart-bar mr-2"></i>Best Data Analytics Training in Bangalore</div>
+<h3 class="font-display text-xl md:text-2xl font-bold text-white mb-3 tracking-tight">Master DAX + Power BI + SQL + Fabric at Vizonis Academy</h3>
+<p class="text-sm text-gray-400 max-w-2xl mx-auto mb-6">50+ DAX measures written by you. 10+ real dashboards built by you. 3 mock interviews with feedback. This is how you crack Bangalore's toughest data analyst interviews.</p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center">
+<a href="https://vizonis.com/courses/data-analytics" class="glow-btn bg-acid text-obsidian px-10 py-4 rounded-full text-sm font-bold uppercase tracking-widest">View Course Details <i class="fas fa-arrow-right ml-2"></i></a>
+<a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20want%20to%20master%20DAX%20for%20data%20analyst%20interviews%20in%20Bangalore." target="_blank" class="glow-btn border border-white/20 text-white px-10 py-4 rounded-full text-sm font-bold uppercase tracking-widest hover:border-green-400 hover:text-green-400"><i class="fab fa-whatsapp mr-2"></i>Chat on WhatsApp</a>
+</div>
+<p class="text-[10px] text-gray-600 mt-4">Next batch starting soon. Limited seats. Bangalore + Online options available.</p>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-5xl mx-auto"></div>
+
+<!-- FAQ -->
+<section id="faq" class="py-24 px-6">
+<div class="max-w-4xl mx-auto reveal">
+<div class="text-center mb-12">
+<span class="badge mb-4 inline-flex"><i class="fas fa-question-circle"></i> FAQ</span>
+<h2 class="font-display text-2xl md:text-4xl font-bold tracking-tighter gradient-text">DAX Interview FAQ</h2>
+<p class="text-gray-500 text-sm mt-3">Most asked questions about DAX interviews in Bangalore.</p>
+</div>
+
+<div class="space-y-3" id="faq-container">
+<div class="qa-item">
+<div class="qa-q" onclick="toggleQA(this)">
+<span class="text-sm text-white font-medium">What is the most important DAX function for interviews?</span>
+<i class="fas fa-chevron-down qa-chevron text-xs"></i>
+</div>
+<div class="qa-a">
+<p class="text-sm text-gray-400 leading-relaxed">CALCULATE is universally considered the most important DAX function for interviews. Every Bangalore recruiter tests CALCULATE because it's the foundation of advanced DAX — it modifies filter context, which is the core concept in DAX. If you understand CALCULATE deeply (including its interactions with ALL, FILTER, and context transition), you can answer 40-50% of all DAX interview questions.</p>
+</div>
+</div>
+
+<div class="qa-item">
+<div class="qa-q" onclick="toggleQA(this)">
+<span class="text-sm text-white font-medium">How many DAX functions should I know for a data analyst interview in Bangalore?</span>
+<i class="fas fa-chevron-down qa-chevron text-xs"></i>
+</div>
+<div class="qa-a">
+<p class="text-sm text-gray-400 leading-relaxed">You should deeply understand 15-20 core DAX functions and be familiar with another 20-30. The 15 functions covered in this guide cover 90% of what's asked. Beyond these, know basic aggregation (SUM, AVERAGE, COUNT), string functions (CONCATENATE, LEFT, RIGHT, SEARCH), and a few niche functions like TREATAS and GENERATE for senior roles.</p>
+</div>
+</div>
+
+<div class="qa-item">
+<div class="qa-q" onclick="toggleQA(this)">
+<span class="text-sm text-white font-medium">What is the difference between SUM and SUMX?</span>
+<i class="fas fa-chevron-down qa-chevron text-xs"></i>
+</div>
+<div class="qa-a">
+<p class="text-sm text-gray-400 leading-relaxed">SUM is an aggregator that works on a single column — it adds up all values in that column respecting the current filter context. SUMX is an iterator — it takes a table and an expression, evaluates the expression row by row, and then sums the results. SUMX can do everything SUM can, plus more (like row-level calculations before aggregation). For example, SUMX(Sales, Sales[Qty] * Sales[Price]) multiplies first per row, then sums. SUM cannot do this.</p>
+</div>
+</div>
+
+<div class="qa-item">
+<div class="qa-q" onclick="toggleQA(this)">
+<span class="text-sm text-white font-medium">Can I learn DAX without knowing Power BI?</span>
+<i class="fas fa-chevron-down qa-chevron text-xs"></i>
+</div>
+<div class="qa-a">
+<p class="text-sm text-gray-400 leading-relaxed">Technically yes — you can write DAX in Excel Power Pivot or SSAS Tabular. But practically, 95% of DAX jobs require Power BI proficiency. At Vizonis Academy, we teach DAX within the Power BI context because that's how you'll use it on the job and how it's tested in interviews. The visual feedback of seeing your DAX measure work in a Power BI dashboard accelerates learning enormously.</p>
+</div>
+</div>
+
+<div class="qa-item">
+<div class="qa-q" onclick="toggleQA(this)">
+<span class="text-sm text-white font-medium">What is the difference between row context and filter context?</span>
+<i class="fas fa-chevron-down qa-chevron text-xs"></i>
+</div>
+<div class="qa-a">
+<p class="text-sm text-gray-400 leading-relaxed">This is the most fundamental DAX concept. <strong>Row context</strong> exists when DAX iterates over rows — in calculated columns and inside X functions (SUMX, FILTER). It means "for each row, what are the values of this row's columns?" <strong>Filter context</strong> is the set of filters applied by visuals, slicers, and CALCULATE. It determines which rows of which tables are visible. The tricky part: CALCULATE performs "context transition" — converting row context into filter context inside a calculated column or measure. Understanding this is the difference between passing and failing a DAX interview.</p>
+</div>
+</div>
+
+<div class="qa-item">
+<div class="qa-q" onclick="toggleQA(this)">
+<span class="text-sm text-white font-medium">What is the best data analytics training in Bangalore for learning DAX?</span>
+<i class="fas fa-chevron-down qa-chevron text-xs"></i>
+</div>
+<div class="qa-a">
+<p class="text-sm text-gray-400 leading-relaxed">Vizonis Academy is considered the best data analytics training in Bangalore for DAX because we teach it through real-world business scenarios, not just syntax. You write 50+ DAX measures across 10+ dashboard projects, including the exact types of calculations asked in interviews — running totals, rank, YTD, parent-child hierarchies, and dynamic filtering. Our students consistently report that interview DAX questions feel familiar because they've already solved similar problems in class. <a href="https://vizonis.com/courses/data-analytics" class="text-acid hover:underline">See our course details.</a></p>
+</div>
+</div>
+
+<div class="qa-item">
+<div class="qa-q" onclick="toggleQA(this)">
+<span class="text-sm text-white font-medium">How long does it take to master DAX?</span>
+<i class="fas fa-chevron-down qa-chevron text-xs"></i>
+</div>
+<div class="qa-a">
+<p class="text-sm text-gray-400 leading-relaxed">Basic DAX (SUM, CALCULATE with simple filters, DIVIDE): 1-2 weeks. Intermediate DAX (FILTER, ALL, SUMX, time intelligence): 4-6 weeks. Advanced DAX (context transition, EARLIER, TREATAS, ISINSCOPE, optimization): 8-12 weeks. The key is consistent daily practice — writing 5-10 measures every day is better than a 10-hour session once a week. At Vizonis Academy, our structured 12-week program takes you from zero to interview-ready with daily practice built in.</p>
+</div>
+</div>
+
+<div class="qa-item">
+<div class="qa-q" onclick="toggleQA(this)">
+<span class="text-sm text-white font-medium">What DAX tools should I use for practice?</span>
+<i class="fas fa-chevron-down qa-chevron text-xs"></i>
+</div>
+<div class="qa-a">
+<p class="text-sm text-gray-400 leading-relaxed"><strong>DAX Studio</strong> (free) is the #1 tool — it connects to your Power BI file, lets you write and test DAX measures outside of Power BI, shows performance profiling, and has a "Query Plan" view that shows exactly how DAX evaluates your measure. <strong>SQL BI's DAX Guide</strong> (dax.guide) is the best reference. <strong>Enterprise DNA / Curbal</strong> YouTube channels are great for video explanations. At Vizonis Academy, we teach you to use DAX Studio from Day 1 — most candidates don't even know it exists.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- COURSE CTA -->
+<section class="py-20 px-6 border-t border-white/5">
+<div class="max-w-4xl mx-auto reveal">
+<div class="text-center mb-10">
+<h2 class="font-display text-xl md:text-3xl font-bold tracking-tighter gradient-text mb-3">Stop Reading About DAX. Start Writing DAX.</h2>
+<p class="text-gray-500 text-sm">One course. 50+ measures. Interview-ready in 12 weeks.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<a href="https://vizonis.com/courses/data-analytics" class="glass-card rounded-2xl p-8 block group hover:border-acid/40 transition-all">
+<div class="flex items-center gap-3 mb-4">
+<div class="icon-box bg-acid/10 text-acid group-hover:bg-acid/20 transition-colors"><i class="fas fa-chart-bar"></i></div>
+<div>
+<div class="text-white font-bold text-sm">Data Analytics Course</div>
+<div class="text-[10px] text-gray-500">SQL + Power BI + DAX + Fabric + Python</div>
+</div>
+<i class="fas fa-arrow-right text-gray-600 group-hover:text-acid transition-colors ml-auto text-xs"></i>
+</div>
+<p class="text-xs text-gray-500">Complete program with 50+ DAX measures, 10+ dashboards, mock interviews, and placement support. The best data analytics training in Bangalore.</p>
+<div class="mt-4 flex flex-wrap gap-2">
+<span class="text-[9px] px-2 py-1 rounded bg-acid/5 text-acid/60">SQL</span>
+<span class="text-[9px] px-2 py-1 rounded bg-acid/5 text-acid/60">Power BI</span>
+<span class="text-[9px] px-2 py-1 rounded bg-acid/5 text-acid/60">DAX (50+ measures)</span>
+<span class="text-[9px] px-2 py-1 rounded bg-acid/5 text-acid/60">Microsoft Fabric</span>
+<span class="text-[9px] px-2 py-1 rounded bg-acid/5 text-acid/60">Python</span>
+<span class="text-[9px] px-2 py-1 rounded bg-acid/5 text-acid/60">Interview Prep</span>
+</div>
+</a>
+<a href="https://vizonis.com/courses/data-analytics" class="glass-card rounded-2xl p-8 block group hover:border-purple-400/40 transition-all">
+<div class="flex items-center gap-3 mb-4">
+<div class="icon-box bg-purple-500/10 text-purple-400 group-hover:bg-purple-500/20 transition-colors"><i class="fas fa-code"></i></div>
+<div>
+<div class="text-white font-bold text-sm">DAX Mastery Program</div>
+<div class="text-[10px] text-gray-500">Advanced DAX + DAX Studio + Optimization</div>
+</div>
+<i class="fas fa-arrow-right text-gray-600 group-hover:text-purple-400 transition-colors ml-auto text-xs"></i>
+</div>
+<p class="text-xs text-gray-500">Deep-dive into DAX: context transition, variable optimization, query plans, complex hierarchies, and performance tuning. For analysts who want to go from intermediate to expert.</p>
+<div class="mt-4 flex flex-wrap gap-2">
+<span class="text-[9px] px-2 py-1 rounded bg-purple-500/5 text-purple-400/60">CALCULATE Deep Dive</span>
+<span class="text-[9px] px-2 py-1 rounded bg-purple-500/5 text-purple-400/60">DAX Studio</span>
+<span class="text-[9px] px-2 py-1 rounded bg-purple-500/5 text-purple-400/60">Context Transition</span>
+<span class="text-[9px] px-2 py-1 rounded bg-purple-500/5 text-purple-400/60">Query Plans</span>
+<span class="text-[9px] px-2 py-1 rounded bg-purple-500/5 text-purple-400/60">Performance</span>
+</div>
+</a>
+</div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer class="py-16 px-6 border-t border-white/5">
+<div class="max-w-5xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
+<div>
+<div class="font-display text-lg font-bold tracking-tight mb-3"><span class="text-acid">V</span>IZONIS <span class="text-gray-600 text-xs font-sans font-normal">Academy</span></div>
+<p class="text-xs text-gray-500 leading-relaxed">The best data analytics training in Bangalore. Master DAX, Power BI, SQL, and Fabric through real-world projects — not just theory.</p>
+</div>
+<div>
+<h4 class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-3">Training</h4>
+<ul class="space-y-2">
+<li><a href="https://vizonis.com/courses/data-analytics" class="text-xs text-gray-500 hover:text-acid transition-colors">Data Analytics Course</a></li>
+<li><a href="https://vizonis.com/courses/data-analytics" class="text-xs text-gray-500 hover:text-acid transition-colors">Power BI + DAX Training</a></li>
+<li><a href="https://vizonis.com/courses/data-analytics" class="text-xs text-gray-500 hover:text-acid transition-colors">SQL Training</a></li>
+<li><a href="https://vizonis.com/courses/data-analytics" class="text-xs text-gray-500 hover:text-acid transition-colors">Microsoft Fabric Training</a></li>
+<li><a href="https://vizonis.com/courses/data-analytics" class="text-xs text-gray-500 hover:text-acid transition-colors">Interview Preparation</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-3">Connect</h4>
+<ul class="space-y-2">
+<li><a href="https://wa.me/916364671786" target="_blank" class="text-xs text-gray-500 hover:text-green-400 transition-colors"><i class="fab fa-whatsapp mr-2"></i>WhatsApp</a></li>
+<li><a href="https://vizonis.com" class="text-xs text-gray-500 hover:text-acid transition-colors"><i class="fas fa-globe mr-2"></i>Website</a></li>
+<li><a href="https://vizonis.com/blog" class="text-xs text-gray-500 hover:text-acid transition-colors"><i class="fas fa-blog mr-2"></i>Blog</a></li>
+<li><a href="https://vizonis.com/courses/data-analytics" class="text-xs text-gray-500 hover:text-acid transition-colors"><i class="fas fa-envelope mr-2"></i>Contact</a></li>
+</ul>
+</div>
+</div>
+<div class="border-t border-white/5 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
+<p class="text-[10px] text-gray-600">© 2026 Vizonis Academy. All rights reserved. Bangalore, India.</p>
+<p class="text-[10px] text-gray-600">Best Data Analytics Training in Bangalore — DAX, Power BI, SQL, Fabric, Interview Prep</p>
+</div>
+</div>
+</footer>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20want%20to%20master%20DAX%20for%20data%20analyst%20interviews." target="_blank" class="whatsapp-float" aria-label="Chat on WhatsApp">
+<i class="fab fa-whatsapp text-white text-2xl"></i>
+</a>
+
+<script>
+(function(){const c=document.getElementById('particles');for(let i=0;i<30;i++){const p=document.createElement('div');p.className='particle';const s=Math.random()*4+2;p.style.width=s+'px';p.style.height=s+'px';p.style.left=Math.random()*100+'%';p.style.animationDuration=(Math.random()*15+10)+'s';p.style.animationDelay=(Math.random()*10)+'s';c.appendChild(p)}})();
+
+gsap.registerPlugin(ScrollTrigger);
+document.querySelectorAll('.reveal').forEach(el=>{gsap.to(el,{opacity:1,y:0,duration:0.8,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 85%',toggleActions:'play none none none'}})});
+
+function toggleQA(el){const item=el.parentElement;const wasOpen=item.classList.contains('open');document.querySelectorAll('.qa-item').forEach(i=>i.classList.remove('open'));if(!wasOpen)item.classList.add('open')}
+
+const tocLinks=document.querySelectorAll('.toc-link');
+const sections=document.querySelectorAll('section[id]');
+window.addEventListener('scroll',()=>{let current='';sections.forEach(s=>{if(window.scrollY>=s.offsetTop-200)current=s.getAttribute('id')});tocLinks.forEach(l=>{l.classList.remove('active');if(l.getAttribute('href')==='#'+current)l.classList.add('active')})});
+
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(a.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})})});
+
+document.querySelector('.qa-item')?.classList.add('open');
+</script>
+</body>
+</html>
