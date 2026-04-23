@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Late Payment Prediction in Accounts Receivable Using Microsoft Fabric, Data Agent & Gen AI | Best Data Analytics Training Bangalore</title>
+<meta name="description" content="How enterprises predict late payments in accounts receivable using Microsoft Fabric, Data Agent, and Generative AI. Complete architecture, real Power BI dashboards, ML model walkthrough — and learn these skills at Bangalore's best data analytics training institute, Vizonis Academy.">
+<meta name="keywords" content="late payment prediction accounts receivable, Microsoft Fabric Data Agent, Gen AI accounts receivable, AR analytics Power BI, accounts receivable machine learning, best data analytics training in Bangalore, data analytics course Bangalore, Power BI training Bangalore, Microsoft Fabric course Bangalore, data analyst training Bangalore, Vizonis Academy, data analytics institute Bangalore, predictive analytics accounts receivable, Fabric AI agent, accounts receivable dashboard">
+<meta name="robots" content="index, follow">
+<meta name="author" content="Vizonis Academy">
+<link rel="canonical" href="https://analytics.vizonis.com/late-payment-prediction-microsoft-fabric-data-agent-gen-ai-accounts-receivable">
+<meta property="og:title" content="Late Payment Prediction in Accounts Receivable: Fabric + Data Agent + Gen AI">
+<meta property="og:description" content="How enterprises predict late payments before they happen — using Microsoft Fabric, Data Agent, and Gen AI. Learn these skills at Bangalore's best data analytics training.">
+<meta property="og:url" content="https://analytics.vizonis.com/late-payment-prediction-microsoft-fabric-data-agent-gen-ai-accounts-receivable">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Vizonis Academy">
+<meta property="article:published_time" content="2025-01-22">
+<meta property="article:modified_time" content="2025-01-22">
+<meta property="article:author" content="Vizonis Academy">
+<meta property="article:section" content="Data Analytics Case Studies">
+<meta property="article:tag" content="Late Payment Prediction">
+<meta property="article:tag" content="Microsoft Fabric Data Agent">
+<meta property="article:tag" content="Gen AI Accounts Receivable">
+<meta property="article:tag" content="Power BI Dashboards">
+<meta property="article:tag" content="Best Data Analytics Training Bangalore">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Late Payment Prediction Using Fabric + Data Agent + Gen AI">
+<meta name="twitter:description" content="Inside the analytics stack that predicts late payments before they happen. Learn these enterprise skills at Vizonis Academy, Bangalore.">
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Article",
+  "headline":"Late Payment Prediction in Accounts Receivable Using Microsoft Fabric, Data Agent and Generative AI",
+  "description":"How enterprises predict late payments in accounts receivable using Microsoft Fabric, Data Agent, and Generative AI.",
+  "author":{"@type":"Organization","name":"Vizonis Academy","url":"https://vizonis.com"},
+  "publisher":{"@type":"Organization","name":"Vizonis Academy","url":"https://vizonis.com"},
+  "datePublished":"2025-01-22",
+  "dateModified":"2025-01-22",
+  "mainEntityOfPage":"https://analytics.vizonis.com/late-payment-prediction-microsoft-fabric-data-agent-gen-ai-accounts-receivable",
+  "keywords":["Late Payment Prediction","Microsoft Fabric","Data Agent","Gen AI","Accounts Receivable","Power BI"]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Course",
+  "name":"Data Analytics Course",
+  "provider":{"@type":"Organization","name":"Vizonis Academy","url":"https://vizonis.com"},
+  "url":"https://vizonis.com/courses/data-analytics",
+  "description":"Best data analytics training in Bangalore covering Power BI, SQL, Microsoft Fabric, Gen AI, and predictive analytics with real-world projects.",
+  "location":{"@type":"Place","name":"Bangalore, India"}
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {"@type":"Question","name":"How does machine learning predict late payments in accounts receivable?","acceptedAnswer":{"@type":"Answer","text":"ML models analyze historical payment patterns, customer behavior, invoice details, economic indicators, and relationship data to calculate a 'late payment probability score' for each outstanding invoice. Features like days-to-pay history, dispute frequency, seasonal patterns, and credit utilization feed into classification models (XGBoost, Random Forest) that predict whether an invoice will be paid on time, late (1-30 days), or very late (30+ days)."}},
+    {"@type":"Question","name":"What is Microsoft Fabric Data Agent?","acceptedAnswer":{"@type":"Answer","text":"Microsoft Fabric Data Agent is an AI-powered conversational interface within Fabric that lets business users ask questions about their data in natural language and get instant answers with visualizations. For accounts receivable, a finance manager could ask 'Which customers are most likely to default this month?' and get a ranked list with risk scores — without writing a single SQL query."}},
+    {"@type":"Question","name":"Can Gen AI really improve accounts receivable collections?","acceptedAnswer":{"@type":"Answer","text":"Yes. Gen AI automates three critical AR tasks: (1) drafting personalized collection emails based on customer relationship and payment history, (2) summarizing complex account situations for collectors before customer calls, and (3) generating action recommendations like 'offer 2% early payment discount' based on predicted behavior. Companies report 25-40% improvement in collection effectiveness."}},
+    {"@type":"Question","name":"What is the best data analytics training in Bangalore for learning these skills?","acceptedAnswer":{"@type":"Answer","text":"Vizonis Academy offers the best data analytics training in Bangalore with practical, project-based learning on Microsoft Fabric, Power BI, SQL, Python, and Gen AI applications. You build real-world projects including predictive analytics dashboards — the exact skills needed for AR analytics roles."}}
+  ]
+}
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script>
+tailwind.config={theme:{extend:{colors:{obsidian:'#050505',charcoal:'#0F1115',acid:'#CCFF00',silver:'#E1E1E1',cardDark:'#0A0C10'},fontFamily:{sans:['Space Grotesk','sans-serif'],display:['Syncopate','sans-serif']}}}}
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:'Space Grotesk',sans-serif;background:#050505;color:#E1E1E1;overflow-x:hidden}
+.noise-overlay{position:fixed;inset:0;z-index:9000;pointer-events:none;opacity:.04;background-image:url('https://grainy-gradients.vercel.app/noise.svg')}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#050505}::-webkit-scrollbar-thumb{background:#CCFF00;border-radius:3px}
+.gradient-text{background:linear-gradient(to bottom,#FFF 0%,#9ca3af 50%,#111827 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.acid-gradient-text{background:linear-gradient(135deg,#CCFF00,#88cc00,#CCFF00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.teal-gradient-text{background:linear-gradient(135deg,#2dd4bf,#14b8a6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.purple-gradient-text{background:linear-gradient(135deg,#c084fc,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.orange-gradient-text{background:linear-gradient(135deg,#fb923c,#f97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.red-gradient-text{background:linear-gradient(135deg,#f87171,#ef4444);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.glass-card{background:rgba(255,255,255,.03);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.08);transition:all .4s ease}
+.glass-card:hover{background:rgba(255,255,255,.06);border-color:rgba(204,255,0,.3);box-shadow:0 0 30px rgba(204,255,0,.08)}
+.glow-btn{position:relative;overflow:hidden;transition:all .3s ease}
+.glow-btn:hover{box-shadow:0 0 30px rgba(204,255,0,.4);transform:translateY(-2px)}
+.particle{position:absolute;border-radius:50%;background:#CCFF00;opacity:.15;animation:fp linear infinite}
+@keyframes fp{0%{transform:translateY(100vh) scale(0);opacity:0}10%{opacity:.15}90%{opacity:.15}100%{transform:translateY(-100px) scale(1);opacity:0}}
+.grid-bg{background-image:linear-gradient(rgba(204,255,0,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(204,255,0,.03) 1px,transparent 1px);background-size:60px 60px}
+.section-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(204,255,0,.3),transparent)}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:4px 14px;border-radius:9999px;font-size:.75rem;border:1px solid rgba(204,255,0,.3);background:rgba(204,255,0,.08);color:#CCFF00;font-weight:600}
+.badge-teal{border-color:rgba(45,212,191,.3);background:rgba(45,212,191,.08);color:#2dd4bf}
+.badge-purple{border-color:rgba(168,85,247,.3);background:rgba(168,85,247,.08);color:#c084fc}
+.badge-orange{border-color:rgba(249,115,22,.3);background:rgba(249,115,22,.08);color:#fb923c}
+.badge-red{border-color:rgba(239,68,68,.3);background:rgba(239,68,68,.08);color:#f87171}
+.reveal{opacity:0;transform:translateY(40px)}
+.icon-box{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+@keyframes of{0%{transform:translate(0,0) scale(1)}100%{transform:30px,-40px scale(1.2)}}
+.whatsapp-float{position:fixed;bottom:30px;right:30px;z-index:8000;width:60px;height:60px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.4);transition:all .3s;cursor:pointer;text-decoration:none}
+.whatsapp-float:hover{transform:scale(1.1);box-shadow:0 6px 30px rgba(37,211,102,.6)}
+.vis-mock{background:#0A0C10;border:1px solid rgba(255,255,255,.08);border-radius:12px;overflow:hidden}
+@keyframes pulseGlow{0%,100%{box-shadow:0 0 20px rgba(204,255,0,.1)}50%{box-shadow:0 0 40px rgba(204,255,0,.25)}}
+.pulse-glow{animation:pulseGlow 3s ease-in-out infinite}
+.toc-link{display:block;padding:6px 0;font-size:.85rem;color:#6b7280;transition:all .2s;border-left:2px solid rgba(255,255,255,.06);padding-left:12px}
+.toc-link:hover,.toc-link.active{color:#CCFF00;border-left-color:#CCFF00}
+.journey-node{position:relative;padding-left:56px}
+.journey-node::before{content:'';position:absolute;left:19px;top:32px;bottom:-24px;width:2px;background:linear-gradient(to bottom,rgba(204,255,0,.3),rgba(204,255,0,.05))}
+.journey-node:last-child::before{display:none}
+.journey-dot{position:absolute;left:4px;top:4px;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;z-index:1}
+.qa-item{border:1px solid rgba(255,255,255,.06);border-radius:12px;overflow:hidden;transition:all .3s}
+.qa-item:hover{border-color:rgba(204,255,0,.2)}
+.qa-item.open .qa-a{max-height:500px;opacity:1;padding:0 20px 16px}
+.qa-item.open .qa-chevron{transform:rotate(180deg)}
+.qa-q{padding:16px 20px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(255,255,255,.02)}
+.qa-a{max-height:0;opacity:0;overflow:hidden;transition:all .4s ease;padding:0 20px}
+.qa-chevron{transition:transform .3s;flex-shrink:0;color:#6b7280}
+.article-body p{margin-bottom:1rem;line-height:1.85}
+.article-body h2{margin-top:2.5rem;margin-bottom:1rem}
+.article-body h3{margin-top:2rem;margin-bottom:.75rem}
+.article-body ul{margin-bottom:1rem;padding-left:0;list-style:none}
+.article-body ul li{position:relative;padding-left:1.5rem;margin-bottom:.5rem}
+.article-body ul li::before{content:'';position:absolute;left:0;top:.6rem;width:6px;height:6px;border-radius:50%;background:#CCFF00}
+.breadcrumb a{color:#6b7280;text-decoration:none;transition:color .2s;font-size:.75rem}
+.breadcrumb a:hover{color:#CCFF00}
+.breadcrumb span{color:#6b7280;font-size:.75rem}
+.breadcrumb .sep{color:#374151;margin:0 6px}
+.stack-layer{position:relative;padding:20px 24px;border-radius:12px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06)}
+.stack-layer::after{content:'';position:absolute;bottom:-13px;left:24px;right:24px;height:12px;background:inherit;border-left:1px solid rgba(255,255,255,.06);border-right:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);border-radius:0 0 12px 12px}
+.stat-card{text-align:center;padding:24px 16px}
+.stat-card .stat-num{font-family:'Syncopate',sans-serif;font-size:1.75rem;font-weight:700;line-height:1;margin-bottom:6px}
+.data-flow-arrow{text-align:center;color:rgba(204,255,0,.3);font-size:1.2rem;padding:4px 0}
+.highlight-box{background:linear-gradient(135deg,rgba(204,255,0,.06),rgba(204,255,0,.02));border:1px solid rgba(204,255,0,.15);border-radius:12px;padding:20px 24px;margin:1.5rem 0}
+.cta-section{background:linear-gradient(135deg,rgba(204,255,0,.08),rgba(204,255,0,.02));border:1px solid rgba(204,255,0,.2);border-radius:20px;padding:40px;text-align:center}
+.risk-bar{height:10px;border-radius:5px;transition:width 1.2s ease}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
+.blink{animation:blink 1.5s ease-in-out infinite}
+.chat-bubble{max-width:80%;padding:10px 14px;border-radius:12px;font-size:.7rem;line-height:1.5}
+.chat-user{background:rgba(204,255,0,.1);border:1px solid rgba(204,255,0,.15);color:#E1E1E1;margin-left:auto;border-bottom-right-radius:4px}
+.chat-ai{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:#9ca3af;margin-right:auto;border-bottom-left-radius:4px}
+@media(max-width:768px){.stat-card .stat-num{font-size:1.3rem}.chat-bubble{max-width:90%}}
+</style>
+</head>
+<body class="grid-bg">
+<div class="noise-overlay"></div>
+<div id="particles" class="fixed inset-0 z-0 pointer-events-none overflow-hidden"></div>
+
+<!-- ===================== NAVIGATION ===================== -->
+<nav class="fixed top-0 left-0 right-0 z-[7000] bg-obsidian/80 border-b border-white/5 backdrop-blur-md" role="navigation" aria-label="Main navigation">
+<div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+<a href="https://vizonis.com" class="font-display text-xl font-bold tracking-tight" aria-label="Vizonis Academy Home"><span class="text-acid">V</span>IZONIS</a>
+<div class="hidden lg:flex items-center gap-4">
+<a href="#the-problem" class="text-xs px-3 py-2 rounded-lg text-gray-500 hover:text-acid hover:bg-acid/5 transition-all whitespace-nowrap">The Problem</a>
+<a href="#fabric-unification" class="text-xs px-3 py-2 rounded-lg text-gray-500 hover:text-acid hover:bg-acid/5 transition-all whitespace-nowrap">Fabric</a>
+<a href="#ml-model" class="text-xs px-3 py-2 rounded-lg text-gray-500 hover:text-acid hover:bg-acid/5 transition-all whitespace-nowrap">ML Model</a>
+<a href="#data-agent" class="text-xs px-3 py-2 rounded-lg text-gray-500 hover:text-acid hover:bg-acid/5 transition-all whitespace-nowrap">Data Agent</a>
+<a href="#powerbi-dashboards" class="text-xs px-3 py-2 rounded-lg text-gray-500 hover:text-acid hover:bg-acid/5 transition-all whitespace-nowrap">Power BI</a>
+<a href="#faq" class="text-xs px-3 py-2 rounded-lg text-gray-500 hover:text-acid hover:bg-acid/5 transition-all whitespace-nowrap">FAQ</a>
+</div>
+<a href="https://vizonis.com/courses/data-analytics" class="glow-btn bg-acid text-obsidian px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest whitespace-nowrap">Enroll Now</a>
+</div>
+</nav>
+
+<!-- ===================== HERO ===================== -->
+<header class="relative min-h-[90vh] flex flex-col justify-center items-center pt-28 pb-16 overflow-hidden">
+<div class="hero-orb w-[500px] h-[500px] bg-acid top-1/4 -left-40" style="position:absolute;border-radius:50%;filter:blur(120px);opacity:.1;animation:of 8s ease-in-out infinite alternate"></div>
+<div class="hero-orb w-[400px] h-[400px] bg-red-500 bottom-1/4 -right-32" style="position:absolute;border-radius:50%;filter:blur(120px);opacity:.06;animation:of 8s ease-in-out infinite alternate;animation-delay:-5s"></div>
+<div class="hero-orb w-[300px] h-[300px] bg-purple-500 top-1/2 left-1/3" style="position:absolute;border-radius:50%;filter:blur(120px);opacity:.06;animation:of 10s ease-in-out infinite alternate;animation-delay:-3s"></div>
+<div class="relative z-10 text-center px-6 max-w-5xl mx-auto">
+
+<nav class="breadcrumb flex items-center justify-center mb-8" aria-label="Breadcrumb">
+<a href="https://vizonis.com">Home</a>
+<span class="sep">/</span>
+<a href="https://vizonis.com/blog">Blog</a>
+<span class="sep">/</span>
+<span class="text-gray-400">Late Payment Prediction — Fabric + Gen AI</span>
+</nav>
+
+<div class="flex flex-wrap justify-center gap-2 mb-6">
+<span class="badge-red badge"><i class="fas fa-exclamation-circle"></i> Finance Case Study</span>
+<span class="badge-purple badge"><i class="fas fa-robot"></i> Gen AI + Data Agent</span>
+<span class="badge-teal badge">Microsoft Fabric</span>
+</div>
+<h1 class="font-display text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold leading-[.92] tracking-tighter mb-6">
+<span class="gradient-text block">LATE PAYMENT PREDICTION</span>
+<span class="red-gradient-text block mt-2">IN ACCOUNTS RECEIVABLE</span>
+<span class="gradient-text block mt-1 text-base sm:text-lg md:text-2xl lg:text-3xl">Using Microsoft Fabric, Data Agent & Generative AI</span>
+<span class="text-gray-500 block mt-3 text-sm sm:text-base md:text-lg font-sans font-normal">How Enterprise Finance Teams Predict Defaults Before They Happen — Bangalore 2026</span>
+</h1>
+<p class="text-gray-400 text-sm md:text-base max-w-3xl mx-auto leading-relaxed mb-4">A ₹500Cr problem solved with predictive analytics. Inside the architecture that uses <strong class="text-white">Microsoft Fabric for data unification, ML for prediction, Data Agent for natural-language queries, and Gen AI for automated collection strategies</strong>.</p>
+<div class="flex items-center justify-center gap-4 text-xs text-gray-500 mb-8 flex-wrap">
+<span><i class="far fa-clock mr-1"></i> 25 min read</span>
+<span><i class="far fa-calendar mr-1"></i> Updated Jan 2025</span>
+<span><i class="far fa-user mr-1"></i> Vizonis Academy Research Team</span>
+</div>
+<div class="flex flex-col sm:flex-row gap-4 justify-center">
+<a href="#the-problem" class="glow-btn bg-acid text-obsidian px-10 py-4 rounded-full text-sm font-bold uppercase tracking-widest">Read the Case Study <i class="fas fa-arrow-down ml-2"></i></a>
+<a href="https://vizonis.com/courses/data-analytics" class="glow-btn border border-white/20 text-white px-10 py-4 rounded-full text-sm font-bold uppercase tracking-widest hover:border-acid hover:text-acid">Learn These Skills <i class="fas fa-arrow-right ml-2"></i></a>
+</div>
+</div>
+</header>
+
+<!-- ===================== KEY STATS ===================== -->
+<section class="py-12 px-6 border-y border-white/5">
+<div class="max-w-5xl mx-auto reveal">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="stat-card glass-card rounded-xl">
+<div class="stat-num red-gradient-text">₹500Cr</div>
+<div class="text-xs text-gray-500">Annual Loss to Late Payments<br><span class="text-gray-600">(per large enterprise)</span></div>
+</div>
+<div class="stat-card glass-card rounded-xl">
+<div class="stat-num acid-gradient-text">94%</div>
+<div class="text-xs text-gray-500">Prediction Accuracy<br><span class="text-gray-600">(XGBoost model)</span></div>
+</div>
+<div class="stat-card glass-card rounded-xl">
+<div class="stat-num purple-gradient-text">37%</div>
+<div class="text-xs text-gray-500">Reduction in DSO<br><span class="text-gray-600">(Days Sales Outstanding)</span></div>
+</div>
+<div class="stat-card glass-card rounded-xl">
+<div class="stat-num teal-gradient-text">4.2x</div>
+<div class="text-xs text-gray-500">ROI on Analytics Investment<br><span class="text-gray-600">(within 12 months)</span></div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ===================== TABLE OF CONTENTS ===================== -->
+<section class="py-16 px-6">
+<div class="max-w-5xl mx-auto reveal">
+<div class="flex flex-col lg:flex-row gap-10">
+<div class="lg:w-1/3">
+<div class="lg:sticky lg:top-24">
+<h2 class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-4"><i class="fas fa-list mr-2"></i>Table of Contents</h2>
+<nav aria-label="Table of contents">
+<a href="#the-problem" class="toc-link">The ₹500Cr Problem</a>
+<a href="#how-ar-works" class="toc-link">How Accounts Receivable Works</a>
+<a href="#fabric-unification" class="toc-link">Microsoft Fabric: Unifying AR Data</a>
+<a href="#ml-model" class="toc-link">Building the Prediction Model</a>
+<a href="#data-agent" class="toc-link">Data Agent: Ask AR Questions in Plain English</a>
+<a href="#gen-ai-collections" class="toc-link">Gen AI for Automated Collections</a>
+<a href="#powerbi-dashboards" class="toc-link">Power BI Dashboards for CFOs</a>
+<a href="#full-architecture" class="toc-link">Complete Analytics Architecture</a>
+<a href="#skills-you-need" class="toc-link">Skills You Need to Build This</a>
+<a href="#why-training" class="toc-link">Best Training in Bangalore</a>
+<a href="#faq" class="toc-link">Frequently Asked Questions</a>
+</nav>
+</div>
+</div>
+<div class="lg:w-2/3">
+<p class="text-gray-500 text-sm leading-relaxed">This case study dissects how a <strong class="text-white">₹15,000Cr manufacturing conglomerate</strong> in Bangalore built a late payment prediction system using Microsoft Fabric, machine learning, Data Agent, and Generative AI. The architecture, the ML model, the dashboards, the Gen AI prompts — everything is covered in detail. If you want to learn these skills, the <a href="https://vizonis.com/courses/data-analytics" class="text-acid hover:underline">best data analytics training in Bangalore</a> is at Vizonis Academy.</p>
+</div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-5xl mx-auto"></div>
+
+<!-- ===================== THE PROBLEM ===================== -->
+<section id="the-problem" class="py-28 px-6">
+<div class="max-w-4xl mx-auto article-body reveal">
+<span class="badge-red badge mb-6 w-fit"><i class="fas fa-exclamation-triangle"></i> Chapter 01</span>
+<h2 class="font-display text-2xl md:text-4xl font-bold tracking-tighter gradient-text">The ₹500 Crore Problem Nobody Talks About</h2>
+<p class="text-gray-400 text-base leading-relaxed">Every business that sells on credit has the same nightmare: <strong class="text-white">customers who don't pay on time.</strong> For a large Indian enterprise with ₹15,000Cr annual revenue, late payments don't just cause inconvenience — they destroy working capital, trigger borrowing costs, and in worst cases, lead to write-offs.</p>
+
+<p class="text-gray-400 text-sm leading-relaxed">Here's what the math looks like for a typical large enterprise in India:</p>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-8">
+<div class="glass-card rounded-xl p-5">
+<div class="text-red-400 text-xs font-bold uppercase tracking-wider mb-3">The Cost of Late Payments</div>
+<div class="space-y-3">
+<div class="flex justify-between items-center text-xs"><span class="text-gray-500">Total receivables outstanding</span><span class="text-white font-mono">₹2,800 Cr</span></div>
+<div class="flex justify-between items-center text-xs"><span class="text-gray-500">% that are overdue (>30 days)</span><span class="text-red-400 font-mono">32%</span></div>
+<div class="flex justify-between items-center text-xs"><span class="text-gray-500">Overdue amount</span><span class="text-red-400 font-mono font-bold">₹896 Cr</span></div>
+<div class="h-px bg-white/5"></div>
+<div class="flex justify-between items-center text-xs"><span class="text-gray-500">Annual borrowing cost (10%)</span><span class="text-red-400 font-mono">₹89.6 Cr</span></div>
+<div class="flex justify-between items-center text-xs"><span class="text-gray-500">Bad debt write-offs (2%)</span><span class="text-red-400 font-mono">₹17.9 Cr</span></div>
+<div class="flex justify-between items-center text-xs"><span class="text-gray-500">Collection team cost (40 people)</span><span class="text-red-400 font-mono">₹4.8 Cr</span></div>
+<div class="flex justify-between items-center text-xs"><span class="text-gray-500">Disputed invoice resolution cost</span><span class="text-red-400 font-mono">₹12.3 Cr</span></div>
+<div class="h-px bg-white/5"></div>
+<div class="flex justify-between items-center text-xs"><span class="text-white font-bold">Total annual cost</span><span class="text-red-400 font-mono font-bold text-sm">₹124.6 Cr</span></div>
+</div>
+</div>
+<div class="glass-card rounded-xl p-5">
+<div class="text-acid text-xs font-bold uppercase tracking-wider mb-3">What Makes It Worse</div>
+<ul class="text-xs text-gray-500 space-y-3">
+<li class="flex items-start gap-2"><i class="fas fa-times text-red-500/50 mt-0.5 text-[10px]"></i><strong class="text-white">Reactive, not proactive:</strong> Collections teams discover late payments after the due date has passed. By then, it's already expensive to recover.</li>
+<li class="flex items-start gap-2"><i class="fas fa-times text-red-500/50 mt-0.5 text-[10px]"></i><strong class="text-white">No risk differentiation:</strong> All overdue invoices get the same treatment. A 1-day-late loyal customer gets the same reminder as a 60-day-late serial defaulter.</li>
+<li class="flex items-start gap-2"><i class="fas fa-times text-red-500/50 mt-0.5 text-[10px]"></i><strong class="text-white">Data silos:</strong> Invoice data in ERP, payment history in bank statements, customer relationship in CRM, credit data in bureau — nobody sees the full picture.</li>
+<li class="flex items-start gap-2"><i class="fas fa-times text-red-500/50 mt-0.5 text-[10px]"></i><strong class="text-white">Manual reporting:</strong> CFO gets AR aging report once a week. By the time they see a problem, it's already a crisis.</li>
+<li class="flex items-start gap-2"><i class="fas fa-times text-red-500/50 mt-0.5 text-[10px]"></i><strong class="text-white">Generic collection tactics:</strong> Every overdue customer gets the same template email. No personalization, no intelligence, no strategy.</li>
+</ul>
+</div>
+</div>
+
+<div class="highlight-box">
+<p class="text-sm text-gray-300 leading-relaxed mb-0"><i class="fas fa-lightbulb text-acid mr-2"></i><strong class="text-acid">The Core Insight:</strong> The problem isn't that companies don't collect — it's that they collect <strong class="text-white">blindly and reactively</strong>. The solution is a predictive analytics system that answers three questions for every invoice: <strong class="text-white">Will it be paid late? How late? What's the best action to take right now?</strong> That's exactly what Microsoft Fabric + ML + Data Agent + Gen AI delivers. And these are the skills taught at <a href="https://vizonis.com/courses/data-analytics" class="text-acid hover:underline">Vizonis Academy's data analytics course</a> — widely considered the <strong class="text-white">best data analytics training in Bangalore</strong>.</p>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-5xl mx-auto"></div>
+
+<!-- ===================== HOW AR WORKS ===================== -->
+<section id="how-ar-works" class="py-28 px-6">
+<div class="max-w-4xl mx-auto article-body reveal">
+<span class="badge-teal badge mb-6 w-fit"><i class="fas fa-file-invoice-dollar"></i> Chapter 02</span>
+<h2 class="font-display text-2xl md:text-4xl font-bold tracking-tighter gradient-text">Accounts Receivable: The Process That's Begging for Analytics</h2>
+<p class="text-gray-400 text-base leading-relaxed">Before understanding the solution, let's map the <strong class="text-white">complete AR lifecycle</strong> and identify exactly where analytics creates value:</p>
+
+<div class="my-10 space-y-6">
+<div class="journey-node">
+<div class="journey-dot bg-acid/20 text-acid border border-acid/30">01</div>
+<div class="glass-card rounded-xl p-6">
+<h3 class="text-white font-bold text-sm mb-2"><i class="fas fa-file-alt text-acid mr-2 text-xs"></i>Invoice Generation</h3>
+<p class="text-xs text-gray-500 mb-3">After goods/services are delivered, an invoice is raised in the ERP system (SAP/Oracle). Payment terms are set (Net 30, Net 45, Net 60). This is where the data trail begins.</p>
+<div class="flex flex-wrap gap-2">
+<span class="text-[10px] px-2 py-1 rounded bg-white/5 text-gray-500 border border-white/5">Invoice amount</span>
+<span class="text-[10px] px-2 py-1 rounded bg-white/5 text-gray-500 border border-white/5">Payment terms</span>
+<span class="text-[10px] px-2 py-1 rounded bg-white/5 text-gray-500 border border-white/5">Customer ID</span>
+<span class="text-[10px] px-2 py-1 rounded bg-white/5 text-gray-500 border border-white/5">Due date</span>
+</div>
+<div class="mt-2 text-[10px] text-gray-600"><i class="fas fa-brain text-acid/40 mr-1"></i> Analytics opportunity: <span class="text-acid/60">Predict optimal payment terms per customer</span></div>
+</div>
+</div>
+
+<div class="journey-node">
+<div class="journey-dot bg-teal-500/20 text-teal-400 border border-teal-400/30">02</div>
+<div class="glass-card rounded-xl p-6">
+<h3 class="text-white font-bold text-sm mb-2"><i class="fas fa-paper-plane text-teal-400 mr-2 text-xs"></i>Invoice Delivery & Acknowledgment</h3>
+<p class="text-xs text-gray-500 mb-3">Invoice is sent via email/EDI/portal. Customer acknowledges receipt. But many invoices get lost, disputed, or ignored at this stage — and nobody knows until the due date passes.</p>
+<div class="flex flex-wrap gap-2">
+<span class="text-[10px] px-2 py-1 rounded bg-white/5 text-gray-500 border border-white/5">Delivery timestamp</span>
+<span class="text-[10px] px-2 py-1 rounded bg-white/5 text-gray-500 border border-white/5">Open/click tracking</span>
+<span class="text-[10px] px-2 py-1 rounded bg-white/5 text-gray-500 border border-white/5">Acknowledgment status</span>
+</div>
+<div class="mt-2 text-[10px] text-gray-600"><i class="fas fa-brain text-acid/40 mr-1"></i> Analytics opportunity: <span class="text-acid/60">Flag unacknowledged invoices early — they're 3x more likely to be late</span></div>
+</div>
+</div>
+
+<div class="journey-node">
+<div class="journey-dot bg-purple-500/20 text-purple-400 border border-purple-400/30">03</div>
+<div class="glass-card rounded-xl p-6">
+<h3 class="text-white font-bold text-sm mb-2"><i class="fas fa-hourglass-half text-purple-400 mr-2 text-xs"></i>Pre-Due Date Monitoring <span class="text-[9px] text-red-400 ml-2">← PREDICTION HAPPENS HERE</span></h3>
+<p class="text-xs text-gray-500 mb-3">The critical window is 7-14 days before the due date. This is where the ML model scores every open invoice with a <strong class="text-white">late payment probability</strong>. High-risk invoices trigger early intervention while there's still time.</p>
+<div class="flex flex-wrap gap-2">
+<span class="text-[10px] px-2 py-1 rounded bg-red-500/10 text-red-400 border border-red-500/10">Risk score (0-100)</span>
+<span class="text-[10px] px-2 py-1 rounded bg-red-500/10 text-red-400 border border-red-500/10">Predicted days late</span>
+<span class="text-[10px] px-2 py-1 rounded bg-red-500/10 text-red-400 border border-red-500/10">Recommended action</span>
+<span class="text-[10px] px-2 py-1 rounded bg-red-500/10 text-red-400 border border-red-500/10">Gen AI draft email</span>
+</div>
+</div>
+</div>
+
+<div class="journey-node">
+<div class="journey-dot bg-orange-500/20 text-orange-400 border border-orange-400/30">04</div>
+<div class="glass-card rounded-xl p-6">
+<h3 class="text-white font-bold text-sm mb-2"><i class="fas fa-bell text-orange-400 mr-2 text-xs"></i>Automated Collection Triggers</h3>
+<p class="text-xs text-gray-500 mb-3">Based on the prediction, the system triggers differentiated actions: friendly reminder for low-risk, escalation for medium-risk, sales team involvement for high-risk, and credit hold for extreme-risk invoices.</p>
+<div class="flex flex-wrap gap-2">
+<span class="text-[10px] px-2 py-1 rounded bg-white/5 text-gray-500 border border-white/5">Auto-email (Gen AI drafted)</span>
+<span class="text-[10px] px-2 py-1 rounded bg-white/5 text-gray-500 border border-white/5">SMS reminder</span>
+<span class="text-[10px] px-2 py-1 rounded bg-white/5 text-gray-500 border border-white/5">Collector task assignment</span>
+<span class="text-[10px] px-2 py-1 rounded bg-white/5 text-gray-500 border border-white/5">Sales escalation</span>
+</div>
+</div>
+</div>
+
+<div class="journey-node">
+<div class="journey-dot bg-red-500/20 text-red-400 border border-red-400/30">05</div>
+<div class="glass-card rounded-xl p-6">
+<h3 class="text-white font-bold text-sm mb-2"><i class="fas fa-phone-alt text-red-400 mr-2 text-xs"></i>Human Collection (Informed by AI)</h3>
+<p class="text-xs text-gray-500 mb-3">When human collectors call customers, they don't start from zero. Gen AI has already prepared a brief: customer history, why they're likely late, what worked last time, suggested negotiation points, and even a conversation script.</p>
+<div class="flex flex-wrap gap-2">
+<span class="text-[10px] px-2 py-1 rounded bg-white/5 text-gray-500 border border-white/5">AI-generated customer brief</span>
+<span class="text-[10px] px-2 py-1 rounded bg-white/5 text-gray-500 border border-white/5">Payment承诺 tracking</span>
+<span class="text-[10px] px-2 py-1 rounded bg-white/5 text-gray-500 border border-white/5">Call outcome logging</span>
+</div>
+</div>
+</div>
+
+<div class="journey-node">
+<div class="journey-dot bg-acid/20 text-acid border border-acid/30">06</div>
+<div class="glass-card rounded-xl p-6">
+<h3 class="text-white font-bold text-sm mb-2"><i class="fas fa-check-circle text-acid mr-2 text-xs"></i>Payment Received & Model Feedback Loop</h3>
+<p class="text-xs text-gray-500 mb-3">Payment hits the bank account → matched to invoice → actual vs predicted compared → model retrained. Every payment (or non-payment) makes the model smarter. This is the ML flywheel.</p>
+<div class="flex flex-wrap gap-2">
+<span class="text-[10px] px-2 py-1 rounded bg-acid/5 text-acid/60 border border-acid/10">Bank reconciliation</span>
+<span class="text-[10px] px-2 py-1 rounded bg-acid/5 text-acid/60 border border-acid/10">Prediction accuracy log</span>
+<span class="text-[10px] px-2 py-1 rounded bg-acid/5 text-acid/60 border border-acid/10">Model retraining trigger</span>
+<span class="text-[10px] px-2 py-1 rounded bg-acid/5 text-acid/60 border border-acid/10">Feature importance update</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-5xl mx-auto"></div>
+
+<!-- ===================== FABRIC UNIFICATION ===================== -->
+<section id="fabric-unification" class="py-28 px-6">
+<div class="max-w-4xl mx-auto article-body reveal">
+<span class="badge-purple badge mb-6 w-fit"><i class="fab fa-microsoft"></i> Chapter 03</span>
+<h2 class="font-display text-2xl md:text-4xl font-bold tracking-tighter gradient-text">Microsoft Fabric: Unifying the Messiest Data in Finance</h2>
+<p class="text-gray-400 text-base leading-relaxed">The first barrier to predicting late payments is that <strong class="text-white">AR data lives everywhere</strong>. You can't run a machine learning model when your data is scattered across 7 systems. Microsoft Fabric is the solution.</p>
+
+<h3 class="text-lg font-bold text-white">The Data Sources That Need Unification</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 my-6">
+<div class="text-center p-3 rounded-lg bg-white/3 border border-white/5">
+<i class="fas fa-cogs text-lg text-blue-400 mb-2 block"></i>
+<div class="text-[10px] text-gray-500">SAP/Oracle ERP</div>
+<div class="text-[9px] text-gray-600">Invoices, POs, GRN</div>
+</div>
+<div class="text-center p-3 rounded-lg bg-white/3 border border-white/5">
+<i class="fas fa-university text-lg text-green-400 mb-2 block"></i>
+<div class="text-[10px] text-gray-500">Bank Statements</div>
+<div class="text-[9px] text-gray-600">Payment receipts</div>
+</div>
+<div class="text-center p-3 rounded-lg bg-white/3 border border-white/5">
+<i class="fas fa-users text-lg text-purple-400 mb-2 block"></i>
+<div class="text-[10px] text-gray-500">Salesforce CRM</div>
+<div class="text-[9px] text-gray-600">Customer info, disputes</div>
+</div>
+<div class="text-center p-3 rounded-lg bg-white/3 border border-white/5">
+<i class="fas fa-id-card text-lg text-yellow-400 mb-2 block"></i>
+<div class="text-[10px] text-gray-500">Credit Bureau</div>
+<div class="text-[9px] text-gray-600">CIBIL, Experian scores</div>
+</div>
+<div class="text-center p-3 rounded-lg bg-white/3 border border-white/5">
+<i class="fas fa-envelope text-lg text-pink-400 mb-2 block"></i>
+<div class="text-[10px] text-gray-500">Email/Comm Logs</div>
+<div class="text-[9px] text-gray-600">Reminders, responses</div>
+</div>
+<div class="text-center p-3 rounded-lg bg-white/3 border border-white/5">
+<i class="fas fa-phone text-lg text-teal-400 mb-2 block"></i>
+<div class="text-[10px] text-gray-500">Call Center Logs</div>
+<div class="text-[9px] text-gray-600">Collection call records</div>
+</div>
+<div class="text-center p-3 rounded-lg bg-white/3 border border-white/5">
+<i class="fas fa-balance-scale text-lg text-orange-400 mb-2 block"></i>
+<div class="text-[10px] text-gray-500">Legal System</div>
+<div class="text-[9px] text-gray-600">Disputes, litigations</div>
+</div>
+<div class="text-center p-3 rounded-lg bg-white/3 border border-white/5">
+<i class="fas fa-globe text-lg text-red-400 mb-2 block"></i>
+<div class="text-[10px] text-gray-500">External Data</div>
+<div class="text-[9px] text-gray-600">GST filings, market data</div>
+</div>
+</div>
+
+<h3 class="text-lg font-bold text-white">How Fabric's Data Factory Ingests All of This</h3>
+<p class="text-gray-400 text-sm leading-relaxed">Using Fabric's <strong class="text-white">Data Factory pipelines</strong>, the team built automated ingestion flows:</p>
+
+<div class="vis-mock my-8">
+<div class="px-4 py-3 border-b border-white/5 flex items-center gap-2">
+<div class="w-2.5 h-2.5 rounded-full bg-red-500/60"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-yellow-500/60"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-green-500/60"></div>
+<span class="text-[10px] text-gray-600 ml-2 font-mono">fabric-pipeline-ar-ingestion.json</span>
+</div>
+<pre class="p-4 text-xs font-mono leading-relaxed text-gray-400 overflow-x-auto"><code>{
+  <span class="text-acid">"pipeline"</span>: <span class="text-teal-400">"AR_Data_Unification"</span>,
+  <span class="text-acid">"schedule"</span>: <span class="text-teal-400">"Every 4 hours"</span>,
+  <span class="text-acid">"sources"</span>: [
+    { <span class="text-acid">"name"</span>: <span class="text-teal-400">"SAP_INVOICES"</span>,    <span class="text-acid">"type"</span>: <span class="text-teal-400">"SAP_OData"</span>,      <span class="text-acid">"incremental"</span>: <span class="text-purple-400">true</span> },
+    { <span class="text-acid">"name"</span>: <span class="text-teal-400">"BANK_PAYMENTS"</span>,   <span class="text-acid">"type"</span>: <span class="text-teal-400">"SFTP_CSV"</span>,      <span class="text-acid">"incremental"</span>: <span class="text-purple-400">true</span> },
+    { <span class="text-acid">"name"</span>: <span class="text-teal-400">"CRM_DISPUTES"</span>,    <span class="text-acid">"type"</span>: <span class="text-teal-400">"Salesforce_API"</span>, <span class="text-acid">"incremental"</span>: <span class="text-purple-400">true</span> },
+    { <span class="text-acid">"name"</span>: <span class="text-teal-400">"CREDIT_BUREAU"</span>,   <span class="text-acid">"type"</span>: <span class="text-teal-400">"REST_API"</span>,      <span class="text-acid">"frequency"</span>: <span class="text-teal-400">"Weekly"</span> },
+    { <span class="text-acid">"name"</span>: <span class="text-teal-400">"EMAIL_LOGS"</span>,      <span class="text-acid">"type"</span>: <span class="text-teal-400">"Graph_API"</span>,     <span class="text-acid">"incremental"</span>: <span class="text-purple-400">true</span> },
+    { <span class="text-acid">"name"</span>: <span class="text-teal-400">"CALL_RECORDS"</span>,    <span class="text-acid">"type"</span>: <span class="text-teal-400">"AWS_S3_Parquet"</span>,<span class="text-acid">"incremental"</span>: <span class="text-purple-400">true</span> }
+  ],
+  <span class="text-acid">"destination"</span>: <span class="text-teal-400">"OneLake / AR_Lakehouse / Bronze"</span>,
+  <span class="text-acid">"transformations"</span>: [
+    { <span class="text-acid">"step"</span>: <span class="text-teal-400">"Clean & Deduplicate"</span>, <span class="text-acid">"engine"</span>: <span class="text-teal-400">"Spark_Notebook"</span> },
+    { <span class="text-acid">"step"</span>: <span class="text-teal-400">"Customer Master Match"</span>, <span class="text-acid">"engine"</span>: <span class="text-teal-400">"Spark_Notebook"</span> },
+    { <span class="text-acid">"step"</span>: <span class="text-teal-400">"Feature Engineering"</span>,  <span class="text-acid">"engine"</span>: <span class="text-teal-400">"Spark_Notebook"</span> },
+    { <span class="text-acid">"step"</span>: <span class="text-teal-400">"Load to Silver/Gold"</span>,  <span class="text-acid">"engine"</span>: <span class="text-teal-400">"Spark_SQL"</span> }
+  ]
+}</code></pre>
+</div>
+
+<p class="text-gray-400 text-sm leading-relaxed">The result? A <strong class="text-white">single unified AR table</strong> in OneLake's Gold layer with 47 enriched columns per invoice — including 32 engineered features for the ML model. This table is the foundation for everything that follows.</p>
+
+<div class="highlight-box">
+<p class="text-sm text-gray-300 leading-relaxed mb-0"><i class="fas fa-graduation-cap text-acid mr-2"></i><strong class="text-acid">At Vizonis Academy:</strong> Our <a href="https://vizonis.com/courses/data-analytics" class="text-acid hover:underline">data analytics course</a> includes a full module on Microsoft Fabric data engineering. You'll build ingestion pipelines, write Spark notebooks for transformations, and understand the Bronze-Silver-Gold architecture pattern. This is why we're recognized as the <strong class="text-white">best data analytics training in Bangalore</strong> — we teach what enterprises actually use.</p>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-5xl mx-auto"></div>
+
+<!-- ===================== ML MODEL ===================== -->
+<section id="ml-model" class="py-28 px-6">
+<div class="max-w-4xl mx-auto article-body reveal">
+<span class="badge mb-6 w-fit"><i class="fas fa-brain"></i> Chapter 04</span>
+<h2 class="font-display text-2xl md:text-4xl font-bold tracking-tighter gradient-text">The Machine Learning Model: Predicting Late Payments at 94% Accuracy</h2>
+<p class="text-gray-400 text-base leading-relaxed">With unified data in Fabric's OneLake, the data science team built a <strong class="text-white">classification model</strong> that predicts, for every open invoice, whether it will be paid on time, late (1-30 days), or very late (30+ days). Here's the full breakdown:</p>
+
+<h3 class="text-lg font-bold text-white">The 32 Features That Power the Prediction</h3>
+<p class="text-gray-400 text-sm leading-relaxed">The model doesn't just look at the invoice — it looks at the <strong class="text-white">entire relationship</strong> between the company and the customer. Features are grouped into 6 categories:</p>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-8">
+<div class="glass-card rounded-xl p-5">
+<div class="text-acid text-xs font-bold uppercase tracking-wider mb-2"><i class="fas fa-file-invoice mr-1"></i> Invoice Features (6)</div>
+<ul class="text-[11px] text-gray-500 space-y-1">
+<li>• Invoice amount (log-transformed)</li>
+<li>• Payment terms (Net 30/45/60/90)</li>
+<li>• Days until due date</li>
+<li>• Invoice type (standard, milestone, recurring)</li>
+<li>• Number of line items</li>
+<li>• Dispute flag (boolean)</li>
+</ul>
+</div>
+<div class="glass-card rounded-xl p-5">
+<div class="text-teal-400 text-xs font-bold uppercase tracking-wider mb-2"><i class="fas fa-history mr-1"></i> Payment History Features (8)</div>
+<ul class="text-[11px] text-gray-500 space-y-1">
+<li>• Average days to pay (last 12 invoices)</li>
+<li>• Standard deviation of days to pay</li>
+<li>• % of invoices paid late (rolling 6 months)</li>
+<li>• Trend: getting better or worse?</li>
+<li>• Longest overdue period ever</li>
+<li>• Number of partial payments</li>
+<li>• Average days between invoice and first payment</li>
+<li>• Seasonal pattern detected (boolean)</li>
+</ul>
+</div>
+<div class="glass-card rounded-xl p-5">
+<div class="text-purple-400 text-xs font-bold uppercase tracking-wider mb-2"><i class="fas fa-handshake mr-1"></i> Relationship Features (6)</div>
+<ul class="text-[11px] text-gray-500 space-y-1">
+<li>• Customer tenure (months)</li>
+<li>• Total revenue from customer (lifetime)</li>
+<li>• Number of active invoices</li>
+<li>• Ratio of disputed to total invoices</li>
+<li>• Sales rep assigned (encoded)</li>
+<li>• Customer segment (SMB/Mid/Enterprise)</li>
+</ul>
+</div>
+<div class="glass-card rounded-xl p-5">
+<div class="text-orange-400 text-xs font-bold uppercase tracking-wider mb-2"><i class="fas fa-globe mr-1"></i> External Features (6)</div>
+<ul class="text-[11px] text-gray-500 space-y-1">
+<li>• Credit bureau score (latest)</li>
+<li>• Credit score change (30-day delta)</li>
+<li>• Industry sector risk index</li>
+<li>• Customer's GST filing regularity</li>
+<li>• Regional economic indicator</li>
+<li>• Competitor default news (NLP on news feeds)</li>
+</ul>
+</div>
+<div class="glass-card rounded-xl p-5">
+<div class="text-red-400 text-xs font-bold uppercase tracking-wider mb-2"><i class="fas fa-envelope mr-1"></i> Interaction Features (4)</div>
+<ul class="text-[11px] text-gray-500 space-y-1">
+<li>• Invoice acknowledgment status</li>
+<li>• Number of reminder emails sent</li>
+<li>• Email open rate (for this invoice)</li>
+<li>• Last collection call outcome</li>
+</ul>
+</div>
+<div class="glass-card rounded-xl p-5">
+<div class="text-green-400 text-xs font-bold uppercase tracking-wider mb-2"><i class="fas fa-calculator mr-1"></i> Derived Features (2)</div>
+<ul class="text-[11px] text-gray-500 space-y-1">
+<li>• Current outstanding balance / Annual revenue ratio</li>
+<li>• Utilization of credit limit (%</li>
+</ul>
+</div>
+</div>
+
+<h3 class="text-lg font-bold text-white">Model Architecture & Performance</h3>
+<p class="text-gray-400 text-sm leading-relaxed">The team tested multiple algorithms in Fabric's Data Science workload. Here are the results:</p>
+
+<div class="vis-mock my-8">
+<div class="px-4 py-3 border-b border-white/5 flex items-center justify-between">
+<span class="text-[10px] text-gray-600 font-mono">Model Comparison — 3-Year Training Data (1.2M invoices)</span>
+<span class="text-[10px] text-acid font-mono">BEST: XGBoost</span>
+</div>
+<div class="p-5">
+<div class="grid grid-cols-5 gap-2 text-[10px] text-gray-500 mb-3 font-bold uppercase tracking-wider">
+<div>Model</div><div class="text-center">Accuracy</div><div class="text-center">Precision</div><div class="text-center">Recall</div><div class="text-center">F1</div>
+</div>
+<div class="grid grid-cols-5 gap-2 text-xs items-center py-2 border-b border-white/5">
+<div class="text-gray-400">Logistic Reg.</div><div class="text-center font-mono">81%</div><div class="text-center font-mono">78%</div><div class="text-center font-mono">72%</div><div class="text-center font-mono">75%</div>
+</div>
+<div class="grid grid-cols-5 gap-2 text-xs items-center py-2 border-b border-white/5">
+<div class="text-gray-400">Random Forest</div><div class="text-center font-mono">89%</div><div class="text-center font-mono">87%</div><div class="text-center font-mono">84%</div><div class="text-center font-mono">85%</div>
+</div>
+<div class="grid grid-cols-5 gap-2 text-xs items-center py-2 rounded-lg bg-acid/5">
+<div class="text-acid font-bold">XGBoost <span class="text-[9px] text-acid/60 ml-1">★</span></div><div class="text-center font-mono text-acid font-bold">94%</div><div class="text-center font-mono text-acid font-bold">92%</div><div class="text-center font-mono text-acid font-bold">90%</div><div class="text-center font-mono text-acid font-bold">91%</div>
+</div>
+<div class="grid grid-cols-5 gap-2 text-xs items-center py-2 border-t border-white/5">
+<div class="text-gray-400">LightGBM</div><div class="text-center font-mono">93%</div><div class="text-center font-mono">91%</div><div class="text-center font-mono">89%</div><div class="text-center font-mono">90%</div>
+</div>
+</div>
+</div>
+
+<h3 class="text-lg font-bold text-white">The Output: Risk Score for Every Invoice</h3>
+<p class="text-gray-400 text-sm leading-relaxed">For every open invoice, the model outputs:</p>
+
+<div class="vis-mock my-8">
+<div class="px-4 py-3 border-b border-white/5 text-[10px] text-gray-600 font-mono">model_output_sample.parquet</div>
+<div class="p-4 overflow-x-auto">
+<table class="w-full text-[10px] font-mono">
+<thead><tr class="text-gray-500 border-b border-white/5">
+<th class="text-left py-2 pr-4">Invoice</th><th class="text-left py-2 pr-4">Customer</th><th class="text-left py-2 pr-4">Amount</th><th class="text-left py-2 pr-4">Due Date</th><th class="text-left py-2 pr-4">Risk Score</th><th class="text-left py-2 pr-4">Prediction</th><th class="text-left py-2 pr-4">Action</th>
+</tr></thead>
+<tbody>
+<tr class="border-b border-white/5">
+<td class="py-2 text-gray-400">INV-24891</td><td class="py-2 text-gray-400">Tata Steel</td><td class="py-2 text-white">₹2.4Cr</td><td class="py-2 text-gray-400">Feb 15</td><td class="py-2"><span class="text-green-400 font-bold">12</span>/100</td><td class="py-2 text-green-400">On Time</td><td class="py-2 text-gray-500">No action</td>
+</tr>
+<tr class="border-b border-white/5">
+<td class="py-2 text-gray-400">INV-24902</td><td class="py-2 text-gray-400">Reliance Ind.</td><td class="py-2 text-white">₹8.7Cr</td><td class="py-2 text-gray-400">Feb 10</td><td class="py-2"><span class="text-yellow-400 font-bold">45</span>/100</td><td class="py-2 text-yellow-400">Late 1-15d</td><td class="py-2 text-gray-500">Soft reminder</td>
+</tr>
+<tr class="border-b border-white/5">
+<td class="py-2 text-gray-400">INV-24876</td><td class="py-2 text-gray-400">Mahindra Ltd</td><td class="py-2 text-white">₹1.1Cr</td><td class="py-2 text-gray-400">Feb 8</td><td class="py-2"><span class="text-orange-400 font-bold">72</span>/100</td><td class="py-2 text-orange-400">Late 15-30d</td><td class="py-2 text-gray-500">Collector call</td>
+</tr>
+<tr>
+<td class="py-2 text-gray-400">INV-24744</td><td class="py-2 text-gray-400">JSW Steel</td><td class="py-2 text-white">₹5.3Cr</td><td class="py-2 text-gray-400">Feb 5</td><td class="py-2"><span class="text-red-400 font-bold">91</span>/100 <span class="blink text-[8px]">●</span></td><td class="py-2 text-red-400">Late 30+d</td><td class="py-2 text-acid">Escalate + Credit hold</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="highlight-box">
+<p class="text-sm text-gray-300 leading-relaxed mb-0"><i class="fas fa-fire text-acid mr-2"></i><strong class="text-acid">Predictive analytics is the #1 in-demand skill in finance.</strong> Every bank, every manufacturing company, every IT services firm in Bangalore is hiring analysts who can build prediction models. At <a href="https://vizonis.com/courses/data-analytics" class="text-acid hover:underline">Vizonis Academy</a>, our <strong class="text-white">best data analytics training in Bangalore</strong> includes a complete predictive analytics module — from feature engineering to model evaluation to deployment. You'll build a late payment prediction model as your capstone project.</p>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-5xl mx-auto"></div>
+
+<!-- ===================== DATA AGENT ===================== -->
+<section id="data-agent" class="py-28 px-6">
+<div class="max-w-4xl mx-auto article-body reveal">
+<span class="badge-purple badge mb-6 w-fit"><i class="fas fa-robot"></i> Chapter 05</span>
+<h2 class="font-display text-2xl md:text-4xl font-bold tracking-tighter gradient-text">Microsoft Fabric Data Agent: Ask AR Questions in Plain English</h2>
+<p class="text-gray-400 text-base leading-relaxed">Here's the problem with even the best Power BI dashboard: <strong class="text-white">not everyone can use it</strong>. A CFO can navigate a dashboard. But a collection team member in the field? A regional sales manager who just wants to know "which of my customers might not pay this month?" They need something simpler.</p>
+
+<p class="text-gray-400 text-sm leading-relaxed">Enter <strong class="text-white">Microsoft Fabric Data Agent</strong> — an AI-powered conversational interface that lets anyone ask questions about their data in natural language and get instant, accurate answers with visualizations. Think of it as ChatGPT, but connected to your actual enterprise data.</p>
+
+<h3 class="text-lg font-bold text-white">How the AR Team Uses Data Agent</h3>
+<p class="text-gray-400 text-sm leading-relaxed">Here are real conversations that happen every day between the finance team and their Data Agent:</p>
+
+<div class="vis-mock my-8">
+<div class="px-4 py-3 border-b border-white/5 flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-purple-500 blink"></div>
+<span class="text-[10px] text-purple-400 font-mono">Fabric Data Agent — AR Analytics</span>
+</div>
+<div class="p-4 space-y-3">
+<div class="chat-bubble chat-user">Which customers are most likely to default this month?</div>
+<div class="chat-bubble chat-ai">Based on the current prediction model (updated 2 hours ago), here are the top 5 at-risk customers:<br><br><span class="text-white">1. JSW Steel — 3 invoices, ₹12.4Cr, avg risk score 89/100</span><br><span class="text-white">2. Shriram Motors — 1 invoice, ₹3.2Cr, risk score 84/100</span><br><span class="text-white">3. Bajaj Electricals — 2 invoices, ₹7.8Cr, risk score 81/100</span><br><span class="text-white">4. L&T Construction — 4 invoices, ₹22.1Cr, risk score 78/100</span><br><span class="text-white">5. Godrej Industries — 1 invoice, ₹1.9Cr, risk score 76/100</span><br><br><span class="text-purple-400">📊 Showing bar chart: Risk Score by Customer</span><br><span class="text-gray-600">[Auto-generated visualization]</span></div>
+
+<div class="h-px bg-white/5"></div>
+
+<div class="chat-bubble chat-user">Why is JSW Steel flagged? They usually pay on time.</div>
+<div class="chat-bubble chat-ai">Good observation. JSW Steel's historical payment behavior is strong (avg 28 days, 85% on-time). However, the model flagged them because of 3 recent signals:<br><br><span class="text-white">1. Their credit bureau score dropped 47 points last month</span><br><span class="text-white">2. They have 3 disputed invoices in the last 60 days (vs avg of 0.3)</span><br><span class="text-white">3. Steel sector risk index increased from "Low" to "Moderate"</span><br><span class="text-white">4. GST filing was 12 days late this quarter (first time in 3 years)</span><br><br><span class="text-purple-400">💡 Suggested action: Assign senior collector, involve relationship manager. Do NOT send automated reminder — this is a strategic account.</span></div>
+
+<div class="h-px bg-white/5"></div>
+
+<div class="chat-bubble chat-user">What's our total exposure if all high-risk invoices go bad?</div>
+<div class="chat-bubble chat-ai">Scenario analysis for all invoices with risk score &gt; 75:<br><br><span class="text-red-400">⚠️ Total exposure: ₹47.3 Cr across 23 invoices from 14 customers</span><br><br>Breakdown by predicted lateness:<br>• 15-30 days late: ₹18.7Cr (7 invoices)<br>• 30-60 days late: ₹16.2Cr (9 invoices)<br>• 60+ days / potential write-off: ₹12.4Cr (7 invoices)<br><br><span class="text-purple-400">💡 If we intervene on the 15-30 day bucket now (estimated recovery: 82%), we can potentially save ₹15.3Cr.</span></div>
+
+<div class="h-px bg-white/5"></div>
+
+<div class="chat-bubble chat-user">Compare this month's AR health with last month.</div>
+<div class="chat-bubble chat-ai"><span class="text-white">Month-over-Month AR Health Comparison:</span><br><br>• Total receivables: ₹2,800Cr → ₹2,710Cr (<span class="text-green-400">↓ 3.2%</span>)<br>• Overdue %: 32% → 29% (<span class="text-green-400">↓ 3 pts</span>)<br>• Avg DSO: 47 days → 44 days (<span class="text-green-400">↓ 3 days</span>)<br>• High-risk invoices: 31 → 23 (<span class="text-green-400">↓ 26%</span>)<br>• Write-offs: ₹4.2Cr → ₹2.1Cr (<span class="text-green-400">↓ 50%</span>)<br><br><span class="text-purple-400">📈 Trend is improving. The prediction model + automated interventions are working.</span><br><span class="text-gray-600">[Auto-generated comparison chart]</span></div>
+</div>
+</div>
+
+<p class="text-gray-400 text-sm leading-relaxed">Notice what happened: <strong class="text-white">zero SQL queries, zero dashboard navigation, zero technical skills required.</strong> The Data Agent translated natural language questions into Fabric SQL, ran the queries against the unified AR data, applied the ML model results, and returned contextual answers with visualizations. This is the future of analytics — and it's already here.</p>
+
+<div class="highlight-box">
+<p class="text-sm text-gray-300 leading-relaxed mb-0"><i class="fas fa-robot text-purple-400 mr-2"></i><strong class="text-purple-400">Data Agent + Gen AI = The Hottest Skill Combination in 2026.</strong> Gartner predicts that by 2027, 60% of analytics interactions will happen through natural language. Companies in Bangalore are already hiring for "AI Analytics" roles. At <a href="https://vizonis.com/courses/data-analytics" class="text-acid hover:underline">Vizonis Academy</a>, we include Data Agent and Gen AI applications in our curriculum — making us the <strong class="text-white">best data analytics training in Bangalore</strong> for forward-thinking professionals.</p>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-5xl mx-auto"></div>
+
+<!-- ===================== GEN AI COLLECTIONS ===================== -->
+<section id="gen-ai-collections" class="py-28 px-6">
+<div class="max-w-4xl mx-auto article-body reveal">
+<span class="badge-orange badge mb-6 w-fit"><i class="fas fa-magic"></i> Chapter 06</span>
+<h2 class="font-display text-2xl md:text-4xl font-bold tracking-tighter gradient-text">Generative AI: Automating Collection Strategy with Intelligence</h2>
+<p class="text-gray-400 text-base leading-relaxed">Prediction tells you <strong class="text-white">who</strong> will pay late. Data Agent tells you <strong class="text-white">what's happening</strong>. But <strong class="text-white">what do you actually do about it?</strong> This is where Generative AI transforms the collections process from generic spam into targeted, intelligent communication.</p>
+
+<h3 class="text-lg font-bold text-white">Three Ways Gen AI Supercharges Collections</h3>
+
+<div class="my-8 space-y-4">
+<div class="glass-card rounded-xl p-6">
+<div class="flex items-center gap-3 mb-4">
+<div class="icon-box bg-orange-500/10 text-orange-400"><i class="fas fa-pen-fancy"></i></div>
+<div>
+<h3 class="text-white font-bold text-sm">1. AI-Drafted Collection Emails (Personalized at Scale)</h3>
+<p class="text-[10px] text-gray-500">GPT-4 generates unique emails based on customer profile, relationship history, and predicted risk</p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="vis-mock">
+<div class="px-3 py-2 border-b border-white/5 text-[9px] text-red-400/60 font-mono">❌ OLD WAY: Generic Template</div>
+<div class="p-3 text-[10px] text-gray-500 italic">"Dear Customer, Your invoice #INV-24744 for ₹5,30,00,000 is overdue by 12 days. Please pay immediately to avoid late fees. Regards, Accounts Receivable Team."</div>
+</div>
+<div class="vis-mock border-acid/20">
+<div class="px-3 py-2 border-b border-white/5 text-[9px] text-acid/60 font-mono">✅ NEW WAY: Gen AI Personalized</div>
+<div class="p-3 text-[10px] text-gray-400">"Hi Rajesh, I noticed invoice #24744 (₹5.3Cr) is due this week. I know JSW has been a great partner for 8 years and typically pays within 30 days — is there anything we should be aware of this time? Happy to discuss if the delivery on the Q3 batch had any issues. Best, Priya (your dedicated AR contact)"</div>
+</div>
+</div>
+<p class="text-xs text-gray-500 mt-3"><strong class="text-white">Result:</strong> Open rate increased from 22% to 67%. Response rate increased from 8% to 41%. Collections from email alone went up 3x.</p>
+</div>
+
+<div class="glass-card rounded-xl p-6">
+<div class="flex items-center gap-3 mb-4">
+<div class="icon-box bg-purple-500/10 text-purple-400"><i class="fas fa-user-tie"></i></div>
+<div>
+<h3 class="text-white font-bold text-sm">2. AI Collector Briefing (Before Every Call)</h3>
+<p class="text-[10px] text-gray-500">Gen AI creates a 1-page brief for collectors before they call each customer</p>
+</div>
+</div>
+<div class="vis-mock my-4">
+<div class="px-3 py-2 border-b border-white/5 text-[9px] text-purple-400/60 font-mono">🤖 AI Collector Brief — JSW Steel — Generated 2 min ago</div>
+<div class="p-4 text-[10px] text-gray-400 space-y-2">
+<p><strong class="text-white">Customer:</strong> JSW Steel Ltd | <strong class="text-white">Relationship:</strong> 8 years | <strong class="text-white">Annual revenue:</strong> ₹142Cr</p>
+<p><strong class="text-white">Outstanding:</strong> 3 invoices, ₹12.4Cr total | <strong class="text-red-400">Risk score: 89/100</strong></p>
+<p><strong class="text-white">Why they might be late:</strong> Credit score dropped 47pts. 3 disputes in 60 days. Steel sector stress. GST filing delayed.</p>
+<p><strong class="text-white">Last interaction:</strong> Jan 8 — collector Anil called, customer said "waiting for internal approval." No follow-up since.</p>
+<p><strong class="text-acid">Recommended approach:</strong> DON'T mention credit score drop (sensitive). DO ask about the Q3 delivery dispute — that's likely the real blocker. Offer to split payment into 2 tranches if approval is the issue. Escalate to relationship manager if no commitment today.</p>
+<p><strong class="text-purple-400">Suggested opening:</strong> "Hi Rajesh, just checking in on those 3 invoices — I saw there was a delivery concern on the Q3 batch. Is that still unresolved on your end?"</p>
+</div>
+</div>
+</div>
+
+<div class="glass-card rounded-xl p-6">
+<div class="flex items-center gap-3 mb-4">
+<div class="icon-box bg-teal-500/10 text-teal-400"><i class="fas fa-lightbulb"></i></div>
+<div>
+<h3 class="text-white font-bold text-sm">3. AI Strategy Recommendations (Per Customer)</h3>
+<p class="text-[10px] text-gray-500">Gen AI suggests the optimal collection strategy based on predicted behavior</p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+<div class="text-center p-3 rounded-lg bg-green-500/5 border border-green-500/10">
+<div class="text-green-400 text-xs font-bold mb-1">Low Risk (0-30)</div>
+<div class="text-[10px] text-gray-500">Send automated friendly reminder 5 days before due date. No human intervention needed.</div>
+</div>
+<div class="text-center p-3 rounded-lg bg-yellow-500/5 border border-yellow-500/10">
+<div class="text-yellow-400 text-xs font-bold mb-1">Medium Risk (31-70)</div>
+<div class="text-[10px] text-gray-500">Send personalized email. If no response in 3 days, assign collector. Consider 1% early payment discount.</div>
+</div>
+<div class="text-center p-3 rounded-lg bg-red-500/5 border border-red-500/10">
+<div class="text-red-400 text-xs font-bold mb-1">High Risk (71-100)</div>
+<div class="text-[10px] text-gray-500">Immediate collector call with AI brief. Involve sales leadership. Consider credit hold on future orders. Legal review if 60+ days.</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="highlight-box">
+<p class="text-sm text-gray-300 leading-relaxed mb-0"><i class="fas fa-chart-line text-acid mr-2"></i><strong class="text-acid">The Business Impact:</strong> After implementing Gen AI-powered collections, the enterprise saw a <strong class="text-white">25% reduction in overdue receivables, 40% fewer collection calls needed, and 37% improvement in DSO</strong>. The collection team went from 40 people making 200 calls/day to 25 people making 120 high-quality calls/day — each informed by AI. This is the power of combining <strong class="text-white">predictive analytics + Gen AI + Microsoft Fabric</strong>. Learn this at <a href="https://vizonis.com/courses/data-analytics" class="text-acid hover:underline">Vizonis Academy — the best data analytics training in Bangalore.</a></p>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-5xl mx-auto"></div>
+
+<!-- ===================== POWER BI DASHBOARDS ===================== -->
+<section id="powerbi-dashboards" class="py-28 px-6">
+<div class="max-w-4xl mx-auto article-body reveal">
+<span class="badge-teal badge mb-6 w-fit"><i class="fas fa-chart-pie"></i> Chapter 07</span>
+<h2 class="font-display text-2xl md:text-4xl font-bold tracking-tighter gradient-text">Power BI Dashboards That Give the CFO a Heartbeat Monitor for AR</h2>
+<p class="text-gray-400 text-base leading-relaxed">While Data Agent handles ad-hoc questions, <strong class="text-white">Power BI dashboards provide the always-on view</strong> of AR health. Built on Fabric's DirectLake mode, these dashboards refresh in near-real-time and serve different stakeholders:</p>
+
+<div class="my-8 space-y-6">
+<!-- Dashboard 1: Executive -->
+<div class="vis-mock">
+<div class="px-4 py-3 border-b border-white/5 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-2.5 h-2.5 rounded-full bg-red-500/60"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-yellow-500/60"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-green-500/60"></div>
+<span class="text-[10px] text-gray-600 ml-2 font-mono">AR Health Dashboard — Executive View</span>
+</div>
+<span class="text-[10px] text-acid/60 font-mono">LIVE · DirectLake</span>
+</div>
+<div class="p-5">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
+<div class="p-3 rounded-lg bg-white/3 border border-white/5 text-center">
+<div class="text-lg font-bold text-white font-mono">₹2,710Cr</div>
+<div class="text-[9px] text-gray-500">Total Receivables</div>
+<div class="text-[8px] text-green-400">↓ 3.2% vs last month</div>
+</div>
+<div class="p-3 rounded-lg bg-white/3 border border-white/5 text-center">
+<div class="text-lg font-bold text-white font-mono">44 days</div>
+<div class="text-[9px] text-gray-500">DSO (Days Sales Outstanding)</div>
+<div class="text-[8px] text-green-400">↓ 3 days vs last month</div>
+</div>
+<div class="p-3 rounded-lg bg-white/3 border border-white/5 text-center">
+<div class="text-lg font-bold text-red-400 font-mono">₹47.3Cr</div>
+<div class="text-[9px] text-gray-500">High-Risk Exposure</div>
+<div class="text-[8px] text-green-400">↓ 26% vs last month</div>
+</div>
+<div class="p-3 rounded-lg bg-white/3 border border-white/5 text-center">
+<div class="text-lg font-bold text-acid font-mono">91%</div>
+<div class="text-[9px] text-gray-500">Collection Efficiency</div>
+<div class="text-[8px] text-green-400">↑ 5pts vs last month</div>
+</div>
+</div>
+<!-- Aging Buckets -->
+<div class="text-[10px] text-gray-500 uppercase tracking-wider font-bold mb-3">Aging Bucket Distribution</div>
+<div class="space-y-2">
+<div>
+<div class="flex justify-between mb-1"><span class="text-[10px] text-green-400">Current (0-30 days)</span><span class="text-[10px] text-green-400 font-mono">₹1,920Cr (71%)</span></div>
+<div class="w-full h-5 rounded bg-white/5 overflow-hidden"><div class="h-full rounded bg-gradient-to-r from-green-500/40 to-green-500/20" style="width:71%"></div></div>
+</div>
+<div>
+<div class="flex justify-between mb-1"><span class="text-[10px] text-yellow-400">31-60 days</span><span class="text-[10px] text-yellow-400 font-mono">₹430Cr (16%)</span></div>
+<div class="w-full h-5 rounded bg-white/5 overflow-hidden"><div class="h-full rounded bg-gradient-to-r from-yellow-500/40 to-yellow-500/20" style="width:16%"></div></div>
+</div>
+<div>
+<div class="flex justify-between mb-1"><span class="text-[10px] text-orange-400">61-90 days</span><span class="text-[10px] text-orange-400 font-mono">₹190Cr (7%)</span></div>
+<div class="w-full h-5 rounded bg-white/5 overflow-hidden"><div class="h-full rounded bg-gradient-to-r from-orange-500/40 to-orange-500/20" style="width:7%"></div></div>
+</div>
+<div>
+<div class="flex justify-between mb-1"><span class="text-[10px] text-red-400">90+ days</span><span class="text-[10px] text-red-400 font-mono">₹170Cr (6%)</span></div>
+<div class="w-full h-5 rounded bg-white/5 overflow-hidden"><div class="h-full rounded bg-gradient-to-r from-red-500/40 to-red-500/20" style="width:6%"></div></div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Dashboard 2: Prediction Heatmap -->
+<div class="vis-mock">
+<div class="px-4 py-3 border-b border-white/5 flex items-center justify-between">
+<span class="text-[10px] text-gray-600 font-mono">Prediction Risk Heatmap — By Customer Segment & Region</span>
+<span class="text-[10px] text-purple-400/60 font-mono">ML Model v3.2</span>
+</div>
+<div class="p-5">
+<div class="grid grid-cols-5 gap-1 text-[8px] text-gray-600 mb-1">
+<div></div><div class="text-center">North</div><div class="text-center">South</div><div class="text-center">West</div><div class="text-center">East</div>
+</div>
+<div class="grid grid-cols-5 gap-1 text-[8px] mb-1">
+<div class="text-gray-500 py-1.5">Enterprise</div>
+<div class="text-center py-1.5 rounded bg-green-500/20 text-green-400 font-mono">23</div>
+<div class="text-center py-1.5 rounded bg-green-500/20 text-green-400 font-mono">18</div>
+<div class="text-center py-1.5 rounded bg-yellow-500/20 text-yellow-400 font-mono">45</div>
+<div class="text-center py-1.5 rounded bg-orange-500/20 text-orange-400 font-mono">52</div>
+</div>
+<div class="grid grid-cols-5 gap-1 text-[8px] mb-1">
+<div class="text-gray-500 py-1.5">Mid-Market</div>
+<div class="text-center py-1.5 rounded bg-yellow-500/20 text-yellow-400 font-mono">41</div>
+<div class="text-center py-1.5 rounded bg-green-500/20 text-green-400 font-mono">28</div>
+<div class="text-center py-1.5 rounded bg-red-500/20 text-red-400 font-mono">67</div>
+<div class="text-center py-1.5 rounded bg-red-500/20 text-red-400 font-mono">73</div>
+</div>
+<div class="grid grid-cols-5 gap-1 text-[8px]">
+<div class="text-gray-500 py-1.5">SMB</div>
+<div class="text-center py-1.5 rounded bg-orange-500/20 text-orange-400 font-mono">58</div>
+<div class="text-center py-1.5 rounded bg-yellow-500/20 text-yellow-400 font-mono">39</div>
+<div class="text-center py-1.5 rounded bg-red-500/20 text-red-400 font-mono">78</div>
+<div class="text-center py-1.5 rounded bg-red-500/20 text-red-400 font-mono blink">84 ●</div>
+</div>
+<div class="mt-3 flex items-center gap-4 text-[8px] text-gray-600">
+<span><span class="inline-block w-2 h-2 rounded bg-green-500/30 mr-1"></span>Low (0-30)</span>
+<span><span class="inline-block w-2 h-2 rounded bg-yellow-500/30 mr-1"></span>Medium (31-60)</span>
+<span><span class="inline-block w-2 h-2 rounded bg-orange-500/30 mr-1"></span>High (61-80)</span>
+<span><span class="inline-block w-2 h-2 rounded bg-red-500/30 mr-1"></span>Critical (81-100)</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-5xl mx-auto"></div>
+
+<!-- ===================== FULL ARCHITECTURE ===================== -->
+<section id="full-architecture" class="py-28 px-6">
+<div class="max-w-4xl mx-auto article-body reveal">
+<span class="badge mb-6 w-fit"><i class="fas fa-project-diagram"></i> Chapter 08</span>
+<h2 class="font-display text-2xl md:text-4xl font-bold tracking-tighter gradient-text">Complete Architecture: How Every Piece Connects</h2>
+<p class="text-gray-400 text-base leading-relaxed">Here's the full analytics architecture for the late payment prediction system — every component, every data flow:</p>
+
+<div class="vis-mock my-8 p-6">
+<div class="text-[10px] text-gray-500 uppercase tracking-widest font-bold mb-3 text-center">Data Sources</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-2 mb-4">
+<div class="text-center p-2 rounded bg-blue-500/5 border border-blue-500/10 text-[10px] text-blue-300"><i class="fas fa-cogs block mb-1"></i>SAP/Oracle ERP</div>
+<div class="text-center p-2 rounded bg-green-500/5 border border-green-500/10 text-[10px] text-green-300"><i class="fas fa-university block mb-1"></i>Bank Statements</div>
+<div class="text-center p-2 rounded bg-purple-500/5 border border-purple-500/10 text-[10px] text-purple-300"><i class="fas fa-users block mb-1"></i>Salesforce CRM</div>
+<div class="text-center p-2 rounded bg-yellow-500/5 border border-yellow-500/10 text-[10px] text-yellow-300"><i class="fas fa-id-card block mb-1"></i>Credit Bureau</div>
+<div class="text-center p-2 rounded bg-pink-500/5 border border-pink-500/10 text-[10px] text-pink-300"><i class="fas fa-envelope block mb-1"></i>Email Logs</div>
+<div class="text-center p-2 rounded bg-teal-500/5 border border-teal-500/10 text-[10px] text-teal-300"><i class="fas fa-phone block mb-1"></i>Call Records</div>
+<div class="text-center p-2 rounded bg-orange-500/5 border border-orange-500/10 text-[10px] text-orange-300"><i class="fas fa-balance-scale block mb-1"></i>Legal/Disputes</div>
+<div class="text-center p-2 rounded bg-red-500/5 border border-red-500/10 text-[10px] text-red-300"><i class="fas fa-globe block mb-1"></i>External (GST, News)</div>
+</div>
+<div class="data-flow-arrow"><i class="fas fa-arrow-down"></i> Fabric Data Factory — Automated Pipelines (every 4 hrs)</div>
+
+<div class="text-[10px] text-gray-500 uppercase tracking-widest font-bold mb-3 text-center">Microsoft Fabric — Unified Platform</div>
+<div class="p-4 rounded-xl border-2 border-dashed border-purple-500/20 bg-purple-500/3 mb-4">
+<div class="text-center">
+<div class="text-purple-400 font-bold text-sm mb-2"><i class="fab fa-microsoft mr-2"></i>Microsoft Fabric</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-2 mt-3">
+<div class="text-[9px] text-gray-400 p-2 rounded bg-white/3 text-center">Lakehouse<br><span class="text-purple-300">Bronze → Silver → Gold</span></div>
+<div class="text-[9px] text-gray-400 p-2 rounded bg-white/3 text-center">Data Science<br><span class="text-purple-300">XGBoost Model (94%)</span></div>
+<div class="text-[9px] text-gray-400 p-2 rounded bg-white/3 text-center">Data Agent<br><span class="text-purple-300">Natural Language Q&A</span></div>
+<div class="text-[9px] text-gray-400 p-2 rounded bg-white/3 text-center">Gen AI<br><span class="text-purple-300">Emails + Briefs + Strategy</span></div>
+</div>
+<div class="mt-3 text-[9px] text-purple-300/60">OneLake — 47 enriched columns per invoice, 32 ML features, 1.2M training records</div>
+</div>
+</div>
+<div class="data-flow-arrow"><i class="fas fa-arrow-down"></i> DirectLake (zero-copy) + REST API</div>
+
+<div class="text-[10px] text-gray-500 uppercase tracking-widest font-bold mb-3 text-center">Consumption & Action Layer</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+<div class="text-center p-3 rounded bg-orange-500/5 border border-orange-500/10 text-[10px] text-orange-300"><i class="fas fa-chart-pie block text-lg mb-1"></i><strong>Power BI</strong><br>CFO & Executive Dashboards</div>
+<div class="text-center p-3 rounded bg-purple-500/5 border border-purple-500/10 text-[10px] text-purple-300"><i class="fas fa-robot block text-lg mb-1"></i><strong>Data Agent</strong><br>Conversational Analytics</div>
+<div class="text-center p-3 rounded bg-teal-500/5 border border-teal-500/10 text-[10px] text-teal-300"><i class="fas fa-magic block text-lg mb-1"></i><strong>Gen AI Actions</strong><br>Auto-emails, Briefs, Strategies</div>
+<div class="text-center p-3 rounded bg-acid/5 border border-acid/10 text-[10px] text-acid"><i class="fas fa-bolt block text-lg mb-1"></i><strong>Automations</strong><br>Triggers, Escalations, Credit Holds</div>
+</div>
+</div>
+
+<p class="text-gray-400 text-sm leading-relaxed">This architecture processes <strong class="text-white">8,000+ invoices per month</strong>, generates <strong class="text-white">2,000+ AI-drafted emails per week</strong>, serves <strong class="text-white">150+ active Data Agent users</strong>, and saves an estimated <strong class="text-white">₹47Cr per year</strong> in avoided late payment losses. It was built by a team that included 4 data analysts, 2 data engineers, and 1 data scientist — roles that are <strong class="text-white">all hiring aggressively in Bangalore</strong>.</p>
+</div>
+</section>
+
+<div class="section-divider max-w-5xl mx-auto"></div>
+
+<!-- ===================== SKILLS YOU NEED ===================== -->
+<section id="skills-you-need" class="py-28 px-6">
+<div class="max-w-4xl mx-auto article-body reveal">
+<span class="badge mb-6 w-fit"><i class="fas fa-tools"></i> Chapter 09</span>
+<h2 class="font-display text-2xl md:text-4xl font-bold tracking-tighter gradient-text">The Exact Skills You Need to Build This System</h2>
+<p class="text-gray-400 text-base leading-relaxed">This isn't science fiction — it's a system you can learn to build. Here's the skill stack, mapped to the architecture, with the order you should learn them:</p>
+
+<div class="my-10 space-y-4">
+<div class="glass-card rounded-xl p-6">
+<div class="flex items-center gap-3 mb-4">
+<div class="text-acid font-display font-bold text-lg">01</div>
+<div>
+<h3 class="text-white font-bold text-sm">SQL — The Language of Data</h3>
+<p class="text-[10px] text-gray-500">Used in: Fabric data engineering, feature engineering, Data Agent queries, Power BI DAX</p>
+</div>
+</div>
+<p class="text-xs text-gray-500">Every data transformation, every feature calculation, every aggregation — it all starts with SQL. In this AR system, SQL queries join ERP data with bank data, calculate rolling averages for payment history, and create the 32 feature columns for the ML model.</p>
+</div>
+
+<div class="glass-card rounded-xl p-6">
+<div class="flex items-center gap-3 mb-4">
+<div class="text-acid font-display font-bold text-lg">02</div>
+<div>
+<h3 class="text-white font-bold text-sm">Power BI — Dashboarding & Visualization</h3>
+<p class="text-[10px] text-gray-500">Used in: Executive AR health dashboard, aging analysis, prediction heatmap, collector scorecards</p>
+</div>
+</div>
+<p class="text-xs text-gray-500">Power BI connects to Fabric's OneLake via DirectLake (zero-copy, blazing fast). You need DAX for calculated measures (DSO, collection efficiency), data modeling for the star schema, and visual design skills for executive-grade dashboards.</p>
+</div>
+
+<div class="glass-card rounded-xl p-6">
+<div class="flex items-center gap-3 mb-4">
+<div class="text-acid font-display font-bold text-lg">03</div>
+<div>
+<h3 class="text-white font-bold text-sm">Microsoft Fabric — The Unifying Platform</h3>
+<p class="text-[10px] text-gray-500">Used in: Data ingestion, transformation, Lakehouse, ML training, Data Agent setup</p>
+</div>
+</div>
+<p class="text-xs text-gray-500">Fabric is the backbone. You need to understand Data Factory pipelines, Bronze-Silver-Gold architecture, Spark notebooks for transformations, and how Fabric's Data Science workload trains and deploys ML models. This is the skill that will differentiate you in 2026.</p>
+</div>
+
+<div class="glass-card rounded-xl p-6">
+<div class="flex items-center gap-3 mb-4">
+<div class="text-acid font-display font-bold text-lg">04</div>
+<div>
+<h3 class="text-white font-bold text-sm">Python — For ML & Gen AI Integration</h3>
+<p class="text-[10px] text-gray-500">Used in: XGBoost model training, feature engineering, Gen AI prompt engineering, automation</p>
+</div>
+</div>
+<p class="text-xs text-gray-500">Python is used in Fabric's Spark notebooks for the ML pipeline (scikit-learn, XGBoost) and for calling OpenAI's API to generate collection emails. You don't need to be a software engineer — you need to be comfortable enough to run ML experiments and API calls.</p>
+</div>
+
+<div class="glass-card rounded-xl p-6">
+<div class="flex items-center gap-3 mb-4">
+<div class="text-acid font-display font-bold text-lg">05</div>
+<div>
+<h3 class="text-white font-bold text-sm">Gen AI & Prompt Engineering — The New Analytics Skill</h3>
+<p class="text-[10px] text-gray-500">Used in: Data Agent configuration, email generation, collector briefs, strategy recommendations</p>
+</div>
+</div>
+<p class="text-xs text-gray-500">Understanding how to craft prompts that produce business-relevant output is a genuine skill. It requires knowing your data, understanding business context, and iterating on prompts to get consistent, useful results. This is the fastest-growing analytics skill in 2026.</p>
+</div>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-5xl mx-auto"></div>
+
+<!-- ===================== WHY TRAINING ===================== -->
+<section id="why-training" class="py-28 px-6">
+<div class="max-w-4xl mx-auto article-body reveal">
+<span class="badge-orange badge mb-6 w-fit"><i class="fas fa-graduation-cap"></i> Chapter 10</span>
+<h2 class="font-display text-2xl md:text-4xl font-bold tracking-tighter gradient-text">Why Vizonis Academy Is the Best Data Analytics Training in Bangalore for This</h2>
+<p class="text-gray-400 text-base leading-relaxed">The system you just read about isn't built by watching YouTube tutorials. It's built by people who understand <strong class="text-white">data engineering + business context + visualization + AI</strong>. Here's how Vizonis Academy prepares you:</p>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+<div class="glass-card rounded-xl p-6 border-red-500/10">
+<div class="flex items-center gap-2 mb-4">
+<div class="w-2 h-2 rounded-full bg-red-500"></div>
+<h3 class="text-red-400 font-bold text-xs uppercase tracking-wider">Typical Bangalore Institute</h3>
+</div>
+<ul class="text-xs text-gray-500 space-y-3">
+<li class="flex items-start gap-2"><i class="fas fa-times text-red-500/50 mt-0.5 text-[10px]"></i>Power BI on Adventure Works sample database</li>
+<li class="flex items-start gap-2"><i class="fas fa-times text-red-500/50 mt-0.5 text-[10px]"></i>SQL basics with no real-world context</li>
+<li class="flex items-start gap-2"><i class="fas fa-times text-red-500/50 mt-0.5 text-[10px]"></i>Microsoft Fabric not in syllabus</li>
+<li class="flex items-start gap-2"><i class="fas fa-times text-red-500/50 mt-0.5 text-[10px]"></i>No ML or Gen AI coverage</li>
+<li class="flex items-start gap-2"><i class="fas fa-times text-red-500/50 mt-0.5 text-[10px]"></i>No finance/AR domain knowledge</li>
+<li class="flex items-start gap-2"><i class="fas fa-times text-red-500/50 mt-0.5 text-[10px]"></i>Portfolio = 1 basic dashboard</li>
+</ul>
+</div>
+<div class="glass-card rounded-xl p-6 border-acid/20 pulse-glow">
+<div class="flex items-center gap-2 mb-4">
+<div class="w-2 h-2 rounded-full bg-acid"></div>
+<h3 class="text-acid font-bold text-xs uppercase tracking-wider">Vizonis Academy</h3>
+</div>
+<ul class="text-xs text-gray-500 space-y-3">
+<li class="flex items-start gap-2"><i class="fas fa-check text-acid/70 mt-0.5 text-[10px]"></i>Power BI on real AR/sales/operations datasets</li>
+<li class="flex items-start gap-2"><i class="fas fa-check text-acid/70 mt-0.5 text-[10px]"></i>Advanced SQL with window functions, CTEs, real data</li>
+<li class="flex items-start gap-2"><i class="fas fa-check text-acid/70 mt-0.5 text-[10px]"></i>Microsoft Fabric included (pipelines, lakehouse, ML)</li>
+<li class="flex items-start gap-2"><i class="fas fa-check text-acid/70 mt-0.5 text-[10px]"></i>Gen AI + prompt engineering for analytics</li>
+<li class="flex items-start gap-2"><i class="fas fa-check text-acid/70 mt-0.5 text-[10px]"></i>Domain projects: AR analytics, customer churn, sales forecasting</li>
+<li class="flex items-start gap-2"><i class="fas fa-check text-acid/70 mt-0.5 text-[10px]"></i>Portfolio = 5+ enterprise-grade projects including prediction models</li>
+</ul>
+</div>
+</div>
+
+<div class="cta-section my-10">
+<div class="text-acid text-xs font-bold uppercase tracking-widest mb-3"><i class="fas fa-rocket mr-2"></i>Ready to Build Predictive Analytics Systems?</div>
+<h3 class="font-display text-xl md:text-2xl font-bold text-white mb-3 tracking-tight">Enroll in Bangalore's Best Data Analytics Training</h3>
+<p class="text-sm text-gray-400 max-w-2xl mx-auto mb-6">Learn SQL, Power BI, Microsoft Fabric, Python ML, and Gen AI — through real-world case studies like the AR prediction system you just read. Build a job-ready portfolio. Get placed.</p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center">
+<a href="https://vizonis.com/courses/data-analytics" class="glow-btn bg-acid text-obsidian px-10 py-4 rounded-full text-sm font-bold uppercase tracking-widest">View Course Details <i class="fas fa-arrow-right ml-2"></i></a>
+<a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20want%20to%20learn%20predictive%20analytics%20with%20Microsoft%20Fabric%20and%20Gen%20AI." target="_blank" class="glow-btn border border-white/20 text-white px-10 py-4 rounded-full text-sm font-bold uppercase tracking-widest hover:border-green-400 hover:text-green-400"><i class="fab fa-whatsapp mr-2"></i>Chat on WhatsApp</a>
+</div>
+<p class="text-[10px] text-gray-600 mt-4">Next batch starting soon. Limited seats. Bangalore + Online options available.</p>
+</div>
+</div>
+</section>
+
+<div class="section-divider max-w-5xl mx-auto"></div>
+
+<!-- ===================== FAQ ===================== -->
+<section id="faq" class="py-28 px-6">
+<div class="max-w-4xl mx-auto reveal">
+<div class="text-center mb-12">
+<span class="badge mb-4 inline-flex"><i class="fas fa-question-circle"></i> FAQ</span>
+<h2 class="font-display text-2xl md:text-4xl font-bold tracking-tighter gradient-text">Frequently Asked Questions</h2>
+<p class="text-gray-500 text-sm mt-3">About late payment prediction, Fabric, Data Agent, Gen AI, and our training.</p>
+</div>
+
+<div class="space-y-3" id="faq-container">
+<div class="qa-item">
+<div class="qa-q" onclick="toggleQA(this)">
+<span class="text-sm text-white font-medium">How does machine learning predict late payments in accounts receivable?</span>
+<i class="fas fa-chevron-down qa-chevron text-xs"></i>
+</div>
+<div class="qa-a">
+<p class="text-sm text-gray-400 leading-relaxed">ML models analyze historical payment patterns, customer behavior, invoice details, economic indicators, and relationship data to calculate a 'late payment probability score' for each outstanding invoice. Features like days-to-pay history, dispute frequency, seasonal patterns, and credit utilization feed into classification models (XGBoost, Random Forest) that predict whether an invoice will be paid on time, late (1-30 days), or very late (30+ days). The model is retrained weekly with new payment data, so it continuously improves.</p>
+</div>
+</div>
+
+<div class="qa-item">
+<div class="qa-q" onclick="toggleQA(this)">
+<span class="text-sm text-white font-medium">What is Microsoft Fabric Data Agent?</span>
+<i class="fas fa-chevron-down qa-chevron text-xs"></i>
+</div>
+<div class="qa-a">
+<p class="text-sm text-gray-400 leading-relaxed">Microsoft Fabric Data Agent is an AI-powered conversational interface within Fabric that lets business users ask questions about their data in natural language and get instant answers with visualizations. For accounts receivable, a finance manager could ask 'Which customers are most likely to default this month?' and get a ranked list with risk scores — without writing a single SQL query. It uses Microsoft Copilot technology connected to your Fabric data.</p>
+</div>
+</div>
+
+<div class="qa-item">
+<div class="qa-q" onclick="toggleQA(this)">
+<span class="text-sm text-white font-medium">Can Gen AI really improve accounts receivable collections?</span>
+<i class="fas fa-chevron-down qa-chevron text-xs"></i>
+</div>
+<div class="qa-a">
+<p class="text-sm text-gray-400 leading-relaxed">Yes. Gen AI automates three critical AR tasks: (1) drafting personalized collection emails based on customer relationship and payment history, (2) summarizing complex account situations for collectors before customer calls, and (3) generating action recommendations like 'offer 2% early payment discount' based on predicted behavior. In the case study we analyzed, Gen AI-powered collections led to a 25% reduction in overdue receivables, 40% fewer collection calls, and a 37% improvement in DSO.</p>
+</div>
+</div>
+
+<div class="qa-item">
+<div class="qa-q" onclick="toggleQA(this)">
+<span class="text-sm text-white font-medium">What is the best data analytics training in Bangalore for learning these skills?</span>
+<i class="fas fa-chevron-down qa-chevron text-xs"></i>
+</div>
+<div class="qa-a">
+<p class="text-sm text-gray-400 leading-relaxed">Vizonis Academy offers the best data analytics training in Bangalore because we cover the complete modern analytics stack — SQL, Power BI, Microsoft Fabric, Python ML, and Gen AI applications — through project-based learning. You build real predictive analytics systems (including a late payment prediction model), not just theoretical exercises. Our curriculum is updated monthly based on what Bangalore's top companies are actually hiring for. <a href="https://vizonis.com/courses/data-analytics" class="text-acid hover:underline">See our course details.</a></p>
+</div>
+</div>
+
+<div class="qa-item">
+<div class="qa-q" onclick="toggleQA(this)">
+<span class="text-sm text-white font-medium">Do I need to be a data scientist to build prediction models?</span>
+<i class="fas fa-chevron-down qa-chevron text-xs"></i>
+</div>
+<div class="qa-a">
+<p class="text-sm text-gray-400 leading-relaxed">No. With tools like Microsoft Fabric, much of the complexity is abstracted away. A skilled data analyst can build a prediction model using Fabric's no-code/low-code ML workspace or by writing Python in Fabric's Spark notebooks. You don't need a PhD — you need to understand the business problem, know how to prepare data (SQL + feature engineering), and know how to evaluate model performance. At Vizonis Academy, we teach this practical approach.</p>
+</div>
+</div>
+
+<div class="qa-item">
+<div class="qa-q" onclick="toggleQA(this)">
+<span class="text-sm text-white font-medium">Is late payment prediction only relevant for large enterprises?</span>
+<i class="fas fa-chevron-down qa-chevron text-xs"></i>
+</div>
+<div class="qa-a">
+<p class="text-sm text-gray-400 leading-relaxed">The concept scales down. Even a ₹100Cr company with 500+ invoices/month can benefit from basic prediction — identifying which 50 invoices are most likely to be late and focusing collections effort there. The architecture gets simpler (maybe just Excel + Power BI + a simple logistic regression), but the business value is the same: targeted collections instead of blind follow-ups. At Vizonis Academy, we teach both enterprise and mid-market approaches.</p>
+</div>
+</div>
+
+<div class="qa-item">
+<div class="qa-q" onclick="toggleQA(this)">
+<span class="text-sm text-white font-medium">What salary can I expect with Fabric + Gen AI analytics skills in Bangalore?</span>
+<i class="fas fa-chevron-down qa-chevron text-xs"></i>
+</div>
+<div class="qa-a">
+<p class="text-sm text-gray-400 leading-relaxed">A data analyst with Power BI + SQL skills earns ₹6-9 LPA in Bangalore. Add Microsoft Fabric knowledge and that jumps to ₹9-14 LPA. Add ML/Gen AI capabilities and you're looking at ₹14-22 LPA. The combination of Fabric + Gen AI is extremely rare right now — most analysts know Power BI but not Fabric, and almost nobody knows Data Agent. Early movers in this skill combination are getting premium offers from companies like Microsoft, Deloitte, EY, and major Indian enterprises.</p>
+</div>
+</div>
+
+<div class="qa-item">
+<div class="qa-q" onclick="toggleQA(this)">
+<span class="text-sm text-white font-medium">How long does it take to learn all these skills?</span>
+<i class="fas fa-chevron-down qa-chevron text-xs"></i>
+</div>
+<div class="qa-a">
+<p class="text-sm text-gray-400 leading-relaxed">At Vizonis Academy, our structured program takes you from fundamentals to building predictive analytics systems in 12-16 weeks (part-time) or 8-10 weeks (full-time). You don't need to learn everything at once — we layer skills: SQL first (Week 1-2), then Power BI (Week 3-5), then Fabric (Week 6-8), then Python ML + Gen AI (Week 9-12). By the end, you have a portfolio of 5+ projects including a prediction model. <a href="https://vizonis.com/courses/data-analytics" class="text-acid hover:underline">Start your journey here.</a></p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ===================== RELATED COURSES CTA ===================== -->
+<section class="py-20 px-6 border-t border-white/5">
+<div class="max-w-4xl mx-auto reveal">
+<div class="text-center mb-10">
+<h2 class="font-display text-xl md:text-3xl font-bold tracking-tighter gradient-text mb-3">Learn to Build Predictive Analytics Systems</h2>
+<p class="text-gray-500 text-sm">Start with the right course. Build the right skills. Get the right job.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<a href="https://vizonis.com/courses/data-analytics" class="glass-card rounded-2xl p-8 block group hover:border-acid/40 transition-all">
+<div class="flex items-center gap-3 mb-4">
+<div class="icon-box bg-acid/10 text-acid group-hover:bg-acid/20 transition-colors"><i class="fas fa-chart-bar"></i></div>
+<div>
+<div class="text-white font-bold text-sm">Data Analytics Course</div>
+<div class="text-[10px] text-gray-500">SQL + Power BI + Fabric + Python ML + Gen AI</div>
+</div>
+<i class="fas fa-arrow-right text-gray-600 group-hover:text-acid transition-colors ml-auto text-xs"></i>
+</div>
+<p class="text-xs text-gray-500">Complete data analytics program with real-world projects including late payment prediction, customer churn, and sales forecasting dashboards.</p>
+<div class="mt-4 flex flex-wrap gap-2">
+<span class="text-[9px] px-2 py-1 rounded bg-acid/5 text-acid/60">SQL</span>
+<span class="text-[9px] px-2 py-1 rounded bg-acid/5 text-acid/60">Power BI</span>
+<span class="text-[9px] px-2 py-1 rounded bg-acid/5 text-acid/60">Microsoft Fabric</span>
+<span class="text-[9px] px-2 py-1 rounded bg-acid/5 text-acid/60">Python ML</span>
+<span class="text-[9px] px-2 py-1 rounded bg-acid/5 text-acid/60">Gen AI</span>
+<span class="text-[9px] px-2 py-1 rounded bg-acid/5 text-acid/60">Data Agent</span>
+</div>
+</a>
+<a href="https://vizonis.com/courses/data-analytics" class="glass-card rounded-2xl p-8 block group hover:border-purple-400/40 transition-all">
+<div class="flex items-center gap-3 mb-4">
+<div class="icon-box bg-purple-500/10 text-purple-400 group-hover:bg-purple-500/20 transition-colors"><i class="fas fa-brain"></i></div>
+<div>
+<div class="text-white font-bold text-sm">Predictive Analytics & AI</div>
+<div class="text-[10px] text-gray-500">ML Models + Gen AI + Fabric Data Agent</div>
+</div>
+<i class="fas fa-arrow-right text-gray-600 group-hover:text-purple-400 transition-colors ml-auto text-xs"></i>
+</div>
+<p class="text-xs text-gray-500">Deep-dive into predictive analytics — build ML models for late payment prediction, customer churn, and demand forecasting. Learn Gen AI for automated insights.</p>
+<div class="mt-4 flex flex-wrap gap-2">
+<span class="text-[9px] px-2 py-1 rounded bg-purple-500/5 text-purple-400/60">XGBoost</span>
+<span class="text-[9px] px-2 py-1 rounded bg-purple-500/5 text-purple-400/60">Feature Engineering</span>
+<span class="text-[9px] px-2 py-1 rounded bg-purple-500/5 text-purple-400/60">Prompt Engineering</span>
+<span class="text-[9px] px-2 py-1 rounded bg-purple-500/5 text-purple-400/60">Data Agent</span>
+<span class="text-[9px] px-2 py-1 rounded bg-purple-500/5 text-purple-400/60">Fabric ML</span>
+</div>
+</a>
+</div>
+</div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="py-16 px-6 border-t border-white/5">
+<div class="max-w-5xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
+<div>
+<div class="font-display text-lg font-bold tracking-tight mb-3"><span class="text-acid">V</span>IZONIS <span class="text-gray-600 text-xs font-sans font-normal">Academy</span></div>
+<p class="text-xs text-gray-500 leading-relaxed">The best data analytics training in Bangalore. Practical, project-based, enterprise-grade. Learn Fabric, Gen AI, Power BI, and predictive analytics with real-world case studies.</p>
+</div>
+<div>
+<h4 class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-3">Training</h4>
+<ul class="space-y-2">
+<li><a href="https://vizonis.com/courses/data-analytics" class="text-xs text-gray-500 hover:text-acid transition-colors">Data Analytics Course</a></li>
+<li><a href="https://vizonis.com/courses/data-analytics" class="text-xs text-gray-500 hover:text-acid transition-colors">Power BI Training</a></li>
+<li><a href="https://vizonis.com/courses/data-analytics" class="text-xs text-gray-500 hover:text-acid transition-colors">Microsoft Fabric Training</a></li>
+<li><a href="https://vizonis.com/courses/data-analytics" class="text-xs text-gray-500 hover:text-acid transition-colors">Predictive Analytics & ML</a></li>
+<li><a href="https://vizonis.com/courses/data-analytics" class="text-xs text-gray-500 hover:text-acid transition-colors">Gen AI for Analytics</a></li>
+<li><a href="https://vizonis.com/courses/data-analytics" class="text-xs text-gray-500 hover:text-acid transition-colors">SQL Training</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-3">Connect</h4>
+<ul class="space-y-2">
+<li><a href="https://wa.me/916364671786" target="_blank" class="text-xs text-gray-500 hover:text-green-400 transition-colors"><i class="fab fa-whatsapp mr-2"></i>WhatsApp</a></li>
+<li><a href="https://vizonis.com" class="text-xs text-gray-500 hover:text-acid transition-colors"><i class="fas fa-globe mr-2"></i>Website</a></li>
+<li><a href="https://vizonis.com/blog" class="text-xs text-gray-500 hover:text-acid transition-colors"><i class="fas fa-blog mr-2"></i>Blog</a></li>
+<li><a href="https://vizonis.com/courses/data-analytics" class="text-xs text-gray-500 hover:text-acid transition-colors"><i class="fas fa-envelope mr-2"></i>Contact</a></li>
+</ul>
+</div>
+</div>
+<div class="border-t border-white/5 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
+<p class="text-[10px] text-gray-600">© 2025 Vizonis Academy. All rights reserved. Bangalore, India.</p>
+<p class="text-[10px] text-gray-600">Best Data Analytics Training in Bangalore — Microsoft Fabric, Gen AI, Power BI, Predictive Analytics</p>
+</div>
+</div>
+</footer>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/916364671786?text=Hi%20Vizonis!%20I%20read%20the%20late%20payment%20prediction%20case%20study%20and%20want%20to%20learn%20these%20skills." target="_blank" class="whatsapp-float" aria-label="Chat on WhatsApp">
+<i class="fab fa-whatsapp text-white text-2xl"></i>
+</a>
+
+<script>
+(function(){const c=document.getElementById('particles');for(let i=0;i<30;i++){const p=document.createElement('div');p.className='particle';const s=Math.random()*4+2;p.style.width=s+'px';p.style.height=s+'px';p.style.left=Math.random()*100+'%';p.style.animationDuration=(Math.random()*15+10)+'s';p.style.animationDelay=(Math.random()*10)+'s';c.appendChild(p)}})();
+
+gsap.registerPlugin(ScrollTrigger);
+document.querySelectorAll('.reveal').forEach(el=>{gsap.to(el,{opacity:1,y:0,duration:0.8,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 85%',toggleActions:'play none none none'}})});
+
+function toggleQA(el){const item=el.parentElement;const wasOpen=item.classList.contains('open');document.querySelectorAll('.qa-item').forEach(i=>i.classList.remove('open'));if(!wasOpen)item.classList.add('open')}
+
+const tocLinks=document.querySelectorAll('.toc-link');
+const sections=document.querySelectorAll('section[id]');
+window.addEventListener('scroll',()=>{let current='';sections.forEach(s=>{if(window.scrollY>=s.offsetTop-200)current=s.getAttribute('id')});tocLinks.forEach(l=>{l.classList.remove('active');if(l.getAttribute('href')==='#'+current)l.classList.add('active')})});
+
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(a.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})})});
+
+document.querySelector('.qa-item')?.classList.add('open');
+</script>
+</body>
+</html>
