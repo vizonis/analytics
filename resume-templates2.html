@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free professional resume templates for Business Analyst, Data Analyst, Data Scientist, and Data Engineer roles. Download in PDF & Word format. Fresher to Senior level templates by Vizonis Academy.">
+    <meta name="keywords" content="resume templates, business analyst resume, data analyst resume, power BI resume, SQL resume, data scientist resume, data engineer resume, snowflake resume, tableau resume, microsoft fabric resume, fresher resume, junior resume, senior resume, free resume templates, download resume PDF, download resume DOCX, Vizonis Academy">
+    <meta name="author" content="Vizonis Academy">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://analytics.vizonis.com/resume-templates">
+    <meta property="og:title" content="Free Resume Templates for Data Professionals | Vizonis Academy">
+    <meta property="og:description" content="29+ professional resume templates for BA, DA, DS & DE roles. Download free in PDF & Word. Freshers to Senior level.">
+    <meta property="og:url" content="https://analytics.vizonis.com/resume-templates">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Vizonis Academy">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Free Resume Templates | Vizonis Academy">
+    <meta name="twitter:description" content="Professional resume templates for Business Analyst, Data Analyst, Data Scientist & Data Engineer. Free PDF & Word download.">
+    <title>Free Resume Templates for Data Professionals | Vizonis Academy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://unpkg.com/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+    <style>
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        :root{--primary:#0f172a;--primary-light:#1e293b;--accent:#2563eb;--accent-hover:#1d4ed8;--accent-light:#dbeafe;--accent-subtle:#eff6ff;--surface:#ffffff;--bg:#f1f5f9;--bg-deep:#e2e8f0;--text:#0f172a;--text-secondary:#475569;--text-muted:#94a3b8;--border:#e2e8f0;--border-hover:#cbd5e1;--shadow-sm:0 1px 2px rgba(0,0,0,.05);--shadow:0 1px 3px rgba(0,0,0,.1),0 1px 2px rgba(0,0,0,.06);--shadow-md:0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -2px rgba(0,0,0,.1);--shadow-lg:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);--shadow-xl:0 20px 25px -5px rgba(0,0,0,.1),0 8px 10px -6px rgba(0,0,0,.1);--radius:8px;--radius-lg:12px;--radius-xl:16px}
+        ::selection{background:var(--accent);color:#fff}
+        html{scroll-behavior:smooth}
+        body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;font-weight:400;-webkit-font-smoothing:antialiased}
+        ::-webkit-scrollbar{width:8px}
+        ::-webkit-scrollbar-track{background:var(--bg)}
+        ::-webkit-scrollbar-thumb{background:var(--text-muted);border-radius:4px}
+        ::-webkit-scrollbar-thumb:hover{background:var(--text-secondary)}
+
+        /* Header */
+        .site-header{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(15,23,42,.95);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.06);height:64px;display:flex;align-items:center;padding:0 32px}
+        .header-inner{max-width:1280px;margin:0 auto;width:100%;display:flex;align-items:center;justify-content:space-between}
+        .logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff}
+        .logo-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--accent),#7c3aed);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#fff;letter-spacing:-.5px}
+        .logo-text{font-size:18px;font-weight:700;letter-spacing:-.02em}
+        .logo-badge{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;background:rgba(37,99,235,.2);color:#93c5fd;padding:2px 8px;border-radius:4px;margin-left:4px}
+        .header-nav{display:flex;align-items:center;gap:8px}
+        .header-link{color:#94a3b8;font-size:13px;font-weight:500;text-decoration:none;padding:8px 14px;border-radius:6px;transition:all .2s}
+        .header-link:hover{color:#fff;background:rgba(255,255,255,.06)}
+        .header-phone{display:flex;align-items:center;gap:6px;color:#cbd5e1;font-size:13px;font-weight:500;text-decoration:none;padding:8px 14px;border-radius:6px;border:1px solid rgba(255,255,255,.1);transition:all .2s}
+        .header-phone:hover{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.2);color:#fff}
+        .header-cta{background:var(--accent);color:#fff;padding:8px 20px;font-size:12px;font-weight:600;border-radius:6px;text-decoration:none;border:none;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
+        .header-cta:hover{background:var(--accent-hover);transform:translateY(-1px);box-shadow:0 4px 12px rgba(37,99,235,.4)}
+
+        /* Hero */
+        .hero{padding:120px 32px 60px;max-width:1280px;margin:0 auto}
+        .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+        .hero-content{}
+        .hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--accent-subtle);color:var(--accent);padding:6px 14px;border-radius:20px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;margin-bottom:20px;border:1px solid var(--accent-light)}
+        .hero h1{font-size:clamp(32px,4vw,48px);font-weight:800;line-height:1.15;letter-spacing:-.03em;margin-bottom:16px;background:linear-gradient(135deg,var(--primary) 0%,var(--text-secondary) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .hero p{font-size:16px;color:var(--text-secondary);line-height:1.7;margin-bottom:28px;max-width:520px}
+        .hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+        .btn-primary{background:var(--accent);color:#fff;padding:12px 28px;font-size:13px;font-weight:600;border-radius:var(--radius);border:none;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s}
+        .btn-primary:hover{background:var(--accent-hover);transform:translateY(-1px);box-shadow:0 4px 12px rgba(37,99,235,.35)}
+        .btn-secondary{background:var(--surface);color:var(--text);padding:12px 28px;font-size:13px;font-weight:600;border-radius:var(--radius);border:1px solid var(--border);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s}
+        .btn-secondary:hover{border-color:var(--border-hover);background:var(--bg);transform:translateY(-1px);box-shadow:var(--shadow-md)}
+        .hero-visual{display:flex;flex-direction:column;gap:12px}
+        .hero-stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px 24px;display:flex;align-items:center;gap:16px;transition:all .3s}
+        .hero-stat-card:hover{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-light)}
+        .hero-stat-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+        .hero-stat-num{font-size:24px;font-weight:800;letter-spacing:-.02em}
+        .hero-stat-label{font-size:12px;color:var(--text-muted);font-weight:500}
+
+        /* Filters */
+        .filters-section{padding:0 32px;max-width:1280px;margin:0 auto 32px}
+        .filters-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;box-shadow:var(--shadow-sm)}
+        .filter-group{margin-bottom:14px}
+        .filter-group:last-child{margin-bottom:0}
+        .filter-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+        .filter-pills{display:flex;flex-wrap:wrap;gap:6px}
+        .filter-pill{padding:7px 14px;border:1px solid var(--border);border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;transition:all .2s;background:var(--surface);color:var(--text-secondary);font-family:inherit}
+        .filter-pill:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-subtle)}
+        .filter-pill.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+        .results-bar{display:flex;align-items:center;justify-content:space-between;margin-top:16px;padding-top:14px;border-top:1px solid var(--border)}
+        .results-count{font-size:13px;color:var(--text-muted)}
+        .results-count strong{color:var(--text);font-weight:600}
+
+        /* Grid */
+        .templates-section{padding:0 32px 80px;max-width:1280px;margin:0 auto}
+        .templates-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
+        .template-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;transition:all .3s ease;cursor:pointer;position:relative}
+        .template-card:hover{border-color:var(--accent);box-shadow:var(--shadow-lg);transform:translateY(-3px)}
+        .card-preview{padding:28px 24px 20px;position:relative;min-height:190px;display:flex;flex-direction:column;justify-content:center}
+        .card-preview-layout{position:absolute;top:14px;right:14px;width:44px;height:56px;border:1.5px solid rgba(0,0,0,.1);border-radius:4px;overflow:hidden;opacity:.45}
+        .card-preview-layout .mh{height:14px;width:100%}
+        .card-preview-layout .ms{position:absolute;left:0;top:14px;bottom:0;width:14px}
+        .card-preview-layout .ml{position:absolute;right:3px;top:17px}
+        .card-preview-layout .ml div{height:2px;background:rgba(0,0,0,.1);border-radius:1px;margin-bottom:3px}
+        .card-preview-name{font-size:18px;font-weight:700;margin-bottom:3px;letter-spacing:-.01em}
+        .card-preview-title{font-size:12px;font-weight:500;color:var(--text-muted);margin-bottom:14px}
+        .card-preview-tags{display:flex;flex-wrap:wrap;gap:4px}
+        .card-preview-tag{font-size:10px;padding:3px 8px;border-radius:4px;font-weight:600;letter-spacing:.02em}
+        .card-info{padding:14px 24px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--bg-deep)}
+        .card-badges{display:flex;gap:5px;flex-wrap:wrap}
+        .card-badge{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:3px 8px;border-radius:4px}
+        .card-actions{display:flex;gap:4px}
+        .card-btn{width:30px;height:30px;border-radius:6px;border:1px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;font-size:14px;color:var(--text-secondary)}
+        .card-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+        .card-btn-preview{width:auto;padding:0 10px;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;gap:4px}
+
+        /* Modal */
+        .modal-overlay{position:fixed;inset:0;z-index:5000;background:rgba(15,23,42,.7);backdrop-filter:blur(6px);display:none;align-items:flex-start;justify-content:center;padding:32px 16px;overflow-y:auto}
+        .modal-overlay.active{display:flex}
+        .modal-container{background:var(--bg);border-radius:var(--radius-xl);max-width:920px;width:100%;overflow:hidden;animation:modalIn .25s ease;box-shadow:var(--shadow-xl)}
+        @keyframes modalIn{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+        .modal-header{padding:16px 24px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;gap:12px;flex-wrap:wrap}
+        .modal-title-area{}
+        .modal-title{font-size:16px;font-weight:700;letter-spacing:-.01em}
+        .modal-subtitle{font-size:11px;color:var(--text-muted);margin-top:1px}
+        .modal-right{display:flex;align-items:center;gap:10px}
+        .dl-loading{display:none;align-items:center;gap:6px;font-size:12px;color:var(--text-muted)}
+        .dl-loading.active{display:flex}
+        .spinner{width:14px;height:14px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .6s linear infinite}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        .modal-actions{display:flex;gap:6px}
+        .modal-dl-btn{padding:7px 16px;border-radius:6px;border:none;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all .2s;font-family:inherit}
+        .modal-dl-btn .iconify{font-size:15px}
+        .dl-pdf{background:#dc2626;color:#fff}
+        .dl-pdf:hover{background:#b91c1c;transform:translateY(-1px)}
+        .dl-docx{background:#2563eb;color:#fff}
+        .dl-docx:hover{background:#1d4ed8;transform:translateY(-1px)}
+        .modal-close{width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:var(--surface);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;transition:all .2s;color:var(--text-secondary)}
+        .modal-close:hover{background:#fee2e2;color:#dc2626;border-color:#fecaca}
+        .modal-body{padding:28px;background:var(--bg-deep)}
+        .resume-paper{background:#fff;max-width:800px;margin:0 auto;box-shadow:var(--shadow-xl);border-radius:2px;overflow:hidden}
+
+        /* Resume Layouts */
+        .r-sidebar{display:flex;min-height:700px}
+        .r-sidebar-left{width:210px;padding:30px 18px;color:#fff;flex-shrink:0}
+        .r-sidebar-left .r-name{font-family:Georgia,serif;font-size:19px;font-weight:700;margin-bottom:3px;line-height:1.2}
+        .r-sidebar-left .r-title{font-size:10px;font-weight:500;opacity:.85;margin-bottom:18px;text-transform:uppercase;letter-spacing:.1em}
+        .r-sidebar-left .r-ci{font-size:9.5px;margin-bottom:7px;opacity:.88;display:flex;align-items:flex-start;gap:5px;line-height:1.4}
+        .r-sidebar-left .r-ci .iconify{font-size:11px;margin-top:2px;flex-shrink:0}
+        .r-sidebar-left .r-st{font-size:9px;text-transform:uppercase;letter-spacing:.14em;font-weight:700;margin:18px 0 8px;padding-bottom:5px;border-bottom:1px solid rgba(255,255,255,.2)}
+        .r-sidebar-left .r-sk{font-size:9.5px;margin-bottom:4px;opacity:.88}
+        .r-sidebar-left .r-ce{font-size:9px;margin-bottom:5px;opacity:.88;line-height:1.4}
+        .r-sidebar-right{flex:1;padding:28px 26px}
+        .r-shd{font-family:Georgia,serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding-bottom:5px;margin-bottom:10px;border-bottom:2px solid}
+        .r-sum{font-size:10.5px;line-height:1.6;color:#444;margin-bottom:14px}
+        .r-ei{margin-bottom:14px}
+        .r-eh{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:2px;gap:8px}
+        .r-er{font-size:11px;font-weight:700}
+        .r-ed{font-size:9.5px;color:#888;white-space:nowrap}
+        .r-eco{font-size:10px;color:#666;margin-bottom:5px}
+        .r-eb{font-size:10.5px;line-height:1.55;color:#444;padding-left:11px;position:relative;margin-bottom:2px}
+        .r-eb::before{content:'•';position:absolute;left:0}
+        .r-pi{margin-bottom:10px}
+        .r-pn{font-size:11px;font-weight:700;margin-bottom:3px}
+        .r-edui{margin-bottom:6px}
+        .r-edud{font-size:10.5px;font-weight:700}
+        .r-edus{font-size:10px;color:#666}
+        .r-edum{font-size:9.5px;color:#888}
+
+        .r-ht{padding:26px 30px 18px;text-align:center}
+        .r-ht .r-name{font-family:Georgia,serif;font-size:24px;font-weight:700;margin-bottom:1px}
+        .r-ht .r-title{font-size:11px;text-transform:uppercase;letter-spacing:.12em;font-weight:600;margin-bottom:10px}
+        .r-ht .r-cb{display:flex;justify-content:center;flex-wrap:wrap;gap:14px;font-size:9.5px;color:#666}
+        .r-ht .r-cb span{display:flex;align-items:center;gap:4px}
+        .r-ht .r-cb .iconify{font-size:11px}
+        .r-hb{height:3px}
+        .r-tc{display:flex;padding:22px 30px;gap:24px}
+        .r-cl{width:190px;flex-shrink:0}
+        .r-cr{flex:1}
+
+        .r-min{padding:30px}
+        .r-min .r-name{font-family:Georgia,serif;font-size:26px;font-weight:700;margin-bottom:1px}
+        .r-min .r-title{font-size:12px;font-weight:500;margin-bottom:6px}
+        .r-min .r-cr{font-size:10px;color:#666;margin-bottom:3px;display:flex;align-items:center;gap:5px}
+        .r-min .r-cr .iconify{font-size:12px}
+        .r-min-hr{border:none;height:1.5px;margin:14px 0}
+        .r-min .r-shd{font-size:11px;margin-bottom:7px;border-bottom-width:1.5px}
+        .r-min .r-stg{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:5px}
+        .r-min .r-stag{font-size:9px;padding:2px 9px;border-radius:3px;font-weight:600}
+
+        /* CTA Banner */
+        .cta-section{padding:0 32px 80px;max-width:1280px;margin:0 auto}
+        .cta-card{background:linear-gradient(135deg,var(--primary) 0%,#1e3a5f 100%);border-radius:var(--radius-xl);padding:48px;position:relative;overflow:hidden}
+        .cta-card::before{content:'';position:absolute;top:-50%;right:-20%;width:400px;height:400px;background:radial-gradient(circle,rgba(37,99,235,.3) 0%,transparent 70%);pointer-events:none}
+        .cta-card::after{content:'';position:absolute;bottom:-30%;left:-10%;width:300px;height:300px;background:radial-gradient(circle,rgba(124,58,237,.2) 0%,transparent 70%);pointer-events:none}
+        .cta-inner{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px}
+        .cta-text h3{font-size:24px;font-weight:700;color:#fff;margin-bottom:6px;letter-spacing:-.02em}
+        .cta-text p{color:rgba(255,255,255,.6);font-size:14px;max-width:460px}
+        .cta-buttons{display:flex;gap:10px;flex-wrap:wrap}
+        .cta-wa{background:#25D366;color:#fff;padding:12px 24px;border-radius:var(--radius);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;cursor:pointer;display:flex;align-items:center;gap:8px;text-decoration:none;border:none;transition:all .2s}
+        .cta-wa:hover{background:#1da851;transform:translateY(-1px);box-shadow:0 4px 12px rgba(37,211,102,.4)}
+        .cta-call{background:rgba(255,255,255,.1);color:#fff;padding:12px 24px;border-radius:var(--radius);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;cursor:pointer;display:flex;align-items:center;gap:8px;text-decoration:none;border:1px solid rgba(255,255,255,.15);transition:all .2s}
+        .cta-call:hover{background:rgba(255,255,255,.15);transform:translateY(-1px)}
+
+        /* FAQ */
+        .faq-section{padding:0 32px 80px;max-width:860px;margin:0 auto}
+        .faq-header{text-align:center;margin-bottom:40px}
+        .faq-header h2{font-size:28px;font-weight:800;letter-spacing:-.02em;margin-bottom:8px}
+        .faq-header p{color:var(--text-muted);font-size:14px}
+        .faq-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);margin-bottom:8px;overflow:hidden;transition:all .2s}
+        .faq-item:hover{border-color:var(--border-hover)}
+        .faq-item.open{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-light)}
+        .faq-q{padding:18px 20px;font-size:14px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px}
+        .faq-q .iconify{font-size:18px;transition:transform .3s;color:var(--text-muted);flex-shrink:0}
+        .faq-item.open .faq-q .iconify{transform:rotate(180deg);color:var(--accent)}
+        .faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease;font-size:13px;color:var(--text-secondary);line-height:1.7}
+        .faq-item.open .faq-a{max-height:300px;padding:0 20px 18px}
+
+        /* Footer */
+        .site-footer{background:var(--primary);color:rgba(255,255,255,.7);padding:56px 32px 32px}
+        .footer-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1.5fr;gap:40px}
+        .footer-brand .logo-text{color:#fff;font-size:20px}
+        .footer-brand p{font-size:13px;margin-top:10px;line-height:1.7;color:rgba(255,255,255,.5);max-width:280px}
+        .footer-col h4{color:#fff;font-size:11px;text-transform:uppercase;letter-spacing:.12em;margin-bottom:16px;font-weight:700}
+        .footer-col a{display:block;color:rgba(255,255,255,.5);text-decoration:none;font-size:13px;margin-bottom:8px;transition:color .2s}
+        .footer-col a:hover{color:#fff}
+        .footer-col .footer-contact-item{display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:13px;color:rgba(255,255,255,.5)}
+        .footer-col .footer-contact-item a{color:rgba(255,255,255,.5);margin-bottom:0}
+        .footer-col .footer-contact-item a:hover{color:#fff}
+        .footer-bottom{max-width:1280px;margin:40px auto 0;padding-top:24px;border-top:1px solid rgba(255,255,255,.08);font-size:12px;color:rgba(255,255,255,.3);text-align:center}
+
+        /* WhatsApp Float */
+        .wa-float{position:fixed;bottom:24px;right:24px;z-index:4000;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:26px;box-shadow:0 4px 20px rgba(37,211,102,.4);cursor:pointer;text-decoration:none;transition:all .3s}
+        .wa-float:hover{transform:scale(1.1);box-shadow:0 6px 24px rgba(37,211,102,.5)}
+
+        /* Toast */
+        .toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--primary);color:#fff;padding:10px 22px;border-radius:var(--radius);font-size:13px;font-weight:500;z-index:9999;opacity:0;transition:all .35s ease;pointer-events:none;white-space:nowrap;box-shadow:var(--shadow-xl)}
+        .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+        /* Responsive */
+        @media(max-width:1024px){
+            .hero-grid{grid-template-columns:1fr;gap:32px}
+            .hero-visual{flex-direction:row;flex-wrap:wrap}
+            .hero-stat-card{flex:1;min-width:140px}
+            .footer-inner{grid-template-columns:1fr 1fr}
+        }
+        @media(max-width:768px){
+            .site-header{padding:0 16px}
+            .header-nav .header-link,.header-nav .header-phone{display:none}
+            .hero{padding:100px 16px 40px}
+            .hero h1{font-size:28px}
+            .hero-visual{flex-direction:column}
+            .filters-section,.templates-section,.cta-section,.faq-section{padding-left:16px;padding-right:16px}
+            .templates-grid{grid-template-columns:1fr}
+            .modal-body{padding:12px}
+            .r-sidebar{flex-direction:column}
+            .r-sidebar-left{width:100%}
+            .r-tc{flex-direction:column}
+            .r-cl{width:100%}
+            .cta-inner{flex-direction:column;text-align:center}
+            .cta-buttons{justify-content:center}
+            .footer-inner{grid-template-columns:1fr}
+            .modal-header{flex-direction:column;align-items:flex-start}
+            .modal-right{width:100%;justify-content:flex-end}
+        }
+    </style>
+</head>
+<body>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"Free Resume Templates for Data Professionals | Vizonis Academy","description":"29+ professional resume templates for Business Analyst, Data Analyst, Data Scientist & Data Engineer. Download free in PDF & Word format.","url":"https://analytics.vizonis.com/resume-templates","provider":{"@type":"Organization","name":"Vizonis Academy","telephone":"+916364671786","url":"https://analytics.vizonis.com"}}
+</script>
+
+<header class="site-header" role="banner">
+    <div class="header-inner">
+        <a href="https://analytics.vizonis.com" class="logo" aria-label="Vizonis Academy Home">
+            <div class="logo-icon">VA</div>
+            <span class="logo-text">Vizonis Academy</span>
+            <span class="logo-badge">Analytics</span>
+        </a>
+        <div class="header-nav">
+            <a href="https://analytics.vizonis.com" class="header-link">Home</a>
+            <a href="#templatesGrid" class="header-link">Templates</a>
+            <a href="tel:+916364671786" class="header-phone">
+                <span class="iconify" data-icon="lucide:phone" style="font-size:14px"></span>
+                +91 6364 671 786
+            </a>
+            <a href="https://wa.me/916364671786?text=Hi%20Vizonis%20Academy%2C%20I%20am%20interested%20in%20your%20courses." class="header-cta">
+                <span class="iconify" data-icon="lucide:message-circle" style="font-size:15px"></span>
+                Enquire Now
+            </a>
+        </div>
+    </div>
+</header>
+
+<main>
+    <section class="hero" aria-label="Resume Templates">
+        <div class="hero-grid">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="iconify" data-icon="lucide:file-text" style="font-size:13px"></span>
+                    29 Free Templates
+                </div>
+                <h1>Professional Resume Templates for Data & Analytics Careers</h1>
+                <p>Handcrafted resume templates for Business Analysts, Data Analysts, Data Scientists, and Data Engineers. Download instantly in PDF or Word — completely free.</p>
+                <div class="hero-actions">
+                    <a href="#templatesGrid" class="btn-primary">
+                        <span class="iconify" data-icon="lucide:layout-grid" style="font-size:16px"></span>
+                        Browse Templates
+                    </a>
+                    <a href="https://wa.me/916364671786?text=Hi%20Vizonis%20Academy%2C%20I%20need%20help%20with%20my%20resume." class="btn-secondary">
+                        <span class="iconify" data-icon="lucide:message-circle" style="font-size:16px"></span>
+                        Get Expert Help
+                    </a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-stat-card">
+                    <div class="hero-stat-icon" style="background:#eff6ff;color:#2563eb"><span class="iconify" data-icon="lucide:file-text"></span></div>
+                    <div><div class="hero-stat-num">29</div><div class="hero-stat-label">Resume Templates</div></div>
+                </div>
+                <div class="hero-stat-card">
+                    <div class="hero-stat-icon" style="background:#f0fdf4;color:#16a34a"><span class="iconify" data-icon="lucide:layers"></span></div>
+                    <div><div class="hero-stat-num">8</div><div class="hero-stat-label">Role Categories</div></div>
+                </div>
+                <div class="hero-stat-card">
+                    <div class="hero-stat-icon" style="background:#fef3c7;color:#d97706"><span class="iconify" data-icon="lucide:sliders-horizontal"></span></div>
+                    <div><div class="hero-stat-num">5</div><div class="hero-stat-label">Experience Levels</div></div>
+                </div>
+                <div class="hero-stat-card">
+                    <div class="hero-stat-icon" style="background:#fce7f3;color:#db2777"><span class="iconify" data-icon="lucide:download"></span></div>
+                    <div><div class="hero-stat-num">PDF+DOCX</div><div class="hero-stat-label">Download Formats</div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <nav class="filters-section" aria-label="Template Filters">
+        <div class="filters-card">
+            <div class="filter-group">
+                <div class="filter-label"><span class="iconify" data-icon="lucide:briefcase" style="font-size:13px"></span> Category</div>
+                <div class="filter-pills" id="catFilters">
+                    <button class="filter-pill active" data-cat="all">All Templates</button>
+                    <button class="filter-pill" data-cat="Business Analyst">Business Analyst</button>
+                    <button class="filter-pill" data-cat="DA - Power BI & SQL">DA — Power BI & SQL</button>
+                    <button class="filter-pill" data-cat="Data Scientist">Data Scientist</button>
+                    <button class="filter-pill" data-cat="DA - Tableau & SQL">DA — Tableau & SQL</button>
+                    <button class="filter-pill" data-cat="DE - SQL Server">DE — SQL Server</button>
+                    <button class="filter-pill" data-cat="DE - Snowflake">DE — Snowflake</button>
+                    <button class="filter-pill" data-cat="Power BI & Snowflake">Power BI & Snowflake</button>
+                    <button class="filter-pill" data-cat="Fabric & Snowflake">Fabric & Snowflake</button>
+                </div>
+            </div>
+            <div class="filter-group">
+                <div class="filter-label"><span class="iconify" data-icon="lucide:trending-up" style="font-size:13px"></span> Experience Level</div>
+                <div class="filter-pills" id="levelFilters">
+                    <button class="filter-pill active" data-level="all">All Levels</button>
+                    <button class="filter-pill" data-level="Fresher">Fresher</button>
+                    <button class="filter-pill" data-level="Junior (0-3 yrs)">Junior (0–3 yrs)</button>
+                    <button class="filter-pill" data-level="Mid (4-5 yrs)">Mid (4–5 yrs)</button>
+                    <button class="filter-pill" data-level="Senior (5+ yrs)">Senior (5+ yrs)</button>
+                    <button class="filter-pill" data-level="Consultant">Consultant</button>
+                </div>
+            </div>
+            <div class="results-bar">
+                <div class="results-count" id="resultsCount">Showing <strong>29</strong> templates</div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="templates-section" id="templatesGrid" aria-label="Resume Templates Grid"></section>
+
+    <section class="cta-section" aria-label="Call to Action">
+        <div class="cta-card">
+            <div class="cta-inner">
+                <div class="cta-text">
+                    <h3>Need Help Customizing Your Resume?</h3>
+                    <p>Get expert guidance from Vizonis Academy mentors to tailor your resume for your dream data role. We review, optimize, and help you stand out.</p>
+                </div>
+                <div class="cta-buttons">
+                    <a href="https://wa.me/916364671786?text=Hi%20Vizonis%20Academy%2C%20I%20need%20help%20customizing%20my%20resume%20for%20a%20data%20role." class="cta-wa">
+                        <span class="iconify" data-icon="lucide:message-circle" style="font-size:16px"></span>
+                        WhatsApp Us
+                    </a>
+                    <a href="tel:+916364671786" class="cta-call">
+                        <span class="iconify" data-icon="lucide:phone" style="font-size:16px"></span>
+                        Call Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq-section" aria-label="FAQ">
+        <div class="faq-header">
+            <h2>Frequently Asked Questions</h2>
+            <p>Everything you need to know about our free resume templates</p>
+        </div>
+        <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Are these resume templates really free?<span class="iconify" data-icon="lucide:chevron-down"></span></div><div class="faq-a">Yes, all 29 resume templates are completely free with no signup or payment required. Vizonis Academy provides these as part of our mission to help students and professionals build successful careers in data and analytics.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">What formats can I download the resumes in?<span class="iconify" data-icon="lucide:chevron-down"></span></div><div class="faq-a">You can download each resume in both PDF format (for online applications) and Word/DOCX format (for editing). The Word format allows you to modify content, add your details, and personalize every section in Microsoft Word or Google Docs.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Which resume template should I use as a fresher?<span class="iconify" data-icon="lucide:chevron-down"></span></div><div class="faq-a">As a fresher, choose templates labeled "Fresher" in your target role. These emphasize education, projects, internships, and skills rather than work experience. For example, use "Data Analyst Power BI & SQL — Fresher" if targeting a DA role.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Can I edit the downloaded Word resume?<span class="iconify" data-icon="lucide:chevron-down"></span></div><div class="faq-a">Absolutely. The Word/DOCX download is fully editable in Microsoft Word, Google Docs, or any compatible word processor. You can change names, add experience, modify skills, adjust formatting, and personalize every section.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">What's the difference between Junior, Mid, and Senior templates?<span class="iconify" data-icon="lucide:chevron-down"></span></div><div class="faq-a">Junior (0–3 years) focuses on learning, execution, and growing skills. Mid (4–5 years) highlights project ownership, mentoring, and measurable impact. Senior (5+ years) emphasizes leadership, strategic thinking, team management, and business transformation.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Do you offer resume review or career guidance?<span class="iconify" data-icon="lucide:chevron-down"></span></div><div class="faq-a">Yes! Vizonis Academy offers personalized resume reviews and career mentoring. Reach out on WhatsApp at +91 6364 671 786 or call us directly. Our mentors have real industry experience and can optimize your resume for specific roles.</div></div>
+    </section>
+</main>
+
+<footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <div class="logo-text">Vizonis Academy</div>
+            <p>Empowering the next generation of data professionals with industry-ready skills, free resume templates, and career guidance.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Quick Links</h4>
+            <a href="https://analytics.vizonis.com">Home</a>
+            <a href="#templatesGrid">Resume Templates</a>
+            <a href="https://analytics.vizonis.com/courses">Courses</a>
+            <a href="https://analytics.vizonis.com/about">About Us</a>
+        </div>
+        <div class="footer-col">
+            <h4>Top Templates</h4>
+            <a href="#" onclick="showPreviewByID('da-pbi-fresher');return false;">DA Fresher — Power BI</a>
+            <a href="#" onclick="showPreviewByID('ds-junior');return false;">Data Scientist Junior</a>
+            <a href="#" onclick="showPreviewByID('de-sf-senior');return false;">DE Snowflake Senior</a>
+            <a href="#" onclick="showPreviewByID('fab-sf-mid');return false;">Fabric & Snowflake Mid</a>
+        </div>
+        <div class="footer-col">
+            <h4>Contact Us</h4>
+            <div class="footer-contact-item"><span class="iconify" data-icon="lucide:phone" style="font-size:15px;color:rgba(255,255,255,.4)"></span><a href="tel:+916364671786">+91 6364 671 786</a></div>
+            <div class="footer-contact-item"><span class="iconify" data-icon="lucide:message-circle" style="font-size:15px;color:rgba(255,255,255,.4)"></span><a href="https://wa.me/916364671786?text=Hi%20Vizonis%20Academy">WhatsApp</a></div>
+            <div class="footer-contact-item"><span class="iconify" data-icon="lucide:mail" style="font-size:15px;color:rgba(255,255,255,.4)"></span><a href="mailto:contact@vizonis.com">contact@vizonis.com</a></div>
+            <div class="footer-contact-item"><span class="iconify" data-icon="lucide:globe" style="font-size:15px;color:rgba(255,255,255,.4)"></span><a href="https://analytics.vizonis.com">analytics.vizonis.com</a></div>
+        </div>
+    </div>
+    <div class="footer-bottom">© 2025 Vizonis Academy. All rights reserved. Free resume templates for students and professionals.</div>
+</footer>
+
+<a href="https://wa.me/916364671786?text=Hi%20Vizonis%20Academy%2C%20I%20am%20browsing%20your%20free%20resume%20templates." class="wa-float" aria-label="Chat on WhatsApp" target="_blank" rel="noopener"><span class="iconify" data-icon="lucide:message-circle"></span></a>
+
+<div class="toast" id="toast"></div>
+
+<div class="modal-overlay" id="modal" role="dialog" aria-modal="true" aria-label="Resume Preview">
+    <div class="modal-container">
+        <div class="modal-header">
+            <div class="modal-title-area">
+                <div class="modal-title" id="modalTitle">Resume Preview</div>
+                <div class="modal-subtitle" id="modalSubtitle">Click download to save as PDF or Word</div>
+            </div>
+            <div class="modal-right">
+                <div class="dl-loading" id="dlLoading"><div class="spinner"></div> Generating...</div>
+                <div class="modal-actions" id="modalActions">
+                    <button class="modal-dl-btn dl-pdf" onclick="downloadPDF()" aria-label="Download PDF"><span class="iconify" data-icon="lucide:file-down"></span> PDF</button>
+                    <button class="modal-dl-btn dl-docx" onclick="downloadDOCX()" aria-label="Download DOCX"><span class="iconify" data-icon="lucide:file-text"></span> DOCX</button>
+                </div>
+                <button class="modal-close" onclick="closeModal()" aria-label="Close"><span class="iconify" data-icon="lucide:x"></span></button>
+            </div>
+        </div>
+        <div class="modal-body"><div class="resume-paper" id="resumePaper"></div></div>
+    </div>
+</div>
+
+<script>
+const T=[
+{id:'ba-fresher',cat:'Business Analyst',level:'Fresher',color:'#2A382E',layout:'sidebar',n:'Priya Sharma',t:'Business Analyst',e:'priya.sharma@email.com',p:'+91 98765 43210',l:'Bangalore, India',li:'linkedin.com/in/priyasharma',sum:'Recent Information Technology graduate with strong foundational knowledge in business analysis methodologies. Proficient in requirements elicitation, use case modeling, and process documentation. Seeking an entry-level Business Analyst position to apply academic learning.',sk:['Requirements Gathering','Use Case Modeling','UML Diagrams','BPMN 2.0','Microsoft Visio','SQL Basics','Microsoft Excel','JIRA','Agile Scrum','Wireframing','Google Sheets','Stakeholder Interviewing'],exp:[],proj:[{n:'Online Shopping Portal – BA Documentation Project',b:['Documented 45+ business requirements using user stories and acceptance criteria','Created 12 process flow diagrams using BPMN 2.0 notation in Microsoft Visio','Conducted mock stakeholder interviews with 5 department representatives','Prepared a comprehensive BRD following IEEE 830 standards']},{n:'Library Management System – Requirements Analysis',b:['Analyzed existing manual library processes and identified 15 pain points','Developed 8 use case diagrams and detailed specifications in UML','Created wireframes for 5 key screens using Figma','Presented findings to a panel of 3 faculty members']}],edu:[{d:'B.Tech in Information Technology',s:'Visvesvaraya Technological University, Bangalore',y:'2024',g:'8.5 CGPA'}],cert:['Agile Scrum Foundation – Simplilearn (2024)','SQL for Business Analysts – Udemy (2024)','Business Analysis Fundamentals – Coursera (2023)']},
+{id:'ba-junior',cat:'Business Analyst',level:'Junior (0-3 yrs)',color:'#2A382E',layout:'sidebar',n:'Rahul Verma',t:'Business Analyst',e:'rahul.verma@email.com',p:'+91 87654 32109',l:'Hyderabad, India',li:'linkedin.com/in/rahulverma',sum:'Business Analyst with 2 years of experience in requirements gathering, process optimization, and stakeholder management within the BFSI domain. Skilled in translating complex business needs into actionable technical specifications.',sk:['Requirements Elicitation','Process Mapping','BPMN & UML','Microsoft Visio','SQL (Intermediate)','Advanced Excel & VBA','Power BI Basics','JIRA & Confluence','Agile & Scrum','User Story Writing','Gap Analysis','Stakeholder Management'],exp:[{role:'Business Analyst',co:'FinEdge Solutions Pvt Ltd, Hyderabad',dt:'Jul 2022 – Present',b:['Gathered and documented 80+ requirements for a loan origination system','Created detailed process flow diagrams reducing requirement ambiguity by 40%','Collaborated with 12-member dev team in 2-week Agile sprints','Facilitated 30+ stakeholder workshops','Prepared test scenarios for UAT ensuring 95% coverage']},{role:'BA Intern',co:'TechBridge Consulting, Hyderabad',dt:'Jan 2022 – Jun 2022',b:['Assisted senior BAs in documenting requirements for CRM migration','Created 20+ workflow diagrams using Visio','Participated in daily stand-ups and sprint planning']}],proj:[],edu:[{d:'MBA in Information Systems',s:'Osmania University, Hyderabad',y:'2022',g:'7.8 CGPA'},{d:'B.Com (Computers)',s:'Osmania University',y:'2020',g:'8.0 CGPA'}],cert:['ECBA – IIBA (2023)','PMI-ACP – PMI (2023)','Power BI Desktop for BA – LinkedIn Learning (2023)']},
+{id:'ba-senior',cat:'Business Analyst',level:'Senior (5+ yrs)',color:'#2A382E',layout:'sidebar',n:'Ananya Patel',t:'Senior Business Analyst',e:'ananya.patel@email.com',p:'+91 76543 21098',l:'Mumbai, India',li:'linkedin.com/in/ananyapatel',sum:'Senior Business Analyst with 7+ years driving business transformation across BFSI, retail, and healthcare. Proven track record of leading cross-functional teams, managing C-suite stakeholder relationships, and delivering multi-million dollar projects.',sk:['Enterprise Requirements Management','Business Process Reengineering','Strategic Planning','Program Management','Stakeholder Management (C-Level)','SQL & Data Analysis','Power BI & Tableau','Advanced Excel & VBA','JIRA & Azure DevOps','SAFe Agile','Change Management','Vendor Management'],exp:[{role:'Senior Business Analyst',co:'Capgemini India, Mumbai',dt:'Mar 2021 – Present',b:['Led requirements analysis for ₹25Cr digital banking transformation impacting 2M+ customers','Managed stakeholder relationships with 15+ business units across 3 geographies','Designed requirements traceability matrix reducing defect leakage by 60%','Mentored team of 5 junior BAs and established BA best practices','Facilitated 50+ executive-level workshops']},{role:'Business Analyst',co:'Accenture, Mumbai',dt:'Aug 2018 – Feb 2021',b:['Delivered 12 projects across retail and healthcare using Agile and Waterfall','Created business cases and ROI analyses securing ₹8Cr in funding','Developed as-is/to-be process maps saving 30% processing time','Managed end-to-end requirements lifecycle']},{role:'Business Analyst',co:'Infosys Ltd, Pune',dt:'Jul 2016 – Jul 2018',b:['Documented requirements for ERP implementation for Fortune 500 client','Coordinated with offshore and onshore teams across US and India','Created 100+ test cases for UAT ensuring zero critical defects']}],proj:[],edu:[{d:'MBA in Finance & IT',s:'S.P. Jain Institute, Mumbai',y:'2016',g:'3.6 GPA'},{d:'B.E. in Computer Science',s:'Pune University',y:'2014',g:'8.2 CGPA'}],cert:['CBAP – IIBA (2020)','SAFe 5 Agilist (2021)','TOGAF 9 (2022)','PMP – PMI (2023)']},
+{id:'da-pbi-fresher',cat:'DA - Power BI & SQL',level:'Fresher',color:'#1B4F72',layout:'header',n:'Vikram Singh',t:'Data Analyst',e:'vikram.singh@email.com',p:'+91 65432 10987',l:'Delhi, India',li:'linkedin.com/in/vikramsingh',sum:'Motivated recent graduate with hands-on experience in Microsoft Power BI and SQL through academic projects. Passionate about transforming raw data into actionable business insights. Looking for an entry-level Data Analyst role.',sk:['Microsoft Power BI (DAX, Power Query)','SQL (Joins, Subqueries, CTEs)','Microsoft Excel (Pivot Tables, VLOOKUP)','Data Cleaning & Transformation','Python Basics','Statistics & Probability','Data Visualization','GitHub'],exp:[],proj:[{n:'Retail Sales Dashboard – Power BI',b:['Built interactive Power BI dashboard analyzing 50K+ retail sales records','Implemented DAX measures for YoY growth (18%), margin analysis','Created drill-through pages for regional analysis with slicers','Connected multiple data sources using Power Query']},{n:'Employee Attrition Analysis – SQL',b:['Wrote 30+ complex SQL queries including window functions and CTEs','Identified key attrition drivers using correlation analysis','Created staged data model following star schema','Automated monthly reporting queries saving 4 hours/month']}],edu:[{d:'B.Sc in Statistics',s:'Delhi University',y:'2024',g:'8.3 CGPA'}],cert:['Microsoft PL-300 (2024)','SQL for Data Science – Coursera (2024)','Data Analysis with Python – IBM (2023)']},
+{id:'da-pbi-junior',cat:'DA - Power BI & SQL',level:'Junior (0-3 yrs)',color:'#1B4F72',layout:'header',n:'Meera Krishnan',t:'Data Analyst',e:'meera.krishnan@email.com',p:'+91 54321 09876',l:'Chennai, India',li:'linkedin.com/in/meerakrishnan',sum:'Data Analyst with 2 years specializing in Power BI dashboard development and SQL-based data analysis. Proven ability to deliver self-service BI solutions enabling data-driven decision making.',sk:['Power BI (Desktop, Service, DAX, Power Query)','SQL Server (T-SQL, Stored Procedures)','Excel Advanced (Power Pivot, VBA)','Data Modeling (Star Schema)','ETL Processes','Python (Pandas, NumPy)','Azure Data Studio','Git'],exp:[{role:'Data Analyst',co:'Retail Insights Analytics, Chennai',dt:'Aug 2022 – Present',b:['Developed 15+ Power BI dashboards serving 50+ business users','Designed centralized data model with 20+ tables reducing refresh time by 60%','Wrote optimized SQL queries and stored procedures','Implemented row-level security for 3 organizational hierarchies','Created DAX measures for YTD, MTD, rolling averages, Pareto analysis']},{role:'Data Analyst Intern',co:'DataMinds Solutions, Chennai',dt:'Feb 2022 – Jul 2022',b:['Migrated Excel reports to Power BI for FMCG client','Applied Power Query for cleaning from 5+ source systems']}],proj:[],edu:[{d:'M.Sc in Data Science',s:'Anna University, Chennai',y:'2022',g:'8.7 CGPA'},{d:'B.Sc in Mathematics',s:'Loyola College, Chennai',y:'2020',g:'8.4 CGPA'}],cert:['PL-300 (2023)','AZ-900 (2023)','SQL Server Development – Udemy (2022)']},
+{id:'da-pbi-mid',cat:'DA - Power BI & SQL',level:'Mid (4-5 yrs)',color:'#1B4F72',layout:'header',n:'Arjun Reddy',t:'Data Analyst',e:'arjun.reddy@email.com',p:'+91 43210 98765',l:'Hyderabad, India',li:'linkedin.com/in/arjunreddy',sum:'Data Analyst with 5 years in Power BI development, SQL analytics, and data modeling. Expert in enterprise-grade BI solutions with complex DAX logic, optimized data models, and automated pipelines. Enabled $2M+ in cost savings.',sk:['Power BI (Expert: DAX, Power Query, Paginated Reports)','SQL Server (Advanced T-SQL, Performance Tuning)','Azure Data Factory','Azure Analysis Services','Data Modeling (Enterprise Scale)','Python (ETL Automation)','Power Automate','SharePoint Integration','Agile & Scrum'],exp:[{role:'Data Analyst',co:'Deloitte India, Hyderabad',dt:'Apr 2021 – Present',b:['Architected enterprise Power BI solution with 40+ dashboards for 200+ users','Optimized DAX calculations reducing query time from 45s to under 3s','Built automated ETL pipelines using ADF processing 10M+ records daily','Implemented incremental refresh reducing refresh time by 75%','Mentored 3 junior analysts on DAX optimization']},{role:'Junior Data Analyst',co:'TCS, Hyderabad',dt:'Jul 2019 – Mar 2021',b:['Developed 20+ Power BI reports for banking client replacing Excel','Created complex stored procedures for monthly MIS reporting','Designed data models integrating SQL Server, Oracle, flat files','Reduced report generation time by 65% via Power Query optimization']}],proj:[],edu:[{d:'B.Tech in Computer Science',s:'JNTU Hyderabad',y:'2019',g:'8.0 CGPA'}],cert:['PL-300 (2021)','DP-500 (2023)','DP-203 (2023)','ITIL 4 (2022)']},
+{id:'da-pbi-senior',cat:'DA - Power BI & SQL',level:'Senior (5+ yrs)',color:'#1B4F72',layout:'header',n:'Neha Gupta',t:'Senior Data Analyst',e:'neha.gupta@email.com',p:'+91 32109 87654',l:'Pune, India',li:'linkedin.com/in/nehagupta',sum:'Senior Data Analyst with 8 years leading Power BI implementations for Fortune 500 clients. Expert in enterprise BI architecture, performance optimization, and building analytics centers of excellence.',sk:['Power BI (Architecture, Governance, Expert DAX)','SQL Server (Expert, Performance Tuning)','Azure Synapse Analytics','Azure Analysis Services (Tabular Models)','DAX Studio & Performance Analyzer','Power BI Embedded & REST APIs','Data Governance & Data Quality','Team Leadership (8+ members)','Stakeholder Management','COE Setup'],exp:[{role:'Senior Data Analyst',co:'Infosys Ltd, Pune',dt:'Jan 2022 – Present',b:['Led team of 8 analysts delivering Power BI solutions across 12 countries','Architected premium capacity solution handling 500+ users with sub-5s loads','Established Power BI COE defining standards and governance','Reduced licensing costs by ₹40L through capacity optimization','Implemented semantic model as single source of truth for 50+ reports']},{role:'Data Analyst',co:'Cognizant, Pune',dt:'Mar 2018 – Dec 2021',b:['Developed 30+ enterprise dashboards for BFSI with multi-source integration','Built real-time analytics using SQL Server streaming for fraud detection','Optimized SQL queries reducing warehouse load by 40% on 2TB DW','Created paginated reports for regulatory compliance (RBI, SEBI)']},{role:'Junior Data Analyst',co:'Wipro, Pune',dt:'Jul 2016 – Feb 2018',b:['Developed SQL-based MIS reports and Excel dashboards','Automated data extraction using SQL Agent jobs saving 20 hrs/week']}],proj:[],edu:[{d:'M.Tech in Data Science',s:'IIIT Pune',y:'2016',g:'9.0 CGPA'},{d:'B.Tech in IT',s:'Pune University',y:'2014',g:'8.5 CGPA'}],cert:['PL-300 (2020)','DP-500 (2022)','DP-600 (2024)','AZ-305 (2023)']},
+{id:'da-pbi-consultant',cat:'DA - Power BI & SQL',level:'Consultant',color:'#1B4F72',layout:'header',n:'Suresh Kumar',t:'Power BI Consultant',e:'suresh.kumar@email.com',p:'+91 21098 76543',l:'Bangalore, India',li:'linkedin.com/in/sureshkumar',sum:'Power BI Consultant with 6+ years of cross-industry consulting experience specializing in end-to-end BI solution delivery. Expert in solution architecture and governance for enterprise clients.',sk:['Power BI (Solution Architecture, Premium Capacity)','SQL Server (Expert, DW Design)','Azure Data Platform (Synapse, ADF, AAS)','Data Modeling (Kimball, Inmon)','Power BI Governance & Security','Client Management','Proposal & SOW Development','Training & Enablement','Vendor Evaluation','BI Strategy'],exp:[{role:'Power BI Consultant',co:'PwC India, Bangalore',dt:'Jun 2021 – Present',b:['Led Power BI implementation for 8 enterprise clients across BFSI, retail, healthcare','Architected scalable BI platform on Azure for ₹500Cr retail chain with 150+ stores','Developed proposals and SOWs securing ₹3Cr in consulting revenue','Conducted 20+ Power BI training workshops for client teams','Implemented governance framework including workspace management and RLS']},{role:'Senior Data Analyst',co:'KPMG India, Bangalore',dt:'Aug 2018 – May 2021',b:['Delivered Power BI solutions for 5 audit/advisory clients','Built unified reporting layer replacing 30+ legacy reports','Designed ETL architectures using ADF and SSIS','Reduced client reporting cycle from 5 days to 1 day']}],proj:[],edu:[{d:'MBA in Business Analytics',s:'IIM Bangalore',y:'2018',g:'3.4 GPA'},{d:'B.Tech in ECE',s:'NIT Trichy',y:'2016',g:'8.7 CGPA'}],cert:['PL-300, DP-500, DP-600','AZ-305 (2023)','TOGAF 9 (2021)','CMC (2022)']},
+{id:'da-pbi-advanced',cat:'DA - Power BI & SQL',level:'Mid (4-5 yrs)',color:'#1B4F72',layout:'header',n:'Divya Iyer',t:'Data Analyst – Power BI Specialist',e:'divya.iyer@email.com',p:'+91 10987 65432',l:'Mumbai, India',li:'linkedin.com/in/divyaiyer',sum:'Data Analyst with 4 years in advanced Power BI development including complex DAX patterns, custom visuals, and embedded analytics. Creating highly interactive, performant dashboards for executive leadership.',sk:['Advanced DAX (Calculation Groups, Field Parameters)','Power Query (M Language, Custom Connectors)','Power BI Embedded & JavaScript API','SQL (Window Functions, Optimization)','Python Integration in Power BI','Power BI Report Server','Custom Visuals Development (TypeScript)','XMLA Endpoint','VertiPaq Engine Tuning'],exp:[{role:'Power BI Specialist',co:'L&T Infotech, Mumbai',dt:'Mar 2022 – Present',b:['Built 10+ executive dashboards with calculation groups for 20+ KPIs','Developed custom Power BI connector using M language for REST API','Implemented embedded analytics in customer-facing portal for 5000+ users','Created advanced DAX patterns: many-to-many, parent-child, temporal','Reduced model size by 45% through VertiPaq optimization using DAX Studio']},{role:'Data Analyst',co:'Mphasis, Mumbai',dt:'Jun 2020 – Feb 2022',b:['Developed 25+ reports for US healthcare client with HIPAA-compliant access','Implemented incremental refresh and composite models for 50M+ row datasets','Created automated testing framework using PowerShell and XMLA']}],proj:[],edu:[{d:'MCA',s:'VJTI Mumbai',y:'2020',g:'8.4 CGPA'},{d:'B.Sc in CS',s:'Mumbai University',y:'2018',g:'8.1 CGPA'}],cert:['PL-300 (2021)','DP-500 (2023)','Power BI Advanced – Udemy (2022)','TypeScript for Custom Visuals (2023)']},
+{id:'ds-fresher',cat:'Data Scientist',level:'Fresher',color:'#6C3483',layout:'minimal',n:'Karthik Nair',t:'Data Scientist',e:'karthik.nair@email.com',p:'+91 99887 76655',l:'Kochi, India',li:'linkedin.com/in/karthiknair',sum:'Recent postgraduate in Data Science with strong foundations in statistics, machine learning, and programming. Built 5+ end-to-end ML projects using Python, SQL, and Power BI.',sk:['Python (Pandas, NumPy, Scikit-learn)','SQL (Queries, Joins, Aggregations)','Machine Learning (Supervised, Unsupervised)','Statistics & Probability','Data Visualization (Matplotlib, Seaborn)','Power BI (Basic Dashboards)','Jupyter Notebook','Git & GitHub'],exp:[],proj:[{n:'Customer Churn Prediction Model',b:['Built Random Forest classifier achieving 89% accuracy on telecom churn data','Performed feature engineering creating 15+ derived features','Identified top 5 churn predictors using correlation and chi-square tests','Deployed predictions in Power BI dashboard']},{n:'Sales Forecasting – Time Series',b:['Implemented ARIMA and Prophet models with 7% MAPE','Used SQL to extract 3 years of transactional data','Created Power BI dashboard comparing forecast vs actual with confidence intervals','Documented complete ML pipeline']}],edu:[{d:'M.Sc in Data Science',s:'Cochin University',y:'2024',g:'8.6 CGPA'},{d:'B.Sc in Mathematics',s:'Kerala University',y:'2022',g:'8.2 CGPA'}],cert:['Python for Data Science – NPTEL (2024)','ML – Stanford Coursera (2023)','PL-300 (2024)']},
+{id:'ds-junior',cat:'Data Scientist',level:'Junior (0-3 yrs)',color:'#6C3483',layout:'minimal',n:'Pooja Deshmukh',t:'Data Scientist',e:'pooja.deshmukh@email.com',p:'+91 88776 65544',l:'Pune, India',li:'linkedin.com/in/poojadeshmukh',sum:'Data Scientist with 2 years building ML models and analytical solutions. Proficient in Python, SQL, Power BI with experience in NLP, classification, and recommendation systems.',sk:['Python (Scikit-learn, TensorFlow, NLTK)','SQL (Advanced Queries)','Machine Learning (Classification, Regression, Clustering)','NLP (Sentiment Analysis, NER)','Deep Learning (CNN, RNN Basics)','Power BI (Dashboard Development)','Statistical Analysis','MLflow (Experiment Tracking)'],exp:[{role:'Data Scientist',co:'Analytics Vidhya Corp, Pune',dt:'Sep 2022 – Present',b:['Developed customer segmentation using K-Means identifying 4 personas','Built sentiment analysis NLP pipeline processing 10K+ reviews at 85% accuracy','Created 8 Power BI dashboards presenting ML results to stakeholders','Implemented A/B testing framework for 50K+ user interactions','Automated feature engineering pipeline using SQL reducing training time 30%']},{role:'DS Intern',co:'Fractal Analytics, Pune',dt:'Mar 2022 – Aug 2022',b:['Assisted in demand forecasting model for retail client using XGBoost','Performed data cleaning on 5M+ records using Python and SQL']}],proj:[],edu:[{d:'M.Tech in DS & AI',s:'COEP Pune',y:'2022',g:'8.9 CGPA'}],cert:['TensorFlow Developer – Google (2023)','Deep Learning – Coursera (2023)','PL-300 (2022)']},
+{id:'ds-mid',cat:'Data Scientist',level:'Mid (4-5 yrs)',color:'#6C3483',layout:'minimal',n:'Amit Joshi',t:'Data Scientist',e:'amit.joshi@email.com',p:'+91 77665 54433',l:'Bangalore, India',li:'linkedin.com/in/amitjoshi',sum:'Data Scientist with 5 years in end-to-end ML solution development. Expertise in scalable ML pipelines, deep learning, and enabling data-driven decisions across healthcare and fintech.',sk:['Python (Advanced, OOP, Design Patterns)','SQL (Expert, Optimization)','Machine Learning (Full Lifecycle)','Deep Learning (PyTorch, TensorFlow)','MLOps (MLflow, Docker, CI/CD)','NLP (Transformers, BERT, LLMs)','Power BI (Advanced Analytics)','Azure ML / AWS SageMaker','A/B Testing'],exp:[{role:'Data Scientist',co:'Flipkart, Bangalore',dt:'Apr 2021 – Present',b:['Led recommendation engine serving 50M+ users increasing CTR by 22%','Built NLP models for product categorization using BERT and GPT','Designed MLOps pipeline with MLflow, Docker, GitHub Actions','Created Power BI dashboards with automated drift detection','Mentored 3 junior data scientists']},{role:'Data Scientist',co:'PharmEasy, Mumbai',dt:'Jul 2019 – Mar 2021',b:['Demand forecasting model reducing inventory costs by ₹12Cr annually','Patient risk stratification model with AUC of 0.92','A/B testing framework optimizing conversion funnels by 15%','SQL-based feature store serving 10+ ML models']}],proj:[],edu:[{d:'M.Tech in AI & ML',s:'IIT Bombay',y:'2019',g:'9.2 CGPA'},{d:'B.Tech in CS',s:'VIT Vellore',y:'2017',g:'8.8 CGPA'}],cert:['AWS ML Specialty (2022)','GCP Professional ML Engineer (2023)','PL-300 (2020)']},
+{id:'ds-senior',cat:'Data Scientist',level:'Senior (5+ yrs)',color:'#6C3483',layout:'minimal',n:'Lakshmi Menon',t:'Senior Data Scientist',e:'lakshmi.menon@email.com',p:'+91 66554 43322',l:'Bangalore, India',li:'linkedin.com/in/lakshmimenon',sum:'Senior Data Scientist with 9 years leading AI/ML initiatives. Expertise in ML architectures, GenAI applications, and AI strategy. Delivered $10M+ business impact through data science solutions.',sk:['ML & Deep Learning (Expert)','GenAI (LLMs, RAG, Fine-tuning)','MLOps & ML Architecture','Python (Expert, System Design)','SQL (Expert)','Power BI (Strategic Dashboards)','Cloud ML (AWS, Azure, GCP)','Team Leadership (10+ members)','AI Strategy','Executive Communication'],exp:[{role:'Senior Data Scientist – AI Lead',co:'Google India, Bangalore',dt:'Jan 2022 – Present',b:['Lead team of 12 building GenAI applications for enterprise clients','Designed RAG-based search processing 100K+ docs at 92% relevance','Built ML platform serving 50+ models with 99.9% uptime on Kubernetes','Drove AI strategy for 5 Fortune 500 clients defining roadmaps','Presented solutions to C-suite securing $15M+ new business']},{role:'Data Scientist',co:'Microsoft India, Hyderabad',dt:'Jun 2017 – Dec 2021',b:['NLP models for Azure Cognitive Services used by 1000+ customers','Fraud detection system processing 1M+ txns/day with 99.5% precision','Power BI dashboards for Azure service health monitoring','Published 2 papers at NeurIPS and ICML']},{role:'Data Analyst',co:'Amazon India, Hyderabad',dt:'Jul 2015 – May 2017',b:['Supply chain optimization reducing delivery time by 18%','SQL-based analytics for 200+ fulfillment centers']}],proj:[],edu:[{d:'Ph.D. in Machine Learning',s:'IISc Bangalore',y:'2015',g:'9.5'},{d:'M.Tech in CS',s:'NITK Surathkal',y:'2011',g:'9.0 CGPA'}],cert:['AWS ML Specialty (2019)','GCP Professional ML (2021)','Azure AI Engineer (2020)','GenAI with LLMs – DeepLearning.AI (2024)']},
+{id:'da-tab-fresher',cat:'DA - Tableau & SQL',level:'Fresher',color:'#1A5276',layout:'sidebar',n:'Rohan Kapoor',t:'Data Analyst',e:'rohan.kapoor@email.com',p:'+91 55443 32211',l:'Jaipur, India',li:'linkedin.com/in/rohankapoor',sum:'Recent graduate with strong skills in Tableau visualization and SQL data analysis. Completed 4 real-world projects creating interactive dashboards and writing complex queries.',sk:['Tableau Desktop (Maps, Charts, Dashboards)','Tableau Prep (Data Cleaning)','SQL (Joins, Subqueries, Aggregations)','Microsoft Excel','Data Visualization Principles','Statistics Basics','Python Basics'],exp:[],proj:[{n:'COVID-19 Analytics Dashboard – Tableau',b:['Interactive dashboard visualizing COVID trends across 200+ countries','Used SQL to clean and aggregate raw data from multiple sources','Implemented parameter-driven views with 5 story points','Applied storytelling with data principles']},{n:'HR Analytics Dashboard – Tableau',b:['Comprehensive HR dashboard analyzing attrition and satisfaction','LOD expressions for attrition rate by tenure','Built drill-down from department to individual level']}],edu:[{d:'B.Tech in Computer Science',s:'MNIT Jaipur',y:'2024',g:'8.4 CGPA'}],cert:['Tableau Desktop Specialist (2024)','SQL for Data Analysis – HackerRank (2024)']},
+{id:'da-tab-junior',cat:'DA - Tableau & SQL',level:'Junior (0-3 yrs)',color:'#1A5276',layout:'sidebar',n:'Sanjana Rao',t:'Data Analyst',e:'sanjana.rao@email.com',p:'+91 44332 21100',l:'Bangalore, India',li:'linkedin.com/in/sanjanarao',sum:'Data Analyst with 2 years creating Tableau dashboards and SQL analytical solutions. Skilled in LOD expressions, data visualization best practices, and self-service analytics.',sk:['Tableau (Desktop, Server, LOD, Sets, Parameters)','Tableau Prep (Complex Flows)','SQL (PostgreSQL, MySQL, SQL Server)','Data Modeling','Excel (Advanced)','Python (Basic)','Storytelling with Data'],exp:[{role:'Data Analyst',co:'KPMG India, Bangalore',dt:'Oct 2022 – Present',b:['Created 20+ Tableau dashboards for audit and advisory teams','Implemented LOD expressions for cohort analysis and repeat purchase rates','Built self-service platform on Tableau Server with 80+ workbooks','Optimized SQL queries reducing load time from 30s to under 5s','Conducted 10+ training sessions for business users']},{role:'Data Analyst Intern',co:'Mu Sigma, Bangalore',dt:'Apr 2022 – Sep 2022',b:['Assisted in Tableau dashboards for CPG client','Data cleaning using Tableau Prep on messy client datasets']}],proj:[],edu:[{d:'BBA in Business Analytics',s:'Christ University, Bangalore',y:'2022',g:'8.6 CGPA'}],cert:['Tableau Desktop Professional (2023)','Tableau Server Certified (2023)','SQL Intermediate – HackerRank (2022)']},
+{id:'da-tab-mid',cat:'DA - Tableau & SQL',level:'Mid (4-5 yrs)',color:'#1A5276',layout:'sidebar',n:'Deepak Mishra',t:'Senior Data Analyst',e:'deepak.mishra@email.com',p:'+91 33221 10099',l:'Gurugram, India',li:'linkedin.com/in/deepakmishra',sum:'Data Analyst with 5 years specializing in Tableau and SQL for enterprise analytics. Expert in scalable dashboard solutions, performance optimization, and governance.',sk:['Tableau (Expert: Performance, Security, Architecture)','Tableau Prep (Advanced, Scheduled Refresh)','SQL (Expert: PostgreSQL, Redshift, BigQuery)','Tableau Server Administration','Data Governance & Quality','ETL Design','Statistical Analysis','Agile Delivery'],exp:[{role:'Senior Data Analyst',co:'Accenture, Gurugram',dt:'May 2021 – Present',b:['Led Tableau development for Fortune 500 client with 300+ users across 10 countries','Optimized workbooks reducing extract refresh by 70%','Implemented Server governance including permissions and scheduling','Designed multi-layered architecture connecting Redshift, BigQuery, Salesforce','Mentored 4 analysts and established development standards']},{role:'Data Analyst',co:'EY India, Delhi',dt:'Aug 2019 – Apr 2021',b:['Built 30+ Tableau dashboards for healthcare and financial services','Complex SQL queries for extraction from enterprise data warehouses','Parameter-driven what-if analysis for C-suite scenario planning']}],proj:[],edu:[{d:'MBA in Business Analytics',s:'MDI Gurugram',y:'2019',g:'3.5 GPA'},{d:'B.Com (Hons)',s:'SRCC Delhi',y:'2017',g:'8.0 CGPA'}],cert:['Tableau Desktop Professional (2020)','Tableau Server Professional (2021)','AWS Data Analytics (2022)','BigQuery Certified (2023)']},
+{id:'da-tab-senior',cat:'DA - Tableau & SQL',level:'Senior (5+ yrs)',color:'#1A5276',layout:'sidebar',n:'Kavitha Sundaram',t:'Lead Data Analyst',e:'kavitha.sundaram@email.com',p:'+91 22110 09988',l:'Chennai, India',li:'linkedin.com/in/kavithasundaram',sum:'Lead Data Analyst with 8 years in Tableau architecture, SQL analytics, and BI strategy. Proven in establishing best practices, managing Tableau at enterprise scale, and driving data literacy.',sk:['Tableau (Architecture, Blueprint, Migration)','Tableau Server/Cloud (Admin, Migration)','SQL (Expert, DW Architecture)','Looker (Competitor Analysis)','Analytics Strategy','Data Literacy Programs','Vendor Management','Executive Stakeholder Mgmt','Team Leadership (12+ members)'],exp:[{role:'Lead Data Analyst – Tableau Practice',co:'Cognizant, Chennai',dt:'Feb 2022 – Present',b:['Lead Tableau practice of 12 analysts across 8 enterprise accounts ($5M revenue)','Designed architecture and migration plan for Server-to-Cloud transition','Conducted Blueprint assessments identifying $200K+ in optimization','Data literacy program training 500+ users on self-service analytics','Managed Server environment: 2000+ users, 500+ workbooks, 99.9% uptime']},{role:'Senior Data Analyst',co:'TCS, Chennai',dt:'Jul 2017 – Jan 2022',b:['Enterprise Tableau solutions for 3 banking clients with regulatory reporting','Unified data model in SQL Server for 100+ reports','Led Server administration: security, performance, capacity planning','Reduced dev cycle time by 50% with standardized templates']}],proj:[],edu:[{d:'M.E. in Computer Science',s:'Anna University',y:'2017',g:'9.1 CGPA'}],cert:['Tableau Desktop & Server Professional (2018-19)','Tableau Blueprint (2022)','SnowPro Core (2023)']},
+{id:'de-ss-junior',cat:'DE - SQL Server',level:'Junior (0-3 yrs)',color:'#B7410E',layout:'header',n:'Aditya Bhattacharya',t:'Data Engineer',e:'aditya.b@email.com',p:'+91 11009 98877',l:'Kolkata, India',li:'linkedin.com/in/adityabhattacharya',sum:'Data Engineer with 2 years in Microsoft SQL Server development and ETL. Skilled in T-SQL, SSIS packages, and database design. Building reliable data pipelines and optimized solutions.',sk:['SQL Server (T-SQL, SSMS)','SSIS (ETL Packages)','Stored Procedures & Functions','Database Design (Normalization)','SSRS (Reports)','SQL Server Agent','Power BI (Data Source)','Git','Python Basics'],exp:[{role:'Data Engineer',co:'Wipro Technologies, Kolkata',dt:'Sep 2022 – Present',b:['Developed 50+ stored procedures for transformation and business logic','Built 15 SSIS packages from flat files, APIs, and legacy systems','Optimized 10+ tables following 3NF for banking data warehouse','SQL Agent jobs for automated ETL with error handling','Reduced ETL time by 35% through query optimization and index tuning']},{role:'DE Intern',co:'TCS, Kolkata',dt:'Mar 2022 – Aug 2022',b:['SSIS package development for Oracle to SQL Server migration','Database administration basics: backup, restore, user management']}],proj:[],edu:[{d:'B.Tech in IT',s:'Jadavpur University',y:'2022',g:'8.3 CGPA'}],cert:['Microsoft 70-461 (2023)','AZ-900 (2023)','SSIS – Udemy (2022)']},
+{id:'de-ss-mid',cat:'DE - SQL Server',level:'Mid (4-5 yrs)',color:'#B7410E',layout:'header',n:'Ritu Sharma',t:'Senior Data Engineer',e:'ritu.sharma@email.com',p:'+91 90088 77666',l:'Noida, India',li:'linkedin.com/in/ritusharma',sum:'Data Engineer with 5 years in SQL Server ecosystem including T-SQL, SSIS/ADF ETL, and data warehouse design. Expert in performance tuning, HA configurations, and Azure migration.',sk:['SQL Server (Expert: T-SQL, Tuning)','SSIS (Advanced ETL)','Azure Data Factory','Azure SQL Database / Managed Instance','DW Design (Kimball)','Change Data Capture (CDC)','SSIS','Database Security & Encryption','Power BI Data Models'],exp:[{role:'Senior Data Engineer',co:'HCL Technologies, Noida',dt:'Jun 2021 – Present',b:['Architected DW on SQL Server processing 50M+ records daily for manufacturing','CDC-based incremental ETL reducing latency from 24hrs to 15min','Migrated 20+ SSIS packages to ADF with 100% functional parity','Tuned critical queries reducing report time from 20min to under 2min','SQL Server Always On groups ensuring 99.99% uptime']},{role:'Data Engineer',co:'Tech Mahindra, Noida',dt:'Aug 2019 – May 2021',b:['30+ SSIS packages for telecom CDR processing','Stored procedures for real-time validation ensuring 99.5% quality','Staging and ODS layers following Medallion architecture']}],proj:[],edu:[{d:'B.Tech in CS',s:'IIIT Delhi',y:'2019',g:'8.6 CGPA'}],cert:['DP-300 (2021)','DP-203 (2022)','PL-300 (2022)']},
+{id:'de-ss-senior',cat:'DE - SQL Server',level:'Senior (5+ yrs)',color:'#B7410E',layout:'header',n:'Manoj Tiwari',t:'Principal Data Engineer',e:'manoj.tiwari@email.com',p:'+91 79977 66555',l:'Bangalore, India',li:'linkedin.com/in/manojtiwari',sum:'Principal Data Engineer with 10 years in SQL Server architecture, data platform design, and cloud migration. Leading data engineering teams and driving strategy for large organizations.',sk:['SQL Server (Master: Architecture, Internals)','Azure Synapse Analytics','Azure Data Factory (Advanced)','Data Platform Architecture','Master Data Management','Data Governance','Team Leadership (15+ members)','Performance Engineering','Disaster Recovery','Cost Optimization'],exp:[{role:'Principal Data Engineer',co:'Infosys Ltd, Bangalore',dt:'Jan 2023 – Present',b:['Cloud-native data platform on Azure Synapse processing 5TB+ daily','Led team of 15 for $2M data modernization program','Multi-region DR solution with zero data loss (RPO=0)','Reduced Azure costs by 40% through right-sizing and optimization','Established CI/CD, code review, automated testing frameworks']},{role:'Senior Data Engineer',co:'Microsoft India, Bangalore',dt:'Mar 2019 – Dec 2022',b:['SQL Server performance engineering for products handling 1B+ daily queries','Real-time analytics platform using SQL Server and Stream Analytics','Mentored 8 engineers on advanced T-SQL and internals','Presented at 3 SQL Server community events']},{role:'Data Engineer',co:'Dell Technologies, Bangalore',dt:'Jul 2015 – Feb 2019',b:['SSIS pipelines processing 200M+ records daily for supply chain','DW with 100+ tables following Kimball methodology']}],proj:[],edu:[{d:'M.Tech in CS',s:'IIT Delhi',y:'2015',g:'9.0 CGPA'}],cert:['DP-203, DP-300 (Expert)','AZ-305, AZ-400 (Expert)','MCSA Database Engineering (2017)','TOGAF 9 (2021)']},
+{id:'de-sf-junior',cat:'DE - Snowflake',level:'Junior (0-3 yrs)',color:'#29B6F6',layout:'minimal',n:'Shreya Nair',t:'Data Engineer',e:'shreya.nair@email.com',p:'+91 68866 55444',l:'Trivandrum, India',li:'linkedin.com/in/shreyanair',sum:'Data Engineer with 2 years in Snowflake data warehousing and cloud data engineering. Skilled in SQL, Snowflake architecture, and modern cloud-native data pipelines.',sk:['Snowflake (Virtual Warehouses, Cloning, Time Travel)','SQL (Advanced, Snowflake-specific)','Snowflake Streams & Tasks','dbt (Data Build Tool)','Python (Snowpark)','Azure Data Factory','Git & GitHub','Data Quality Testing'],exp:[{role:'Data Engineer',co:'Zoho Corporation, Trivandrum',dt:'Nov 2022 – Present',b:['Built 20+ data models in Snowflake following star schema','Implemented Streams and Tasks for incremental loading reducing costs 30%','Developed 50+ dbt models with comprehensive testing','Optimized queries by choosing warehouse sizes and clustering keys saving 25%','Python pipelines using Snowpark for complex transformations']},{role:'DE Intern',co:'Finfort Analytics, Trivandrum',dt:'May 2022 – Oct 2022',b:['Snowflake fundamentals: architecture, virtual warehouses, access control','Migration of PostgreSQL pipelines to Snowflake']}],proj:[],edu:[{d:'M.C.A',s:'CET Trivandrum',y:'2022',g:'8.5 CGPA'}],cert:['SnowPro Core (2023)','SnowPro Architecture (2024)','dbt Analytics Engineering (2023)']},
+{id:'de-sf-mid',cat:'DE - Snowflake',level:'Mid (4-5 yrs)',color:'#29B6F6',layout:'minimal',n:'Nikhil Pandey',t:'Senior Data Engineer',e:'nikhil.pandey@email.com',p:'+91 57755 44333',l:'Hyderabad, India',li:'linkedin.com/in/nikhilpandey',sum:'Senior Data Engineer with 5 years in Snowflake and modern data stack. Expert in scalable architectures using Snowflake, dbt, and Airflow. Building platforms processing terabytes reliably and cost-efficiently.',sk:['Snowflake (Expert: Performance, Security, Governance)','dbt (Advanced Modeling, Macros)','Apache Airflow (DAG Design)','Snowpark & Snowflake Scripting','Data Vault','CI/CD for Data','Python (Airflow Plugins)','Azure/GCP Integration','Cost Optimization'],exp:[{role:'Senior Data Engineer',co:'Deloitte US-India, Hyderabad',dt:'May 2021 – Present',b:['Architected Snowflake platform processing 2TB+ daily for healthcare analytics','Data Vault 2.0 in Snowflake ensuring full auditability','100+ dbt models with 99.5% data quality score','Dynamic tables and Snowpark Container Services for ML feature engineering','Reduced compute costs by 50% through rightsizing and auto-suspend tuning']},{role:'Data Engineer',co:'CRED, Bangalore',dt:'Jul 2019 – Apr 2021',b:['Migrated from Redshift to Snowflake: 40% cost reduction, 3x performance','Airflow DAGs orchestrating 50+ pipelines with error handling','Snowflake Streams for real-time CDC from PostgreSQL and MongoDB']}],proj:[],edu:[{d:'B.Tech in CS',s:'BITS Pilani, Hyderabad',y:'2019',g:'8.8 CGPA'}],cert:['SnowPro Core (2020)','SnowPro Data Engineer (2021)','SnowPro Advanced Architect (2023)','dbt Certification (2022)']},
+{id:'de-sf-senior',cat:'DE - Snowflake',level:'Senior (5+ yrs)',color:'#29B6F6',layout:'minimal',n:'Aparna Das',t:'Principal Data Engineer – Snowflake',e:'aparna.das@email.com',p:'+91 46644 33222',l:'Bangalore, India',li:'linkedin.com/in/aparnadas',sum:'Principal Data Engineer with 8 years and deep Snowflake expertise. Led enterprise implementations across multi-cloud environments. Building platforms for analytics, ML, and real-time applications.',sk:['Snowflake (Master: Cortex, Iceberg, Horizon)','Multi-Cloud (AWS, Azure, GCP)','Data Mesh Architecture','Apache Iceberg & Native Snowflake','Streaming (Kafka, Snowpipe)','Governance (Horizon, Classification)','FinOps for Snowflake','Platform Engineering','Team Leadership (20+ members)','Executive Communication'],exp:[{role:'Principal Data Engineer',co:'Atlassian India, Bangalore',dt:'Mar 2023 – Present',b:['Led Snowflake platform for 500+ users across engineering, analytics, ML','Multi-cloud architecture spanning AWS and GCP with cross-cloud replication','Snowflake Cortex for in-warehouse ML reducing latency from seconds to ms','Self-service platform with automated provisioning, cost attribution, governance','Reduced annual spend by $500K through FinOps practices']},{role:'Senior Data Engineer',co:'Snowflake, Bangalore',dt:'Jan 2020 – Feb 2023',b:['Solution engineer designing reference architectures for enterprise customers','Technical workshops for 50+ customers on best practices','Contributed to Streams & Tasks documentation','Real-time architecture using Snowpipe, Kafka, Materialized Views']}],proj:[],edu:[{d:'M.Tech in Data Science',s:'IIT Madras',y:'2016',g:'9.3 CGPA'},{d:'B.Tech in IT',s:'NIT Calicut',y:'2014',g:'8.9 CGPA'}],cert:['SnowPro Core, DE, Arch, Admin (All 4)','AWS Solutions Architect Pro (2021)','GCP Professional DE (2022)','dbt (2021)']},
+{id:'pbi-sf-junior',cat:'Power BI & Snowflake',level:'Junior (0-3 yrs)',color:'#004E8C',layout:'sidebar',n:'Tarun Mehta',t:'Data Analyst',e:'tarun.mehta@email.com',p:'+91 35533 22110',l:'Mumbai, India',li:'linkedin.com/in/tarunmehta',sum:'Data Analyst with 2 years connecting Power BI to Snowflake for enterprise reporting. Skilled in Snowflake SQL, Power BI modeling, and performant dashboards leveraging Snowflake scalability.',sk:['Power BI (Desktop, DAX, Power Query)','Snowflake (SQL, Virtual Warehouses)','Power BI – Snowflake Connector','DirectQuery vs Import Mode','DAX Optimization','Snowflake Access Control','Basic dbt','Excel'],exp:[{role:'Data Analyst',co:'L&T Mindtree, Mumbai',dt:'Aug 2022 – Present',b:['DirectQuery dashboards on Snowflake for 100M+ row datasets','Optimized DAX and Snowflake queries: 25s to under 4s','Row-level security in both Snowflake and Power BI','12 dashboards for logistics: shipments, delays, route optimization','Collaborated with DEs on Snowflake table design for BI requirements']},{role:'DA Intern',co:'Bajaj Finserv, Pune',dt:'Feb 2022 – Jul 2022',b:['Power BI reports on Snowflake for loan portfolio analytics','Snowflake SQL fundamentals and warehouse management']}],proj:[],edu:[{d:'BMS in IT',s:'NMIMS Mumbai',y:'2022',g:'8.2 CGPA'}],cert:['PL-300 (2023)','SnowPro Core (2023)']},
+{id:'pbi-sf-mid',cat:'Power BI & Snowflake',level:'Mid (4-5 yrs)',color:'#004E8C',layout:'sidebar',n:'Bhavna Kulkarni',t:'Senior Data Analyst',e:'bhavna.kulkarni@email.com',p:'+91 24422 11099',l:'Pune, India',li:'linkedin.com/in/bhavnakulkarni',sum:'Senior Data Analyst with 5 years in Power BI + Snowflake ecosystem. Expert in semantic layers backed by Snowflake, hybrid DirectQuery/Import approaches, and enterprise self-service analytics.',sk:['Power BI (Expert: DAX, Hybrid, XMLA)','Snowflake (Advanced SQL, Performance, Security)','Connector (Advanced)','Composite Models & Aggregations','Snowflake Views & Secure Views','Incremental Refresh with Snowflake','dbt + Power BI','Semantic Model Design'],exp:[{role:'Senior Data Analyst',co:'Accenture India, Pune',dt:'Apr 2021 – Present',b:['Power BI + Snowflake solution for global CPG client: 150+ dashboards','Composite models: DirectQuery real-time + imported aggregates','Snowflake views/materialized views optimized for BI patterns','Incremental refresh reducing refresh time by 80%','Governance: Snowflake RBAC + Power BI RLS unified','Mentored 5 analysts on best practices']},{role:'Data Analyst',co:'Capgemini India, Pune',dt:'Jul 2019 – Mar 2021',b:['20+ dashboards with Snowflake backend for retail analytics','Optimized Snowflake queries by 60% via clustering and sizing']}],proj:[],edu:[{d:'MBA in IT & Systems',s:'Symbiosis Pune',y:'2019',g:'3.4 GPA'},{d:'B.Sc in Statistics',s:'Pune University',y:'2017',g:'8.3 CGPA'}],cert:['PL-300, DP-500','SnowPro Core, SnowPro DE','dbt (2023)']},
+{id:'pbi-sf-senior',cat:'Power BI & Snowflake',level:'Senior (5+ yrs)',color:'#004E8C',layout:'sidebar',n:'Girish Hegde',t:'Lead Analytics Architect',e:'girish.hegde@email.com',p:'+91 13311 00998',l:'Bangalore, India',li:'linkedin.com/in/girishhegde',sum:'Lead Analytics Architect with 8 years designing enterprise platforms combining Power BI and Snowflake. Expert in analytics architecture, governance at scale, and driving modernization.',sk:['Power BI (Architecture, Premium, Embedded)','Snowflake (Platform Architecture, Governance)','Analytics Architecture (Lakehouse, Medallion)','Integration Patterns','Fabric + Snowflake Hybrid','Data Governance & Cataloging','FinOps (Both Platforms)','Team Leadership (15+ members)','Vendor Management','COE Setup'],exp:[{role:'Lead Analytics Architect',co:'EY India, Bangalore',dt:'Feb 2022 – Present',b:['Analytics target architecture for $500M transformation: Power BI + Snowflake + dbt','Led team of 15 across 4 business units','Power BI Premium governance reducing costs $200K/year','Snowflake data mesh with domain-specific Power BI workspaces','Governance: classification, lineage, quality across both platforms']},{role:'Senior Data Analyst',co:'Infosys Ltd, Bangalore',dt:'Mar 2018 – Jan 2022',b:['Enterprise Power BI on Snowflake for 3 Fortune 500 BFSI/retail clients','Snowflake semantic layer: single source of truth for 100+ reports','Snowflake-to-Power BI migration replacing OBIEE, reducing TCO 35%']}],proj:[],edu:[{d:'M.Tech in IT',s:'NITK Surathkal',y:'2018',g:'8.9 CGPA'}],cert:['PL-300, DP-500, DP-600','SnowPro Core, DE, Arch (All 3)','Databricks DE Associate (2022)','TOGAF 9 (2021)']},
+{id:'fab-sf-junior',cat:'Fabric & Snowflake',level:'Junior (0-3 yrs)',color:'#7FBA00',layout:'header',n:'Swati Rane',t:'Data Analyst',e:'swati.rane@email.com',p:'+91 92200 88776',l:'Pune, India',li:'linkedin.com/in/swatirane',sum:'Data Analyst with 2 years in Microsoft Fabric and Snowflake. Skilled in Fabric Workspaces, Lakehouses, Power BI integration, and connecting Snowflake as external source for cross-platform analytics.',sk:['Microsoft Fabric (Workspaces, Lakehouse)','Fabric Power BI Integration','Snowflake (SQL, Partner Connect)','Shortcuts & External Data Sources','Fabric Data Factory (Dataflows)','Power Query Online','DAX Basics','SQL Basics','Excel','Git'],exp:[{role:'Data Analyst',co:'LTIMindtree, Pune',dt:'Jul 2022 – Present',b:['Fabric Workspaces with Lakehouse and Power BI for retail analytics','Snowflake as external source via Shortcuts for cross-platform access','8 Power BI reports analyzing data from both Fabric and Snowflake','Dataflows in Fabric Data Factory for cleaning and transformation','Snowflake Partner Connect for secure Fabric integration']},{role:'DA Intern',co:'Persistent Systems, Pune',dt:'Jan 2022 – Jun 2022',b:['Fabric fundamentals: OneLake, Lakehouse, Data Factory','Snowflake SQL query development for extraction and reporting']}],proj:[],edu:[{d:'B.Tech in CS',s:'Pune University',y:'2022',g:'8.4 CGPA'}],cert:['PL-300 (2023)','DP-600 (2024)','SnowPro Core (2023)']},
+{id:'fab-sf-mid',cat:'Fabric & Snowflake',level:'Mid (4-5 yrs)',color:'#7FBA00',layout:'header',n:'Rajesh Pillai',t:'Senior Data Analyst',e:'rajesh.pillai@email.com',p:'+91 81199 77665',l:'Hyderabad, India',li:'linkedin.com/in/rajeshpillai',sum:'Senior Data Analyst with 5 years in Microsoft Fabric and Snowflake. Expert in hybrid architectures leveraging Fabric for BI/ML and Snowflake for enterprise DW. Delivering cross-platform solutions at scale.',sk:['Microsoft Fabric (Expert: Lakehouse, Warehouse, Real-Time)','Snowflake (Advanced SQL, Performance)','Integration (Shortcuts, PolyBase)','Fabric Data Factory (Pipelines, Dataflows)','Delta Lake & Parquet Optimization','Power BI in Fabric (Expert)','Medallion Architecture','Fabric Event Streams','dbt + Fabric','Security & Governance'],exp:[{role:'Senior Data Analyst',co:'KPMG India, Hyderabad',dt:'Jun 2021 – Present',b:['Hybrid architecture: Fabric for BI/ML, Snowflake for DW for banking client','Fabric Shortcuts to Snowflake: seamless access without duplication','25+ Power BI reports from both Fabric Lakehouse and Snowflake','Medallion architecture in Lakehouse (Bronze → Silver → Gold)','Optimized Delta Lake tables reducing storage 35%','Fabric Event Streams for real-time Kafka ingestion feeding Snowflake']},{role:'Data Analyst',co:'PwC India, Hyderabad',dt:'Aug 2019 – May 2021',b:['Power BI on Snowflake for 3 BFSI consulting engagements','Snowflake Streams and Tasks for automated processing','Snowflake-to-Fabric migration assessment for healthcare client']}],proj:[],edu:[{d:'MBA in Business Analytics',s:'ICFAI Hyderabad',y:'2019',g:'3.5 GPA'},{d:'B.Tech in ECE',s:'JNTU Hyderabad',y:'2017',g:'8.0 CGPA'}],cert:['DP-600 (2023)','PL-300 (2021)','SnowPro Core (2021), SnowPro DE (2022)','DP-203 (2022)']},
+{id:'fab-sf-senior',cat:'Fabric & Snowflake',level:'Senior (5+ yrs)',color:'#7FBA00',layout:'header',n:'Vikram Choudhary',t:'Principal Analytics Architect',e:'vikram.choudhary@email.com',p:'+91 70088 66554',l:'Bangalore, India',li:'linkedin.com/in/vikramchoudhary',sum:'Principal Analytics Architect with 8+ years designing enterprise data platforms. Deep expertise in Fabric and Snowflake, specializing in hybrid architectures and multi-cloud strategies. Led $5M+ transformations.',sk:['Microsoft Fabric (Master: All Workloads)','Snowflake (Master: Cortex, Horizon)','Hybrid Architecture','OneLake Federation & Shortcuts','Snowflake External Tables & Iceberg','Data Mesh & DDD','Governance (Cross-Platform)','FinOps (Both)','Platform Engineering','Leadership (25+ members)'],exp:[{role:'Principal Analytics Architect',co:'Microsoft India, Bangalore',dt:'Jan 2023 – Present',b:['Reference architectures for Fabric + Snowflake hybrid for enterprise clients','$5M data platform for global bank: Fabric real-time + Snowflake batch DW','OneLake Federation querying Snowflake without data movement','Cross-platform governance: cataloging, lineage, quality','Presented at Microsoft Ignite and Snowflake Summit']},{role:'Senior Data Architect',co:'Databricks India, Bangalore',dt:'Mar 2020 – Dec 2022',b:['Lakehouse architectures for 10+ clients comparing Delta vs Snowflake','Led 12 architects in analytics modernization engagements','Snowflake-to-Fabric migration playbook adopted by 5 teams']},{role:'Data Engineer',co:'Amazon India, Hyderabad',dt:'Jul 2016 – Feb 2020',b:['Pipelines on Redshift and Snowflake for supply chain analytics','Real-time platform processing 1M+ events/hr using Kinesis + Snowflake']}],proj:[],edu:[{d:'M.Tech in Data Science',s:'IIT Kharagpur',y:'2016',g:'9.1 CGPA'},{d:'B.Tech in CSE',s:'NIT Warangal',y:'2014',g:'8.7 CGPA'}],cert:['DP-600, PL-300, AZ-305','SnowPro Core, DE, Arch, Admin (All 4)','AWS Solutions Architect Pro (2020)','Databricks DE Pro (2021)']}
+];
+
+const LC={'Fresher':{bg:'#dcfce7',text:'#166534'},'Junior (0-3 yrs)':{bg:'#dbeafe',text:'#1e40af'},'Mid (4-5 yrs)':{bg:'#fef3c7',text:'#92400e'},'Senior (5+ yrs)':{bg:'#fee2e2',text:'#991b1b'},'Consultant':{bg:'#f3e8ff',text:'#6b21a8'}};
+
+function renderSidebar(t){return`<div class="r-sidebar"><div class="r-sidebar-left" style="background:${t.color}"><div class="r-name">${t.n}</div><div class="r-title">${t.t}</div><div class="r-ci"><span class="iconify" data-icon="lucide:mail"></span>${t.e}</div><div class="r-ci"><span class="iconify" data-icon="lucide:phone"></span>${t.p}</div><div class="r-ci"><span class="iconify" data-icon="lucide:map-pin"></span>${t.l}</div><div class="r-ci"><span class="iconify" data-icon="lucide:linkedin"></span>${t.li}</div>${t.sk.length?`<div class="r-st">Technical Skills</div>${t.sk.map(s=>`<div class="r-sk">• ${s}</div>`).join('')}`:''}${t.cert&&t.cert.length?`<div class="r-st">Certifications</div>${t.cert.map(c=>`<div class="r-ce">• ${c}</div>`).join('')}`:''}</div><div class="r-sidebar-right">${t.sum?`<div class="r-shd" style="border-color:${t.color}">Professional Summary</div><div class="r-sum">${t.sum}</div>`:''}${t.exp.length?`<div class="r-shd" style="border-color:${t.color}">Work Experience</div>${t.exp.map(x=>`<div class="r-ei"><div class="r-eh"><span class="r-er">${x.role}</span><span class="r-ed">${x.dt}</span></div><div class="r-eco">${x.co}</div>${x.b.map(b=>`<div class="r-eb">${b}</div>`).join('')}</div>`).join('')}`:''}${t.proj&&t.proj.length?`<div class="r-shd" style="border-color:${t.color}">Academic Projects</div>${t.proj.map(p=>`<div class="r-pi"><div class="r-pn">${p.n}</div>${p.b.map(b=>`<div class="r-eb">${b}</div>`).join('')}</div>`).join('')}`:''}${t.edu.length?`<div class="r-shd" style="border-color:${t.color}">Education</div>${t.edu.map(e=>`<div class="r-edui"><div class="r-edud">${e.d}</div><div class="r-edus">${e.s}</div><div class="r-edum">${e.y} | ${e.g}</div></div>`).join('')}`:''}</div></div>`}
+
+function renderHeader(t){return`<div class="r-ht" style="background:${t.color};color:#fff"><div class="r-name">${t.n}</div><div class="r-title">${t.t}</div><div class="r-cb" style="color:rgba(255,255,255,.85)"><span><span class="iconify" data-icon="lucide:mail"></span>${t.e}</span><span><span class="iconify" data-icon="lucide:phone"></span>${t.p}</span><span><span class="iconify" data-icon="lucide:map-pin"></span>${t.l}</span><span><span class="iconify" data-icon="lucide:linkedin"></span>${t.li}</span></div></div><div class="r-hb" style="background:${t.color}"></div><div class="r-tc"><div class="r-cl">${t.sk.length?`<div class="r-shd" style="border-color:${t.color}">Technical Skills</div>${t.sk.map(s=>`<div style="font-size:10.5px;margin-bottom:4px;color:#444">• ${s}</div>`).join('')}`:''}${t.cert&&t.cert.length?`<div class="r-shd" style="border-color:${t.color};margin-top:14px">Certifications</div>${t.cert.map(c=>`<div style="font-size:9.5px;margin-bottom:5px;color:#444;line-height:1.4">• ${c}</div>`).join('')}`:''}${t.edu.length?`<div class="r-shd" style="border-color:${t.color};margin-top:14px">Education</div>${t.edu.map(e=>`<div class="r-edui"><div class="r-edud">${e.d}</div><div class="r-edus">${e.s}</div><div class="r-edum">${e.y} | ${e.g}</div></div>`).join('')}`:''}</div><div class="r-cr">${t.sum?`<div class="r-shd" style="border-color:${t.color}">Professional Summary</div><div class="r-sum">${t.sum}</div>`:''}${t.exp.length?`<div class="r-shd" style="border-color:${t.color}">Work Experience</div>${t.exp.map(x=>`<div class="r-ei"><div class="r-eh"><span class="r-er">${x.role}</span><span class="r-ed">${x.dt}</span></div><div class="r-eco">${x.co}</div>${x.b.map(b=>`<div class="r-eb">${b}</div>`).join('')}</div>`).join('')}`:''}${t.proj&&t.proj.length?`<div class="r-shd" style="border-color:${t.color}">Projects</div>${t.proj.map(p=>`<div class="r-pi"><div class="r-pn">${p.n}</div>${p.b.map(b=>`<div class="r-eb">${b}</div>`).join('')}</div>`).join('')}`:''}</div></div>`}
+
+function renderMinimal(t){return`<div class="r-min"><div class="r-name">${t.n}</div><div class="r-title" style="color:${t.color}">${t.t}</div><div class="r-cr"><span class="iconify" data-icon="lucide:mail" style="color:${t.color}"></span>${t.e}</div><div class="r-cr"><span class="iconify" data-icon="lucide:phone" style="color:${t.color}"></span>${t.p}</div><div class="r-cr"><span class="iconify" data-icon="lucide:map-pin" style="color:${t.color}"></span>${t.l}</div><div class="r-cr"><span class="iconify" data-icon="lucide:linkedin" style="color:${t.color}"></span>${t.li}</div><hr class="r-min-hr" style="background:${t.color}">${t.sum?`<div class="r-shd" style="border-color:${t.color}">Professional Summary</div><div class="r-sum">${t.sum}</div>`:''}${t.sk.length?`<div class="r-shd" style="border-color:${t.color}">Technical Skills</div><div class="r-stg">${t.sk.map(s=>`<span class="r-stag" style="background:${t.color}12;color:${t.color};border:1px solid ${t.color}30">${s}</span>`).join('')}</div>`:''}<hr class="r-min-hr" style="background:${t.color}20">${t.exp.length?`<div class="r-shd" style="border-color:${t.color}">Work Experience</div>${t.exp.map(x=>`<div class="r-ei"><div class="r-eh"><span class="r-er">${x.role}</span><span class="r-ed">${x.dt}</span></div><div class="r-eco">${x.co}</div>${x.b.map(b=>`<div class="r-eb">${b}</div>`).join('')}</div>`).join('')}`:''}${t.proj&&t.proj.length?`<div class="r-shd" style="border-color:${t.color}">Projects</div>${t.proj.map(p=>`<div class="r-pi"><div class="r-pn">${p.n}</div>${p.b.map(b=>`<div class="r-eb">${b}</div>`).join('')}</div>`).join('')}`:''}<hr class="r-min-hr" style="background:${t.color}20">${t.edu.length?`<div class="r-shd" style="border-color:${t.color}">Education</div>${t.edu.map(e=>`<div class="r-edui"><div class="r-edud">${e.d}</div><div class="r-edus">${e.s}</div><div class="r-edum">${e.y} | ${e.g}</div></div>`).join('')}`:''}${t.cert&&t.cert.length?`<div class="r-shd" style="border-color:${t.color}">Certifications</div>${t.cert.map(c=>`<div style="font-size:10.5px;margin-bottom:4px;color:#444">• ${c}</div>`).join('')}`:''}</div>`}
+
+function getHTML(t){return t.layout==='sidebar'?renderSidebar(t):t.layout==='header'?renderHeader(t):renderMinimal(t)}
+
+function getMini(t){
+    if(t.layout==='sidebar')return`<div class="card-preview-layout"><div class="mh" style="background:${t.color}"></div><div class="ms" style="background:${t.color}"></div><div class="ml"><div style="width:18px"></div><div style="width:14px"></div><div style="width:16px"></div><div style="width:12px"></div></div></div>`;
+    if(t.layout==='header')return`<div class="card-preview-layout"><div class="mh" style="background:${t.color}"></div><div class="ml" style="top:16px;right:2px;left:2px"><div style="width:36px"></div><div style="width:20px;margin-left:14px"></div><div style="width:28px"></div><div style="width:22px;margin-left:14px"></div></div></div>`;
+    return`<div class="card-preview-layout"><div class="ml" style="top:4px;left:4px;right:4px"><div style="width:22px"></div><div style="width:16px"></div><div style="width:30px"></div><div style="width:24px"></div><div style="width:18px"></div></div></div>`;
+}
+
+function renderGrid(filtered){
+    const grid=document.getElementById('templatesGrid');
+    if(!filtered.length){grid.innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:80px 20px;color:var(--text-muted)"><span class="iconify" data-icon="lucide:search-x" style="font-size:48px;display:block;margin-bottom:16px;opacity:.25"></span><div style="font-size:16px;font-weight:600;margin-bottom:4px;color:var(--text-secondary)">No templates found</div><div style="font-size:13px">Try adjusting your filters to see more results.</div></div>`;document.getElementById('resultsCount').innerHTML='Showing <strong>0</strong> templates';return}
+    grid.innerHTML=filtered.map(t=>{const lc=LC[t.level]||{bg:'#f1f5f9',text:'#475569'};return`<div class="template-card" data-id="${t.id}" onclick="openModal('${t.id}')"><div class="card-preview" style="background:${t.color}06">${getMini(t)}<div class="card-preview-name" style="color:${t.color}">${t.n}</div><div class="card-preview-title">${t.cat} · ${t.level}</div><div class="card-preview-tags">${t.sk.slice(0,4).map(s=>`<span class="card-preview-tag" style="background:${t.color}12;color:${t.color}">${s}</span>`).join('')}</div></div><div class="card-info"><div class="card-badges"><span class="card-badge" style="background:${lc.bg};color:${lc.text}">${t.level}</span><span class="card-badge" style="background:var(--bg);color:var(--text-muted)">${t.layout}</span></div><div class="card-actions"><button class="card-btn card-btn-preview" onclick="event.stopPropagation();openModal('${t.id}')" aria-label="Preview"><span class="iconify" data-icon="lucide:eye"></span> Preview</button><button class="card-btn" onclick="event.stopPropagation();quickPDF('${t.id}')" aria-label="PDF" title="Download PDF"><span class="iconify" data-icon="lucide:file-down"></span></button><button class="card-btn" onclick="event.stopPropagation();quickDOCX('${t.id}')" aria-label="DOCX" title="Download DOCX"><span class="iconify" data-icon="lucide:file-text"></span></button></div></div></div>`}).join('');
+    document.getElementById('resultsCount').innerHTML=`Showing <strong>${filtered.length}</strong> template${filtered.length!==1?'s':''}`;
+}
+
+let activeCat='all',activeLevel='all';
+document.getElementById('catFilters').addEventListener('click',e=>{if(!e.target.classList.contains('filter-pill'))return;document.querySelectorAll('#catFilters .filter-pill').forEach(p=>p.classList.remove('active'));e.target.classList.add('active');activeCat=e.target.dataset.cat;applyFilters()});
+document.getElementById('levelFilters').addEventListener('click',e=>{if(!e.target.classList.contains('filter-pill'))return;document.querySelectorAll('#levelFilters .filter-pill').forEach(p=>p.classList.remove('active'));e.target.classList.add('active');activeLevel=e.target.dataset.level;applyFilters()});
+function applyFilters(){let f=T;if(activeCat!=='all')f=f.filter(t=>t.cat===activeCat);if(activeLevel!=='all')f=f.filter(t=>t.level===activeLevel);renderGrid(f)}
+
+let currentTemplate=null;
+function openModal(id){currentTemplate=T.find(t=>t.id===id);if(!currentTemplate)return;document.getElementById('modalTitle').textContent=currentTemplate.cat+' — '+currentTemplate.level;document.getElementById('modalSubtitle').textContent=currentTemplate.n+' | '+currentTemplate.t+' | Layout: '+currentTemplate.layout;document.getElementById('resumePaper').innerHTML=getHTML(currentTemplate);document.getElementById('modal').classList.add('active');document.body.style.overflow='hidden';if(window.Iconify)Iconify.scan(document.getElementById('resumePaper'))}
+function closeModal(){document.getElementById('modal').classList.remove('active');document.body.style.overflow='';currentTemplate=null}
+document.getElementById('modal').addEventListener('click',e=>{if(e.target===document.getElementById('modal'))closeModal()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+function showPreviewByID(id){openModal(id)}
+
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000)}
+
+function genPDF(elem,t){return new Promise((resolve,reject)=>{const opt={margin:0,filename:t.cat.replace(/[^a-zA-Z0-9]/g,'_')+'_'+t.level.replace(/[^a-zA-Z0-9]/g,'_')+'_Resume.pdf',image:{type:'jpeg',quality:.98},html2canvas:{scale:2,useCORS:true,letterRendering:true,logging:false},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'},pagebreak:{mode:['avoid-all','css','legacy']}};html2pdf().set(opt).from(elem).save().then(resolve).catch(reject)})}
+
+function downloadPDF(){if(!currentTemplate)return;var elem=document.getElementById('resumePaper'),btns=document.getElementById('modalActions'),loading=document.getElementById('dlLoading');btns.style.display='none';loading.classList.add('active');if(window.Iconify)Iconify.scan(elem);setTimeout(function(){genPDF(elem,currentTemplate).then(function(){loading.classList.remove('active');btns.style.display='flex';showToast('PDF downloaded successfully!')}).catch(function(){loading.classList.remove('active');btns.style.display='flex';showToast('PDF download failed. Try again.')})},300)}
+
+function quickPDF(id){var t=T.find(function(x){return x.id===id});if(!t)return;showToast('Generating PDF...');var c=document.createElement('div');c.style.cssText='position:fixed;left:-9999px;top:0;width:800px';c.innerHTML='<div class="resume-paper">'+getHTML(t)+'</div>';document.body.appendChild(c);if(window.Iconify)Iconify.scan(c);setTimeout(function(){genPDF(c.querySelector('.resume-paper'),t).then(function(){document.body.removeChild(c);showToast('PDF downloaded successfully!')}).catch(function(){document.body.removeChild(c);showToast('PDF download failed. Try again.')})},500)}
+
+function buildDOCX(t){return'<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="utf-8"><title>'+t.n+' Resume</title><style>body{font-family:Calibri,Arial,sans-serif;font-size:11pt;line-height:1.4;color:#1C1C1C;margin:40px}h1{font-size:20pt;margin:0 0 2pt 0;color:'+t.color+'}h2{font-size:10pt;margin:0 0 2pt 0;text-transform:uppercase;letter-spacing:2px;color:#555}h3{font-size:12pt;margin:14pt 0 6pt 0;padding-bottom:4pt;border-bottom:2px solid '+t.color+';text-transform:uppercase;letter-spacing:1px;color:'+t.color+'}.ct{font-size:9pt;color:#666;margin-bottom:10pt}.sum{font-size:10.5pt;color:#333;margin-bottom:8pt}.rl{font-size:11pt;font-weight:bold;margin:0}.dt{font-size:9.5pt;color:#888;float:right}.co{font-size:10pt;color:#555;margin-bottom:4pt}.bl{font-size:10pt;color:#333;margin-left:16pt;margin-bottom:2pt}.sk{font-size:10pt;color:#333}.ce{font-size:9.5pt;color:#444;margin-bottom:3pt}.ed{font-size:11pt;font-weight:bold}.es{font-size:10pt;color:#555}.em{font-size:9.5pt;color:#888}.pn{font-size:11pt;font-weight:bold;margin-bottom:3pt}hr{border:none;border-top:1px solid #ddd;margin:10pt 0}table{width:100%}td{vertical-align:top}</style></head><body><h1>'+t.n+'</h1><h2>'+t.t+'</h2><div class="ct">'+t.e+' | '+t.p+' | '+t.l+' | '+t.li+'</div><hr>'+(t.sum?'<h3>Professional Summary</h3><div class="sum">'+t.sum+'</div>':'')+(t.sk.length?'<h3>Technical Skills</h3><div>'+t.sk.map(function(s){return'<span class="sk">'+s+'</span>'}).join(' &bull; ')+'</div>':'')+(t.exp.length?'<h3>Work Experience</h3>'+t.exp.map(function(x){return'<div style="margin-bottom:8pt"><table><tr><td><span class="rl">'+x.role+'</span></td><td style="text-align:right"><span class="dt">'+x.dt+'</span></td></tr></table><div class="co">'+x.co+'</div>'+x.b.map(function(b){return'<div class="bl">&#8226; '+b+'</div>'}).join('')+'</div>'}).join(''):'')+(t.proj&&t.proj.length?'<h3>'+(t.exp.length?'Academic Projects':'Projects')+'</h3>'+t.proj.map(function(p){return'<div style="margin-bottom:8pt"><div class="pn">'+p.n+'</div>'+p.b.map(function(b){return'<div class="bl">&#8226; '+b+'</div>'}).join('')+'</div>'}).join(''):'')+(t.edu.length?'<h3>Education</h3>'+t.edu.map(function(e){return'<div style="margin-bottom:4pt"><div class="ed">'+e.d+'</div><div class="es">'+e.s+'</div><div class="em">'+e.y+' | '+e.g+'</div></div>'}).join(''):'')+(t.cert&&t.cert.length?'<h3>Certifications</h3>'+t.cert.map(function(c){return'<div class="ce">&#8226; '+c+'</div>'}).join(''):'')+'</body></html>'}
+
+function saveDOCX(t){var blob=new Blob(['\ufeff',buildDOCX(t)],{type:'application/msword'});saveAs(blob,t.cat.replace(/[^a-zA-Z0-9]/g,'_')+'_'+t.level.replace(/[^a-zA-Z0-9]/g,'_')+'_Resume.doc')}
+
+function downloadDOCX(){if(!currentTemplate)return;var btns=document.getElementById('modalActions'),loading=document.getElementById('dlLoading');btns.style.display='none';loading.classList.add('active');setTimeout(function(){try{saveDOCX(currentTemplate);loading.classList.remove('active');btns.style.display='flex';showToast('DOCX downloaded! Open in Word or Google Docs to edit.')}catch(e){loading.classList.remove('active');btns.style.display='flex';showToast('DOCX download failed. Try again.')}},200)}
+
+function quickDOCX(id){var t=T.find(function(x){return x.id===id});if(!t)return;try{saveDOCX(t);showToast('DOCX downloaded! Open in Word or Google Docs to edit.')}catch(e){showToast('DOCX download failed. Try again.')}}
+
+document.addEventListener('DOMContentLoaded',function(){renderGrid(T);if(window.Iconify)Iconify.scan()});
+</script>
+</body>
+</html>
