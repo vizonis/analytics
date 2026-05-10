@@ -1,0 +1,1767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Guide to Power BI Charts for Beginners | Vizonis Academy</title>
+    <meta name="description" content="Master every Power BI visual — Line, Area, Column, Bar, Combo, Pie, Funnel, Table, Matrix & more. Learn what each chart does, when & why to use it with real-world examples.">
+    <meta name="keywords" content="Power BI charts, data visualization beginners, line chart Power BI, stacked column chart, clustered bar chart, combo chart Power BI, funnel chart Power BI, matrix visual, Vizonis Academy">
+    <meta name="author" content="Vizonis Academy">
+    <meta property="og:title" content="Complete Guide to Power BI Charts for Beginners | Vizonis Academy">
+    <meta property="og:description" content="Learn every Power BI visual with real examples. Line, Area, Column, Bar, Combo, Pie, Funnel, Table, Matrix & more — all explained simply.">
+    <meta property="og:type" content="article">
+    <link rel="canonical" href="https://analytics.vizonis.com/power-bi-charts-guide">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Rethink+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Rethink Sans', 'sans-serif'] },
+                    colors: {
+                        primary: '#6145FF',
+                        'primary-hover': '#5035e4',
+                        dark: '#0A0618',
+                        'dark-text': '#0D0C54',
+                        'body-text': '#40406A',
+                        'light-text': '#B8B1D8',
+                        'light-bg': '#F8F6FF',
+                        'card-border': '#EBE7FF',
+                        star: '#FFB648',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { font-family: 'Rethink Sans', sans-serif; }
+        html { scroll-behavior: smooth; }
+        .text-gradient {
+            background-image: linear-gradient(45deg, #6145FF, #BA9DFF);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .glass { background: rgba(154, 145, 255, 0.1); backdrop-filter: blur(12px); border: 1px solid rgba(201, 196, 255, 0.2); }
+        .chart-card { transition: all 300ms ease; }
+        .chart-card:hover { transform: translateY(-6px); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15); }
+        .nav-link { transition: color 150ms ease; }
+        .nav-link:hover { color: #6145FF; }
+        .example-tag { background: linear-gradient(135deg, rgba(97,69,255,0.1), rgba(186,157,255,0.15)); }
+        .whatsapp-float { animation: pulse-wa 2s infinite; }
+        @keyframes pulse-wa {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(37,211,102,0.5); }
+            50% { box-shadow: 0 0 0 14px rgba(37,211,102,0); }
+        }
+        .sticky-nav { backdrop-filter: blur(12px); background: rgba(10,6,24,0.85); }
+        .toc-link { transition: all 150ms ease; border-left: 3px solid transparent; }
+        .toc-link:hover, .toc-link.active { border-left-color: #6145FF; color: #6145FF; background: rgba(97,69,255,0.05); }
+        @keyframes fadeInUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+        .fade-in-up { animation: fadeInUp 0.6s ease forwards; }
+        .mini-chart-bar { animation: growBar 0.8s ease forwards; transform-origin: bottom; }
+        @keyframes growBar { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+        .mini-chart-line { stroke-dasharray: 300; stroke-dashoffset: 300; animation: drawLine 1.5s ease forwards; }
+        @keyframes drawLine { to { stroke-dashoffset: 0; } }
+        details summary { cursor: pointer; list-style: none; }
+        details summary::-webkit-details-marker { display: none; }
+        details[open] .chevron-icon { transform: rotate(180deg); }
+        .chevron-icon { transition: transform 200ms ease; }
+    </style>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Complete Guide to Power BI Charts for Beginners",
+        "author": { "@type": "Organization", "name": "Vizonis Academy" },
+        "description": "Master every Power BI visual — Line, Area, Column, Bar, Combo, Pie, Funnel, Table, Matrix & more. Learn when and why to use each chart with real examples.",
+        "publisher": { "@type": "Organization", "name": "Vizonis Academy" }
+    }
+    </script>
+</head>
+<body class="bg-white text-body-text">
+
+    <!-- ========== HEADER / NAV ========== -->
+    <nav class="sticky top-0 z-50 sticky-nav border-b border-white/10">
+        <div class="max-w-[1346px] mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-2">
+                <span class="iconify text-primary text-3xl" data-icon="mdi:chart-donut"></span>
+                <span class="text-white font-bold text-xl tracking-tight">Vizonis<span class="text-primary">Academy</span></span>
+            </a>
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#charts" class="nav-link text-light-text font-medium">Charts</a>
+                <a href="#when-to-use" class="nav-link text-light-text font-medium">When to Use</a>
+                <a href="#faq" class="nav-link text-light-text font-medium">FAQ</a>
+                <a href="https://wa.me/916364671786?text=Hi%20Vizonis%20Academy!%20I%20want%20to%20learn%20Power%20BI" target="_blank" class="bg-primary hover:bg-primary-hover text-white font-semibold py-2.5 px-7 rounded-full transition-colors duration-150">
+                    Enroll Now
+                </a>
+            </div>
+            <button id="mobileMenuBtn" class="md:hidden text-white">
+                <span class="iconify text-2xl" data-icon="mdi:menu"></span>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden px-6 pb-4">
+            <a href="#charts" class="block py-2 text-light-text font-medium">Charts</a>
+            <a href="#when-to-use" class="block py-2 text-light-text font-medium">When to Use</a>
+            <a href="#faq" class="block py-2 text-light-text font-medium">FAQ</a>
+            <a href="https://wa.me/916364671786?text=Hi%20Vizonis%20Academy!%20I%20want%20to%20learn%20Power%20BI" target="_blank" class="block mt-2 bg-primary text-white font-semibold py-2.5 px-7 rounded-full text-center">Enroll Now</a>
+        </div>
+    </nav>
+
+    <!-- ========== HERO ========== -->
+    <section class="bg-dark relative overflow-hidden">
+        <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at 20% 50%, #6145FF 0%, transparent 50%), radial-gradient(circle at 80% 20%, #BA9DFF 0%, transparent 50%);"></div>
+        <div class="max-w-[1346px] mx-auto px-6 pt-20 pb-24 md:pt-28 md:pb-32 relative z-10">
+            <div class="grid lg:grid-cols-[1fr_1fr] gap-12 items-center">
+                <div class="fade-in-up">
+                    <span class="inline-block bg-light-bg text-primary text-xs font-bold uppercase py-1.5 px-3 rounded-full mb-6">🔥 Beginner's Guide — Power BI Visuals</span>
+                    <h1 class="text-4xl md:text-5xl lg:text-[4.25rem] font-semibold text-white leading-[1.1] tracking-tight mb-6">
+                        The Complete Guide to <span class="text-gradient">Power BI Charts</span> for Beginners
+                    </h1>
+                    <p class="text-light-text text-lg leading-relaxed mb-8 max-w-xl">
+                        Confused about which chart to use? Learn <strong class="text-white">what each Power BI visual does, when to use it, and why</strong> — with real-world examples that make it stick.
+                    </p>
+                    <div class="flex flex-wrap gap-4 mb-10">
+                        <a href="#charts" class="bg-primary hover:bg-primary-hover text-white font-semibold py-4 px-10 rounded-full transition-colors duration-150 inline-flex items-center gap-2">
+                            Explore All Charts <span class="iconify" data-icon="mdi:arrow-down"></span>
+                        </a>
+                        <a href="https://wa.me/916364671786?text=Hi!%20I%20need%20help%20choosing%20the%20right%20Power%20BI%20chart" target="_blank" class="border border-white/30 hover:bg-white/10 text-white font-semibold py-4 px-10 rounded-full transition-colors duration-150 inline-flex items-center gap-2">
+                            <span class="iconify text-[#25D366]" data-icon="mdi:whatsapp"></span> Ask an Expert
+                        </a>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="flex -space-x-3">
+                            <img src="https://picsum.photos/seed/student1/80/80" class="w-10 h-10 rounded-full border-[3px] border-dark object-cover" alt="Student">
+                            <img src="https://picsum.photos/seed/student2/80/80" class="w-10 h-10 rounded-full border-[3px] border-dark object-cover" alt="Student">
+                            <img src="https://picsum.photos/seed/student3/80/80" class="w-10 h-10 rounded-full border-[3px] border-dark object-cover" alt="Student">
+                        </div>
+                        <div>
+                            <div class="flex gap-0.5">
+                                <span class="iconify text-star" data-icon="mdi:star"></span>
+                                <span class="iconify text-star" data-icon="mdi:star"></span>
+                                <span class="iconify text-star" data-icon="mdi:star"></span>
+                                <span class="iconify text-star" data-icon="mdi:star"></span>
+                                <span class="iconify text-star" data-icon="mdi:star-half-full"></span>
+                            </div>
+                            <p class="text-light-text text-sm">Trusted by <strong class="text-white">2,400+</strong> learners</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="hidden lg:block">
+                    <div class="relative">
+                        <div class="glass rounded-3xl p-8">
+                            <svg viewBox="0 0 500 300" class="w-full">
+                                <!-- Background grid -->
+                                <line x1="50" y1="250" x2="450" y2="250" stroke="rgba(186,157,255,0.2)" stroke-width="1"/>
+                                <line x1="50" y1="180" x2="450" y2="180" stroke="rgba(186,157,255,0.1)" stroke-width="1" stroke-dasharray="4"/>
+                                <line x1="50" y1="110" x2="450" y2="110" stroke="rgba(186,157,255,0.1)" stroke-width="1" stroke-dasharray="4"/>
+                                <line x1="50" y1="40" x2="450" y2="40" stroke="rgba(186,157,255,0.1)" stroke-width="1" stroke-dasharray="4"/>
+                                <!-- Area fill -->
+                                <path d="M50,220 L120,180 L190,200 L260,120 L330,90 L400,60 L450,40 L450,250 L50,250 Z" fill="url(#areaGrad)" opacity="0.3"/>
+                                <!-- Line -->
+                                <polyline points="50,220 120,180 190,200 260,120 330,90 400,60 450,40" fill="none" stroke="#6145FF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="mini-chart-line"/>
+                                <!-- Dots -->
+                                <circle cx="50" cy="220" r="5" fill="#6145FF"/>
+                                <circle cx="120" cy="180" r="5" fill="#6145FF"/>
+                                <circle cx="190" cy="200" r="5" fill="#6145FF"/>
+                                <circle cx="260" cy="120" r="5" fill="#6145FF"/>
+                                <circle cx="330" cy="90" r="5" fill="#6145FF"/>
+                                <circle cx="400" cy="60" r="5" fill="#6145FF"/>
+                                <circle cx="450" cy="40" r="6" fill="#6145FF" stroke="#BA9DFF" stroke-width="3"/>
+                                <!-- Bars -->
+                                <rect x="60" y="190" width="25" height="60" rx="4" fill="rgba(97,69,255,0.4)" class="mini-chart-bar"/>
+                                <rect x="130" y="160" width="25" height="90" rx="4" fill="rgba(97,69,255,0.4)" class="mini-chart-bar" style="animation-delay:0.1s"/>
+                                <rect x="200" y="175" width="25" height="75" rx="4" fill="rgba(97,69,255,0.4)" class="mini-chart-bar" style="animation-delay:0.2s"/>
+                                <rect x="270" y="110" width="25" height="140" rx="4" fill="rgba(97,69,255,0.5)" class="mini-chart-bar" style="animation-delay:0.3s"/>
+                                <rect x="340" y="80" width="25" height="170" rx="4" fill="rgba(97,69,255,0.6)" class="mini-chart-bar" style="animation-delay:0.4s"/>
+                                <rect x="410" y="50" width="25" height="200" rx="4" fill="rgba(97,69,255,0.7)" class="mini-chart-bar" style="animation-delay:0.5s"/>
+                                <defs>
+                                    <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="#6145FF"/>
+                                        <stop offset="100%" stop-color="#6145FF" stop-opacity="0"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                            <p class="text-light-text text-center text-sm mt-2">Visualizing data the right way changes everything.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== WHAT IS DATA VISUALIZATION ========== -->
+    <section class="bg-light-bg py-20 md:py-28">
+        <div class="max-w-[1062px] mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="inline-block bg-white text-primary text-xs font-bold uppercase py-1.5 px-3 rounded-full mb-4 border border-card-border">Foundation</span>
+                <h2 class="text-3xl md:text-4xl lg:text-[3.75rem] font-semibold text-dark-text leading-tight tracking-tight mb-4">What is Data Visualization?</h2>
+                <p class="text-body-text text-lg leading-relaxed max-w-2xl mx-auto">Data visualization is the <strong class="text-dark-text">graphical representation of information</strong>. Instead of staring at rows of numbers, you turn them into charts, graphs, and visuals that tell a story.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white border border-card-border rounded-3xl p-8 text-center chart-card">
+                    <div class="w-14 h-14 bg-light-bg rounded-2xl flex items-center justify-center mx-auto mb-5">
+                        <span class="iconify text-primary text-2xl" data-icon="mdi:eye-outline"></span>
+                    </div>
+                    <h3 class="text-dark-text font-semibold text-xl mb-3">See the Patterns</h3>
+                    <p class="text-body-text leading-relaxed">Spot trends, outliers, and correlations that are invisible in raw tables.</p>
+                </div>
+                <div class="bg-white border border-card-border rounded-3xl p-8 text-center chart-card">
+                    <div class="w-14 h-14 bg-light-bg rounded-2xl flex items-center justify-center mx-auto mb-5">
+                        <span class="iconify text-primary text-2xl" data-icon="mdi:share-variant-outline"></span>
+                    </div>
+                    <h3 class="text-dark-text font-semibold text-xl mb-3">Share Insights</h3>
+                    <p class="text-body-text leading-relaxed">Communicate complex data to anyone — executives, clients, or teammates — in seconds.</p>
+                </div>
+                <div class="bg-white border border-card-border rounded-3xl p-8 text-center chart-card">
+                    <div class="w-14 h-14 bg-light-bg rounded-2xl flex items-center justify-center mx-auto mb-5">
+                        <span class="iconify text-primary text-2xl" data-icon="mdi:lightbulb-on-outline"></span>
+                    </div>
+                    <h3 class="text-dark-text font-semibold text-xl mb-3">Make Decisions</h3>
+                    <p class="text-body-text leading-relaxed">Data-driven visuals empower faster, more confident business decisions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== WHY POWER BI ========== -->
+    <section class="bg-white py-20 md:py-28">
+        <div class="max-w-[1062px] mx-auto px-6">
+            <div class="bg-dark rounded-[2rem] p-10 md:p-16 relative overflow-hidden">
+                <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 70% 30%, #6145FF, transparent 60%);"></div>
+                <div class="relative z-10 grid md:grid-cols-2 gap-10 items-center">
+                    <div>
+                        <h2 class="text-3xl md:text-4xl font-semibold text-white leading-tight tracking-tight mb-5">Why Power BI for Data Visualization?</h2>
+                        <p class="text-light-text text-lg leading-relaxed mb-6">Power BI is Microsoft's industry-leading business intelligence tool. It offers <strong class="text-white">20+ built-in visuals</strong> and thousands of custom visuals, making it the go-to choice for 97% of Fortune 500 companies.</p>
+                        <a href="https://wa.me/916364671786?text=Hi!%20I%20want%20to%20learn%20Power%20BI%20from%20scratch" target="_blank" class="bg-primary hover:bg-primary-hover text-white font-semibold py-3 px-8 rounded-full transition-colors duration-150 inline-flex items-center gap-2">
+                            <span class="iconify" data-icon="mdi:whatsapp"></span> Learn Power BI with Us
+                        </a>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="glass rounded-2xl p-5 text-center">
+                            <span class="iconify text-primary text-3xl mb-2" data-icon="mdi:chart-box-outline"></span>
+                            <p class="text-white font-semibold text-sm">20+ Built-in Visuals</p>
+                        </div>
+                        <div class="glass rounded-2xl p-5 text-center">
+                            <span class="iconify text-primary text-3xl mb-2" data-icon="mdi:puzzle-outline"></span>
+                            <p class="text-white font-semibold text-sm">2000+ Custom Visuals</p>
+                        </div>
+                        <div class="glass rounded-2xl p-5 text-center">
+                            <span class="iconify text-primary text-3xl mb-2" data-icon="mdi:microsoft"></span>
+                            <p class="text-white font-semibold text-sm">Microsoft Ecosystem</p>
+                        </div>
+                        <div class="glass rounded-2xl p-5 text-center">
+                            <span class="iconify text-primary text-3xl mb-2" data-icon="mdi:cash-remove"></span>
+                            <p class="text-white font-semibold text-sm">Free Desktop Version</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== ALL CHARTS SECTION ========== -->
+    <section id="charts" class="bg-light-bg py-20 md:py-28">
+        <div class="max-w-[1346px] mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="inline-block bg-white text-primary text-xs font-bold uppercase py-1.5 px-3 rounded-full mb-4 border border-card-border">Complete Reference</span>
+                <h2 class="text-3xl md:text-4xl lg:text-[3.75rem] font-semibold text-dark-text leading-tight tracking-tight mb-4">Every Power BI Chart <span class="text-gradient">Explained</span></h2>
+                <p class="text-body-text text-lg leading-relaxed max-w-2xl mx-auto">From the simplest line chart to advanced matrix visuals — here's your complete guide with real-world examples.</p>
+            </div>
+
+            <!-- Charts Grid -->
+            <div class="space-y-8">
+
+                <!-- 1. LINE CHART -->
+                <div class="bg-white border border-card-border rounded-[2rem] overflow-hidden chart-card" id="line-chart">
+                    <div class="grid md:grid-cols-[1fr_1fr]">
+                        <div class="p-8 md:p-10">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="w-10 h-10 bg-light-bg rounded-xl flex items-center justify-center">
+                                    <span class="iconify text-primary text-xl" data-icon="mdi:chart-line"></span>
+                                </span>
+                                <span class="bg-light-bg text-primary text-xs font-bold uppercase py-1 px-3 rounded-full">Trend Analysis</span>
+                            </div>
+                            <h3 class="text-dark-text font-semibold text-2xl mb-3">1. Line Chart</h3>
+                            <p class="text-body-text leading-relaxed mb-5">A line chart connects data points with a continuous line to show <strong class="text-dark-text">trends over time</strong>. It's the most fundamental time-series visual in Power BI. Best for showing how a metric changes across a continuous axis like dates, months, or years.</p>
+                            <div class="space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">✅ When to Use:</p>
+                                <ul class="text-body-text text-sm leading-relaxed space-y-1 ml-4">
+                                    <li>• Tracking a metric over time (continuous data)</li>
+                                    <li>• Comparing trends of 2-3 categories</li>
+                                    <li>• Showing rate of change (steepness = speed)</li>
+                                </ul>
+                            </div>
+                            <div class="mt-5 space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">💡 Real-World Examples:</p>
+                                <div class="space-y-2">
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 1:</strong> Monthly website traffic over 12 months — see seasonal dips and growth patterns.</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 2:</strong> Daily stock price movement of a company over a quarter.</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 3:</strong> Year-over-year revenue comparison for 3 product lines from 2019–2024.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-light-bg flex items-center justify-center p-8">
+                            <svg viewBox="0 0 300 200" class="w-full max-w-[280px]">
+                                <line x1="30" y1="170" x2="280" y2="170" stroke="#EBE7FF" stroke-width="2"/>
+                                <line x1="30" y1="130" x2="280" y2="130" stroke="#EBE7FF" stroke-width="1" stroke-dasharray="4"/>
+                                <line x1="30" y1="90" x2="280" y2="90" stroke="#EBE7FF" stroke-width="1" stroke-dasharray="4"/>
+                                <line x1="30" y1="50" x2="280" y2="50" stroke="#EBE7FF" stroke-width="1" stroke-dasharray="4"/>
+                                <polyline points="30,150 80,130 130,140 180,90 230,70 280,40" fill="none" stroke="#6145FF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                <circle cx="30" cy="150" r="4" fill="#6145FF"/><circle cx="80" cy="130" r="4" fill="#6145FF"/>
+                                <circle cx="130" cy="140" r="4" fill="#6145FF"/><circle cx="180" cy="90" r="4" fill="#6145FF"/>
+                                <circle cx="230" cy="70" r="4" fill="#6145FF"/><circle cx="280" cy="40" r="5" fill="#6145FF" stroke="#BA9DFF" stroke-width="2"/>
+                                <text x="30" y="190" fill="#B8B1D8" font-size="9">Jan</text><text x="80" y="190" fill="#B8B1D8" font-size="9">Feb</text>
+                                <text x="130" y="190" fill="#B8B1D8" font-size="9">Mar</text><text x="180" y="190" fill="#B8B1D8" font-size="9">Apr</text>
+                                <text x="230" y="190" fill="#B8B1D8" font-size="9">May</text><text x="280" y="190" fill="#B8B1D8" font-size="9">Jun</text>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. AREA CHART -->
+                <div class="bg-white border border-card-border rounded-[2rem] overflow-hidden chart-card" id="area-chart">
+                    <div class="grid md:grid-cols-[1fr_1fr]">
+                        <div class="p-8 md:p-10">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="w-10 h-10 bg-light-bg rounded-xl flex items-center justify-center">
+                                    <span class="iconify text-primary text-xl" data-icon="mdi:chart-areaspline"></span>
+                                </span>
+                                <span class="bg-light-bg text-primary text-xs font-bold uppercase py-1 px-3 rounded-full">Volume + Trend</span>
+                            </div>
+                            <h3 class="text-dark-text font-semibold text-2xl mb-3">2. Area Chart</h3>
+                            <p class="text-body-text leading-relaxed mb-5">An area chart is a line chart with the area below the line filled in. It emphasizes the <strong class="text-dark-text">magnitude or volume</strong> of a trend, not just its direction. The filled area draws attention to the "weight" of the data.</p>
+                            <div class="space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">✅ When to Use:</p>
+                                <ul class="text-body-text text-sm leading-relaxed space-y-1 ml-4">
+                                    <li>• Showing volume beneath a trend line</li>
+                                    <li>• Emphasizing total value across time (not just change)</li>
+                                    <li>• Single series where magnitude matters as much as direction</li>
+                                </ul>
+                            </div>
+                            <div class="mt-5 space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">💡 Real-World Examples:</p>
+                                <div class="space-y-2">
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 1:</strong> Total sales volume over 12 months — the filled area shows the "weight" of sales.</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 2:</strong> Website page views per day — area conveys total traffic volume.</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 3:</strong> Cumulative energy consumption over a year for a manufacturing plant.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-light-bg flex items-center justify-center p-8">
+                            <svg viewBox="0 0 300 200" class="w-full max-w-[280px]">
+                                <line x1="30" y1="170" x2="280" y2="170" stroke="#EBE7FF" stroke-width="2"/>
+                                <line x1="30" y1="130" x2="280" y2="130" stroke="#EBE7FF" stroke-width="1" stroke-dasharray="4"/>
+                                <line x1="30" y1="90" x2="280" y2="90" stroke="#EBE7FF" stroke-width="1" stroke-dasharray="4"/>
+                                <line x1="30" y1="50" x2="280" y2="50" stroke="#EBE7FF" stroke-width="1" stroke-dasharray="4"/>
+                                <path d="M30,150 L80,120 L130,135 L180,80 L230,65 L280,35 L280,170 L30,170 Z" fill="url(#areaGrad2)" opacity="0.5"/>
+                                <polyline points="30,150 80,120 130,135 180,80 230,65 280,35" fill="none" stroke="#6145FF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                <circle cx="30" cy="150" r="4" fill="#6145FF"/><circle cx="80" cy="120" r="4" fill="#6145FF"/>
+                                <circle cx="130" cy="135" r="4" fill="#6145FF"/><circle cx="180" cy="80" r="4" fill="#6145FF"/>
+                                <circle cx="230" cy="65" r="4" fill="#6145FF"/><circle cx="280" cy="35" r="5" fill="#6145FF" stroke="#BA9DFF" stroke-width="2"/>
+                                <defs><linearGradient id="areaGrad2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6145FF"/><stop offset="100%" stop-color="#6145FF" stop-opacity="0"/></linearGradient></defs>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. STACKED AREA CHART -->
+                <div class="bg-white border border-card-border rounded-[2rem] overflow-hidden chart-card" id="stacked-area-chart">
+                    <div class="grid md:grid-cols-[1fr_1fr]">
+                        <div class="p-8 md:p-10">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="w-10 h-10 bg-light-bg rounded-xl flex items-center justify-center">
+                                    <span class="iconify text-primary text-xl" data-icon="mdi:chart-areaspline-variant"></span>
+                                </span>
+                                <span class="bg-light-bg text-primary text-xs font-bold uppercase py-1 px-3 rounded-full">Composition + Trend</span>
+                            </div>
+                            <h3 class="text-dark-text font-semibold text-2xl mb-3">3. Stacked Area Chart</h3>
+                            <p class="text-body-text leading-relaxed mb-5">A stacked area chart shows <strong class="text-dark-text">multiple series stacked on top of each other</strong>, revealing both the total and the composition. Each band represents a category, and together they show the whole.</p>
+                            <div class="space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">✅ When to Use:</p>
+                                <ul class="text-body-text text-sm leading-relaxed space-y-1 ml-4">
+                                    <li>• Showing part-to-whole relationships over time</li>
+                                    <li>• Comparing contribution of multiple categories</li>
+                                    <li>• Total + breakdown simultaneously</li>
+                                </ul>
+                            </div>
+                            <div class="mt-5 space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">💡 Real-World Examples:</p>
+                                <div class="space-y-2">
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 1:</strong> Revenue by product category (Electronics, Clothing, Food) over 5 years — see each category's contribution.</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 2:</strong> Website traffic sources (Organic, Paid, Social, Direct) by month.</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 3:</strong> Energy production by source (Solar, Wind, Hydro, Nuclear) over a decade.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-light-bg flex items-center justify-center p-8">
+                            <svg viewBox="0 0 300 200" class="w-full max-w-[280px]">
+                                <line x1="30" y1="170" x2="280" y2="170" stroke="#EBE7FF" stroke-width="2"/>
+                                <!-- Top layer -->
+                                <path d="M30,100 L80,85 L130,95 L180,60 L230,50 L280,30 L280,75 L230,90 L180,105 L130,130 L80,125 L30,140 Z" fill="#BA9DFF" opacity="0.6"/>
+                                <!-- Middle layer -->
+                                <path d="M30,140 L80,125 L130,130 L180,105 L230,90 L280,75 L280,130 L230,135 L180,150 L130,160 L80,155 L30,160 Z" fill="#6145FF" opacity="0.5"/>
+                                <!-- Bottom layer -->
+                                <path d="M30,160 L80,155 L130,160 L180,150 L230,135 L280,130 L280,170 L30,170 Z" fill="#EBE7FF" opacity="0.8"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. CLUSTERED COLUMN CHART -->
+                <div class="bg-white border border-card-border rounded-[2rem] overflow-hidden chart-card" id="clustered-column-chart">
+                    <div class="grid md:grid-cols-[1fr_1fr]">
+                        <div class="p-8 md:p-10">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="w-10 h-10 bg-light-bg rounded-xl flex items-center justify-center">
+                                    <span class="iconify text-primary text-xl" data-icon="mdi:chart-bar"></span>
+                                </span>
+                                <span class="bg-light-bg text-primary text-xs font-bold uppercase py-1 px-3 rounded-full">Comparison</span>
+                            </div>
+                            <h3 class="text-dark-text font-semibold text-2xl mb-3">4. Clustered Column Chart</h3>
+                            <p class="text-body-text leading-relaxed mb-5">A clustered column chart places bars <strong class="text-dark-text">side by side</strong> for each category. It's perfect for comparing discrete categories or groups. Each cluster has multiple bars representing different series.</p>
+                            <div class="space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">✅ When to Use:</p>
+                                <ul class="text-body-text text-sm leading-relaxed space-y-1 ml-4">
+                                    <li>• Comparing values across categories</li>
+                                    <li>• Side-by-side comparison of 2-4 series</li>
+                                    <li>• Categories are discrete (not continuous time)</li>
+                                </ul>
+                            </div>
+                            <div class="mt-5 space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">💡 Real-World Examples:</p>
+                                <div class="space-y-2">
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 1:</strong> Quarterly sales comparison across 4 regions (North, South, East, West).</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 2:</strong> Student scores in Math, Science, English across 3 departments.</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 3:</strong> Monthly product returns for 3 different product lines side by side.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-light-bg flex items-center justify-center p-8">
+                            <svg viewBox="0 0 300 200" class="w-full max-w-[280px]">
+                                <line x1="30" y1="170" x2="280" y2="170" stroke="#EBE7FF" stroke-width="2"/>
+                                <line x1="30" y1="130" x2="280" y2="130" stroke="#EBE7FF" stroke-width="1" stroke-dasharray="4"/>
+                                <line x1="30" y1="90" x2="280" y2="90" stroke="#EBE7FF" stroke-width="1" stroke-dasharray="4"/>
+                                <line x1="30" y1="50" x2="280" y2="50" stroke="#EBE7FF" stroke-width="1" stroke-dasharray="4"/>
+                                <!-- Cluster 1 -->
+                                <rect x="50" y="90" width="18" height="80" rx="3" fill="#6145FF" class="mini-chart-bar"/>
+                                <rect x="72" y="110" width="18" height="60" rx="3" fill="#BA9DFF" class="mini-chart-bar" style="animation-delay:0.1s"/>
+                                <!-- Cluster 2 -->
+                                <rect x="120" y="60" width="18" height="110" rx="3" fill="#6145FF" class="mini-chart-bar" style="animation-delay:0.2s"/>
+                                <rect x="142" y="80" width="18" height="90" rx="3" fill="#BA9DFF" class="mini-chart-bar" style="animation-delay:0.3s"/>
+                                <!-- Cluster 3 -->
+                                <rect x="190" y="100" width="18" height="70" rx="3" fill="#6145FF" class="mini-chart-bar" style="animation-delay:0.4s"/>
+                                <rect x="212" y="70" width="18" height="100" rx="3" fill="#BA9DFF" class="mini-chart-bar" style="animation-delay:0.5s"/>
+                                <!-- Cluster 4 -->
+                                <rect x="255" y="50" width="18" height="120" rx="3" fill="#6145FF" class="mini-chart-bar" style="animation-delay:0.6s"/>
+                                <rect x="277" y="90" width="18" height="80" rx="3" fill="#BA9DFF" class="mini-chart-bar" style="animation-delay:0.7s"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. STACKED COLUMN CHART -->
+                <div class="bg-white border border-card-border rounded-[2rem] overflow-hidden chart-card" id="stacked-column-chart">
+                    <div class="grid md:grid-cols-[1fr_1fr]">
+                        <div class="p-8 md:p-10">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="w-10 h-10 bg-light-bg rounded-xl flex items-center justify-center">
+                                    <span class="iconify text-primary text-xl" data-icon="mdi:chart-bar-stacked"></span>
+                                </span>
+                                <span class="bg-light-bg text-primary text-xs font-bold uppercase py-1 px-3 rounded-full">Composition</span>
+                            </div>
+                            <h3 class="text-dark-text font-semibold text-2xl mb-3">5. Stacked Column Chart</h3>
+                            <p class="text-body-text leading-relaxed mb-5">A stacked column chart stacks segments on top of each other within a single bar. It shows <strong class="text-dark-text">both the total and the breakdown</strong> by category, making part-to-whole relationships clear.</p>
+                            <div class="space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">✅ When to Use:</p>
+                                <ul class="text-body-text text-sm leading-relaxed space-y-1 ml-4">
+                                    <li>• Showing composition within a total</li>
+                                    <li>• Comparing totals while seeing breakdowns</li>
+                                    <li>• 3-5 segments per bar (more gets messy)</li>
+                                </ul>
+                            </div>
+                            <div class="mt-5 space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">💡 Real-World Examples:</p>
+                                <div class="space-y-2">
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 1:</strong> Monthly total expenses broken down by category (Rent, Food, Transport, Utilities).</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 2:</strong> Quarterly revenue by region — total bar height shows total revenue, segments show regional split.</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 3:</strong> Project budget allocation across departments (Design, Dev, QA, Marketing).</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-light-bg flex items-center justify-center p-8">
+                            <svg viewBox="0 0 300 200" class="w-full max-w-[280px]">
+                                <line x1="30" y1="170" x2="280" y2="170" stroke="#EBE7FF" stroke-width="2"/>
+                                <!-- Bar 1 -->
+                                <rect x="50" y="120" width="35" height="50" rx="3" fill="#EBE7FF" class="mini-chart-bar"/>
+                                <rect x="50" y="80" width="35" height="40" rx="3" fill="#BA9DFF" class="mini-chart-bar" style="animation-delay:0.1s"/>
+                                <rect x="50" y="40" width="35" height="40" rx="3" fill="#6145FF" class="mini-chart-bar" style="animation-delay:0.2s"/>
+                                <!-- Bar 2 -->
+                                <rect x="120" y="110" width="35" height="60" rx="3" fill="#EBE7FF" class="mini-chart-bar" style="animation-delay:0.3s"/>
+                                <rect x="120" y="60" width="35" height="50" rx="3" fill="#BA9DFF" class="mini-chart-bar" style="animation-delay:0.4s"/>
+                                <rect x="120" y="20" width="35" height="40" rx="3" fill="#6145FF" class="mini-chart-bar" style="animation-delay:0.5s"/>
+                                <!-- Bar 3 -->
+                                <rect x="190" y="130" width="35" height="40" rx="3" fill="#EBE7FF" class="mini-chart-bar" style="animation-delay:0.6s"/>
+                                <rect x="190" y="90" width="35" height="40" rx="3" fill="#BA9DFF" class="mini-chart-bar" style="animation-delay:0.7s"/>
+                                <rect x="190" y="50" width="35" height="40" rx="3" fill="#6145FF" class="mini-chart-bar" style="animation-delay:0.8s"/>
+                                <!-- Bar 4 -->
+                                <rect x="255" y="100" width="35" height="70" rx="3" fill="#EBE7FF" class="mini-chart-bar" style="animation-delay:0.9s"/>
+                                <rect x="255" y="55" width="35" height="45" rx="3" fill="#BA9DFF" class="mini-chart-bar" style="animation-delay:1s"/>
+                                <rect x="255" y="25" width="35" height="30" rx="3" fill="#6145FF" class="mini-chart-bar" style="animation-delay:1.1s"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. CLUSTERED BAR CHART -->
+                <div class="bg-white border border-card-border rounded-[2rem] overflow-hidden chart-card" id="clustered-bar-chart">
+                    <div class="grid md:grid-cols-[1fr_1fr]">
+                        <div class="p-8 md:p-10">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="w-10 h-10 bg-light-bg rounded-xl flex items-center justify-center">
+                                    <span class="iconify text-primary text-xl" data-icon="mdi:chart-bar-horizontal"></span>
+                                </span>
+                                <span class="bg-light-bg text-primary text-xs font-bold uppercase py-1 px-3 rounded-full">Ranking</span>
+                            </div>
+                            <h3 class="text-dark-text font-semibold text-2xl mb-3">6. Clustered Bar Chart</h3>
+                            <p class="text-body-text leading-relaxed mb-5">A clustered bar chart is the horizontal version of the clustered column chart. Bars extend <strong class="text-dark-text">left to right</strong>, making it ideal when category labels are long or when you're ranking items.</p>
+                            <div class="space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">✅ When to Use:</p>
+                                <ul class="text-body-text text-sm leading-relaxed space-y-1 ml-4">
+                                    <li>• Long category names that don't fit on X-axis</li>
+                                    <li>• Ranking items from highest to lowest</li>
+                                    <li>• Comparing 2-4 series across many categories</li>
+                                </ul>
+                            </div>
+                            <div class="mt-5 space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">💡 Real-World Examples:</p>
+                                <div class="space-y-2">
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 1:</strong> Employee satisfaction scores across departments (HR, Engineering, Sales, Marketing, Finance).</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 2:</strong> Country-wise GDP comparison for 10 countries with full country names.</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 3:</strong> Product return rates by product name (long labels) for two fiscal years.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-light-bg flex items-center justify-center p-8">
+                            <svg viewBox="0 0 300 200" class="w-full max-w-[280px]">
+                                <line x1="80" y1="15" x2="80" y2="180" stroke="#EBE7FF" stroke-width="2"/>
+                                <!-- Row 1 -->
+                                <rect x="80" y="20" width="160" height="14" rx="3" fill="#6145FF" class="mini-chart-bar"/>
+                                <rect x="80" y="37" width="130" height="14" rx="3" fill="#BA9DFF" class="mini-chart-bar" style="animation-delay:0.1s"/>
+                                <!-- Row 2 -->
+                                <rect x="80" y="62" width="140" height="14" rx="3" fill="#6145FF" class="mini-chart-bar" style="animation-delay:0.2s"/>
+                                <rect x="80" y="79" width="170" height="14" rx="3" fill="#BA9DFF" class="mini-chart-bar" style="animation-delay:0.3s"/>
+                                <!-- Row 3 -->
+                                <rect x="80" y="104" width="120" height="14" rx="3" fill="#6145FF" class="mini-chart-bar" style="animation-delay:0.4s"/>
+                                <rect x="80" y="121" width="90" height="14" rx="3" fill="#BA9DFF" class="mini-chart-bar" style="animation-delay:0.5s"/>
+                                <!-- Row 4 -->
+                                <rect x="80" y="146" width="100" height="14" rx="3" fill="#6145FF" class="mini-chart-bar" style="animation-delay:0.6s"/>
+                                <rect x="80" y="163" width="150" height="14" rx="3" fill="#BA9DFF" class="mini-chart-bar" style="animation-delay:0.7s"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7. STACKED BAR CHART -->
+                <div class="bg-white border border-card-border rounded-[2rem] overflow-hidden chart-card" id="stacked-bar-chart">
+                    <div class="grid md:grid-cols-[1fr_1fr]">
+                        <div class="p-8 md:p-10">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="w-10 h-10 bg-light-bg rounded-xl flex items-center justify-center">
+                                    <span class="iconify text-primary text-xl" data-icon="mdi:chart-bar-stacked-horizontal"></span>
+                                </span>
+                                <span class="bg-light-bg text-primary text-xs font-bold uppercase py-1 px-3 rounded-full">Horizontal Composition</span>
+                            </div>
+                            <h3 class="text-dark-text font-semibold text-2xl mb-3">7. Stacked Bar Chart</h3>
+                            <p class="text-body-text leading-relaxed mb-5">The horizontal sibling of the stacked column. Segments are stacked <strong class="text-dark-text">left to right</strong> within each bar. Great for part-to-whole analysis with long labels.</p>
+                            <div class="space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">✅ When to Use:</p>
+                                <ul class="text-body-text text-sm leading-relaxed space-y-1 ml-4">
+                                    <li>• Part-to-whole with long category names</li>
+                                    <li>• Showing composition across ranked items</li>
+                                    <li>• Survey response breakdowns (Strongly Agree → Disagree)</li>
+                                </ul>
+                            </div>
+                            <div class="mt-5 space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">💡 Real-World Examples:</p>
+                                <div class="space-y-2">
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 1:</strong> Budget allocation by department — each bar shows sub-categories (Salaries, Tools, Training).</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 2:</strong> Customer sentiment breakdown (Positive, Neutral, Negative) by product line.</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 3:</strong> Market share by company with product segment breakdown.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-light-bg flex items-center justify-center p-8">
+                            <svg viewBox="0 0 300 200" class="w-full max-w-[280px]">
+                                <line x1="80" y1="15" x2="80" y2="180" stroke="#EBE7FF" stroke-width="2"/>
+                                <!-- Row 1 -->
+                                <rect x="80" y="20" width="90" height="22" rx="3" fill="#6145FF" class="mini-chart-bar"/>
+                                <rect x="170" y="20" width="60" height="22" rx="3" fill="#BA9DFF" class="mini-chart-bar" style="animation-delay:0.1s"/>
+                                <rect x="230" y="20" width="40" height="22" rx="3" fill="#EBE7FF" class="mini-chart-bar" style="animation-delay:0.2s"/>
+                                <!-- Row 2 -->
+                                <rect x="80" y="58" width="110" height="22" rx="3" fill="#6145FF" class="mini-chart-bar" style="animation-delay:0.3s"/>
+                                <rect x="190" y="58" width="50" height="22" rx="3" fill="#BA9DFF" class="mini-chart-bar" style="animation-delay:0.4s"/>
+                                <rect x="240" y="58" width="30" height="22" rx="3" fill="#EBE7FF" class="mini-chart-bar" style="animation-delay:0.5s"/>
+                                <!-- Row 3 -->
+                                <rect x="80" y="96" width="70" height="22" rx="3" fill="#6145FF" class="mini-chart-bar" style="animation-delay:0.6s"/>
+                                <rect x="150" y="96" width="80" height="22" rx="3" fill="#BA9DFF" class="mini-chart-bar" style="animation-delay:0.7s"/>
+                                <rect x="230" y="96" width="40" height="22" rx="3" fill="#EBE7FF" class="mini-chart-bar" style="animation-delay:0.8s"/>
+                                <!-- Row 4 -->
+                                <rect x="80" y="134" width="130" height="22" rx="3" fill="#6145FF" class="mini-chart-bar" style="animation-delay:0.9s"/>
+                                <rect x="210" y="134" width="40" height="22" rx="3" fill="#BA9DFF" class="mini-chart-bar" style="animation-delay:1s"/>
+                                <rect x="250" y="134" width="20" height="22" rx="3" fill="#EBE7FF" class="mini-chart-bar" style="animation-delay:1.1s"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8. COMBO CHART -->
+                <div class="bg-white border border-card-border rounded-[2rem] overflow-hidden chart-card" id="combo-chart">
+                    <div class="grid md:grid-cols-[1fr_1fr]">
+                        <div class="p-8 md:p-10">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="w-10 h-10 bg-light-bg rounded-xl flex items-center justify-center">
+                                    <span class="iconify text-primary text-xl" data-icon="mdi:chart-multiple"></span>
+                                </span>
+                                <span class="bg-light-bg text-primary text-xs font-bold uppercase py-1 px-3 rounded-full">Dual Axis</span>
+                            </div>
+                            <h3 class="text-dark-text font-semibold text-2xl mb-3">8. Combo Chart (Column + Line)</h3>
+                            <p class="text-body-text leading-relaxed mb-5">A combo chart combines two chart types — typically columns and a line — on <strong class="text-dark-text">dual axes</strong>. It lets you plot two different scales (like revenue in millions and margin as %) on the same visual.</p>
+                            <div class="space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">✅ When to Use:</p>
+                                <ul class="text-body-text text-sm leading-relaxed space-y-1 ml-4">
+                                    <li>• Two metrics with different scales (e.g., $ vs %)</li>
+                                    <li>• Showing correlation between two measures</li>
+                                    <li>• Highlighting a target or benchmark against actuals</li>
+                                </ul>
+                            </div>
+                            <div class="mt-5 space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">💡 Real-World Examples:</p>
+                                <div class="space-y-2">
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 1:</strong> Monthly revenue (columns, $ scale) and profit margin (line, % scale) on dual axes.</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 2:</strong> Units sold (columns) vs average selling price (line) by product category.</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 3:</strong> Actual sales (columns) vs target (line) — quickly see which months missed target.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-light-bg flex items-center justify-center p-8">
+                            <svg viewBox="0 0 300 200" class="w-full max-w-[280px]">
+                                <line x1="30" y1="170" x2="280" y2="170" stroke="#EBE7FF" stroke-width="2"/>
+                                <line x1="30" y1="130" x2="280" y2="130" stroke="#EBE7FF" stroke-width="1" stroke-dasharray="4"/>
+                                <line x1="30" y1="90" x2="280" y2="90" stroke="#EBE7FF" stroke-width="1" stroke-dasharray="4"/>
+                                <line x1="30" y1="50" x2="280" y2="50" stroke="#EBE7FF" stroke-width="1" stroke-dasharray="4"/>
+                                <!-- Bars -->
+                                <rect x="45" y="100" width="30" height="70" rx="4" fill="#6145FF" opacity="0.7" class="mini-chart-bar"/>
+                                <rect x="110" y="70" width="30" height="100" rx="4" fill="#6145FF" opacity="0.7" class="mini-chart-bar" style="animation-delay:0.1s"/>
+                                <rect x="175" y="90" width="30" height="80" rx="4" fill="#6145FF" opacity="0.7" class="mini-chart-bar" style="animation-delay:0.2s"/>
+                                <rect x="240" y="50" width="30" height="120" rx="4" fill="#6145FF" opacity="0.7" class="mini-chart-bar" style="animation-delay:0.3s"/>
+                                <!-- Line -->
+                                <polyline points="60,120 125,95 190,110 255,65" fill="none" stroke="#FFB648" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                <circle cx="60" cy="120" r="5" fill="#FFB648"/><circle cx="125" cy="95" r="5" fill="#FFB648"/>
+                                <circle cx="190" cy="110" r="5" fill="#FFB648"/><circle cx="255" cy="65" r="5" fill="#FFB648"/>
+                                <!-- Legend -->
+                                <rect x="50" y="8" width="10" height="10" rx="2" fill="#6145FF" opacity="0.7"/>
+                                <text x="65" y="17" fill="#40406A" font-size="9">Revenue</text>
+                                <line x1="130" y1="13" x2="150" y2="13" stroke="#FFB648" stroke-width="2"/>
+                                <circle cx="140" cy="13" r="3" fill="#FFB648"/>
+                                <text x="155" y="17" fill="#40406A" font-size="9">Margin %</text>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 9. STACKED COMBO CHART -->
+                <div class="bg-white border border-card-border rounded-[2rem] overflow-hidden chart-card" id="stacked-combo-chart">
+                    <div class="grid md:grid-cols-[1fr_1fr]">
+                        <div class="p-8 md:p-10">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="w-10 h-10 bg-light-bg rounded-xl flex items-center justify-center">
+                                    <span class="iconify text-primary text-xl" data-icon="mdi:chart-bar-stacked-plus-line"></span>
+                                </span>
+                                <span class="bg-light-bg text-primary text-xs font-bold uppercase py-1 px-3 rounded-full">Advanced Dual Axis</span>
+                            </div>
+                            <h3 class="text-dark-text font-semibold text-2xl mb-3">9. Stacked Combo Chart</h3>
+                            <p class="text-body-text leading-relaxed mb-5">A stacked combo chart combines <strong class="text-dark-text">stacked columns with a line</strong>. You get composition detail from the stacked bars plus a trend line on a secondary axis — the best of both worlds.</p>
+                            <div class="space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">✅ When to Use:</p>
+                                <ul class="text-body-text text-sm leading-relaxed space-y-1 ml-4">
+                                    <li>• Composition + trend simultaneously</li>
+                                    <li>• Showing category breakdown with an overlay metric</li>
+                                    <li>• When a simple combo isn't enough depth</li>
+                                </ul>
+                            </div>
+                            <div class="mt-5 space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">💡 Real-World Examples:</p>
+                                <div class="space-y-2">
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 1:</strong> Stacked columns = revenue by product line; Line = overall profit margin % trend.</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 2:</strong> Stacked columns = support tickets by priority (Critical, High, Low); Line = average resolution time.</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 3:</strong> Stacked columns = headcount by department; Line = total cost per employee.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-light-bg flex items-center justify-center p-8">
+                            <svg viewBox="0 0 300 200" class="w-full max-w-[280px]">
+                                <line x1="30" y1="170" x2="280" y2="170" stroke="#EBE7FF" stroke-width="2"/>
+                                <!-- Stacked Bar 1 -->
+                                <rect x="45" y="120" width="30" height="50" rx="3" fill="#BA9DFF" class="mini-chart-bar"/>
+                                <rect x="45" y="70" width="30" height="50" rx="3" fill="#6145FF" class="mini-chart-bar" style="animation-delay:0.1s"/>
+                                <!-- Stacked Bar 2 -->
+                                <rect x="110" y="100" width="30" height="70" rx="3" fill="#BA9DFF" class="mini-chart-bar" style="animation-delay:0.2s"/>
+                                <rect x="110" y="40" width="30" height="60" rx="3" fill="#6145FF" class="mini-chart-bar" style="animation-delay:0.3s"/>
+                                <!-- Stacked Bar 3 -->
+                                <rect x="175" y="130" width="30" height="40" rx="3" fill="#BA9DFF" class="mini-chart-bar" style="animation-delay:0.4s"/>
+                                <rect x="175" y="80" width="30" height="50" rx="3" fill="#6145FF" class="mini-chart-bar" style="animation-delay:0.5s"/>
+                                <!-- Stacked Bar 4 -->
+                                <rect x="240" y="110" width="30" height="60" rx="3" fill="#BA9DFF" class="mini-chart-bar" style="animation-delay:0.6s"/>
+                                <rect x="240" y="45" width="30" height="65" rx="3" fill="#6145FF" class="mini-chart-bar" style="animation-delay:0.7s"/>
+                                <!-- Line -->
+                                <polyline points="60,100 125,85 190,110 255,60" fill="none" stroke="#FFB648" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                <circle cx="60" cy="100" r="4" fill="#FFB648"/><circle cx="125" cy="85" r="4" fill="#FFB648"/>
+                                <circle cx="190" cy="110" r="4" fill="#FFB648"/><circle cx="255" cy="60" r="4" fill="#FFB648"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 10. PIE CHART -->
+                <div class="bg-white border border-card-border rounded-[2rem] overflow-hidden chart-card" id="pie-chart">
+                    <div class="grid md:grid-cols-[1fr_1fr]">
+                        <div class="p-8 md:p-10">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="w-10 h-10 bg-light-bg rounded-xl flex items-center justify-center">
+                                    <span class="iconify text-primary text-xl" data-icon="mdi:chart-pie"></span>
+                                </span>
+                                <span class="bg-light-bg text-primary text-xs font-bold uppercase py-1 px-3 rounded-full">Proportion</span>
+                            </div>
+                            <h3 class="text-dark-text font-semibold text-2xl mb-3">10. Pie Chart</h3>
+                            <p class="text-body-text leading-relaxed mb-5">A pie chart divides a circle into slices, each representing a <strong class="text-dark-text">proportion of the whole</strong>. Best used sparingly — for 3-5 categories max. It's the most recognized (and most misused) chart type.</p>
+                            <div class="space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">✅ When to Use:</p>
+                                <ul class="text-body-text text-sm leading-relaxed space-y-1 ml-4">
+                                    <li>• Showing simple proportions (3-5 slices max)</li>
+                                    <li>• One dominant category to highlight</li>
+                                    <li>• Audience is non-technical (everyone understands pie)</li>
+                                </ul>
+                            </div>
+                            <div class="mt-5 space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">💡 Real-World Examples:</p>
+                                <div class="space-y-2">
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 1:</strong> Market share of top 5 smartphone brands — instantly see who dominates.</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 2:</strong> Budget allocation: 45% Operations, 25% Marketing, 20% R&D, 10% Admin.</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 3:</strong> Survey results: What's your preferred work mode? (Office, Hybrid, Remote)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-light-bg flex items-center justify-center p-8">
+                            <svg viewBox="0 0 200 200" class="w-full max-w-[200px]">
+                                <circle cx="100" cy="100" r="80" fill="none" stroke="#EBE7FF" stroke-width="40"/>
+                                <!-- Slice 1: 45% = 162deg -->
+                                <circle cx="100" cy="100" r="80" fill="none" stroke="#6145FF" stroke-width="40"
+                                    stroke-dasharray="251.3 251.3" stroke-dashoffset="0" transform="rotate(-90 100 100)"/>
+                                <!-- Slice 2: 25% = 90deg -->
+                                <circle cx="100" cy="100" r="80" fill="none" stroke="#BA9DFF" stroke-width="40"
+                                    stroke-dasharray="125.66 376.99" stroke-dashoffset="-251.3" transform="rotate(-90 100 100)"/>
+                                <!-- Slice 3: 20% -->
+                                <circle cx="100" cy="100" r="80" fill="none" stroke="#FFB648" stroke-width="40"
+                                    stroke-dasharray="100.53 402.12" stroke-dashoffset="-376.99" transform="rotate(-90 100 100)"/>
+                                <!-- Center text -->
+                                <text x="100" y="95" text-anchor="middle" fill="#0D0C54" font-size="18" font-weight="600">100%</text>
+                                <text x="100" y="112" text-anchor="middle" fill="#40406A" font-size="9">Total Share</text>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 11. DONUT CHART -->
+                <div class="bg-white border border-card-border rounded-[2rem] overflow-hidden chart-card" id="donut-chart">
+                    <div class="grid md:grid-cols-[1fr_1fr]">
+                        <div class="p-8 md:p-10">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="w-10 h-10 bg-light-bg rounded-xl flex items-center justify-center">
+                                    <span class="iconify text-primary text-xl" data-icon="mdi:chart-donut"></span>
+                                </span>
+                                <span class="bg-light-bg text-primary text-xs font-bold uppercase py-1 px-3 rounded-full">Proportion + KPI</span>
+                            </div>
+                            <h3 class="text-dark-text font-semibold text-2xl mb-3">11. Donut Chart</h3>
+                            <p class="text-body-text leading-relaxed mb-5">A donut chart is a pie chart with a <strong class="text-dark-text">hollow center</strong>. The center can display a key metric or KPI. It's visually cleaner than a pie and less cluttered.</p>
+                            <div class="space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">✅ When to Use:</p>
+                                <ul class="text-body-text text-sm leading-relaxed space-y-1 ml-4">
+                                    <li>• Same as pie, but you want to show a KPI in the center</li>
+                                    <li>• Slightly more modern look than pie</li>
+                                    <li>• 3-6 categories with a summary stat</li>
+                                </ul>
+                            </div>
+                            <div class="mt-5 space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">💡 Real-World Examples:</p>
+                                <div class="space-y-2">
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 1:</strong> Project completion status — center shows "73% Complete", slices show task stages.</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 2:</strong> Customer segmentation — center shows total customers, slices show segments.</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 3:</strong> Expense categories — center shows total spend, slices show category breakdown.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-light-bg flex items-center justify-center p-8">
+                            <svg viewBox="0 0 200 200" class="w-full max-w-[200px]">
+                                <circle cx="100" cy="100" r="70" fill="none" stroke="#EBE7FF" stroke-width="25"/>
+                                <circle cx="100" cy="100" r="70" fill="none" stroke="#6145FF" stroke-width="25"
+                                    stroke-dasharray="220 220" stroke-dashoffset="0" transform="rotate(-90 100 100)"/>
+                                <circle cx="100" cy="100" r="70" fill="none" stroke="#BA9DFF" stroke-width="25"
+                                    stroke-dasharray="110 330" stroke-dashoffset="-220" transform="rotate(-90 100 100)"/>
+                                <circle cx="100" cy="100" r="70" fill="none" stroke="#FFB648" stroke-width="25"
+                                    stroke-dasharray="88 352" stroke-dashoffset="-330" transform="rotate(-90 100 100)"/>
+                                <circle cx="100" cy="100" r="45" fill="#F8F6FF"/>
+                                <text x="100" y="95" text-anchor="middle" fill="#6145FF" font-size="22" font-weight="700">73%</text>
+                                <text x="100" y="112" text-anchor="middle" fill="#40406A" font-size="8">Complete</text>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 12. FUNNEL CHART -->
+                <div class="bg-white border border-card-border rounded-[2rem] overflow-hidden chart-card" id="funnel-chart">
+                    <div class="grid md:grid-cols-[1fr_1fr]">
+                        <div class="p-8 md:p-10">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="w-10 h-10 bg-light-bg rounded-xl flex items-center justify-center">
+                                    <span class="iconify text-primary text-xl" data-icon="mdi:filter-variant"></span>
+                                </span>
+                                <span class="bg-light-bg text-primary text-xs font-bold uppercase py-1 px-3 rounded-full">Process Flow</span>
+                            </div>
+                            <h3 class="text-dark-text font-semibold text-2xl mb-3">12. Funnel Chart</h3>
+                            <p class="text-body-text leading-relaxed mb-5">A funnel chart shows a <strong class="text-dark-text">sequential process with decreasing values</strong> — from the widest stage at top to the narrowest at bottom. It's essential for conversion analysis.</p>
+                            <div class="space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">✅ When to Use:</p>
+                                <ul class="text-body-text text-sm leading-relaxed space-y-1 ml-4">
+                                    <li>• Sequential process with drop-offs</li>
+                                    <li>• Conversion / pipeline analysis</li>
+                                    <li>• Identifying bottlenecks in a flow</li>
+                                </ul>
+                            </div>
+                            <div class="mt-5 space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">💡 Real-World Examples:</p>
+                                <div class="space-y-2">
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 1:</strong> Sales pipeline: Leads → Qualified → Proposal → Negotiation → Closed Won.</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 2:</strong> Website funnel: Visits → Signups → Activations → Subscriptions → Upgrades.</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 3:</strong> Recruitment funnel: Applications → Screened → Interviewed → Offered → Hired.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-light-bg flex items-center justify-center p-8">
+                            <svg viewBox="0 0 200 220" class="w-full max-w-[180px]">
+                                <polygon points="10,10 190,10 170,50 30,50" fill="#6145FF" rx="5" opacity="0.9"/>
+                                <text x="100" y="36" text-anchor="middle" fill="white" font-size="10" font-weight="600">10,000 Leads</text>
+                                <polygon points="30,60 170,60 150,100 50,100" fill="#6145FF" opacity="0.72"/>
+                                <text x="100" y="86" text-anchor="middle" fill="white" font-size="10" font-weight="600">5,000 Qualified</text>
+                                <polygon points="50,110 150,110 130,150 70,150" fill="#6145FF" opacity="0.52"/>
+                                <text x="100" y="136" text-anchor="middle" fill="white" font-size="10" font-weight="600">2,000 Proposals</text>
+                                <polygon points="70,160 130,160 115,195 85,195" fill="#6145FF" opacity="0.35"/>
+                                <text x="100" y="182" text-anchor="middle" fill="white" font-size="9" font-weight="600">800 Won</text>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 13. SCATTER CHART -->
+                <div class="bg-white border border-card-border rounded-[2rem] overflow-hidden chart-card" id="scatter-chart">
+                    <div class="grid md:grid-cols-[1fr_1fr]">
+                        <div class="p-8 md:p-10">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="w-10 h-10 bg-light-bg rounded-xl flex items-center justify-center">
+                                    <span class="iconify text-primary text-xl" data-icon="mdi:chart-scatter-plot"></span>
+                                </span>
+                                <span class="bg-light-bg text-primary text-xs font-bold uppercase py-1 px-3 rounded-full">Correlation</span>
+                            </div>
+                            <h3 class="text-dark-text font-semibold text-2xl mb-3">13. Scatter Chart</h3>
+                            <p class="text-body-text leading-relaxed mb-5">A scatter chart plots individual data points on an X-Y plane to reveal <strong class="text-dark-text">correlation, clusters, and outliers</strong>. Each dot is an observation. No connecting lines — just raw distribution.</p>
+                            <div class="space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">✅ When to Use:</p>
+                                <ul class="text-body-text text-sm leading-relaxed space-y-1 ml-4">
+                                    <li>• Finding correlation between two variables</li>
+                                    <li>• Identifying outliers or clusters</li>
+                                    <li>• Large datasets with many data points</li>
+                                </ul>
+                            </div>
+                            <div class="mt-5 space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">💡 Real-World Examples:</p>
+                                <div class="space-y-2">
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 1:</strong> Marketing spend (X) vs revenue (Y) — see if higher spend correlates with higher revenue.</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 2:</strong> Employee experience years (X) vs salary (Y) — spot outliers and trends.</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 3:</strong> Product price vs customer rating — find the sweet spot for pricing.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-light-bg flex items-center justify-center p-8">
+                            <svg viewBox="0 0 300 200" class="w-full max-w-[280px]">
+                                <line x1="30" y1="170" x2="280" y2="170" stroke="#EBE7FF" stroke-width="2"/>
+                                <line x1="30" y1="170" x2="30" y2="20" stroke="#EBE7FF" stroke-width="2"/>
+                                <circle cx="60" cy="140" r="5" fill="#6145FF" opacity="0.6"/>
+                                <circle cx="80" cy="130" r="5" fill="#6145FF" opacity="0.6"/>
+                                <circle cx="100" cy="120" r="5" fill="#6145FF" opacity="0.6"/>
+                                <circle cx="120" cy="105" r="5" fill="#6145FF" opacity="0.6"/>
+                                <circle cx="140" cy="100" r="5" fill="#6145FF" opacity="0.6"/>
+                                <circle cx="155" cy="90" r="5" fill="#6145FF" opacity="0.6"/>
+                                <circle cx="170" cy="80" r="5" fill="#6145FF" opacity="0.6"/>
+                                <circle cx="190" cy="75" r="5" fill="#6145FF" opacity="0.6"/>
+                                <circle cx="210" cy="55" r="5" fill="#6145FF" opacity="0.6"/>
+                                <circle cx="230" cy="50" r="5" fill="#6145FF" opacity="0.6"/>
+                                <circle cx="250" cy="35" r="5" fill="#6145FF" opacity="0.6"/>
+                                <circle cx="270" cy="30" r="5" fill="#6145FF" opacity="0.6"/>
+                                <!-- Outlier -->
+                                <circle cx="240" cy="140" r="6" fill="#FFB648" opacity="0.8"/>
+                                <text x="248" y="138" fill="#FFB648" font-size="8">Outlier</text>
+                                <!-- Trend line -->
+                                <line x1="55" y1="145" x2="275" y2="25" stroke="#BA9DFF" stroke-width="1.5" stroke-dasharray="6"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 14. TREEMAP -->
+                <div class="bg-white border border-card-border rounded-[2rem] overflow-hidden chart-card" id="treemap">
+                    <div class="grid md:grid-cols-[1fr_1fr]">
+                        <div class="p-8 md:p-10">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="w-10 h-10 bg-light-bg rounded-xl flex items-center justify-center">
+                                    <span class="iconify text-primary text-xl" data-icon="mdi:view-dashboard-outline"></span>
+                                </span>
+                                <span class="bg-light-bg text-primary text-xs font-bold uppercase py-1 px-3 rounded-full">Hierarchical</span>
+                            </div>
+                            <h3 class="text-dark-text font-semibold text-2xl mb-3">14. Treemap</h3>
+                            <p class="text-body-text leading-relaxed mb-5">A treemap uses <strong class="text-dark-text">nested rectangles</strong> to show hierarchical data. The size of each rectangle represents a value, and colors can represent categories or performance. It packs a lot of data into limited space.</p>
+                            <div class="space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">✅ When to Use:</p>
+                                <ul class="text-body-text text-sm leading-relaxed space-y-1 ml-4">
+                                    <li>• Showing hierarchical data (category → sub-category)</li>
+                                    <li>• Space-efficient — many categories in one visual</li>
+                                    <li>• Emphasizing relative size differences</li>
+                                </ul>
+                            </div>
+                            <div class="mt-5 space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">💡 Real-World Examples:</p>
+                                <div class="space-y-2">
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 1:</strong> Revenue by product sub-category within product groups (Electronics → Phones, Laptops, Tablets).</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 2:</strong> Population by continent → country — instantly see dominant regions.</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 3:</strong> Stock portfolio allocation by sector → individual stocks.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-light-bg flex items-center justify-center p-8">
+                            <svg viewBox="0 0 250 180" class="w-full max-w-[250px]">
+                                <rect x="5" y="5" width="140" height="90" rx="6" fill="#6145FF" opacity="0.8"/>
+                                <text x="75" y="55" text-anchor="middle" fill="white" font-size="11" font-weight="600">Electronics</text>
+                                <rect x="150" y="5" width="95" height="90" rx="6" fill="#BA9DFF" opacity="0.8"/>
+                                <text x="197" y="55" text-anchor="middle" fill="white" font-size="10" font-weight="600">Clothing</text>
+                                <rect x="5" y="100" width="85" height="75" rx="6" fill="#FFB648" opacity="0.8"/>
+                                <text x="47" y="142" text-anchor="middle" fill="white" font-size="10" font-weight="600">Food</text>
+                                <rect x="95" y="100" width="75" height="75" rx="6" fill="#6145FF" opacity="0.45"/>
+                                <text x="132" y="142" text-anchor="middle" fill="white" font-size="9" font-weight="600">Home</text>
+                                <rect x="175" y="100" width="70" height="75" rx="6" fill="#6145FF" opacity="0.3"/>
+                                <text x="210" y="142" text-anchor="middle" fill="#0D0C54" font-size="9" font-weight="600">Sports</text>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 15. GAUGE CHART -->
+                <div class="bg-white border border-card-border rounded-[2rem] overflow-hidden chart-card" id="gauge-chart">
+                    <div class="grid md:grid-cols-[1fr_1fr]">
+                        <div class="p-8 md:p-10">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="w-10 h-10 bg-light-bg rounded-xl flex items-center justify-center">
+                                    <span class="iconify text-primary text-xl" data-icon="mdi:speedometer"></span>
+                                </span>
+                                <span class="bg-light-bg text-primary text-xs font-bold uppercase py-1 px-3 rounded-full">KPI / Target</span>
+                            </div>
+                            <h3 class="text-dark-text font-semibold text-2xl mb-3">15. Gauge Chart</h3>
+                            <p class="text-body-text leading-relaxed mb-5">A gauge chart (or radial gauge) shows a <strong class="text-dark-text">single value against a target or range</strong>, like a car's speedometer. It provides instant visual feedback on whether a metric is on track, behind, or exceeding targets.</p>
+                            <div class="space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">✅ When to Use:</p>
+                                <ul class="text-body-text text-sm leading-relaxed space-y-1 ml-4">
+                                    <li>• Single KPI against a target</li>
+                                    <li>• At-a-glance status (Green/Yellow/Red zones)</li>
+                                    <li>• Executive dashboards for quick reads</li>
+                                </ul>
+                            </div>
+                            <div class="mt-5 space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">💡 Real-World Examples:</p>
+                                <div class="space-y-2">
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 1:</strong> Customer satisfaction score: 78/100 with target at 80 — almost there!</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 2:</strong> Server CPU utilization: currently at 65% — green zone, all good.</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 3:</strong> Sales quota achievement: $850K vs $1M target — 85% reached.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-light-bg flex items-center justify-center p-8">
+                            <svg viewBox="0 0 200 140" class="w-full max-w-[220px]">
+                                <!-- Background arc -->
+                                <path d="M 20 120 A 80 80 0 0 1 180 120" fill="none" stroke="#EBE7FF" stroke-width="18" stroke-linecap="round"/>
+                                <!-- Red zone -->
+                                <path d="M 20 120 A 80 80 0 0 1 60 42" fill="none" stroke="#FF6B6B" stroke-width="18" stroke-linecap="round" opacity="0.5"/>
+                                <!-- Yellow zone -->
+                                <path d="M 60 42 A 80 80 0 0 1 120 28" fill="none" stroke="#FFB648" stroke-width="18" stroke-linecap="round" opacity="0.6"/>
+                                <!-- Green zone -->
+                                <path d="M 120 28 A 80 80 0 0 1 180 120" fill="none" stroke="#25D366" stroke-width="18" stroke-linecap="round" opacity="0.5"/>
+                                <!-- Needle -->
+                                <line x1="100" y1="120" x2="140" y2="50" stroke="#0D0C54" stroke-width="3" stroke-linecap="round"/>
+                                <circle cx="100" cy="120" r="6" fill="#0D0C54"/>
+                                <text x="100" y="110" text-anchor="middle" fill="#6145FF" font-size="24" font-weight="700">78</text>
+                                <text x="100" y="135" text-anchor="middle" fill="#40406A" font-size="9">Target: 80</text>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 16. WATERFALL CHART -->
+                <div class="bg-white border border-card-border rounded-[2rem] overflow-hidden chart-card" id="waterfall-chart">
+                    <div class="grid md:grid-cols-[1fr_1fr]">
+                        <div class="p-8 md:p-10">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="w-10 h-10 bg-light-bg rounded-xl flex items-center justify-center">
+                                    <span class="iconify text-primary text-xl" data-icon="mdi:chart-waterfall"></span>
+                                </span>
+                                <span class="bg-light-bg text-primary text-xs font-bold uppercase py-1 px-3 rounded-full">Incremental</span>
+                            </div>
+                            <h3 class="text-dark-text font-semibold text-2xl mb-3">16. Waterfall Chart</h3>
+                            <p class="text-body-text leading-relaxed mb-5">A waterfall chart shows <strong class="text-dark-text">how an initial value is affected by a series of positive and negative changes</strong>. It bridges the gap between start and end values, showing exactly what drove the change.</p>
+                            <div class="space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">✅ When to Use:</p>
+                                <ul class="text-body-text text-sm leading-relaxed space-y-1 ml-4">
+                                    <li>• Explaining how a total was reached (start + gains - losses = end)</li>
+                                    <li>• Financial analysis (P&L, cash flow)</li>
+                                    <li>• Showing contributors to variance</li>
+                                </ul>
+                            </div>
+                            <div class="mt-5 space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">💡 Real-World Examples:</p>
+                                <div class="space-y-2">
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 1:</strong> Profit walk: Revenue - COGS - OpEx + Other Income = Net Profit.</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 2:</strong> Headcount changes: Start 500 + Hires 80 - Exits 45 - Transfers 10 = End 525.</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 3:</strong> Budget variance: Planned $1M + Savings $120K - Overruns $80K = Actual $1.04M.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-light-bg flex items-center justify-center p-8">
+                            <svg viewBox="0 0 300 200" class="w-full max-w-[280px]">
+                                <line x1="30" y1="170" x2="280" y2="170" stroke="#EBE7FF" stroke-width="2"/>
+                                <!-- Start bar -->
+                                <rect x="40" y="50" width="30" height="120" rx="4" fill="#6145FF" opacity="0.8"/>
+                                <!-- Up bar -->
+                                <rect x="85" y="30" width="30" height="90" rx="4" fill="#25D366" opacity="0.7"/>
+                                <!-- Connector line -->
+                                <line x1="70" y1="50" x2="85" y2="50" stroke="#40406A" stroke-width="1" stroke-dasharray="3"/>
+                                <!-- Down bar -->
+                                <rect x="130" y="120" width="30" height="70" rx="4" fill="#FF6B6B" opacity="0.7"/>
+                                <line x1="115" y1="30" x2="130" y2="30" stroke="#40406A" stroke-width="1" stroke-dasharray="3"/>
+                                <!-- Up bar -->
+                                <rect x="175" y="80" width="30" height="70" rx="4" fill="#25D366" opacity="0.7"/>
+                                <line x1="160" y1="120" x2="175" y2="120" stroke="#40406A" stroke-width="1" stroke-dasharray="3"/>
+                                <!-- Down bar -->
+                                <rect x="220" y="110" width="30" height="40" rx="4" fill="#FF6B6B" opacity="0.7"/>
+                                <line x1="205" y1="80" x2="220" y2="80" stroke="#40406A" stroke-width="1" stroke-dasharray="3"/>
+                                <!-- End bar -->
+                                <rect x="255" y="40" width="30" height="130" rx="4" fill="#6145FF" opacity="0.8"/>
+                                <line x1="250" y1="110" x2="255" y2="110" stroke="#40406A" stroke-width="1" stroke-dasharray="3"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 17. TABLE VISUAL -->
+                <div class="bg-white border border-card-border rounded-[2rem] overflow-hidden chart-card" id="table-visual">
+                    <div class="grid md:grid-cols-[1fr_1fr]">
+                        <div class="p-8 md:p-10">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="w-10 h-10 bg-light-bg rounded-xl flex items-center justify-center">
+                                    <span class="iconify text-primary text-xl" data-icon="mdi:table"></span>
+                                </span>
+                                <span class="bg-light-bg text-primary text-xs font-bold uppercase py-1 px-3 rounded-full">Detail</span>
+                            </div>
+                            <h3 class="text-dark-text font-semibold text-2xl mb-3">17. Table Visual</h3>
+                            <p class="text-body-text leading-relaxed mb-5">A table visual displays data in <strong class="text-dark-text">rows and columns</strong> — just like Excel. It's the most precise visual for showing exact numbers. While charts show the "picture," tables show the "details."</p>
+                            <div class="space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">✅ When to Use:</p>
+                                <ul class="text-body-text text-sm leading-relaxed space-y-1 ml-4">
+                                    <li>• Users need to see exact numbers, not approximations</li>
+                                    <li>• Detailed lookups (find a specific row)</li>
+                                    <li>• Supporting data alongside a chart</li>
+                                </ul>
+                            </div>
+                            <div class="mt-5 space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">💡 Real-World Examples:</p>
+                                <div class="space-y-2">
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 1:</strong> Employee master list with Name, Department, Salary, Join Date — for HR lookups.</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 2:</strong> Invoice-level transaction data for audit purposes.</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 3:</strong> Product catalog with SKU, Price, Stock, Category — for operations team.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-light-bg flex items-center justify-center p-8">
+                            <div class="w-full max-w-[280px] bg-white rounded-2xl overflow-hidden border border-card-border shadow-sm">
+                                <div class="grid grid-cols-3 bg-primary text-white text-xs font-semibold">
+                                    <div class="p-3">Product</div><div class="p-3">Revenue</div><div class="p-3">Growth</div>
+                                </div>
+                                <div class="grid grid-cols-3 text-xs border-b border-card-border">
+                                    <div class="p-3 text-dark-text font-medium">Laptops</div><div class="p-3 text-body-text">$1.2M</div><div class="p-3 text-green-600 font-semibold">+15%</div>
+                                </div>
+                                <div class="grid grid-cols-3 text-xs border-b border-card-border bg-light-bg/50">
+                                    <div class="p-3 text-dark-text font-medium">Phones</div><div class="p-3 text-body-text">$980K</div><div class="p-3 text-green-600 font-semibold">+22%</div>
+                                </div>
+                                <div class="grid grid-cols-3 text-xs border-b border-card-border">
+                                    <div class="p-3 text-dark-text font-medium">Tablets</div><div class="p-3 text-body-text">$450K</div><div class="p-3 text-red-500 font-semibold">-5%</div>
+                                </div>
+                                <div class="grid grid-cols-3 text-xs border-b border-card-border bg-light-bg/50">
+                                    <div class="p-3 text-dark-text font-medium">Watches</div><div class="p-3 text-body-text">$320K</div><div class="p-3 text-green-600 font-semibold">+30%</div>
+                                </div>
+                                <div class="grid grid-cols-3 text-xs">
+                                    <div class="p-3 text-dark-text font-medium">Acc.</div><div class="p-3 text-body-text">$180K</div><div class="p-3 text-body-text">+2%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 18. MATRIX VISUAL -->
+                <div class="bg-white border border-card-border rounded-[2rem] overflow-hidden chart-card" id="matrix-visual">
+                    <div class="grid md:grid-cols-[1fr_1fr]">
+                        <div class="p-8 md:p-10">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="w-10 h-10 bg-light-bg rounded-xl flex items-center justify-center">
+                                    <span class="iconify text-primary text-xl" data-icon="mdi:view-grid-outline"></span>
+                                </span>
+                                <span class="bg-light-bg text-primary text-xs font-bold uppercase py-1 px-3 rounded-full">Multi-Dimensional</span>
+                            </div>
+                            <h3 class="text-dark-text font-semibold text-2xl mb-3">18. Matrix Visual</h3>
+                            <p class="text-body-text leading-relaxed mb-5">A matrix visual is like a <strong class="text-dark-text">pivot table</strong> in Power BI. It shows data across rows AND columns with aggregations at intersections. It supports drill-down, subtotals, and cross-highlighting — the most powerful tabular visual.</p>
+                            <div class="space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">✅ When to Use:</p>
+                                <ul class="text-body-text text-sm leading-relaxed space-y-1 ml-4">
+                                    <li>• Multi-dimensional analysis (rows × columns)</li>
+                                    <li>• Pivot table style summary with drill-down</li>
+                                    <li>• Subtotals and grand totals automatically</li>
+                                </ul>
+                            </div>
+                            <div class="mt-5 space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">💡 Real-World Examples:</p>
+                                <div class="space-y-2">
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 1:</strong> Sales by Region (rows) × Quarter (columns) — with drill-down from Region → Country → City.</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 2:</strong> Employee count by Department (rows) × Year (columns) with subtotals per division.</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 3:</strong> Expense categories (rows) × Months (columns) showing budget vs actual with conditional formatting.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-light-bg flex items-center justify-center p-8">
+                            <div class="w-full max-w-[280px] bg-white rounded-2xl overflow-hidden border border-card-border shadow-sm">
+                                <div class="grid grid-cols-4 bg-primary text-white text-[10px] font-semibold">
+                                    <div class="p-2.5"></div><div class="p-2.5">Q1</div><div class="p-2.5">Q2</div><div class="p-2.5">Q3</div>
+                                </div>
+                                <div class="grid grid-cols-4 text-[10px] border-b border-card-border bg-primary/5">
+                                    <div class="p-2.5 text-dark-text font-bold">North</div><div class="p-2.5 text-body-text">$320K</div><div class="p-2.5 text-body-text">$410K</div><div class="p-2.5 text-body-text">$380K</div>
+                                </div>
+                                <div class="grid grid-cols-4 text-[10px] border-b border-card-border">
+                                    <div class="p-2.5 text-dark-text font-bold">South</div><div class="p-2.5 text-body-text">$210K</div><div class="p-2.5 text-body-text">$280K</div><div class="p-2.5 text-body-text">$250K</div>
+                                </div>
+                                <div class="grid grid-cols-4 text-[10px] border-b border-card-border bg-primary/5">
+                                    <div class="p-2.5 text-dark-text font-bold">East</div><div class="p-2.5 text-body-text">$180K</div><div class="p-2.5 text-body-text">$220K</div><div class="p-2.5 text-body-text">$190K</div>
+                                </div>
+                                <div class="grid grid-cols-4 text-[10px] border-b border-card-border">
+                                    <div class="p-2.5 text-dark-text font-bold">West</div><div class="p-2.5 text-body-text">$290K</div><div class="p-2.5 text-body-text">$350K</div><div class="p-2.5 text-body-text">$310K</div>
+                                </div>
+                                <div class="grid grid-cols-4 text-[10px] bg-primary/10">
+                                    <div class="p-2.5 text-primary font-bold">Total</div><div class="p-2.5 text-primary font-semibold">$1M</div><div class="p-2.5 text-primary font-semibold">$1.26M</div><div class="p-2.5 text-primary font-semibold">$1.13M</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 19. CARD VISUAL -->
+                <div class="bg-white border border-card-border rounded-[2rem] overflow-hidden chart-card" id="card-visual">
+                    <div class="grid md:grid-cols-[1fr_1fr]">
+                        <div class="p-8 md:p-10">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="w-10 h-10 bg-light-bg rounded-xl flex items-center justify-center">
+                                    <span class="iconify text-primary text-xl" data-icon="mdi:card-text-outline"></span>
+                                </span>
+                                <span class="bg-light-bg text-primary text-xs font-bold uppercase py-1 px-3 rounded-full">Single KPI</span>
+                            </div>
+                            <h3 class="text-dark-text font-semibold text-2xl mb-3">19. Card Visual</h3>
+                            <p class="text-body-text leading-relaxed mb-5">A card displays a <strong class="text-dark-text">single aggregated value</strong> — total revenue, count of orders, average score. It's the simplest visual but the most impactful for headline KPIs on executive dashboards.</p>
+                            <div class="space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">✅ When to Use:</p>
+                                <ul class="text-body-text text-sm leading-relaxed space-y-1 ml-4">
+                                    <li>• Single headline metric (big number)</li>
+                                    <li>• Top of dashboard for instant context</li>
+                                    <li>• Paired with other cards for KPI summary row</li>
+                                </ul>
+                            </div>
+                            <div class="mt-5 space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">💡 Real-World Examples:</p>
+                                <div class="space-y-2">
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 1:</strong> Total Revenue: $4.7M — the biggest number on the sales dashboard.</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 2:</strong> Active Users: 12,450 — the key growth metric on a product dashboard.</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 3:</strong> Average Delivery Time: 2.3 days — headline ops metric.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-light-bg flex items-center justify-center p-8">
+                            <div class="space-y-4 w-full max-w-[280px]">
+                                <div class="bg-white border-2 border-primary/20 rounded-2xl p-6 text-center shadow-sm">
+                                    <p class="text-body-text text-sm mb-1">Total Revenue</p>
+                                    <p class="text-primary text-4xl font-bold">$4.7M</p>
+                                    <p class="text-green-600 text-sm font-semibold mt-1">↑ 12% vs last year</p>
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="bg-white border border-card-border rounded-xl p-4 text-center shadow-sm">
+                                        <p class="text-body-text text-xs mb-1">Orders</p>
+                                        <p class="text-dark-text text-xl font-bold">8,432</p>
+                                    </div>
+                                    <div class="bg-white border border-card-border rounded-xl p-4 text-center shadow-sm">
+                                        <p class="text-body-text text-xs mb-1">Avg. Value</p>
+                                        <p class="text-dark-text text-xl font-bold">$558</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 20. MAP & FILLED MAP -->
+                <div class="bg-white border border-card-border rounded-[2rem] overflow-hidden chart-card" id="map-visual">
+                    <div class="grid md:grid-cols-[1fr_1fr]">
+                        <div class="p-8 md:p-10">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="w-10 h-10 bg-light-bg rounded-xl flex items-center justify-center">
+                                    <span class="iconify text-primary text-xl" data-icon="mdi:map-marker-outline"></span>
+                                </span>
+                                <span class="bg-light-bg text-primary text-xs font-bold uppercase py-1 px-3 rounded-full">Geospatial</span>
+                            </div>
+                            <h3 class="text-dark-text font-semibold text-2xl mb-3">20. Map & Filled Map</h3>
+                            <p class="text-body-text leading-relaxed mb-5">Power BI's map visuals plot data on <strong class="text-dark-text">geographic locations</strong>. A bubble map shows circles sized by value; a filled map colors regions based on values. Essential for any location-based analysis.</p>
+                            <div class="space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">✅ When to Use:</p>
+                                <ul class="text-body-text text-sm leading-relaxed space-y-1 ml-4">
+                                    <li>• Data has a geographic component (country, state, city)</li>
+                                    <li>• Regional performance comparison</li>
+                                    <li>• Spotting geographic patterns or clusters</li>
+                                </ul>
+                            </div>
+                            <div class="mt-5 space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">💡 Real-World Examples:</p>
+                                <div class="space-y-2">
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 1:</strong> Sales by state on a filled map — darker = higher revenue. Instantly see top-performing regions.</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 2:</strong> Store locations as bubble map — bubble size = revenue, color = profit margin.</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 3:</strong> COVID cases by country — filled map with color intensity showing severity.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-light-bg flex items-center justify-center p-8">
+                            <svg viewBox="0 0 300 200" class="w-full max-w-[280px]">
+                                <!-- Simplified map outline -->
+                                <path d="M50,80 Q80,40 140,50 Q180,30 220,60 Q260,50 280,80 Q270,120 240,140 Q200,160 160,150 Q120,160 80,140 Q50,120 50,80Z" fill="#EBE7FF" stroke="#BA9DFF" stroke-width="1"/>
+                                <!-- Bubbles -->
+                                <circle cx="120" cy="70" r="20" fill="#6145FF" opacity="0.5"/>
+                                <circle cx="180" cy="90" r="28" fill="#6145FF" opacity="0.6"/>
+                                <circle cx="220" cy="70" r="15" fill="#6145FF" opacity="0.4"/>
+                                <circle cx="100" cy="120" r="12" fill="#6145FF" opacity="0.35"/>
+                                <circle cx="200" cy="130" r="18" fill="#6145FF" opacity="0.45"/>
+                                <circle cx="150" cy="100" r="10" fill="#6145FF" opacity="0.3"/>
+                                <!-- Labels -->
+                                <text x="180" y="94" text-anchor="middle" fill="white" font-size="9" font-weight="600">$1.2M</text>
+                                <text x="120" y="74" text-anchor="middle" fill="white" font-size="8" font-weight="600">$800K</text>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 21. RIBBON CHART -->
+                <div class="bg-white border border-card-border rounded-[2rem] overflow-hidden chart-card" id="ribbon-chart">
+                    <div class="grid md:grid-cols-[1fr_1fr]">
+                        <div class="p-8 md:p-10">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="w-10 h-10 bg-light-bg rounded-xl flex items-center justify-center">
+                                    <span class="iconify text-primary text-xl" data-icon="mdi:gesture"></span>
+                                </span>
+                                <span class="bg-light-bg text-primary text-xs font-bold uppercase py-1 px-3 rounded-full">Rank Change</span>
+                            </div>
+                            <h3 class="text-dark-text font-semibold text-2xl mb-3">21. Ribbon Chart</h3>
+                            <p class="text-body-text leading-relaxed mb-5">A ribbon chart is a stacked bar chart with <strong class="text-dark-text">connected ribbons</strong> between categories across time periods. The ribbons show how category rankings change — when a category moves up or down, the ribbon flows accordingly.</p>
+                            <div class="space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">✅ When to Use:</p>
+                                <ul class="text-body-text text-sm leading-relaxed space-y-1 ml-4">
+                                    <li>• Tracking rank changes over time</li>
+                                    <li>• Seeing which category overtakes another</li>
+                                    <li>• More dynamic than a simple stacked bar</li>
+                                </ul>
+                            </div>
+                            <div class="mt-5 space-y-3">
+                                <p class="text-sm font-semibold text-dark-text">💡 Real-World Examples:</p>
+                                <div class="space-y-2">
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 1:</strong> Browser market share over years — see Chrome overtaking IE and Firefox.</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 2:</strong> Department budget rankings by quarter — when R&D overtakes Marketing in spending.</p>
+                                    </div>
+                                    <div class="example-tag rounded-xl p-3">
+                                        <p class="text-sm text-dark-text"><strong>Example 3:</strong> Social media platform popularity — TikTok rising, Facebook declining over 5 years.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-light-bg flex items-center justify-center p-8">
+                            <svg viewBox="0 0 300 200" class="w-full max-w-[280px]">
+                                <line x1="30" y1="170" x2="280" y2="170" stroke="#EBE7FF" stroke-width="2"/>
+                                <!-- Period 1 -->
+                                <rect x="40" y="30" width="50" height="45" fill="#6145FF" opacity="0.8" rx="2"/>
+                                <rect x="40" y="75" width="50" height="40" fill="#BA9DFF" opacity="0.8" rx="2"/>
+                                <rect x="40" y="115" width="50" height="55" fill="#FFB648" opacity="0.6" rx="2"/>
+                                <!-- Period 2 -->
+                                <rect x="125" y="30" width="50" height="50" fill="#6145FF" opacity="0.8" rx="2"/>
+                                <rect x="125" y="80" width="50" height="55" fill="#FFB648" opacity="0.6" rx="2"/>
+                                <rect x="125" y="135" width="50" height="35" fill="#BA9DFF" opacity="0.8" rx="2"/>
+                                <!-- Period 3 -->
+                                <rect x="210" y="30" width="50" height="60" fill="#6145FF" opacity="0.8" rx="2"/>
+                                <rect x="210" y="90" width="50" height="45" fill="#FFB648" opacity="0.6" rx="2"/>
+                                <rect x="210" y="135" width="50" height="35" fill="#BA9DFF" opacity="0.8" rx="2"/>
+                                <!-- Ribbons connecting -->
+                                <path d="M90,52 L125,55 L125,105 L90,95 Z" fill="#BA9DFF" opacity="0.2"/>
+                                <path d="M90,95 L125,105 L125,152 L90,137 Z" fill="#FFB648" opacity="0.15"/>
+                                <path d="M175,107 L210,112 L210,157 L175,152 Z" fill="#BA9DFF" opacity="0.2"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== WHEN TO USE QUICK REFERENCE ========== -->
+    <section id="when-to-use" class="bg-white py-20 md:py-28">
+        <div class="max-w-[1346px] mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="inline-block bg-light-bg text-primary text-xs font-bold uppercase py-1.5 px-3 rounded-full mb-4">Quick Reference</span>
+                <h2 class="text-3xl md:text-4xl lg:text-[3.75rem] font-semibold text-dark-text leading-tight tracking-tight mb-4">When to Use <span class="text-gradient">Which Chart?</span></h2>
+                <p class="text-body-text text-lg leading-relaxed max-w-2xl mx-auto">Your cheat sheet for choosing the right Power BI visual every time.</p>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse">
+                    <thead>
+                        <tr class="bg-primary text-white">
+                            <th class="py-4 px-6 text-left text-sm font-semibold rounded-tl-2xl">You Want To...</th>
+                            <th class="py-4 px-6 text-left text-sm font-semibold">Chart Type</th>
+                            <th class="py-4 px-6 text-left text-sm font-semibold rounded-tr-2xl">Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-card-border hover:bg-light-bg transition-colors">
+                            <td class="py-4 px-6 text-sm font-medium text-dark-text">Show a trend over time</td>
+                            <td class="py-4 px-6 text-sm"><span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-semibold">Line Chart</span></td>
+                            <td class="py-4 px-6 text-sm text-body-text">Monthly revenue trend</td>
+                        </tr>
+                        <tr class="border-b border-card-border hover:bg-light-bg transition-colors bg-light-bg/40">
+                            <td class="py-4 px-6 text-sm font-medium text-dark-text">Compare categories</td>
+                            <td class="py-4 px-6 text-sm"><span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-semibold">Clustered Column / Bar</span></td>
+                            <td class="py-4 px-6 text-sm text-body-text">Sales by region</td>
+                        </tr>
+                        <tr class="border-b border-card-border hover:bg-light-bg transition-colors">
+                            <td class="py-4 px-6 text-sm font-medium text-dark-text">Show composition / part-to-whole</td>
+                            <td class="py-4 px-6 text-sm"><span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-semibold">Stacked Column / Pie / Donut</span></td>
+                            <td class="py-4 px-6 text-sm text-body-text">Budget by category</td>
+                        </tr>
+                        <tr class="border-b border-card-border hover:bg-light-bg transition-colors bg-light-bg/40">
+                            <td class="py-4 px-6 text-sm font-medium text-dark-text">Show two measures with different scales</td>
+                            <td class="py-4 px-6 text-sm"><span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-semibold">Combo Chart</span></td>
+                            <td class="py-4 px-6 text-sm text-body-text">Revenue ($) vs Margin (%)</td>
+                        </tr>
+                        <tr class="border-b border-card-border hover:bg-light-bg transition-colors">
+                            <td class="py-4 px-6 text-sm font-medium text-dark-text">Track a sequential process</td>
+                            <td class="py-4 px-6 text-sm"><span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-semibold">Funnel Chart</span></td>
+                            <td class="py-4 px-6 text-sm text-body-text">Sales pipeline stages</td>
+                        </tr>
+                        <tr class="border-b border-card-border hover:bg-light-bg transition-colors bg-light-bg/40">
+                            <td class="py-4 px-6 text-sm font-medium text-dark-text">Find correlation</td>
+                            <td class="py-4 px-6 text-sm"><span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-semibold">Scatter Chart</span></td>
+                            <td class="py-4 px-6 text-sm text-body-text">Ad spend vs revenue</td>
+                        </tr>
+                        <tr class="border-b border-card-border hover:bg-light-bg transition-colors">
+                            <td class="py-4 px-6 text-sm font-medium text-dark-text">Show hierarchical data</td>
+                            <td class="py-4 px-6 text-sm"><span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-semibold">Treemap</span></td>
+                            <td class="py-4 px-6 text-sm text-body-text">Revenue by category & sub-category</td>
+                        </tr>
+                        <tr class="border-b border-card-border hover:bg-light-bg transition-colors bg-light-bg/40">
+                            <td class="py-4 px-6 text-sm font-medium text-dark-text">Show a single KPI</td>
+                            <td class="py-4 px-6 text-sm"><span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-semibold">Card / Gauge</span></td>
+                            <td class="py-4 px-6 text-sm text-body-text">Total revenue, CSAT score</td>
+                        </tr>
+                        <tr class="border-b border-card-border hover:bg-light-bg transition-colors">
+                            <td class="py-4 px-6 text-sm font-medium text-dark-text">Explain incremental changes</td>
+                            <td class="py-4 px-6 text-sm"><span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-semibold">Waterfall Chart</span></td>
+                            <td class="py-4 px-6 text-sm text-body-text">Profit = Rev - COGS - OpEx</td>
+                        </tr>
+                        <tr class="hover:bg-light-bg transition-colors bg-light-bg/40">
+                            <td class="py-4 px-6 text-sm font-medium text-dark-text">Display exact numbers</td>
+                            <td class="py-4 px-6 text-sm"><span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-semibold">Table / Matrix</span></td>
+                            <td class="py-4 px-6 text-sm text-body-text">Employee details, pivot summary</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FAQ ========== -->
+    <section id="faq" class="bg-light-bg py-20 md:py-28">
+        <div class="max-w-[1062px] mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="inline-block bg-white text-primary text-xs font-bold uppercase py-1.5 px-3 rounded-full mb-4 border border-card-border">FAQ</span>
+                <h2 class="text-3xl md:text-4xl lg:text-[3.75rem] font-semibold text-dark-text leading-tight tracking-tight mb-4">Common Questions</h2>
+            </div>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white border border-card-border rounded-2xl overflow-hidden">
+                    <details class="group">
+                        <summary class="flex items-center justify-between p-6 cursor-pointer">
+                            <span class="text-dark-text font-semibold pr-4">What's the difference between a clustered and stacked column chart?</span>
+                            <span class="iconify chevron-icon text-primary text-xl flex-shrink-0" data-icon="mdi:chevron-down"></span>
+                        </summary>
+                        <div class="px-6 pb-6 text-body-text text-sm leading-relaxed">Clustered columns place bars <strong>side by side</strong> for comparison. Stacked columns place segments <strong>on top of each other</strong> to show composition. Use clustered when comparing totals; use stacked when showing part-to-whole.</div>
+                    </details>
+                </div>
+                <div class="bg-white border border-card-border rounded-2xl overflow-hidden">
+                    <details class="group">
+                        <summary class="flex items-center justify-between p-6 cursor-pointer">
+                            <span class="text-dark-text font-semibold pr-4">When should I avoid a pie chart?</span>
+                            <span class="iconify chevron-icon text-primary text-xl flex-shrink-0" data-icon="mdi:chevron-down"></span>
+                        </summary>
+                        <div class="px-6 pb-6 text-body-text text-sm leading-relaxed">Avoid pie charts when you have more than 5-6 categories, when slices are similar in size (hard to compare), when you need precise comparisons, or when showing changes over time. Use a bar chart instead in those cases.</div>
+                    </details>
+                </div>
+                <div class="bg-white border border-card-border rounded-2xl overflow-hidden">
+                    <details class="group">
+                        <summary class="flex items-center justify-between p-6 cursor-pointer">
+                            <span class="text-dark-text font-semibold pr-4">Table vs Matrix — what's the difference?</span>
+                            <span class="iconify chevron-icon text-primary text-xl flex-shrink-0" data-icon="mdi:chevron-down"></span>
+                        </summary>
+                        <div class="px-6 pb-6 text-body-text text-sm leading-relaxed">A Table has fixed columns (like Excel). A Matrix is a pivot table — it supports rows AND columns with drill-down, subtotals, and cross-highlighting. Use Matrix for multi-dimensional analysis; use Table for simple row-by-row detail.</div>
+                    </details>
+                </div>
+                <div class="bg-white border border-card-border rounded-2xl overflow-hidden">
+                    <details class="group">
+                        <summary class="flex items-center justify-between p-6 cursor-pointer">
+                            <span class="text-dark-text font-semibold pr-4">What chart should I use for time-series data?</span>
+                            <span class="iconify chevron-icon text-primary text-xl flex-shrink-0" data-icon="mdi:chevron-down"></span>
+                        </summary>
+                        <div class="px-6 pb-6 text-body-text text-sm leading-relaxed">Line chart for simple trends. Area chart for volume emphasis. Stacked area for composition over time. Column chart for discrete time periods (quarters, months). Combo chart when adding a second metric on a different scale.</div>
+                    </details>
+                </div>
+                <div class="bg-white border border-card-border rounded-2xl overflow-hidden">
+                    <details class="group">
+                        <summary class="flex items-center justify-between p-6 cursor-pointer">
+                            <span class="text-dark-text font-semibold pr-4">How many charts should I put on one dashboard?</span>
+                            <span class="iconify chevron-icon text-primary text-xl flex-shrink-0" data-icon="mdi:chevron-down"></span>
+                        </summary>
+                        <div class="px-6 pb-6 text-body-text text-sm leading-relaxed">Ideally 4-8 visuals per dashboard page. Start with 2-3 KPI cards at the top, then 3-5 supporting charts below. Too many charts overwhelm; too few leave questions unanswered. Every chart should answer a specific question.</div>
+                    </details>
+                </div>
+                <div class="bg-white border border-card-border rounded-2xl overflow-hidden">
+                    <details class="group">
+                        <summary class="flex items-center justify-between p-6 cursor-pointer">
+                            <span class="text-dark-text font-semibold pr-4">Can I use custom visuals in Power BI?</span>
+                            <span class="iconify chevron-icon text-primary text-xl flex-shrink-0" data-icon="mdi:chevron-down"></span>
+                        </summary>
+                        <div class="px-6 pb-6 text-body-text text-sm leading-relaxed">Yes! Power BI has 2,000+ custom visuals from AppSource — including chord diagrams, sankey charts, small multiples, and more. But start with built-in visuals (they're faster and more reliable) before exploring custom ones.</div>
+                    </details>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== CTA ========== -->
+    <section class="bg-dark py-20 md:py-28 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at 30% 70%, #6145FF, transparent 50%), radial-gradient(circle at 70% 30%, #BA9DFF, transparent 50%);"></div>
+        <div class="max-w-[1062px] mx-auto px-6 text-center relative z-10">
+            <h2 class="text-3xl md:text-4xl lg:text-[3.75rem] font-semibold text-white leading-tight tracking-tight mb-6">Ready to Master <span class="text-gradient">Power BI?</span></h2>
+            <p class="text-light-text text-lg leading-relaxed max-w-xl mx-auto mb-10">Join thousands of learners at Vizonis Academy. Get hands-on training, real projects, and expert mentorship — all designed for beginners.</p>
+            <div class="flex flex-wrap gap-4 justify-center">
+                <a href="https://wa.me/916364671786?text=Hi%20Vizonis%20Academy!%20I%20want%20to%20enroll%20in%20the%20Power%20BI%20course" target="_blank" class="bg-[#25D366] hover:bg-[#20bd5a] text-white font-semibold py-4 px-10 rounded-full transition-colors duration-150 inline-flex items-center gap-3 text-lg">
+                    <span class="iconify text-2xl" data-icon="mdi:whatsapp"></span> Chat on WhatsApp
+                </a>
+                <a href="tel:+916364671786" class="border border-white/30 hover:bg-white/10 text-white font-semibold py-4 px-10 rounded-full transition-colors duration-150 inline-flex items-center gap-2">
+                    <span class="iconify" data-icon="mdi:phone"></span> +91 6364 671 786
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="bg-dark border-t border-white/10">
+        <div class="max-w-[1346px] mx-auto px-6 py-16">
+            <div class="grid lg:grid-cols-[1.2fr_2fr] gap-16">
+                <div>
+                    <a href="#" class="flex items-center gap-2 mb-6">
+                        <span class="iconify text-primary text-3xl" data-icon="mdi:chart-donut"></span>
+                        <span class="text-white font-bold text-xl tracking-tight">Vizonis<span class="text-primary">Academy</span></span>
+                    </a>
+                    <p class="text-light-text leading-relaxed mb-6">Empowering the next generation of data professionals with practical, hands-on training in Power BI, data analytics, and business intelligence.</p>
+                    <div class="flex items-center gap-4">
+                        <a href="https://wa.me/916364671786?text=Hi%20Vizonis%20Academy!" target="_blank" class="w-10 h-10 glass rounded-xl flex items-center justify-center hover:bg-white/20 transition-colors">
+                            <span class="iconify text-[#25D366] text-xl" data-icon="mdi:whatsapp"></span>
+                        </a>
+                        <a href="#" class="w-10 h-10 glass rounded-xl flex items-center justify-center hover:bg-white/20 transition-colors">
+                            <span class="iconify text-light-text text-xl" data-icon="mdi:linkedin"></span>
+                        </a>
+                        <a href="#" class="w-10 h-10 glass rounded-xl flex items-center justify-center hover:bg-white/20 transition-colors">
+                            <span class="iconify text-light-text text-xl" data-icon="mdi:youtube"></span>
+                        </a>
+                        <a href="#" class="w-10 h-10 glass rounded-xl flex items-center justify-center hover:bg-white/20 transition-colors">
+                            <span class="iconify text-light-text text-xl" data-icon="mdi:instagram"></span>
+                        </a>
+                    </div>
+                    <div class="mt-6 flex items-center gap-3 text-light-text text-sm">
+                        <span class="iconify text-[#25D366]" data-icon="mdi:whatsapp"></span>
+                        <a href="https://wa.me/916364671786?text=Hi%20Vizonis%20Academy!" target="_blank" class="hover:text-primary transition-colors">+91 6364 671 786</a>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+                    <div>
+                        <h4 class="text-white font-semibold mb-4">Power BI Charts</h4>
+                        <ul class="space-y-3">
+                            <li><a href="#line-chart" class="text-light-text hover:text-primary transition-colors text-sm">Line Chart</a></li>
+                            <li><a href="#area-chart" class="text-light-text hover:text-primary transition-colors text-sm">Area Chart</a></li>
+                            <li><a href="#clustered-column-chart" class="text-light-text hover:text-primary transition-colors text-sm">Column Charts</a></li>
+                            <li><a href="#clustered-bar-chart" class="text-light-text hover:text-primary transition-colors text-sm">Bar Charts</a></li>
+                            <li><a href="#combo-chart" class="text-light-text hover:text-primary transition-colors text-sm">Combo Charts</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-semibold mb-4">More Visuals</h4>
+                        <ul class="space-y-3">
+                            <li><a href="#pie-chart" class="text-light-text hover:text-primary transition-colors text-sm">Pie & Donut</a></li>
+                            <li><a href="#funnel-chart" class="text-light-text hover:text-primary transition-colors text-sm">Funnel Chart</a></li>
+                            <li><a href="#scatter-chart" class="text-light-text hover:text-primary transition-colors text-sm">Scatter Chart</a></li>
+                            <li><a href="#treemap" class="text-light-text hover:text-primary transition-colors text-sm">Treemap</a></li>
+                            <li><a href="#waterfall-chart" class="text-light-text hover:text-primary transition-colors text-sm">Waterfall Chart</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-semibold mb-4">Resources</h4>
+                        <ul class="space-y-3">
+                            <li><a href="#table-visual" class="text-light-text hover:text-primary transition-colors text-sm">Table & Matrix</a></li>
+                            <li><a href="#card-visual" class="text-light-text hover:text-primary transition-colors text-sm">Card & Gauge</a></li>
+                            <li><a href="#map-visual" class="text-light-text hover:text-primary transition-colors text-sm">Maps</a></li>
+                            <li><a href="#when-to-use" class="text-light-text hover:text-primary transition-colors text-sm">Quick Reference</a></li>
+                            <li><a href="#faq" class="text-light-text hover:text-primary transition-colors text-sm">FAQ</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-light-text text-sm">&copy; 2026 Vizonis Academy. All rights reserved.</p>
+                <div class="flex items-center gap-6 text-sm">
+                    <a href="#" class="text-light-text hover:text-primary transition-colors">Privacy Policy</a>
+                    <a href="#" class="text-light-text hover:text-primary transition-colors">Terms of Service</a>
+                    <a href="#" class="text-light-text hover:text-primary transition-colors">Refund Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========== FLOATING WHATSAPP BUTTON ========== -->
+    <a href="https://wa.me/916364671786?text=Hi%20Vizonis%20Academy!%20I%20want%20to%20learn%20Power%20BI%20charts" target="_blank" 
+       class="whatsapp-float fixed bottom-6 right-6 z-50 bg-[#25D366] hover:bg-[#20bd5a] text-white w-16 h-16 rounded-full flex items-center justify-center shadow-2xl transition-transform duration-300 hover:scale-110"
+       aria-label="Chat on WhatsApp">
+        <span class="iconify text-3xl" data-icon="mdi:whatsapp"></span>
+    </a>
+
+    <!-- ========== JAVASCRIPT ========== -->
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        let menuOpen = false;
+        mobileMenuBtn.addEventListener('click', () => {
+            menuOpen = !menuOpen;
+            mobileMenu.classList.toggle('hidden');
+            const icon = mobileMenuBtn.querySelector('.iconify');
+            icon.setAttribute('data-icon', menuOpen ? 'mdi:close' : 'mdi:menu');
+        });
+
+        // Close mobile menu on link click
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                menuOpen = false;
+                mobileMenuBtn.querySelector('.iconify').setAttribute('data-icon', 'mdi:menu');
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 80;
+                    const bodyRect = document.body.getBoundingClientRect().top;
+                    const elementRect = target.getBoundingClientRect().top;
+                    const elementPosition = elementRect - bodyRect;
+                    const offsetPosition = elementPosition - offset;
+                    window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.chart-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Nav background on scroll
+        const nav = document.querySelector('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-lg');
+            } else {
+                nav.classList.remove('shadow-lg');
+            }
+        });
+    </script>
+
+</body>
+</html>

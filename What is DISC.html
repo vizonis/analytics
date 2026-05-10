@@ -1,0 +1,2100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My DISC Leadership Journey — Vikram Rao</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  :root {
+    --bg: #0f0f0f;
+    --bg-elevated: #1a1a1a;
+    --bg-card: #1e1e1e;
+    --fg: #f0ece4;
+    --fg-muted: #9a958c;
+    --fg-dim: #6b665e;
+    --accent: #e8a838;
+    --accent-glow: rgba(232, 168, 56, 0.15);
+    --disc-d: #e84545;
+    --disc-i: #f5b731;
+    --disc-s: #2db87e;
+    --disc-c: #3a8fd4;
+    --disc-d-bg: rgba(232, 69, 69, 0.08);
+    --disc-i-bg: rgba(245, 183, 49, 0.08);
+    --disc-s-bg: rgba(45, 184, 126, 0.08);
+    --disc-c-bg: rgba(58, 143, 212, 0.08);
+    --border: rgba(255,255,255,0.06);
+    --radius: 16px;
+    --radius-sm: 10px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent) var(--bg);
+  }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.7;
+    font-weight: 400;
+    overflow-x: hidden;
+  }
+
+  /* Ambient background */
+  .ambient-bg {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .ambient-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.4;
+    animation: orbFloat 20s ease-in-out infinite;
+  }
+
+  .ambient-orb:nth-child(1) {
+    width: 600px; height: 600px;
+    background: var(--disc-c);
+    top: -200px; right: -150px;
+    opacity: 0.07;
+    animation-delay: 0s;
+  }
+  .ambient-orb:nth-child(2) {
+    width: 500px; height: 500px;
+    background: var(--disc-i);
+    bottom: 20%; left: -100px;
+    opacity: 0.05;
+    animation-delay: -7s;
+  }
+  .ambient-orb:nth-child(3) {
+    width: 400px; height: 400px;
+    background: var(--accent);
+    top: 50%; right: 10%;
+    opacity: 0.04;
+    animation-delay: -14s;
+  }
+
+  @keyframes orbFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(30px, -40px) scale(1.05); }
+    66% { transform: translate(-20px, 30px) scale(0.95); }
+  }
+
+  .content-wrapper {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Navigation */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.4s ease;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  nav.scrolled {
+    background: rgba(15,15,15,0.85);
+    padding: 14px 40px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-brand {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--fg);
+    letter-spacing: -0.02em;
+  }
+
+  .nav-brand span { color: var(--accent); }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--fg-muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 2px;
+    background: var(--accent);
+    transition: width 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--fg); }
+  .nav-links a:hover::after { width: 100%; }
+
+  /* Hero Section */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 120px 40px 80px;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 60px;
+  }
+
+  .hero-content { flex: 1; }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 28px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+
+  .hero-eyebrow .line {
+    width: 40px; height: 1px;
+    background: var(--accent);
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 6vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    margin-bottom: 28px;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeUp 0.8s 0.4s forwards;
+  }
+
+  .hero h1 .highlight {
+    background: linear-gradient(135deg, var(--disc-c), var(--disc-i));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-desc {
+    font-size: 1.15rem;
+    color: var(--fg-muted);
+    max-width: 560px;
+    line-height: 1.8;
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.8s 0.6s forwards;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 32px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.8s 0.8s forwards;
+  }
+
+  .hero-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .hero-meta-item .label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+  }
+
+  .hero-meta-item .value {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--fg);
+  }
+
+  .hero-visual {
+    flex: 0 0 380px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transform: scale(0.9);
+    animation: scaleIn 1s 0.5s forwards;
+  }
+
+  .disc-wheel-container {
+    position: relative;
+    width: 340px; height: 340px;
+  }
+
+  .disc-wheel {
+    width: 100%; height: 100%;
+    position: relative;
+  }
+
+  .disc-segment {
+    position: absolute;
+    width: 50%; height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 900;
+    opacity: 0.25;
+    transition: all 0.5s ease;
+    cursor: default;
+  }
+
+  .disc-segment.active {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+
+  .disc-segment.d-seg {
+    top: 0; left: 50%;
+    background: var(--disc-d-bg);
+    border-radius: 0 var(--radius) 0 0;
+    color: var(--disc-d);
+    border-right: 2px solid rgba(232,69,69,0.15);
+    border-top: 2px solid rgba(232,69,69,0.15);
+  }
+  .disc-segment.d-seg.active { background: rgba(232,69,69,0.15); }
+
+  .disc-segment.i-seg {
+    top: 0; left: 0;
+    background: var(--disc-i-bg);
+    border-radius: var(--radius) 0 0 0;
+    color: var(--disc-i);
+    border-left: 2px solid rgba(245,183,49,0.15);
+    border-top: 2px solid rgba(245,183,49,0.15);
+  }
+  .disc-segment.i-seg.active { background: rgba(245,183,49,0.15); }
+
+  .disc-segment.s-seg {
+    bottom: 0; left: 0;
+    background: var(--disc-s-bg);
+    border-radius: 0 0 0 var(--radius);
+    color: var(--disc-s);
+    border-left: 2px solid rgba(45,184,126,0.15);
+    border-bottom: 2px solid rgba(45,184,126,0.15);
+  }
+
+  .disc-segment.c-seg {
+    bottom: 0; left: 50%;
+    background: var(--disc-c-bg);
+    border-radius: 0 0 var(--radius) 0;
+    color: var(--disc-c);
+    border-right: 2px solid rgba(58,143,212,0.15);
+    border-bottom: 2px solid rgba(58,143,212,0.15);
+  }
+  .disc-segment.c-seg.active { background: rgba(58,143,212,0.15); }
+
+  .disc-segment .seg-label {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    opacity: 0.7;
+  }
+
+  .disc-segment.i-seg .seg-label { bottom: 12px; left: 12px; right: auto; }
+  .disc-segment.s-seg .seg-label { top: 12px; left: 12px; right: auto; bottom: auto; }
+  .disc-segment.c-seg .seg-label { top: 12px; right: 12px; bottom: auto; }
+
+  .wheel-center {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90px; height: 90px;
+    background: var(--bg-elevated);
+    border: 2px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+  }
+
+  .wheel-center .ci-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--disc-c), var(--disc-i));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+  }
+
+  .wheel-center .ci-sub {
+    font-size: 0.55rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+    margin-top: 2px;
+  }
+
+  .my-style-badge {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 6px 18px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes scaleIn {
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  /* Section base */
+  section {
+    padding: 100px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .section-eyebrow .line {
+    width: 30px; height: 1px;
+    background: var(--accent);
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 20px;
+  }
+
+  .section-subtitle {
+    font-size: 1.1rem;
+    color: var(--fg-muted);
+    max-width: 640px;
+    line-height: 1.8;
+  }
+
+  /* Story Section */
+  .story-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  .story-text p {
+    color: var(--fg-muted);
+    font-size: 1.05rem;
+    line-height: 1.9;
+    margin-bottom: 20px;
+  }
+
+  .story-text p strong {
+    color: var(--fg);
+    font-weight: 600;
+  }
+
+  .story-highlight {
+    background: var(--accent-glow);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 24px 28px;
+    margin: 28px 0;
+  }
+
+  .story-highlight p {
+    color: var(--fg) !important;
+    font-style: italic;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    margin-bottom: 0 !important;
+  }
+
+  .story-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 36px;
+    position: sticky;
+    top: 120px;
+  }
+
+  .story-card-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .story-card-avatar {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--disc-c), var(--disc-i));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: var(--bg);
+    flex-shrink: 0;
+  }
+
+  .story-card-info h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+
+  .story-card-info p {
+    font-size: 0.85rem;
+    color: var(--fg-muted);
+  }
+
+  .story-card-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .stat-box {
+    background: rgba(255,255,255,0.03);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    text-align: center;
+  }
+
+  .stat-box .stat-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-box .stat-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+  }
+
+  /* DISC Grid */
+  .disc-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 60px;
+  }
+
+  .disc-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px 24px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .disc-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .disc-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+
+  .disc-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+  }
+
+  .disc-card.d-card::before { background: var(--disc-d); }
+  .disc-card.i-card::before { background: var(--disc-i); }
+  .disc-card.s-card::before { background: var(--disc-s); }
+  .disc-card.c-card::before { background: var(--disc-c); }
+
+  .disc-card-letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .d-card .disc-card-letter { color: var(--disc-d); }
+  .i-card .disc-card-letter { color: var(--disc-i); }
+  .s-card .disc-card-letter { color: var(--disc-s); }
+  .c-card .disc-card-letter { color: var(--disc-c); }
+
+  .disc-card-name {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    margin-bottom: 20px;
+  }
+
+  .disc-card-section {
+    margin-bottom: 16px;
+  }
+
+  .disc-card-section:last-child { margin-bottom: 0; }
+
+  .disc-card-section h4 {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .disc-card-section.strengths h4 { color: var(--disc-s); }
+  .disc-card-section.weaknesses h4 { color: var(--disc-d); }
+
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .tag {
+    font-size: 0.72rem;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.05);
+    color: var(--fg-muted);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .d-card .tag { border-color: rgba(232,69,69,0.15); color: rgba(232,69,69,0.85); background: rgba(232,69,69,0.06); }
+  .i-card .tag { border-color: rgba(245,183,49,0.15); color: rgba(245,183,49,0.85); background: rgba(245,183,49,0.06); }
+  .s-card .tag { border-color: rgba(45,184,126,0.15); color: rgba(45,184,126,0.85); background: rgba(45,184,126,0.06); }
+  .c-card .tag { border-color: rgba(58,143,212,0.15); color: rgba(58,143,212,0.85); background: rgba(58,143,212,0.06); }
+
+  /* My Results Section */
+  .results-section {
+    background: var(--bg-elevated);
+    border-radius: var(--radius);
+    padding: 60px;
+    margin-top: 60px;
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .results-section::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(58,143,212,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .results-section::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(245,183,49,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .results-header {
+    text-align: center;
+    margin-bottom: 50px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .results-bars {
+    display: flex;
+    gap: 28px;
+    align-items: flex-end;
+    justify-content: center;
+    height: 220px;
+    margin-bottom: 50px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .result-bar-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    max-width: 160px;
+  }
+
+  .result-bar-wrapper {
+    width: 100%;
+    height: 180px;
+    background: rgba(255,255,255,0.03);
+    border-radius: var(--radius-sm);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .result-bar {
+    width: 100%;
+    border-radius: var(--radius-sm);
+    transition: height 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    height: 0;
+    position: relative;
+  }
+
+  .result-bar.animated { /* height set via JS */ }
+
+  .result-bar.d-bar { background: linear-gradient(to top, var(--disc-d), rgba(232,69,69,0.6)); }
+  .result-bar.i-bar { background: linear-gradient(to top, var(--disc-i), rgba(245,183,49,0.6)); }
+  .result-bar.s-bar { background: linear-gradient(to top, var(--disc-s), rgba(45,184,126,0.6)); }
+  .result-bar.c-bar { background: linear-gradient(to top, var(--disc-c), rgba(58,143,212,0.6)); }
+
+  .result-bar .bar-percent {
+    position: absolute;
+    top: 10px; left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: white;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  }
+
+  .result-bar-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    text-align: center;
+  }
+
+  .result-bar-label .letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .d-bar ~ .result-bar-label .letter { color: var(--disc-d); }
+  .i-bar ~ .result-bar-label .letter { color: var(--disc-i); }
+  /* Using data attributes instead for cleaner approach */
+
+  /* CI Deep Dive */
+  .ci-dive {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .ci-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 36px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ci-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .ci-card.c-dive::before { background: linear-gradient(90deg, var(--disc-c), transparent); }
+  .ci-card.i-dive::before { background: linear-gradient(90deg, var(--disc-i), transparent); }
+
+  .ci-card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+
+  .ci-card-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .c-dive .ci-card-icon {
+    background: rgba(58,143,212,0.12);
+    color: var(--disc-c);
+  }
+
+  .i-dive .ci-card-icon {
+    background: rgba(245,183,49,0.12);
+    color: var(--disc-i);
+  }
+
+  .ci-card-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+  }
+
+  .c-dive .ci-card-header h3 { color: var(--disc-c); }
+  .i-dive .ci-card-header h3 { color: var(--disc-i); }
+
+  .ci-card-header p {
+    font-size: 0.8rem;
+    color: var(--fg-dim);
+    font-weight: 500;
+  }
+
+  .ci-list {
+    list-style: none;
+  }
+
+  .ci-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.95rem;
+    color: var(--fg-muted);
+    line-height: 1.6;
+  }
+
+  .ci-list li:last-child { border-bottom: none; }
+
+  .ci-list li i {
+    margin-top: 4px;
+    font-size: 0.65rem;
+    flex-shrink: 0;
+  }
+
+  .c-dive .ci-list li i { color: var(--disc-c); }
+  .i-dive .ci-list li i { color: var(--disc-i); }
+
+  /* Communication Section */
+  .comm-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-top: 50px;
+  }
+
+  .comm-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px;
+    transition: transform 0.3s ease;
+  }
+
+  .comm-card:hover {
+    transform: translateY(-3px);
+  }
+
+  .comm-card-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .comm-card-letter {
+    width: 42px; height: 42px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 900;
+    flex-shrink: 0;
+  }
+
+  .comm-card.d-comm .comm-card-letter { background: rgba(232,69,69,0.12); color: var(--disc-d); }
+  .comm-card.i-comm .comm-card-letter { background: rgba(245,183,49,0.12); color: var(--disc-i); }
+  .comm-card.s-comm .comm-card-letter { background: rgba(45,184,126,0.12); color: var(--disc-s); }
+  .comm-card.c-comm .comm-card-letter { background: rgba(58,143,212,0.12); color: var(--disc-c); }
+
+  .comm-card-head h3 {
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .comm-card-head .looking-for {
+    font-size: 0.78rem;
+    color: var(--fg-dim);
+    font-weight: 500;
+  }
+
+  .comm-tips {
+    list-style: none;
+  }
+
+  .comm-tips li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    font-size: 0.92rem;
+    color: var(--fg-muted);
+    line-height: 1.6;
+  }
+
+  .comm-tips li i {
+    margin-top: 5px;
+    font-size: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  .comm-card.d-comm .comm-tips li i { color: var(--disc-d); }
+  .comm-card.i-comm .comm-tips li i { color: var(--disc-i); }
+  .comm-card.s-comm .comm-tips li i { color: var(--disc-s); }
+  .comm-card.c-comm .comm-tips li i { color: var(--disc-c); }
+
+  /* Managing & Motivating */
+  .manage-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    margin-top: 50px;
+  }
+
+  .manage-table-wrap {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .manage-table-title {
+    padding: 20px 28px;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .manage-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .manage-table th {
+    padding: 14px 20px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    color: var(--fg-dim);
+  }
+
+  .manage-table th:first-child { padding-left: 28px; }
+
+  .manage-table td {
+    padding: 14px 20px;
+    font-size: 0.88rem;
+    color: var(--fg-muted);
+    line-height: 1.6;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .manage-table td:first-child {
+    padding-left: 28px;
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+
+  .manage-table tr:last-child td { border-bottom: none; }
+
+  .manage-table .d-cell { color: var(--disc-d); }
+  .manage-table .i-cell { color: var(--disc-i); }
+  .manage-table .s-cell { color: var(--disc-s); }
+  .manage-table .c-cell { color: var(--disc-c); }
+
+  /* Insights Section */
+  .insights-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 50px;
+  }
+
+  .insight-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 36px;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+
+  .insight-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255,255,255,0.12);
+  }
+
+  .insight-icon {
+    width: 50px; height: 50px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    background: var(--accent-glow);
+    color: var(--accent);
+  }
+
+  .insight-card h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--fg);
+  }
+
+  .insight-card p {
+    font-size: 0.92rem;
+    color: var(--fg-muted);
+    line-height: 1.75;
+  }
+
+  /* Reflections Section */
+  .reflections {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .reflection-item {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.6s ease;
+  }
+
+  .reflection-item.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .reflection-number {
+    flex-shrink: 0;
+    width: 48px; height: 48px;
+    background: var(--accent-glow);
+    border: 1px solid rgba(232,168,56,0.2);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: var(--accent);
+  }
+
+  .reflection-content h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .reflection-content p {
+    font-size: 0.95rem;
+    color: var(--fg-muted);
+    line-height: 1.8;
+  }
+
+  /* Success Wheel */
+  .wheel-section {
+    text-align: center;
+  }
+
+  .combo-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 50px;
+  }
+
+  .combo-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px 16px;
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+
+  .combo-card:hover { transform: translateY(-3px); }
+
+  .combo-letters {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 900;
+    margin-bottom: 8px;
+  }
+
+  .combo-card:nth-child(1) .combo-letters { color: var(--disc-d); }
+  .combo-card:nth-child(2) .combo-letters { color: var(--disc-i); }
+  .combo-card:nth-child(3) .combo-letters { color: var(--disc-s); }
+  .combo-card:nth-child(4) .combo-letters { color: var(--disc-c); }
+
+  .combo-name {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+    margin-bottom: 12px;
+  }
+
+  .combo-desc {
+    font-size: 0.85rem;
+    color: var(--fg-muted);
+    line-height: 1.6;
+  }
+
+  .combo-bad-words {
+    margin-top: 10px;
+    font-size: 0.75rem;
+    color: var(--disc-d);
+    opacity: 0.7;
+    font-style: italic;
+  }
+
+  /* Footer */
+  footer {
+    padding: 60px 40px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-left {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .footer-left span { color: var(--accent); }
+
+  .footer-right {
+    font-size: 0.8rem;
+    color: var(--fg-dim);
+  }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .disc-grid { grid-template-columns: repeat(2, 1fr); }
+    .ci-dive { grid-template-columns: 1fr; }
+    .manage-grid { grid-template-columns: 1fr; }
+    .comm-grid { grid-template-columns: 1fr; }
+    .insights-grid { grid-template-columns: 1fr; }
+    .combo-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      flex-direction: column;
+      padding: 100px 24px 60px;
+      gap: 40px;
+    }
+    .hero-visual { flex: none; }
+    .disc-wheel-container { width: 280px; height: 280px; }
+    section { padding: 60px 24px; }
+    .story-section { grid-template-columns: 1fr; }
+    .story-card { position: static; }
+    .disc-grid { grid-template-columns: 1fr 1fr; }
+    .results-section { padding: 36px 24px; }
+    .results-bars { gap: 16px; height: 180px; }
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    footer { flex-direction: column; gap: 12px; text-align: center; }
+  }
+
+  @media (max-width: 480px) {
+    .disc-grid { grid-template-columns: 1fr; }
+    .combo-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Toast notification */
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 16px 24px;
+    font-size: 0.9rem;
+    color: var(--fg);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    z-index: 200;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.4s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .toast.show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .toast i { color: var(--accent); }
+
+  /* Reading progress bar */
+  .progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--disc-c), var(--disc-i), var(--accent));
+    z-index: 200;
+    width: 0%;
+    transition: width 0.1s linear;
+  }
+
+  /* Tooltip */
+  .disc-segment {
+    position: relative;
+  }
+
+  .seg-tooltip {
+    position: absolute;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 0.78rem;
+    color: var(--fg-muted);
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 10;
+  }
+
+  .disc-segment:hover .seg-tooltip { opacity: 1; }
+  .d-seg .seg-tooltip { top: 50%; right: -10px; transform: translate(100%, -50%); }
+  .i-seg .seg-tooltip { top: 50%; left: -10px; transform: translate(-100%, -50%); }
+  .s-seg .seg-tooltip { bottom: -10px; left: 50%; transform: translate(-50%, 100%); }
+  .c-seg .seg-tooltip { bottom: -10px; right: 50%; transform: translate(50%, 100%); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<div class="ambient-bg">
+  <div class="ambient-orb"></div>
+  <div class="ambient-orb"></div>
+  <div class="ambient-orb"></div>
+</div>
+
+<div class="content-wrapper">
+
+  <!-- Navigation -->
+  <nav id="mainNav">
+    <div class="nav-brand">Vikram<span>.</span>Rao</div>
+    <ul class="nav-links">
+      <li><a href="#story">My Story</a></li>
+      <li><a href="#what-is-disc">What is DISC</a></li>
+      <li><a href="#my-results">My Results</a></li>
+      <li><a href="#communication">Communication</a></li>
+      <li><a href="#insights">Insights</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <span class="line"></span>
+        Leadership Reflection
+      </div>
+      <h1>I Took the DISC Assessment.<br>Here's What It <span class="highlight">Revealed</span> About My Leadership.</h1>
+      <p class="hero-desc">After 14 years leading data analytics teams, I thought I knew my working style. A two-day DISC leadership bootcamp proved me wrong — and showed me exactly where I could grow.</p>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <span class="label">Experience</span>
+          <span class="value">14 Years</span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="label">Team Size</span>
+          <span class="value">10–12</span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="label">DISC Style</span>
+          <span class="value">C + I</span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="label">Role</span>
+          <span class="value">Data Analytics Lead</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="disc-wheel-container">
+        <div class="disc-wheel">
+          <div class="disc-segment i-seg active">
+            I
+            <span class="seg-label">Influence</span>
+            <div class="seg-tooltip">High Influence — Your secondary style</div>
+          </div>
+          <div class="disc-segment d-seg">
+            D
+            <span class="seg-label">Dominance</span>
+            <div class="seg-tooltip">Dominance — Lower intensity for you</div>
+          </div>
+          <div class="disc-segment s-seg">
+            S
+            <span class="seg-label">Steadiness</span>
+            <div class="seg-tooltip">Steadiness — Moderate presence</div>
+          </div>
+          <div class="disc-segment c-seg active">
+            C
+            <span class="seg-label">Compliance</span>
+            <div class="seg-tooltip">High Compliance — Your primary style</div>
+          </div>
+        </div>
+        <div class="wheel-center">
+          <span class="ci-text">CI</span>
+          <span class="ci-sub">My Style</span>
+        </div>
+        <div class="my-style-badge">High C + High I Profile</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Story Section -->
+  <section id="story">
+    <div class="story-section">
+      <div class="story-text reveal">
+        <div class="section-eyebrow"><span class="line"></span> The Backstory</div>
+        <h2 class="section-title">Why I Signed Up for a DISC Bootcamp</h2>
+        <p>After spending <strong>14 years in data analytics</strong> — building dashboards, designing data pipelines, and leading technical teams of 10–12 people — I figured I had a pretty solid read on who I am as a professional. I'm detail-oriented. I like things accurate. I care about the "why" behind the numbers. That much I knew.</p>
+        <p>What I didn't fully understand was <strong>how my natural working style impacts the people around me</strong> — especially when the pressure is on, deadlines are tight, and my team needs me to be more than just technically right.</p>
+        <div class="story-highlight">
+          <p>"Self-awareness isn't a destination — it's a discipline. The DISC bootcamp didn't just give me a label; it gave me a mirror and a map."</p>
+        </div>
+        <p>That's exactly what the DISC Leadership Bootcamp offered: a structured, evidence-based framework to understand not just what I do, but <strong>why I do it</strong>, and more importantly, <strong>how to adapt when what comes naturally isn't what the situation needs</strong>.</p>
+        <p>The two-day intensive wasn't your typical corporate training. It was deeply personal. You complete a detailed assessment beforehand, and the results map you across four behavioral dimensions. Then the real work begins — understanding what those dimensions mean, where you over-index, where you under-index, and how to flex your style to meet people where they are.</p>
+      </div>
+      <div class="story-card reveal">
+        <div class="story-card-header">
+          <div class="story-card-avatar">VR</div>
+          <div class="story-card-info">
+            <h3>Vikram Rao</h3>
+            <p>Data Analytics Lead | Technical Lead</p>
+          </div>
+        </div>
+        <div class="story-card-stats">
+          <div class="stat-box">
+            <div class="stat-value">14</div>
+            <div class="stat-label">Years Experience</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value">10–12</div>
+            <div class="stat-label">Team Members</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value">C+I</div>
+            <div class="stat-label">DISC Style</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value">2</div>
+            <div class="stat-label">Days Intensive</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What is DISC -->
+  <section id="what-is-disc">
+    <div class="reveal">
+      <div class="section-eyebrow"><span class="line"></span> The Framework</div>
+      <h2 class="section-title">So, What Exactly is DISC?</h2>
+      <p class="section-subtitle">DISC is a behavioral assessment framework that categorizes how people approach tasks, interact with others, and respond to their environment. It doesn't measure intelligence or capability — it measures behavioral tendencies. Think of it as a lens, not a label.</p>
+    </div>
+
+    <div class="disc-grid">
+      <!-- D Card -->
+      <div class="disc-card d-card">
+        <div class="disc-card-letter">D</div>
+        <div class="disc-card-name">Dominance</div>
+        <div class="disc-card-section strengths">
+          <h4>Value to Team</h4>
+          <div class="tag-list">
+            <span class="tag">Bottom-line organizer</span>
+            <span class="tag">Forward-moving</span>
+            <span class="tag">Gets things done</span>
+            <span class="tag">Results-oriented</span>
+            <span class="tag">Self-starting</span>
+            <span class="tag">Decisive</span>
+            <span class="tag">Innovative</span>
+          </div>
+        </div>
+        <div class="disc-card-section weaknesses">
+          <h4>Possible Limitations</h4>
+          <div class="tag-list">
+            <span class="tag">Overuse of position</span>
+            <span class="tag">Argumentative</span>
+            <span class="tag">May not listen</span>
+            <span class="tag">Impatient</span>
+            <span class="tag">Daring</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- I Card -->
+      <div class="disc-card i-card">
+        <div class="disc-card-letter">I</div>
+        <div class="disc-card-name">Influence</div>
+        <div class="disc-card-section strengths">
+          <h4>Value to Team</h4>
+          <div class="tag-list">
+            <span class="tag">Optimism & enthusiasm</span>
+            <span class="tag">Creative problem solving</span>
+            <span class="tag">Contacts & networks</span>
+            <span class="tag">Persuasive</span>
+            <span class="tag">Inspiring</span>
+            <span class="tag">Good networker</span>
+          </div>
+        </div>
+        <div class="disc-card-section weaknesses">
+          <h4>Possible Limitations</h4>
+          <div class="tag-list">
+            <span class="tag">More talk than action</span>
+            <span class="tag">Inattentive to detail</span>
+            <span class="tag">Time management</span>
+            <span class="tag">Frequent interruptions</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- S Card -->
+      <div class="disc-card s-card">
+        <div class="disc-card-letter">S</div>
+        <div class="disc-card-name">Steadiness</div>
+        <div class="disc-card-section strengths">
+          <h4>Value to Team</h4>
+          <div class="tag-list">
+            <span class="tag">Dependable team player</span>
+            <span class="tag">Loyal & supportive</span>
+            <span class="tag">Good listener</span>
+            <span class="tag">Patient</span>
+            <span class="tag">Calm</span>
+            <span class="tag">Sincere</span>
+          </div>
+        </div>
+        <div class="disc-card-section weaknesses">
+          <h4>Possible Limitations</h4>
+          <div class="tag-list">
+            <span class="tag">Yields to avoid controversy</span>
+            <span class="tag">Slow to take action</span>
+            <span class="tag">Resists change</span>
+            <span class="tag">Tends to conform</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- C Card -->
+      <div class="disc-card c-card">
+        <div class="disc-card-letter">C</div>
+        <div class="disc-card-name">Compliance</div>
+        <div class="disc-card-section strengths">
+          <h4>Value to Team</h4>
+          <div class="tag-list">
+            <span class="tag">Maintains high standards</span>
+            <span class="tag">Conscientious & steady</span>
+            <span class="tag">Analytical</span>
+            <span class="tag">Accurate</span>
+            <span class="tag">Quality-oriented</span>
+            <span class="tag">Logical</span>
+            <span class="tag">Systematic</span>
+          </div>
+        </div>
+        <div class="disc-card-section weaknesses">
+          <h4>Possible Limitations</h4>
+          <div class="tag-list">
+            <span class="tag">Defensive when criticized</span>
+            <span class="tag">Perfectionist</span>
+            <span class="tag">Over-analyzes</span>
+            <span class="tag">May be overly cautious</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- My Results -->
+  <section id="my-results">
+    <div class="results-section reveal">
+      <div class="results-header">
+        <div class="section-eyebrow"><span class="line"></span> My Assessment Results</div>
+        <h2 class="section-title">High C + High I: The Analyst Who Connects</h2>
+        <p class="section-subtitle" style="margin: 12px auto 0; text-align: center;">My DISC survey revealed a distinctive dual-style profile — strong Compliance paired with strong Influence. Here's how that scored across all four dimensions.</p>
+      </div>
+
+      <div class="results-bars" id="resultsBars">
+        <div class="result-bar-group">
+          <div class="result-bar-wrapper">
+            <div class="result-bar d-bar" data-height="35">
+              <span class="bar-percent">35%</span>
+            </div>
+          </div>
+          <div class="result-bar-label">
+            <span class="letter" style="color: var(--disc-d);">D</span>
+            Dominance
+          </div>
+        </div>
+        <div class="result-bar-group">
+          <div class="result-bar-wrapper">
+            <div class="result-bar i-bar" data-height="78">
+              <span class="bar-percent">78%</span>
+            </div>
+          </div>
+          <div class="result-bar-label">
+            <span class="letter" style="color: var(--disc-i);">I</span>
+            Influence
+          </div>
+        </div>
+        <div class="result-bar-group">
+          <div class="result-bar-wrapper">
+            <div class="result-bar s-bar" data-height="45">
+              <span class="bar-percent">45%</span>
+            </div>
+          </div>
+          <div class="result-bar-label">
+            <span class="letter" style="color: var(--disc-s);">S</span>
+            Steadiness
+          </div>
+        </div>
+        <div class="result-bar-group">
+          <div class="result-bar-wrapper">
+            <div class="result-bar c-bar" data-height="82">
+              <span class="bar-percent">82%</span>
+            </div>
+          </div>
+          <div class="result-bar-label">
+            <span class="letter" style="color: var(--disc-c);">C</span>
+            Compliance
+          </div>
+        </div>
+      </div>
+
+      <!-- CI Deep Dive -->
+      <div class="ci-dive">
+        <div class="ci-card c-dive">
+          <div class="ci-card-header">
+            <div class="ci-card-icon"><i class="fas fa-microscope"></i></div>
+            <div>
+              <h3>High C — Compliance</h3>
+              <p>My Primary Style</p>
+            </div>
+          </div>
+          <p style="font-size: 0.92rem; color: var(--fg-muted); margin-bottom: 16px; line-height: 1.7;">This didn't surprise me at all. In data analytics, precision isn't optional — it's the baseline. My high C shows up as:</p>
+          <ul class="ci-list">
+            <li><i class="fas fa-circle"></i> A deep need for accuracy and evidence before drawing conclusions</li>
+            <li><i class="fas fa-circle"></i> Maintaining high quality standards even when timelines are aggressive</li>
+            <li><i class="fas fa-circle"></i> Systematic, logical approach to problem-solving</li>
+            <li><i class="fas fa-circle"></i> Being conscientious and detail-oriented — catching things others miss</li>
+            <li><i class="fas fa-circle"></i> Preference for well-defined processes and clear expectations</li>
+            <li><i class="fas fa-circle"></i> Tendency to over-analyze when I should be deciding</li>
+            <li><i class="fas fa-circle"></i> Getting defensive when my work is criticized without data</li>
+          </ul>
+        </div>
+
+        <div class="ci-card i-dive">
+          <div class="ci-card-header">
+            <div class="ci-card-icon"><i class="fas fa-users"></i></div>
+            <div>
+              <h3>High I — Influence</h3>
+              <p>My Secondary Style</p>
+            </div>
+          </div>
+          <p style="font-size: 0.92rem; color: var(--fg-muted); margin-bottom: 16px; line-height: 1.7;">This was the surprise. I expected to be a pure C, but my I score was nearly as high. It explains a lot about how I lead:</p>
+          <ul class="ci-list">
+            <li><i class="fas fa-circle"></i> I genuinely enjoy presenting insights and influencing stakeholders</li>
+            <li><i class="fas fa-circle"></i> Building networks across departments comes naturally to me</li>
+            <li><i class="fas fa-circle"></i> I bring optimism and enthusiasm when pitching data-driven strategies</li>
+            <li><i class="fas fa-circle"></i> I prefer collaborative problem-solving over working in isolation</li>
+            <li><i class="fas fa-circle"></i> I can talk through a problem before I've fully thought it through</li>
+            <li><i class="fas fa-circle"></i> Sometimes I oversell an insight because I'm excited about it</li>
+            <li><i class="fas fa-circle"></i> I struggle with time management when I'm enjoying the conversation</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Communication Tips -->
+  <section id="communication">
+    <div class="reveal">
+      <div class="section-eyebrow"><span class="line"></span> Practical Takeaways</div>
+      <h2 class="section-title">How to Communicate with Each DISC Style</h2>
+      <p class="section-subtitle">One of the most valuable parts of the bootcamp was learning how to adjust my communication depending on who I'm talking to. Here's what I learned — and what I'm now practicing daily.</p>
+    </div>
+
+    <div class="comm-grid">
+      <div class="comm-card d-comm reveal">
+        <div class="comm-card-head">
+          <div class="comm-card-letter">D</div>
+          <div>
+            <h3>Communicating with D Style</h3>
+            <div class="looking-for">They are looking for: Results</div>
+          </div>
+        </div>
+        <ul class="comm-tips">
+          <li><i class="fas fa-circle"></i> Be brief, direct, and bottom-line oriented</li>
+          <li><i class="fas fa-circle"></i> Come prepared with evidence and clear outcomes</li>
+          <li><i class="fas fa-circle"></i> Remove social chatter — get to the point</li>
+          <li><i class="fas fa-circle"></i> Provide options rather than opinions</li>
+          <li><i class="fas fa-circle"></i> Talk about how you'll remove their obstacles</li>
+        </ul>
+      </div>
+
+      <div class="comm-card i-comm reveal">
+        <div class="comm-card-head">
+          <div class="comm-card-letter">I</div>
+          <div>
+            <h3>Communicating with I Style</h3>
+            <div class="looking-for">They are looking for: Action & Relationship</div>
+          </div>
+        </div>
+        <ul class="comm-tips">
+          <li><i class="fas fa-circle"></i> Share your experiences and allow them to share theirs</li>
+          <li><i class="fas fa-circle"></i> Allow them time to talk — don't interrupt</li>
+          <li><i class="fas fa-circle"></i> Provide a warm and friendly environment</li>
+          <li><i class="fas fa-circle"></i> Focus on the big picture, not just details</li>
+          <li><i class="fas fa-circle"></i> Ask for their opinions and ideas</li>
+        </ul>
+      </div>
+
+      <div class="comm-card s-comm reveal">
+        <div class="comm-card-head">
+          <div class="comm-card-letter">S</div>
+          <div>
+            <h3>Communicating with S Style</h3>
+            <div class="looking-for">They are looking for: Security & Assurance</div>
+          </div>
+        </div>
+        <ul class="comm-tips">
+          <li><i class="fas fa-circle"></i> Be patient — draw out their opinions</li>
+          <li><i class="fas fa-circle"></i> Don't rush them into decisions</li>
+          <li><i class="fas fa-circle"></i> Provide clear expectations and reassurance</li>
+          <li><i class="fas fa-circle"></i> Minimize risk and surprise in proposals</li>
+          <li><i class="fas fa-circle"></i> Show how changes will affect them personally</li>
+        </ul>
+      </div>
+
+      <div class="comm-card c-comm reveal">
+        <div class="comm-card-head">
+          <div class="comm-card-letter">C</div>
+          <div>
+            <h3>Communicating with C Style</h3>
+            <div class="looking-for">They are looking for: Accuracy & Details</div>
+          </div>
+        </div>
+        <ul class="comm-tips">
+          <li><i class="fas fa-circle"></i> Prepare your case in advance — have data ready</li>
+          <li><i class="fas fa-circle"></i> Be detailed and organized in your presentation</li>
+          <li><i class="fas fa-circle"></i> Don't rush them — allow time for analysis</li>
+          <li><i class="fas fa-circle"></i> Provide evidence, not just opinions</li>
+          <li><i class="fas fa-circle"></i> Acknowledge their need for precision</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Managing & Motivating -->
+  <section id="managing">
+    <div class="reveal">
+      <div class="section-eyebrow"><span class="line"></span> Leadership Application</div>
+      <h2 class="section-title">Managing & Motivating Different Styles</h2>
+      <p class="section-subtitle">As someone managing a team of 10–12, this was perhaps the most directly actionable part of the bootcamp. Different people need different things from their leader.</p>
+    </div>
+
+    <div class="manage-grid">
+      <div class="manage-table-wrap reveal">
+        <div class="manage-table-title"><i class="fas fa-compass"></i> Managing DISC Styles</div>
+        <table class="manage-table">
+          <thead>
+            <tr>
+              <th>Style</th>
+              <th>What They Need From You</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="d-cell">D</td>
+              <td>Clearly explain results expected; give them authority to act; allow independence; focus on outcomes not process</td>
+            </tr>
+            <tr>
+              <td class="i-cell">I</td>
+              <td>Allow them to express their ideas; provide social opportunities; recognize their contributions publicly; give them visibility</td>
+            </tr>
+            <tr>
+              <td class="s-cell">S</td>
+              <td>Provide a stable environment; give clear instructions; show patience; recognize their loyalty and dependability</td>
+            </tr>
+            <tr>
+              <td class="c-cell">C</td>
+              <td>Provide detailed instructions; allow time for analysis; recognize quality work; respect their need for accuracy</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="manage-table-wrap reveal">
+        <div class="manage-table-title"><i class="fas fa-bolt"></i> Motivating DISC Styles</div>
+        <table class="manage-table">
+          <thead>
+            <tr>
+              <th>Style</th>
+              <th>What Drives Them</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="d-cell">D</td>
+              <td>Allow them to control their own destiny; provide new challenges; give them power and authority to take action</td>
+            </tr>
+            <tr>
+              <td class="i-cell">I</td>
+              <td>Recognize their accomplishments publicly; provide social opportunities; allow them to express their vision</td>
+            </tr>
+            <tr>
+              <td class="s-cell">S</td>
+              <td>Recognize their loyalty and dependability; provide security and stability; give them consistent, sincere appreciation</td>
+            </tr>
+            <tr>
+              <td class="c-cell">C</td>
+              <td>Recognize their quality work; provide opportunities to use analytical skills; value their precision and expertise</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Success Insights Wheel -->
+  <section id="wheel" class="wheel-section">
+    <div class="reveal">
+      <div class="section-eyebrow" style="justify-content: center;"><span class="line"></span> Beyond Single Styles</div>
+      <h2 class="section-title" style="text-align: center;">The Combination Styles</h2>
+      <p class="section-subtitle" style="margin: 12px auto 0; text-align: center;">Most people aren't purely one letter. The DISC wheel shows how combining styles creates nuanced profiles — each with unique strengths and friction points.</p>
+    </div>
+
+    <div class="combo-grid">
+      <div class="combo-card reveal">
+        <div class="combo-letters">DI</div>
+        <div class="combo-name">The Challenger</div>
+        <div class="combo-desc">Competitive, driving, results-focused with social confidence. Bold decision-makers who rally people toward ambitious goals.</div>
+        <div class="combo-bad-words">Words that don't work: "Because I said so," micromanaging</div>
+      </div>
+      <div class="combo-card reveal">
+        <div class="combo-letters">IS</div>
+        <div class="combo-name">The Counselor</div>
+        <div class="combo-desc">Warm, empathetic, and persuasive. High trust level, accommodating, and great at building deep relationships across teams.</div>
+        <div class="combo-bad-words">Words that don't work: Harsh criticism, cold data-only arguments</div>
+      </div>
+      <div class="combo-card reveal">
+        <div class="combo-letters">SC</div>
+        <div class="combo-name">The Specialist</div>
+        <div class="combo-desc">Steady, precise, and reliable. Methodical workers who bring consistency and depth. Prefer clear processes and minimal disruption.</div>
+        <div class="combo-bad-words">Words that don't work: Sudden change, vague directions</div>
+      </div>
+      <div class="combo-card reveal">
+        <div class="combo-letters">CD</div>
+        <div class="combo-name">The Reformer</div>
+        <div class="combo-desc">Analytical and results-driven. Private, critical thinkers who set high standards for themselves and others. Fact-based and decisive.</div>
+        <div class="combo-bad-words">Words that don't work: Emotional appeals without evidence</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key Insights -->
+  <section id="insights">
+    <div class="reveal">
+      <div class="section-eyebrow"><span class="line"></span> Key Takeaways</div>
+      <h2 class="section-title">What I'm Walking Away With</h2>
+      <p class="section-subtitle">The DISC bootcamp gave me more than a profile — it gave me a practical toolkit. Here are the insights that are already reshaping how I lead.</p>
+    </div>
+
+    <div class="insights-grid">
+      <div class="insight-card reveal">
+        <div class="insight-icon"><i class="fas fa-brain"></i></div>
+        <h3>Self-Awareness is the Starting Point, Not the Destination</h3>
+        <p>Knowing I'm a CI profile doesn't mean I get to say "that's just how I am." It means I now know exactly when my C tendency to over-analyze is slowing the team down, and when my I tendency to talk through problems is eating into execution time.</p>
+      </div>
+      <div class="insight-card reveal">
+        <div class="insight-icon"><i class="fas fa-arrows-alt"></i></div>
+        <h3>Adaptability Beats Authenticity (Most Days)</h3>
+        <p>Yes, be authentic. But authenticity without adaptability is rigidity. When I'm presenting to a D-style VP who wants the bottom line, my CI instinct to walk through the entire methodology is counterproductive. Flex your style — don't abandon it.</p>
+      </div>
+      <div class="insight-card reveal">
+        <div class="insight-icon"><i class="fas fa-users-cog"></i></div>
+        <h3>My Team Isn't Me — And That's the Point</h3>
+        <p>Not everyone processes information the way I do. Some team members need reassurance and clear expectations (S). Others need autonomy and challenge (D). Learning to read and respond to these differences has already made my 1-on-1s more productive.</p>
+      </div>
+      <div class="insight-card reveal">
+        <div class="insight-icon"><i class="fas fa-balance-scale"></i></div>
+        <h3>The CI Tension is Real — and Valuable</h3>
+        <p>My C wants everything perfect before sharing. My I wants to share everything immediately. This internal tension used to feel like a flaw. Now I see it as a rhythm — use I energy to get things moving, use C discipline to make sure the quality is there.</p>
+      </div>
+      <div class="insight-card reveal">
+        <div class="insight-icon"><i class="fas fa-comments"></i></div>
+        <h3>Communication Isn't About What You Say — It's About What They Hear</h3>
+        <p>I used to think being clear meant being thorough. For a D-style stakeholder, "thorough" feels like noise. The bootcamp taught me to match my delivery to the receiver's style, not my own comfort zone.</p>
+      </div>
+      <div class="insight-card reveal">
+        <div class="insight-icon"><i class="fas fa-seedling"></i></div>
+        <h3>Emotional Intelligence is a Skill, Not a Trait</h3>
+        <p>I used to think EQ was something you either had or didn't. The DISC framework showed me it's a practiced skill — the ability to read a room, identify the dominant styles, and adjust your approach in real time. That's learnable. That's empowering.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Personal Reflections -->
+  <section id="reflections">
+    <div class="reveal">
+      <div class="section-eyebrow" style="justify-content: center;"><span class="line"></span> Closing Thoughts</div>
+      <h2 class="section-title" style="text-align: center;">My Leadership Growth Plan</h2>
+      <p class="section-subtitle" style="margin: 12px auto 0; text-align: center;">Here are the specific commitments I'm making based on what DISC revealed about my style.</p>
+    </div>
+
+    <div class="reflections">
+      <div class="reflection-item">
+        <div class="reflection-number">1</div>
+        <div class="reflection-content">
+          <h3>Set "Decision Deadlines" for Myself</h3>
+          <p>My high C will happily analyze forever. Going forward, I'm setting explicit deadlines for analysis phases — even when the data feels incomplete. An 80% confident decision made today beats a 99% confident decision made next week.</p>
+        </div>
+      </div>
+      <div class="reflection-item">
+        <div class="reflection-number">2</div>
+        <div class="reflection-content">
+          <h3>Lead with the Bottom Line for D-Style Stakeholders</h3>
+          <p>I'm restructuring my presentations to open with the recommendation and impact — then offer the methodology as an appendix. My C brain wants to build the argument step-by-step, but that's about my comfort, not their needs.</p>
+        </div>
+      </div>
+      <div class="reflection-item">
+        <div class="reflection-number">3</div>
+        <div class="reflection-content">
+          <h3>Protect Time for S-Style Team Members</h3>
+          <p>My high I moves fast and changes direction quickly. For my S-style team members, that's disorienting. I'm committing to giving more advance notice of changes, providing clearer context, and checking in before pivoting.</p>
+        </div>
+      </div>
+      <div class="reflection-item">
+        <div class="reflection-number">4</div>
+        <div class="reflection-content">
+          <h3>Channel My I Energy into Stakeholder Engagement</h3>
+          <p>Rather than letting my Influence side create unfocused enthusiasm, I'm directing it strategically — building cross-functional relationships, championing my team's work in leadership forums, and using my communication strength to translate data into stories that move decisions.</p>
+        </div>
+      </div>
+      <div class="reflection-item">
+        <div class="reflection-number">5</div>
+        <div class="reflection-content">
+          <h3>Reframe Criticism as Data</h3>
+          <p>My high C gets defensive when criticized. The reframe: criticism is just feedback data. I don't get defensive when a dashboard shows an unexpected metric — I investigate. Same principle. Apply analytical curiosity to interpersonal feedback.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-left">Vikram<span>.</span>Rao</div>
+    <div class="footer-right">Reflecting on DISC Leadership | 2024</div>
+  </footer>
+
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <i class="fas fa-lightbulb"></i>
+  <span id="toastText"></span>
+</div>
+
+<script>
+  // Reading progress bar
+  const progressBar = document.getElementById('progressBar');
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = (scrollTop / docHeight) * 100;
+    progressBar.style.width = scrollPercent + '%';
+  });
+
+  // Navigation scroll effect
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  });
+
+  // Scroll reveal with IntersectionObserver
+  const revealElements = document.querySelectorAll('.reveal, .disc-card, .reflection-item');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        // Add staggered delay for grid items
+        const delay = entry.target.classList.contains('disc-card') 
+          ? Array.from(entry.target.parentElement.children).indexOf(entry.target) * 120 
+          : 0;
+        
+        const reflDelay = entry.target.classList.contains('reflection-item')
+          ? Array.from(entry.target.parentElement.children).indexOf(entry.target) * 150
+          : delay;
+
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, reflDelay);
+
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.15,
+    rootMargin: '0px 0px -40px 0px'
+  });
+
+  revealElements.forEach(el => revealObserver.observe(el));
+
+  // Animate result bars when in viewport
+  const resultsSection = document.getElementById('resultsBars');
+  let barsAnimated = false;
+
+  const barObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !barsAnimated) {
+        barsAnimated = true;
+        const bars = document.querySelectorAll('.result-bar');
+        bars.forEach((bar, i) => {
+          const targetHeight = bar.getAttribute('data-height');
+          setTimeout(() => {
+            bar.style.height = targetHeight + '%';
+          }, i * 200);
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+
+  barObserver.observe(resultsSection);
+
+  // Smooth scroll for nav links
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetId = link.getAttribute('href');
+      const target = document.querySelector(targetId);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Toast notification on page load
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      showToast('Scroll through to explore the full DISC journey');
+    }, 2000);
+  });
+
+  function showToast(text) {
+    const toast = document.getElementById('toast');
+    const toastText = document.getElementById('toastText');
+    toastText.textContent = text;
+    toast.classList.add('show');
+    setTimeout(() => {
+      toast.classList.remove('show');
+    }, 4000);
+  }
+
+  // Interactive DISC wheel hover effects
+  const segments = document.querySelectorAll('.disc-segment');
+  segments.forEach(seg => {
+    seg.addEventListener('mouseenter', () => {
+      segments.forEach(s => s.style.opacity = '0.3');
+      seg.style.opacity = '1';
+    });
+    seg.addEventListener('mouseleave', () => {
+      segments.forEach(s => {
+        if (s.classList.contains('active')) {
+          s.style.opacity = '1';
+        } else {
+          s.style.opacity = '0.25';
+        }
+      });
+    });
+  });
+
+  // Parallax-like effect for ambient orbs
+  let mouseX = 0, mouseY = 0;
+  document.addEventListener('mousemove', (e) => {
+    mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+    mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+  });
+
+  const orbs = document.querySelectorAll('.ambient-orb');
+  function animateOrbs() {
+    orbs.forEach((orb, i) => {
+      const speed = (i + 1) * 8;
+      const x = mouseX * speed;
+      const y = mouseY * speed;
+      orb.style.transform = `translate(${x}px, ${y}px)`;
+    });
+    requestAnimationFrame(animateOrbs);
+  }
+  animateOrbs();
+
+  // Number counter animation for stat boxes
+  const statObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const statValues = entry.target.querySelectorAll('.stat-value');
+        statValues.forEach(val => {
+          const text = val.textContent;
+          val.style.opacity = '0';
+          val.style.transform = 'translateY(10px)';
+          setTimeout(() => {
+            val.style.transition = 'all 0.5s ease';
+            val.style.opacity = '1';
+            val.style.transform = 'translateY(0)';
+          }, 100);
+        });
+        statObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  document.querySelectorAll('.story-card-stats').forEach(el => statObserver.observe(el));
+</script>
+
+</body>
+</html>
